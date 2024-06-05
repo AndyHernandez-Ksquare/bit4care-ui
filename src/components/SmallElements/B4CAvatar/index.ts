@@ -1,0 +1,1 @@
+export { B4CAvatar } from "./B4CAvatar"

@@ -1,0 +1,1 @@
+export { B4CAccordion } from './B4CAccordion'
