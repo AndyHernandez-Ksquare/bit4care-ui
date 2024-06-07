@@ -1,15 +1,11 @@
-"use client";
-import { Inter } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 import { spacingScale, spacings } from "../partials/spacings";
 import { CSSProperties } from "react";
 import { colorPalette } from "../partials/colorPalette";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/700.css";
 
-const inter = Inter({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
+const interFontFamily = "'Inter', sans-serif";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
@@ -71,14 +67,14 @@ declare module "@mui/material/Button" {
 }
 
 const headingStyle = (fontSize: number) => ({
-  fontFamily: inter.style.fontFamily,
+  fontFamily: interFontFamily,
   fontWeight: 700,
   fontSize: `${fontSize}px`,
   lineHeight: `${fontSize * 1.1}px`,
 });
 
 const bodyStyle = (fontSize: number, isBold?: boolean) => ({
-  fontFamily: inter.style.fontFamily,
+  fontFamily: interFontFamily,
   fontWeight: isBold ? 700 : 400,
   fontSize: `${fontSize}px`,
   lineHeight: `${fontSize * 1.4}px`,
@@ -106,7 +102,7 @@ const customTheme = createTheme({
   },
   spacing: (factor: number) => `${spacingScale * factor}px`,
   typography: {
-    fontFamily: inter.style.fontFamily,
+    fontFamily: interFontFamily,
     h1: {
       ...headingStyle(56),
     },

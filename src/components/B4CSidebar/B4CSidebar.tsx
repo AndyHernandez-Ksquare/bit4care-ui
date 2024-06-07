@@ -1,12 +1,16 @@
 import { B4CLogo } from "@/assets/images/B4CLogo";
-import { Box, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { spacings } from "@/style/partials/spacings";
+import {
+  Box,
+  Button,
+  List,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { navigationTabs } from "@/constants/navigationMap";
+import { Link as RouterLink } from "react-router-dom";
 
 export const B4CSidebar = () => {
-  const [router, setRouter] = useState("/");
   return (
     <Box
       sx={{
@@ -19,8 +23,8 @@ export const B4CSidebar = () => {
       }}
     >
       <B4CLogo />
-      <ul
-        style={{
+      <List
+        sx={{
           listStyle: "none",
           display: "flex",
           flexDirection: "column",
@@ -28,42 +32,32 @@ export const B4CSidebar = () => {
           gap: "32px",
         }}
       >
-        {navigationTabs.map(({ label, route }, index) => {
-          return (
-            <li
-              key={`${label.toLocaleLowerCase()}-${index}`}
-              onClick={() => {
-                setRouter(route);
-              }}
-              style={{
-                display: "flex",
-              }}
-            >
-              {/* <Link
-                href={route}
-                style={{
-                  width: "100%",
-                  paddingBlock: spacings.spacing2,
-                  borderRadius: "8px",
-                  textDecoration: "none",
-                  paddingLeft: spacings.spacing6,
-                  color:
-                    router === route
-                      ? colorPalette.primary
-                      : colorPalette.black1,
-                  display: "flex",
-                  alignItems: "left",
-                  ...(router === route && {
-                    backgroundColor: colorPalette.white,
-                  }),
-                }}
-              >
-                <Typography variant="body-normal-bold">{label}</Typography>
-              </Link> */}
-            </li>
-          );
-        })}
-      </ul>
+        <li>
+          <ListItemButton component={RouterLink} to={"/admin"}>
+            <ListItemText primary={"Dashboard"} />
+          </ListItemButton>
+        </li>
+        <li>
+          <ListItemButton component={RouterLink} to={"/admin/colaboradores"}>
+            <ListItemText primary={"Colaboradores"} />
+          </ListItemButton>
+        </li>
+        <li>
+          <ListItemButton component={RouterLink} to={"/admin/servicios"}>
+            <ListItemText primary={"Servicios"} />
+          </ListItemButton>
+        </li>
+        <li>
+          <ListItemButton component={RouterLink} to={"/admin/clientes"}>
+            <ListItemText primary={"Clientes"} />
+          </ListItemButton>
+        </li>
+        <li>
+          <ListItemButton component={RouterLink} to={"/admin/ajustes"}>
+            <ListItemText primary={"Ajustes"} />
+          </ListItemButton>
+        </li>
+      </List>
       <Button sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>
       </Button>
