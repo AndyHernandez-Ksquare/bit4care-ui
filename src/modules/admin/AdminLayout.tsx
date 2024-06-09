@@ -3,8 +3,9 @@ import { B4CSidebar } from "@/components/B4CSidebar";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box } from "@mui/material";
 import React from "react";
+import { Outlet } from "react-router-dom";
 
-export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+export const AdminLayout = () => {
   return (
     <div
       style={{
@@ -30,7 +31,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <Box sx={{ marginRight: "auto", marginTop: "5vh" }}>
           <B4CMainArea profileName="Braulio" profileRole="Admin">
-            {children}
+            <Outlet />
           </B4CMainArea>
         </Box>
       </Box>

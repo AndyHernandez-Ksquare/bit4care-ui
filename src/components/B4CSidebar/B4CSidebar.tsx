@@ -1,14 +1,7 @@
 import { B4CLogo } from "@/assets/images/B4CLogo";
-import {
-  Box,
-  Button,
-  List,
-  ListItemButton,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, Button, List, Typography } from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { Link as RouterLink } from "react-router-dom";
+import { ListItemLink } from "./ListItemLink";
 
 export const B4CSidebar = () => {
   return (
@@ -32,31 +25,11 @@ export const B4CSidebar = () => {
           gap: "32px",
         }}
       >
-        <li>
-          <ListItemButton component={RouterLink} to={"/admin"}>
-            <ListItemText primary={"Dashboard"} />
-          </ListItemButton>
-        </li>
-        <li>
-          <ListItemButton component={RouterLink} to={"/admin/colaboradores"}>
-            <ListItemText primary={"Colaboradores"} />
-          </ListItemButton>
-        </li>
-        <li>
-          <ListItemButton component={RouterLink} to={"/admin/servicios"}>
-            <ListItemText primary={"Servicios"} />
-          </ListItemButton>
-        </li>
-        <li>
-          <ListItemButton component={RouterLink} to={"/admin/clientes"}>
-            <ListItemText primary={"Clientes"} />
-          </ListItemButton>
-        </li>
-        <li>
-          <ListItemButton component={RouterLink} to={"/admin/ajustes"}>
-            <ListItemText primary={"Ajustes"} />
-          </ListItemButton>
-        </li>
+        <ListItemLink to="/admin" />
+        <ListItemLink to="/admin/colaboradores" />
+        <ListItemLink to="/admin/servicios" />
+        <ListItemLink to="/admin/clientes" />
+        <ListItemLink to="/admin/ajustes" />
       </List>
       <Button sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>

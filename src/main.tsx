@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App.tsx";
-import "./index.css";
 import { ThemeProvider } from "@mui/material";
 import customTheme from "./style/theme/customTheme.ts";
 import { ColaboratosPage } from "./modules/admin/ColaboratorsPage/ColaboratosPage.tsx";
@@ -11,11 +9,12 @@ import { HomePage } from "./modules/admin/HomePage/HomePage.tsx";
 import { ServicePage } from "./modules/admin/ServicesPage/ServicePage.tsx";
 import { ClientsPage } from "./modules/admin/ClientsPage/ClientsPage.tsx";
 import { Settings } from "./modules/admin/SettingsPage/Settings.tsx";
+import { AdminLayout } from "./modules/admin/AdminLayout.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/admin",
-    element: <App />,
+    element: <AdminLayout />,
     children: [
       {
         path: "/admin/",
