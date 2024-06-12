@@ -10,6 +10,7 @@ import { ServicePage } from "./modules/admin/ServicesPage/ServicePage.tsx";
 import { ClientsPage } from "./modules/admin/ClientsPage/ClientsPage.tsx";
 import { Settings } from "./modules/admin/SettingsPage/Settings.tsx";
 import { AdminLayout } from "./modules/admin/AdminLayout.tsx";
+import { ColaboratorsLayout } from "./modules/users/colaborators/ColaboratorsLayout.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
         element: <p>random</p>,
       },
     ],
+  },
+  {
+    path: "/colaborador",
+    element: <ColaboratorsLayout />,
   },
 ]);
 
