@@ -23,11 +23,8 @@ export const B4CSidebar = () => {
           gap: "32px",
         }}
       >
-        <ListItemLink to="/admin" />
-        <ListItemLink to="/admin/colaboradores" />
-        <ListItemLink to="/admin/servicios" />
-        <ListItemLink to="/admin/clientes" />
-        <ListItemLink to="/admin/ajustes" />
+        <ListItemLink to="/colaborador" />
+        <ListItemLink to="/colaborador/perfil&ajustes" />
       </List>
       <Button sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>

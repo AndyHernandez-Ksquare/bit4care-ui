@@ -11,6 +11,7 @@ import { ClientsPage } from "./modules/admin/ClientsPage/ClientsPage.tsx";
 import { Settings } from "./modules/admin/SettingsPage/Settings.tsx";
 import { AdminLayout } from "./modules/admin/AdminLayout.tsx";
 import { ColaboratorsLayout } from "./modules/users/colaborators/ColaboratorsLayout.tsx";
+import { ColaboratorsHome } from "./modules/users/colaborators/pages/ColaboratorsHome/ColaboratorsHome.tsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,12 @@ const router = createBrowserRouter([
   {
     path: "/colaborador",
     element: <ColaboratorsLayout />,
+    children: [
+      {
+        path: "/colaborador/",
+        element: <ColaboratorsHome />,
+      },
+    ],
   },
 ]);
 
