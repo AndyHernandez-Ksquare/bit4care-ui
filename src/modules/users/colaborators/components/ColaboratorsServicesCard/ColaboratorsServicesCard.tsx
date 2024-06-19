@@ -7,8 +7,37 @@ import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 import React from "react";
+import { color } from "@/ts/types/colors";
 
-export const ColaboratorsServicesCard = () => {
+export type Status = "solicitado" | "realizado" | "no realizado";
+interface IColaboratorsServicesCardProps {
+  name: string;
+  address: string;
+  fee: string;
+  schedule: string;
+  hours: number;
+  service: string;
+  status: Status;
+  skills: string[];
+  onClick?: () => void;
+}
+
+export const ColaboratorsServicesCard = ({
+  name,
+  fee,
+  schedule,
+  hours,
+  address,
+  service,
+  status,
+  skills,
+  onClick,
+}: IColaboratorsServicesCardProps) => {
+  const statusTagInfo = {
+    solicitado: { color: "warning", label: "Solicitado" },
+    realizado: { color: "success", label: "Realizado" },
+    "no realizado": { color: "error", label: "No Realizado" },
+  };
   return (
     <Box
       sx={{
@@ -32,36 +61,37 @@ export const ColaboratorsServicesCard = () => {
           <Avatar sx={{ width: "64px", height: "64px" }} />
           <Box>
             <Typography variant="h5" sx={{ color: colorPalette.primary }}>
-              Armando Perez Hernandez
+              {name}
             </Typography>
             <Typography
               variant="body-normal"
               sx={{ color: colorPalette.grey4 }}
             >
-              Cuidado de adulto mayor con Alzheimer
+              {service}
             </Typography>
           </Box>
         </Box>
-        <B4CTag label="Solicitado"></B4CTag>
+        <B4CTag
+          label={statusTagInfo[status].label}
+          color={statusTagInfo[status].color as color}
+        ></B4CTag>
       </Box>
       <Grid container>
         <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
           <LocationIcons />
-          <Typography variant="body-normal">
-            Colonia Los Álamos, Benito Juárez CDMX. CP: 05040
-          </Typography>
+          <Typography variant="body-normal">{address}</Typography>
         </Grid>
         <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
           <MoneyIcons />
-          <Typography variant="body-normal">$8100 ($150/h)</Typography>
+          <Typography variant="body-normal">{fee}</Typography>
         </Grid>
         <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
           <ClockIcon />
-          <Typography variant="body-normal">5 días (56 horas)</Typography>
+          <Typography variant="body-normal">{`${hours} horas`}</Typography>
         </Grid>
         <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
           <ClockIcon />
-          <Typography variant="body-normal">9AM-6PM</Typography>
+          <Typography variant="body-normal">{schedule}</Typography>
         </Grid>
       </Grid>
       <Box
@@ -73,11 +103,15 @@ export const ColaboratorsServicesCard = () => {
           alignItems: "left",
         }}
       >
-        <B4CTag label="Acompa;amiento a citas medicas" />
-        <B4CTag label="Acompa;amiento a citas medicas" />
-        <B4CTag label="Acompa;amiento a citas medicas" />
+        {skills.map((skill) => {
+          return <B4CTag label={skill} />;
+        })}
       </Box>
-      <B4CButton size={Size.Small} label="Ver detalles"></B4CButton>
+      <B4CButton
+        size={Size.Small}
+        label="Ver detalles"
+        onClick={onClick}
+      ></B4CButton>
     </Box>
   );
 };

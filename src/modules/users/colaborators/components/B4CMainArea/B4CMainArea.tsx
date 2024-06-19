@@ -21,7 +21,7 @@ export const B4CMainArea = ({ children, sx }: IB4CMainArea) => {
         backgroundColor: colorPalette.white,
         border: `1px solid ${colorPalette.grey4}`,
 
-        width: "65vw",
+        width: "50vw",
         maxWidth: "1235px",
         ...sx,
       }}
