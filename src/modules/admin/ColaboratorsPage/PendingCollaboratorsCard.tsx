@@ -1,7 +1,5 @@
-"use client";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CStarRating } from "@/components/B4CStarRating";
-import { B4CImage } from "@/components/BigElements/B4CImage";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { User } from "@/services/colaboratorsServices";
 import { colorPalette } from "@/style/partials/colorPalette";

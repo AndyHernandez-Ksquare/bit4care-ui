@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-export const AdminLayout = () => {
+export const ClientsLayout = () => {
   return (
     <div
       style={{

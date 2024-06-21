@@ -1,4 +1,3 @@
-import { B4CLogo } from "@/assets/images/B4CLogo";
 import { Box, Button, List, Typography } from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ListItemLink } from "./ListItemLink";
@@ -15,7 +14,6 @@ export const B4CSidebar = () => {
         gap: "4vh",
       }}
     >
-      <B4CLogo />
       <List
         sx={{
           listStyle: "none",
@@ -25,11 +23,8 @@ export const B4CSidebar = () => {
           gap: "32px",
         }}
       >
-        <ListItemLink to="/admin" />
-        <ListItemLink to="/admin/colaboradores" />
-        <ListItemLink to="/admin/servicios" />
-        <ListItemLink to="/admin/clientes" />
-        <ListItemLink to="/admin/ajustes" />
+        <ListItemLink to="/colaborador" />
+        <ListItemLink to="/colaborador/perfil&ajustes" />
       </List>
       <Button sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>
