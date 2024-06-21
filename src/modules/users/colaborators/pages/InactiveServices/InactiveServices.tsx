@@ -1,8 +1,24 @@
 import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { Fragment } from "react";
+import {
+  ColaboratorsServicesCard,
+  Status,
+} from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 
 export const InactiveServices = () => {
+  const colaboratorsServicesData = [
+    {
+      name: "Juan Lopez Perez",
+      schedule: "Hoy, en 6 horas",
+      fee: "$2500 ($150/h)",
+      hours: 23,
+      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
+      service: "Cuidado de adulto mayor",
+      status: "no realizado",
+      skills: ["skill1", "skill2"],
+    },
+  ];
   return (
     <Box
       sx={{
@@ -13,12 +29,33 @@ export const InactiveServices = () => {
         gap: "2rem",
       }}
     >
-      <Typography variant="h4">Aun no tienes servicios finalizados</Typography>
-      <Typography variant="body1">
-        Completa tu primer Servicio para que pueda aparecer en tu archivo de
-        Servicios. Estos se eliminarán después de un año.
-      </Typography>
-      <B4CNoFinishedServices />
+      {colaboratorsServicesData.length > 0 ? (
+        colaboratorsServicesData.map((colaborator, index) => (
+          <ColaboratorsServicesCard
+            isFinished
+            key={index}
+            name={colaborator.name}
+            schedule={colaborator.schedule}
+            fee={colaborator.fee}
+            hours={colaborator.hours}
+            address={colaborator.address}
+            service={colaborator.service}
+            status={colaborator.status as Status}
+            skills={colaborator.skills}
+          />
+        ))
+      ) : (
+        <Fragment>
+          <Typography variant="h4">
+            Aun no tienes servicios finalizados
+          </Typography>
+          <Typography variant="body1">
+            Completa tu primer Servicio para que pueda aparecer en tu archivo de
+            Servicios. Estos se eliminarán después de un año.
+          </Typography>
+          <B4CNoFinishedServices />)
+        </Fragment>
+      )}
     </Box>
   );
 };

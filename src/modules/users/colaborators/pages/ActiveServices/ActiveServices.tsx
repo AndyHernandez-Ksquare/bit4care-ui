@@ -1,14 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import {
   ColaboratorsServicesCard,
   Status,
 } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
 
 export const ActiveServices = () => {
+  const [openModal, setIsOpenModal] = useState<boolean>(false);
   const colaboratorsServicesData = [
     {
       name: "Juan Lopez Perez",
@@ -83,6 +85,9 @@ export const ActiveServices = () => {
             service={colaborator.service}
             status={colaborator.status as Status}
             skills={colaborator.skills}
+            onClick={() => {
+              setIsOpenModal(!openModal);
+            }}
           />
         ))
       ) : (
@@ -108,6 +113,12 @@ export const ActiveServices = () => {
           </Link>
         </Fragment>
       )}
+      <B4CDetailService
+        isOpen={openModal}
+        onClose={() => {
+          setIsOpenModal(false);
+        }}
+      />
     </Box>
   );
 };

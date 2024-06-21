@@ -8,6 +8,7 @@ import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 import React from "react";
 import { color } from "@/ts/types/colors";
+import { B4CStarRating } from "@/components/B4CStarRating";
 
 export type Status = "solicitado" | "realizado" | "no realizado";
 interface IColaboratorsServicesCardProps {
@@ -19,6 +20,7 @@ interface IColaboratorsServicesCardProps {
   service: string;
   status: Status;
   skills: string[];
+  isFinished?: boolean;
   onClick?: () => void;
 }
 
@@ -31,6 +33,7 @@ export const ColaboratorsServicesCard = ({
   service,
   status,
   skills,
+  isFinished = false,
   onClick,
 }: IColaboratorsServicesCardProps) => {
   const statusTagInfo = {
@@ -74,7 +77,20 @@ export const ColaboratorsServicesCard = ({
         <B4CTag
           label={statusTagInfo[status].label}
           color={statusTagInfo[status].color as color}
-        ></B4CTag>
+        />
+        <Box
+          sx={{
+            display: isFinished ? "flex" : "none",
+            flexDirection: "row",
+            gap: "1rem",
+          }}
+        >
+          <Avatar sx={{ width: "48px", height: "48px" }} />
+          <Box>
+            <Typography variant="body-normal">Maria Perez</Typography>
+            <B4CStarRating rating={3} />
+          </Box>
+        </Box>
       </Box>
       <Grid container>
         <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>

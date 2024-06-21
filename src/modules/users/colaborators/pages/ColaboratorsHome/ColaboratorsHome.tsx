@@ -22,7 +22,6 @@ export const ColaboratorsHome = () => {
               display: "flex",
               flexDirection: "row",
               gap: spacings.spacing3,
-              marginBottom: spacings.spacing3,
             }}
           >
             <B4CTab

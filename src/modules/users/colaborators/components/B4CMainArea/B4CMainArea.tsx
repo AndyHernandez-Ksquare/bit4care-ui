@@ -30,8 +30,9 @@ export const B4CMainArea = ({ children, sx }: IB4CMainArea) => {
         item
         xs={12}
         sx={{
-          paddingInline: spacings.spacing4,
+          paddingInline: spacings.spacing6,
           paddingTop: spacings.spacing6,
+          paddingBottom: spacings.spacing8,
           minHeight: "95vh",
         }}
       >

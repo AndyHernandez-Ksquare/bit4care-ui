@@ -19,7 +19,7 @@ export const B4CModal = ({
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          position: "absolute" as "absolute",
+          position: "absolute" as const,
           top: "50%",
           left: "50%",
           transform: `translate(-50%, -50%)`,
