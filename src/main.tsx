@@ -12,6 +12,8 @@ import { Settings } from "./modules/admin/SettingsPage/Settings.tsx";
 import { AdminLayout } from "./modules/admin/AdminLayout.tsx";
 import { ColaboratorsLayout } from "./modules/users/colaborators/ColaboratorsLayout.tsx";
 import { ColaboratorsHome } from "./modules/users/colaborators/pages/ColaboratorsHome/ColaboratorsHome.tsx";
+import { ColaboratorLogin } from "./modules/users/colaborators/pages/Login/index.ts";
+import { SettingsAndProfile } from "./modules/users/colaborators/pages/SettingsAndProfile/SettingsAndProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +54,15 @@ const router = createBrowserRouter([
         path: "/colaborador/",
         element: <ColaboratorsHome />,
       },
+      {
+        path: "/colaborador/ajustes-y-perfil",
+        element: <SettingsAndProfile />,
+      },
     ],
+  },
+  {
+    path: "/ColaboradorLogin",
+    element: <ColaboratorLogin />,
   },
 ]);
 

@@ -32,7 +32,6 @@ export const InactiveServices = () => {
       {colaboratorsServicesData.length > 0 ? (
         colaboratorsServicesData.map((colaborator, index) => (
           <ColaboratorsServicesCard
-            isFinished
             key={index}
             name={colaborator.name}
             schedule={colaborator.schedule}

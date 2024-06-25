@@ -31,7 +31,6 @@ import { ReturnIcon } from "@/assets/svgIcons/ReturnIcon/ReturnIcon";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
 import { styled } from "@mui/material/styles";
 import { ServiceDetailModalPage } from "./ServiceDetailModalPage";
 

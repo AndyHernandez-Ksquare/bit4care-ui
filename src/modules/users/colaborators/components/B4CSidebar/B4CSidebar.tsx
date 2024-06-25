@@ -24,7 +24,7 @@ export const B4CSidebar = () => {
         }}
       >
         <ListItemLink to="/colaborador" />
-        <ListItemLink to="/colaborador/perfil&ajustes" />
+        <ListItemLink to="/colaborador/ajustes-y-perfil" />
       </List>
       <Button sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>
