@@ -1,9 +1,8 @@
 import { B4CModal } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { Fragment } from "react";
 import { B4CImage } from "../B4CImage";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums/Size";
 

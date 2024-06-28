@@ -1,14 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { B4CMainArea } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { B4CGallery } from "../BigElements/B4CGallery";
-import { B4CTable } from "../BigElements/B4CTable";
-import {
-  GridCellParams,
-  GridColDef,
-  GridColumnHeaderParams,
-} from "@mui/x-data-grid";
 
 const meta = {
   title: "B4CComponents/B4CMainArea",

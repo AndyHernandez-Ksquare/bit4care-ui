@@ -1,4 +1,3 @@
-import { colorPalette } from "@/style/partials/colorPalette";
 import { color } from "@/ts/types/colors";
 import { Badge } from "@mui/material";
 import React, { ReactNode } from "react";

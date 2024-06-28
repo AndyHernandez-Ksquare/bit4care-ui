@@ -2,8 +2,7 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
-import { Avatar, Box, Button, TextField, Typography } from "@mui/material";
-import { GridRowParams } from "@mui/x-data-grid";
+import { Avatar, Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 interface IEditClientModal {

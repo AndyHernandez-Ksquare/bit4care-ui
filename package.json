@@ -15,6 +15,8 @@
     "@mui/material": "^5.15.19",
     "@mui/x-data-grid": "^7.6.2",
     "@mui/x-date-pickers": "^7.6.2",
+    "@storybook/react": "^8.1.11",
+    "@storybook/test": "^8.1.11",
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
     "react": "^18.2.0",

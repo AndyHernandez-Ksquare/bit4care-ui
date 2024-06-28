@@ -1,5 +1,5 @@
 import { colorPalette } from "@/style/partials/colorPalette";
-import { Avatar, Stack } from "@mui/material";
+import { Avatar } from "@mui/material";
 import React from "react";
 
 interface IB4CAvatar {

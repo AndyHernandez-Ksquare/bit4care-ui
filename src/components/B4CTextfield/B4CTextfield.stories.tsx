@@ -1,6 +1,5 @@
 import { B4CTextfield } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 
 const meta = {
   title: "B4CComponents/B4CTextield",

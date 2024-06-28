@@ -1,7 +1,6 @@
 "use client";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
 import React, { useState } from "react";
 
 interface IB4CImageProps {
@@ -23,7 +22,7 @@ export const B4CImage = ({
   return (
     <Box display="flex" flexDirection={"column"} gap={"4px"}>
       {!error ? (
-        <Image
+        <img
           alt={alt}
           src={src}
           width={width}

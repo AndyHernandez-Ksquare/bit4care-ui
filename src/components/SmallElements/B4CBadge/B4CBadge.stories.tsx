@@ -1,8 +1,6 @@
 import { B4CBadge } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { B4CAvatar } from "../B4CAvatar";
-import { colorPalette } from "@/style/partials/colorPalette";
 
 const meta = {
   title: "B4CComponents/SmallElements/B4CBadge",
