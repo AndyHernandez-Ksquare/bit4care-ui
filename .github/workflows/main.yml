@@ -30,10 +30,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync build s3://${{ secrets.AWS_DEV_S3_BUCKET }} --delete
-  # paths:
-  #   - "src/**"
-  #   - "package.json"
-  #   - "package-lock.json"
-  #   - "tsconfig.json"
-  #   - "README.md"
+        run: aws s3 sync dist s3://${{ secrets.AWS_DEV_S3_BUCKET }} --delete
