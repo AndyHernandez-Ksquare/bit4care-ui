@@ -31,3 +31,6 @@ jobs:
 
       - name: Deploy to S3
         run: aws s3 sync dist s3://${{ secrets.AWS_DEV_S3_BUCKET }} --delete
+
+      - name: Invalidate CloudFront Cached Data
+        run: aws cloudfront create-invalidation --region ${{ secrets.AWS_REGION }} --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
