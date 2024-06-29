@@ -1,14 +1,23 @@
 import { Photos } from "@/assets/svgIcons/photos/photos";
 import { B4CTextfield } from "@/components/B4CTextfield";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
+import React, { Fragment, useState } from "react";
+import { ChangeMobileNum } from "./ChangeMobileNum";
 
 export const UserSettings = () => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
   return (
     <Fragment>
       <Grid
         container
-        xs={12}
         display={"flex"}
         flexDirection={"column"}
         sx={{ marginBottom: "2rem" }}
@@ -27,7 +36,6 @@ export const UserSettings = () => {
       <Box sx={{ flexGrow: "1", marginBottom: "2rem" }}>
         <Grid
           container
-          xs={12}
           spacing={8}
           sx={{
             border: `1px solid #E2E4E5`,
@@ -37,13 +45,20 @@ export const UserSettings = () => {
         >
           <Grid item xs={12}>
             <B4CTextfield label="Numero de telefono" />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenModal}
+            >
+              Cambiar número de teléfono
+            </Button>
+            <ChangeMobileNum open={modalOpen} onClose={handleCloseModal} />
           </Grid>
         </Grid>
       </Box>
       <Box sx={{ flexGrow: "1", marginBottom: "2rem" }}>
         <Grid
           container
-          xs={12}
           spacing={8}
           sx={{
             border: `1px solid #E2E4E5`,
@@ -65,7 +80,6 @@ export const UserSettings = () => {
       <Box sx={{ flexGrow: "1", marginBottom: "2rem" }}>
         <Grid
           container
-          xs={12}
           spacing={8}
           sx={{
             border: `1px solid #E2E4E5`,
@@ -91,7 +105,6 @@ export const UserSettings = () => {
       <Box sx={{ flexGrow: "1", marginBottom: "2rem" }}>
         <Grid
           container
-          xs={12}
           spacing={8}
           sx={{
             border: `1px solid #E2E4E5`,
@@ -106,7 +119,6 @@ export const UserSettings = () => {
       </Box>
       <Grid
         container
-        xs={12}
         spacing={8}
         sx={{
           border: `1px solid #E2E4E5`,
