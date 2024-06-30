@@ -4,6 +4,7 @@ import { CSSProperties } from "react";
 import { colorPalette } from "../partials/colorPalette";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/700.css";
+import { stepLabelClasses } from "@mui/material";
 
 const interFontFamily = "'Inter', sans-serif";
 
@@ -192,6 +193,33 @@ const customTheme = createTheme({
           backgroundColor: colorPalette.grey5,
         }
       }
+    },
+    MuiStepConnector: {
+      styleOverrides: {
+        alternativeLabel: {
+          top: 10,
+          left: `calc(-50% + ${spacings.spacing2})`,
+          right: `calc(50% + ${spacings.spacing2})`,
+        },
+        line: {
+          marginTop: '8px',
+          height: 2,
+          borderRadius: spacings.spacing1,
+          backgroundColor: colorPalette.grey3,
+          minWidth: '10px',
+          width: "100%",
+          borderTopStyle: "hidden",
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        root: {
+          [`.${stepLabelClasses.label}.${stepLabelClasses.alternativeLabel}`]: {
+            marginTop: spacings.spacing0,
+          },
+        },
+      },
     },
     MuiTooltip: {
       styleOverrides: {

@@ -3,16 +3,26 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { ChangeMobileNum } from "./ChangeMobileNum";
+import { ChangePassword } from "./ChangePassword";
 
 export const UserSettings = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalPasswordOpen, setModalPasswordOpen] = useState<boolean>(false);
 
   const handleOpenModal = () => {
     setModalOpen(true);
   };
 
+  const handleOpenModalPassword = () => {
+    setModalPasswordOpen(true);
+  };
+
   const handleCloseModal = () => {
     setModalOpen(false);
+  };
+
+  const handleCloseModalPassword = () => {
+    setModalPasswordOpen(false);
   };
   return (
     <Fragment>
@@ -53,6 +63,10 @@ export const UserSettings = () => {
               Cambiar número de teléfono
             </Button>
             <ChangeMobileNum open={modalOpen} onClose={handleCloseModal} />
+            <ChangePassword
+              open={modalPasswordOpen}
+              onClose={handleCloseModalPassword}
+            />
           </Grid>
         </Grid>
       </Box>
@@ -128,6 +142,13 @@ export const UserSettings = () => {
       >
         <Grid item xs={12}>
           <B4CTextfield label="Contrase;a" isPassword />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleOpenModalPassword}
+          >
+            Cambiar contraseña
+          </Button>
         </Grid>
       </Grid>
     </Fragment>
