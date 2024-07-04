@@ -9,11 +9,9 @@ import {
   IconButton,
   Typography,
   Box,
-  SelectChangeEvent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { PhoneInput } from "./PhoneInput";
-import { CodeInput } from "./CodeInput";
+import { NewPasswordInput } from "./NewPasswordInput";
 
 interface ChangePasswordProps {
   open: boolean;
@@ -21,29 +19,8 @@ interface ChangePasswordProps {
 }
 
 export const ChangePassword = ({ open, onClose }: ChangePasswordProps) => {
-  const [countryCode, setCountryCode] = useState<string>("+1");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [activeStep, setActiveStep] = useState<number>(0);
 
-  const handleCountryCodeChange = (event: SelectChangeEvent<string>) => {
-    setCountryCode(event.target.value as string);
-  };
-
-  const handleActiveStep = (step: number) => {
-    setActiveStep(step);
-  };
-
-  const handlePhoneNumberChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPhoneNumber(event.target.value);
-  };
-
-  const handleSendCode = () => {
-    // Aquí puedes manejar la lógica para enviar el código de verificación
-    console.log(`Country Code: ${countryCode}, Phone Number: ${phoneNumber}`);
-    handleActiveStep(1);
-  };
   const steps = ["paso1", "paso2"];
 
   useEffect(() => {
@@ -91,25 +68,16 @@ export const ChangePassword = ({ open, onClose }: ChangePasswordProps) => {
               Usa tu antigua contraseña para autenticar y poder crear una nueva
             </Typography>
           </Box>
-          {activeStep === 0 && (
-            <PhoneInput
-              countryCode={countryCode}
-              phoneNumber={phoneNumber}
-              handleCountryCodeChange={handleCountryCodeChange}
-              handlePhoneNumberChange={handlePhoneNumberChange}
-            />
-          )}
-          {activeStep === 1 && (
-            <CodeInput countryCode={countryCode} phoneNumber={phoneNumber} />
-          )}
+          {activeStep === 0 && <NewPasswordInput />}
+          {activeStep === 1 && <div>hola</div>}
         </Box>
       </DialogContent>
       <DialogActions>
         {activeStep === 0 && (
           <B4CButton
+            fullWidth
             label="Confirmar"
             variant="primary"
-            onClick={handleSendCode}
             size={Size.Small}
           />
         )}
