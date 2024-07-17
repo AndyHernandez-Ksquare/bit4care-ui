@@ -3,7 +3,7 @@ import { useSession } from "./CollaboratorSessionContext";
 import { ProviderProps } from "@/ts/types/providerprops.type";
 
 const AuthCollaboratorContext = createContext({
-  isCollaboratorAuthenticated: false,
+  isCollaboratorAuthenticated: true,
 });
 
 export const AuthCollaboratorProvider = ({ children }: ProviderProps) => {
@@ -16,7 +16,7 @@ export const AuthCollaboratorProvider = ({ children }: ProviderProps) => {
     if (token) {
       setIsCollaboratorAuthenticated(true);
     } else {
-      setIsCollaboratorAuthenticated(false);
+      setIsCollaboratorAuthenticated(true);
     }
   }, [token]);
 

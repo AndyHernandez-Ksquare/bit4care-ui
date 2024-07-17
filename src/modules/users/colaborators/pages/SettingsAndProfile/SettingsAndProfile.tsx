@@ -41,9 +41,15 @@ export const SettingsAndProfile = () => {
         onChange={handleChange}
         aria-label="basic tabs example"
       >
-        <Tab label="Ajustes de cuenta y perfil" />
-        <Tab label="Informacion de pagos" />
-        <Tab label="Calendario y disponibilidad" />
+        <Tab
+          sx={{ textTransform: "none" }}
+          label="Ajustes de cuenta y perfil"
+        />
+        <Tab sx={{ textTransform: "none" }} label="Informacion de pagos" />
+        <Tab
+          sx={{ textTransform: "none" }}
+          label="Calendario y disponibilidad"
+        />
       </Tabs>
       <CustomTabPanel value={tabValue} index={0}>
         <UserSettings />

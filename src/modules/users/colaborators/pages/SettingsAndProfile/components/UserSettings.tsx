@@ -4,6 +4,7 @@ import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { ChangeMobileNum } from "./ChangeMobileNum";
 import { ChangePassword } from "./ChangePassword";
+import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
 
 export const UserSettings = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -30,7 +31,7 @@ export const UserSettings = () => {
         container
         display={"flex"}
         flexDirection={"column"}
-        sx={{ marginBottom: "2rem" }}
+        sx={{ marginBottom: "2rem", marginTop: "2rem" }}
       >
         <IconButton
           sx={{
@@ -56,9 +57,21 @@ export const UserSettings = () => {
           <Grid item xs={12}>
             <B4CTextfield label="Numero de telefono" />
             <Button
+              startIcon={<EditFieldIcons />}
               variant="contained"
               color="primary"
               onClick={handleOpenModal}
+              sx={{
+                backgroundColor: "white",
+                boxShadow: "none",
+                textTransform: "none",
+                color: "#2F80ED",
+                "&:hover": {
+                  backgroundColor: "white",
+                  boxShadow: "none",
+                  fontWeight: "600",
+                },
+              }}
             >
               Cambiar número de teléfono
             </Button>
@@ -143,9 +156,21 @@ export const UserSettings = () => {
         <Grid item xs={12}>
           <B4CTextfield label="Contrase;a" isPassword />
           <Button
+            startIcon={<EditFieldIcons />}
             variant="contained"
             color="primary"
             onClick={handleOpenModalPassword}
+            sx={{
+              backgroundColor: "white",
+              boxShadow: "none",
+              textTransform: "none",
+              color: "#2F80ED",
+              "&:hover": {
+                backgroundColor: "white",
+                boxShadow: "none",
+                fontWeight: "600",
+              },
+            }}
           >
             Cambiar contraseña
           </Button>

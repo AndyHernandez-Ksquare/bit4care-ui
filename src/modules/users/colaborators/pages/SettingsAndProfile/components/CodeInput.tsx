@@ -1,4 +1,6 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
+import { RepeatIcon } from "@/assets/svgIcons/ReturnIcon/RepeatIcon";
+import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 
 interface CodeInputProps {
@@ -11,23 +13,26 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
     <Fragment>
       <Grid
         container
-        spacing={16}
+        spacing={12}
         sx={{
           marginLeft: 0,
-          maxWidth: "100%",
           border: `1px solid #BDBDBD`,
           borderRadius: "8px",
           width: "100%",
+          overflow: "hidden",
+          maxHeight: "80px",
         }}
       >
-        <Grid item xs={12} sx={{ display: "flex" }}>
+        <Grid item xs={12}>
           <Typography>{`${countryCode}-${phoneNumber}`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={11} sx={{ display: "flex" }}>
+        <Grid item xs={12} desktop={11}>
           <Typography>{`Numero aun no confirmado`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={1} sx={{ display: "flex" }}>
-          <Typography>{`Editar`}</Typography>
+        <Grid item xs={12} desktop={1}>
+          <IconButton>
+            <EditFieldIcons />
+          </IconButton>
         </Grid>
       </Grid>
       <Grid
@@ -51,7 +56,22 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
           </Typography>
         </Grid>
         <Grid item xs={12} desktop={2}>
-          <Typography>Enviar otra vez</Typography>
+          <Button
+            startIcon={<RepeatIcon />}
+            sx={{
+              backgroundColor: "white",
+              boxShadow: "none",
+              textTransform: "none",
+              color: "#2F80ED",
+              "&:hover": {
+                backgroundColor: "white",
+                boxShadow: "none",
+                fontWeight: "600",
+              },
+            }}
+          >
+            Enviar otra vez
+          </Button>
         </Grid>
       </Grid>
     </Fragment>
