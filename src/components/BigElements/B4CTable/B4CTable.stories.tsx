@@ -68,7 +68,7 @@ const columns: GridColDef[] = [
       <Typography variant="body-normal">{"Acciones"}</Typography>
     ),
     width: 150,
-    renderCell: (params: GridCellParams) => (
+    renderCell: (_params: GridCellParams) => (
       <Box
         display="flex"
         alignItems="center"

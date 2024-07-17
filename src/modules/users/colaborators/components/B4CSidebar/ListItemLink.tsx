@@ -11,7 +11,7 @@ export interface IListItemLinkProps extends ListItemProps {
 
 const breadcrumbNameMap: { [key: string]: string } = {
   "/colaborador": "Mis servicios",
-  "/colaborador/perfil&ajustes": "Perfil y ajustes",
+  "/colaborador/ajustes-y-perfil": "Perfil y ajustes",
 };
 
 export const ListItemLink = ({ to, ...other }: IListItemLinkProps) => {

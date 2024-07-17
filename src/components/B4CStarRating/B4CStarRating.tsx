@@ -1,3 +1,5 @@
+import { SelectedStarIcon } from "@/assets/svgIcons/ratingIcons/SelectedStarIcon";
+import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
@@ -9,18 +11,14 @@ export const B4CStarRating = ({ rating }: IStarRatingProps) => {
   return (
     <Box
       display={"flex"}
-      sx={{ flexDirection: "row", verticalAlign: "middle" }}
+      flexDirection={"row"}
+      sx={{ flexDirection: "row", alignItems: "center" }}
     >
       {[...Array(5)].map((_, index) => (
-        <span
+        <SelectedStarIcon
           key={index}
-          style={{
-            color: index < rating ? "gold" : "gray",
-            fontSize: "24px",
-          }}
-        >
-          &#9733;
-        </span>
+          color={index < rating ? colorPalette.primary : "none"}
+        />
       ))}
       <Typography>{`(${rating})`}</Typography>
     </Box>

@@ -10,7 +10,7 @@ import React from "react";
 import { color } from "@/ts/types/colors";
 import { B4CStarRating } from "@/components/B4CStarRating";
 
-export type Status = "solicitado" | "realizado" | "no realizado";
+export type Status = "solicitado" | "aceptado" | "realizado" | "no realizado";
 interface IColaboratorsServicesCardProps {
   name: string;
   address: string;
@@ -20,7 +20,7 @@ interface IColaboratorsServicesCardProps {
   service: string;
   status: Status;
   skills: string[];
-  isFinished?: boolean;
+  isAssigned?: boolean;
   onClick?: () => void;
 }
 
@@ -33,12 +33,13 @@ export const ColaboratorsServicesCard = ({
   service,
   status,
   skills,
-  isFinished = false,
+  isAssigned = false,
   onClick,
 }: IColaboratorsServicesCardProps) => {
   const statusTagInfo = {
     solicitado: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
+    aceptado: { color: "success", label: "Aceptado" },
     "no realizado": { color: "error", label: "No Realizado" },
   };
   return (
@@ -80,7 +81,7 @@ export const ColaboratorsServicesCard = ({
         />
         <Box
           sx={{
-            display: isFinished ? "flex" : "none",
+            display: isAssigned ? "flex" : "none",
             flexDirection: "row",
             gap: "1rem",
           }}

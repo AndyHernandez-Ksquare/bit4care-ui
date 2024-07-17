@@ -3,15 +3,13 @@ import {
   DataGrid,
   gridPageCountSelector,
   gridPageSelector,
-  gridPageSizeSelector,
   useGridApiContext,
   useGridSelector,
   GridColDef,
   GridColumnVisibilityModel,
-  GridCellParams,
   GridRowParams,
 } from "@mui/x-data-grid";
-import { Box, Pagination, Skeleton, Typography } from "@mui/material";
+import { Pagination } from "@mui/material";
 import PaginationItem from "@mui/material/PaginationItem";
 import { colorPalette } from "@/style/partials/colorPalette";
 
@@ -34,7 +32,7 @@ function CustomPagination() {
         shape="rounded"
         page={page + 1}
         count={pageCount}
-        // @ts-expect-error
+        // @ts-expect-error: Some description
         renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
         onChange={(event: React.ChangeEvent<unknown>, value: number) =>
           apiRef.current.setPage(value - 1)

@@ -12,6 +12,10 @@ import { Settings } from "./modules/admin/SettingsPage/Settings.tsx";
 import { AdminLayout } from "./modules/admin/AdminLayout.tsx";
 import { ColaboratorsLayout } from "./modules/users/colaborators/ColaboratorsLayout.tsx";
 import { ColaboratorsHome } from "./modules/users/colaborators/pages/ColaboratorsHome/ColaboratorsHome.tsx";
+import { ColaboratorLogin } from "./modules/users/colaborators/pages/Login/index.ts";
+import { SettingsAndProfile } from "./modules/users/colaborators/pages/SettingsAndProfile/SettingsAndProfile.tsx";
+import { ProtectedCollaboratorModule } from "./modules/users/colaborators/pages/ProtectedModule/ProtectedCollaboratorModule.tsx";
+import { ClientLogin } from "./modules/users/clients/pages/Login/ClientLogin.tsx";
 
 const router = createBrowserRouter([
   {
@@ -46,13 +50,47 @@ const router = createBrowserRouter([
   },
   {
     path: "/colaborador",
-    element: <ColaboratorsLayout />,
+    element: <ProtectedCollaboratorModule />,
     children: [
       {
-        path: "/colaborador/",
-        element: <ColaboratorsHome />,
+        path: "/colaborador",
+        element: <ColaboratorsLayout />,
+        children: [
+          {
+            path: "/colaborador/",
+            element: <ColaboratorsHome />,
+          },
+          {
+            path: "/colaborador/ajustes-y-perfil",
+            element: <SettingsAndProfile />,
+          },
+        ],
       },
     ],
+  },
+  {
+    path: "/cliente",
+    element: <ProtectedCollaboratorModule />,
+    children: [
+      {
+        path: "/cliente",
+        element: <ColaboratorsLayout />,
+        children: [
+          {
+            path: "/cliente/",
+            element: <ColaboratorsHome />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/ColaboradorLogin",
+    element: <ColaboratorLogin />,
+  },
+  {
+    path: "/ClienteLogin",
+    element: <ClientLogin />,
   },
 ]);
 

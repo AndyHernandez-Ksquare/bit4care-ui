@@ -61,6 +61,7 @@ export const ActiveServices = () => {
       service: "Asistencia en cocina",
       status: "solicitado",
       skills: ["skill9", "skill10"],
+      isAssigned: true,
     },
   ];
   return (
@@ -85,6 +86,7 @@ export const ActiveServices = () => {
             service={colaborator.service}
             status={colaborator.status as Status}
             skills={colaborator.skills}
+            isAssigned={colaborator.isAssigned}
             onClick={() => {
               setIsOpenModal(!openModal);
             }}

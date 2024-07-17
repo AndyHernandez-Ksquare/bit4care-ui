@@ -1,7 +1,6 @@
 import { B4CButton } from "@/components/B4CButton";
 import { B4CTooltip } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { Box, Typography } from "@mui/material";
 
 const meta = {

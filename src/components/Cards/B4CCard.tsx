@@ -2,8 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { B4CButton } from "../B4CButton";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { spacingScale, spacings } from "@/style/partials/spacings";
-import Image from "next/image";
+import { spacings } from "@/style/partials/spacings";
 
 interface IB4CCardProps {
   title: string;
@@ -80,7 +79,7 @@ export const B4CCard = ({
     >
       {theme === "backgroundImage" && <Box height={297}></Box>}
       {hasImage && (
-        <Image
+        <img
           src={imageSrc ? imageSrc : ""}
           alt={`image-${title}`}
           height={297}

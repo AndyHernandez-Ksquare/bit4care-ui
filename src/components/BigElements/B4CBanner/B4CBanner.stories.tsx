@@ -1,7 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { B4CBanner } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { B4CButton } from "@/components/B4CButton";
 import { spacings } from "@/style/partials/spacings";
 import { Size } from "@/ts/enums/Size";

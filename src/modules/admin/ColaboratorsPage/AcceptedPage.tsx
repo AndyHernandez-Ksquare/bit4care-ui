@@ -3,14 +3,14 @@ import { spacings } from "@/style/partials/spacings";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SingleCollaboratorsCard } from "./SingleCollaboratorsCard";
-import { colorPalette } from "@/style/partials/colorPalette";
 
 export const AcceptedPage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  const handleOpen = (user: User | null) => (_event: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleOpen = (user: User | null) => (_event: unknown) => {
     setSelectedUser(user);
     setOpenModal(!!user);
   };

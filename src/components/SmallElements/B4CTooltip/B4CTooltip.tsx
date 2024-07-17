@@ -1,5 +1,4 @@
-import { colorPalette } from "@/style/partials/colorPalette";
-import { Popper, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import React, { ReactElement, ReactNode } from "react";
 
 interface IB4CTooltipProps {
