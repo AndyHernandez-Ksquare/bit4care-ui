@@ -16,6 +16,10 @@ import { ColaboratorLogin } from "./modules/users/colaborators/pages/Login/index
 import { SettingsAndProfile } from "./modules/users/colaborators/pages/SettingsAndProfile/SettingsAndProfile.tsx";
 import { ProtectedCollaboratorModule } from "./modules/users/colaborators/pages/ProtectedModule/ProtectedCollaboratorModule.tsx";
 import { ClientLogin } from "./modules/users/clients/pages/Login/ClientLogin.tsx";
+import { ClientsLayout } from "./modules/users/clients/ClientsLayout.tsx";
+import { ClientsHome } from "./modules/users/clients/pages/ClientsHome";
+import { ClientsServices } from "./modules/users/clients/pages/ClientsServices";
+import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
 
 const router = createBrowserRouter([
   {
@@ -74,11 +78,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/cliente",
-        element: <ColaboratorsLayout />,
+        element: <ClientsLayout />,
         children: [
           {
             path: "/cliente/",
-            element: <ColaboratorsHome />,
+            element: <ClientsHome />,
+          },
+          {
+            path: "/cliente/mis-servicios",
+            element: <ClientsServices />,
+          },
+          {
+            path: "/cliente/ajustes-y-perfil",
+            element: <ClientsAccount />,
           },
         ],
       },
