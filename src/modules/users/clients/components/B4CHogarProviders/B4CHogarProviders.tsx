@@ -57,7 +57,7 @@ export const B4CHogarProviders = () => {
     },
   ];
   return (
-    <Box sx={{ display: "flex", gap: 24, justifyContent: "center", mt: 4 }}>
+    <Box sx={{ display: "flex", gap: 16, justifyContent: "center", mt: 4 }}>
       {providers.map((nurse) => (
         <B4CProviderCard
           key={nurse.name}

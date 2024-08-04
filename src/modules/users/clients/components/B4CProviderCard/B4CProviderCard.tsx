@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { FavIcon } from "@/assets/svgIcons/favoriteIcons/FavIcon";
 import { B4CStarRating } from "@/components/B4CStarRating";
+import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CProviderCardProps } from "@/ts/types/B4CProviderCard";
 import {
@@ -40,7 +42,7 @@ export const B4CProviderCard = ({
         sx={{ display: "flex", justifyContent: "center" }}
         action={
           <IconButton aria-label="add to favorites" onClick={onFavoriteToggle}>
-            fav
+            <FavIcon color={colorPalette.grey5} />
           </IconButton>
         }
       />
@@ -48,14 +50,14 @@ export const B4CProviderCard = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 4,
+          gap: 8,
           alignItems: "center",
         }}
       >
-        <Avatar aria-label="nurse">
-          {/* Placeholder Avatar */}
-          <img src="https://via.placeholder.com/40" alt="avatar" />
-        </Avatar>
+        <Avatar
+          aria-label="nurse"
+          sx={{ width: "70px", height: "70px" }}
+        ></Avatar>
         <Typography variant="h6" component="div">
           {name}
         </Typography>
@@ -111,8 +113,10 @@ export const B4CProviderCard = ({
             mt: 2,
             display: "flex",
             flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 1,
+            width: "100%",
+            overflow: "hidden",
+            alignItems: "center",
+            gap: 8,
           }}
         >
           <Typography
@@ -125,7 +129,7 @@ export const B4CProviderCard = ({
             Habilidades:
           </Typography>
           {skills.map((skill) => (
-            <Chip key={skill} label={skill} variant="outlined" />
+            <B4CTag color="info" key={skill} label={skill} />
           ))}
         </Box>
       </CardContent>

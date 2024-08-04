@@ -17,7 +17,7 @@ const styles = {
     marginTop: "5vh",
     display: "flex",
     flexGrow: 1,
-    gap: "2vw",
+    gap: "1vw",
   },
   sidebar: {
     width: "22vw",
@@ -36,8 +36,6 @@ export const ClientsLayout = () => (
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            width: "76vw",
             overflowY: "auto",
             zIndex: 2,
           }}

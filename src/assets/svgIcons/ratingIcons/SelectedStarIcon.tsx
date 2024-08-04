@@ -1,11 +1,8 @@
 import { colorPalette } from "@/style/partials/colorPalette";
+import { SvgColor } from "@/ts/types/SvgColors.types";
 import React from "react";
 
-interface SelectedStarIconProps {
-  color: string;
-}
-
-export const SelectedStarIcon = ({ color }: SelectedStarIconProps) => {
+export const SelectedStarIcon = ({ color }: SvgColor) => {
   return (
     <svg
       width="18"

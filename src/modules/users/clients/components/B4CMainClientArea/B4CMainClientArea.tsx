@@ -1,6 +1,6 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
-import { Grid, SxProps, Theme } from "@mui/material";
+import { Box, SxProps, Theme } from "@mui/material";
 import React, { ReactNode } from "react";
 
 interface IB4CMainArea {
@@ -13,31 +13,29 @@ interface IB4CMainArea {
 
 export const B4CMainClientArea = ({ children, sx }: IB4CMainArea) => {
   return (
-    <Grid
-      container
+    <Box
       sx={{
         borderTopLeftRadius: "8px",
         borderTopRightRadius: "8px",
         backgroundColor: colorPalette.white,
         border: `none`,
-
-        width: "75vw",
         maxWidth: "1235px",
+        display: "flex",
+        flexDirection: "column",
         flexGrow: 1,
         ...sx,
       }}
     >
-      <Grid
-        item
-        xs={12}
+      <Box
         sx={{
           paddingInline: spacings.spacing6,
           paddingTop: spacings.spacing6,
           paddingBottom: spacings.spacing8,
+          flexGrow: 1,
         }}
       >
         {children}
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 };

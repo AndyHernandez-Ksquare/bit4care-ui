@@ -20,6 +20,22 @@ import { ClientsLayout } from "./modules/users/clients/ClientsLayout.tsx";
 import { ClientsHome } from "./modules/users/clients/pages/ClientsHome";
 import { ClientsServices } from "./modules/users/clients/pages/ClientsServices";
 import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
+import { B4CColaboradorDetail } from "./modules/users/clients/pages/ClientsCollaboratorDetail/B4CColaboradorDetail.tsx";
+import { User } from "./ts/types/User.type.ts";
+
+const user: User = {
+  name: "María Pérez",
+  occupation: "Enfermera Geriátrica",
+  verified: true,
+  location: "Zona Centro, Querétaro",
+  experienceYears: 10,
+  hoursWorked: 120,
+  rating: 4.9,
+  servicesCompleted: 100,
+  rate: 200,
+  bio: "María García, enfermera geriátrica. Apasionada por el cuidado de los ancianos y comprometida con su bienestar.",
+  skills: ["Pie diabético", "Curaciones", "Licencia de conducir", "Cocina"],
+};
 
 const router = createBrowserRouter([
   {
@@ -83,6 +99,10 @@ const router = createBrowserRouter([
           {
             path: "/cliente/",
             element: <ClientsHome />,
+          },
+          {
+            path: "/cliente/colaborador",
+            element: <B4CColaboradorDetail user={user} />,
           },
           {
             path: "/cliente/mis-servicios",
