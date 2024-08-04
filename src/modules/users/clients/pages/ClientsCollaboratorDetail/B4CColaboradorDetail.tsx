@@ -5,9 +5,11 @@ import { User } from "@/ts/types/User.type";
 import {
   Avatar,
   Box,
+  Breadcrumbs,
   Chip,
   Divider,
   Grid,
+  Link,
   SxProps,
   Tab,
   Tabs,
@@ -18,6 +20,7 @@ import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { B4CReviewComponent } from "../../components/B4CReviewComponent";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
+import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 
 interface UserProfileProps {
   user: User;
@@ -56,13 +59,32 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
 
   return (
     <Fragment>
-      <Box sx={{ marginBottom: "24px" }}>
+      <Box
+        sx={{
+          marginBottom: "24px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+        }}
+      >
         <Typography variant="h4" display={{ color: colorPalette.primary }}>
           Colaboradores
         </Typography>
+        <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/cliente/">
+            <Typography typography="body-normal">Explorar</Typography>
+          </Link>
+          <Typography
+            typography="body-normal-bold"
+            color={colorPalette.primary}
+          >
+            {user.name}
+          </Typography>
+        </Breadcrumbs>
       </Box>
+
       <Grid container spacing={24} sx={{ height: "100%" }}>
-        <Grid item xs={12} desktop={8}>
+        <Grid item xs={12} desktop={9}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
@@ -236,7 +258,7 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} desktop={4}>
+        <Grid item xs={12} desktop={3}>
           <B4CMakeAppointment />
         </Grid>
       </Grid>

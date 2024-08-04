@@ -22,6 +22,7 @@ import { ClientsServices } from "./modules/users/clients/pages/ClientsServices";
 import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
 import { B4CColaboradorDetail } from "./modules/users/clients/pages/ClientsCollaboratorDetail/B4CColaboradorDetail.tsx";
 import { User } from "./ts/types/User.type.ts";
+import { ClientsReservationDetail } from "./modules/users/clients/pages/ClientsReservationDetail/ClientsReservationDetail.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
           {
             path: "/cliente/colaborador",
             element: <B4CColaboradorDetail user={user} />,
+          },
+          {
+            path: "/cliente/confirmar-y-pagar",
+            element: <ClientsReservationDetail />,
           },
           {
             path: "/cliente/mis-servicios",
