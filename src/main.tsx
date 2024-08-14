@@ -23,6 +23,7 @@ import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
 import { B4CColaboradorDetail } from "./modules/users/clients/pages/ClientsCollaboratorDetail/B4CColaboradorDetail.tsx";
 import { User } from "./ts/types/User.type.ts";
 import { ClientsReservationDetail } from "./modules/users/clients/pages/ClientsReservationDetail/ClientsReservationDetail.tsx";
+import { B4CClientsNewService } from "./modules/users/clients/pages/ClientsNewService/B4CClientsNewService.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
           {
             path: "/cliente/mis-servicios",
             element: <ClientsServices />,
+          },
+          {
+            path: "/cliente/mis-servicios/nueva-solicitud",
+            element: <B4CClientsNewService />,
           },
           {
             path: "/cliente/ajustes-y-perfil",

@@ -1,10 +1,10 @@
-import { Photos } from "@/assets/svgIcons/photos/photos";
 import { B4CTextfield } from "@/components/B4CTextfield";
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { ChangeMobileNum } from "./ChangeMobileNum";
 import { ChangePassword } from "./ChangePassword";
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
+import { B4CDragPhotoItem } from "@/components/B4CDragPhotoItem";
 
 export const UserSettings = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -33,16 +33,7 @@ export const UserSettings = () => {
         flexDirection={"column"}
         sx={{ marginBottom: "2rem", marginTop: "2rem" }}
       >
-        <IconButton
-          sx={{
-            backgroundColor: "#ECECEE",
-            width: "80px",
-            height: "80px",
-          }}
-        >
-          <Photos />
-        </IconButton>
-        <Typography variant="body-small-bold">Cambiar foto</Typography>
+        <B4CDragPhotoItem />
       </Grid>
       <Box sx={{ flexGrow: "1", marginBottom: "2rem" }}>
         <Grid

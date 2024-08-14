@@ -4,13 +4,9 @@ import { B4CStepperConnector } from "./B4CStepperConnector";
 import { getStepType } from "./helper";
 import { StepType } from "@/ts/enums";
 import { B4CStepIcon } from "./B4CStepIcon";
+import { B4CStepperProps } from "@/ts/types";
 
-export interface StepperProps {
-  activeStep: number;
-  steps: string[];
-}
-
-export const B4CStepper = ({ activeStep, steps }: StepperProps) => {
+export const B4CStepper = ({ activeStep, steps }: B4CStepperProps) => {
   return (
     <Fragment>
       <Stack spacing={4} sx={{ width: "100%" }}>

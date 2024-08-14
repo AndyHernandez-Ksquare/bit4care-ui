@@ -1,0 +1,1 @@
+export { B4CClientBigCalendar } from './B4CClientBigCalendar'
