@@ -10,9 +10,11 @@ export const B4CCLientSidebar = () => {
         width: "223px",
         display: "flex",
         flexDirection: "column",
-        marginLeft: "auto",
+        position: "fixed",
+        left: "5%",
         marginTop: "5vh",
         gap: "4vh",
+        zIndex: 3,
       }}
     >
       <List

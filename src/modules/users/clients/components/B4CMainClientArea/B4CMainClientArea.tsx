@@ -19,9 +19,10 @@ export const B4CMainClientArea = ({ children, sx }: IB4CMainArea) => {
         borderTopRightRadius: "8px",
         backgroundColor: colorPalette.white,
         border: `none`,
-        maxWidth: "1235px",
+        // maxWidth: "1235px",
         display: "flex",
         flexDirection: "column",
+        width: "65vw",
         flexGrow: 1,
         ...sx,
       }}
@@ -31,7 +32,6 @@ export const B4CMainClientArea = ({ children, sx }: IB4CMainArea) => {
           paddingInline: spacings.spacing6,
           paddingTop: spacings.spacing6,
           paddingBottom: spacings.spacing8,
-          flexGrow: 1,
         }}
       >
         {children}

@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { B4CClientBigCalendar } from "../../components/B4CClientBigCalendar";
 import { B4CAvailableColaborator } from "../../components/B4CAvailableColaborator";
+import { B4CServiceSpecs } from "../../components/B4CServiceSpecs";
 
 export const B4CClientsNewService = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -36,6 +37,7 @@ export const B4CClientsNewService = () => {
         />
         {activeStep === 0 && <B4CClientBigCalendar />}
         {activeStep === 1 && <B4CAvailableColaborator />}
+        {activeStep === 2 && <B4CServiceSpecs />}
       </Box>
     </PageLayout>
   );

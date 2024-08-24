@@ -1,6 +1,6 @@
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { Box, Button, Grid } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { ChangeMobileNum } from "./ChangeMobileNum";
 import { ChangePassword } from "./ChangePassword";
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
@@ -26,7 +26,15 @@ export const UserSettings = () => {
     setModalPasswordOpen(false);
   };
   return (
-    <Fragment>
+    <Box
+      component="form"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 32,
+        margin: "auto",
+      }}
+    >
       <Grid
         container
         display={"flex"}
@@ -74,7 +82,7 @@ export const UserSettings = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ flexGrow: "1", marginBottom: "2rem" }}>
+      <Box sx={{ marginBottom: "2rem" }}>
         <Grid
           container
           spacing={8}
@@ -167,6 +175,6 @@ export const UserSettings = () => {
           </Button>
         </Grid>
       </Grid>
-    </Fragment>
+    </Box>
   );
 };

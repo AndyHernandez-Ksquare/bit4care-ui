@@ -85,7 +85,7 @@ export const PaymentInfo = () => {
     },
   ];
   return (
-    <Box paddingTop="2rem">
+    <Box paddingTop="2rem" sx={{ width: "100%" }}>
       <B4CButton label="Agregar cuenta a depositar" size={Size.Small} />
       <B4CTable dataTable={data} columns={columns} />
     </Box>
