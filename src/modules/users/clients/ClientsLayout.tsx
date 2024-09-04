@@ -1,40 +1,59 @@
-import { B4CMainArea } from "@/components/B4CMainArea";
-import { B4CSidebar } from "@/components/B4CSidebar";
+import { B4CMainClientArea } from "./components/B4CMainClientArea/B4CMainClientArea";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Typography } from "@mui/material";
+import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
+import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
+import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
 
-export const ClientsLayout = () => {
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
+const styles = {
+  contentContainer: {
+    marginTop: "5vh",
+    display: "flex",
+    flexGrow: 1,
+    gap: "1vw",
+  },
+};
+
+export const ClientsLayout = () => (
+  <Fragment>
+    <ClientsNavbar />
+    <Box
+      sx={{
         background: `linear-gradient(#E4EEFC, ${colorPalette.white})`,
         display: "flex",
-        position: "fixed",
-        gap: "2vw",
-        // Altura máxima del componente B4CMainArea
+        flex: 1,
+        flexDirection: "column",
+        paddingTop: "100px",
       }}
     >
-      <Box width={"22vw"} display={"flex"}>
-        <B4CSidebar />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          width: "76vw",
-          overflowY: "auto",
-          zIndex: 2,
-        }}
-      >
-        <Box sx={{ marginRight: "auto", marginTop: "5vh" }}>
-          <B4CMainArea profileName="Braulio" profileRole="Admin">
+      <B4CCLientSidebar />
+
+      <Box sx={styles.contentContainer}>
+        <Box
+          sx={{
+            display: "flex",
+            paddingLeft: "20%",
+            zIndex: 2,
+          }}
+        >
+          <B4CMainClientArea profileName="Braulio" profileRole="Admin">
             <Outlet />
-          </B4CMainArea>
+          </B4CMainClientArea>
         </Box>
       </Box>
-    </div>
-  );
-};
+    </Box>
+    <Box
+      sx={{
+        backgroundColor: colorPalette.primary,
+        color: colorPalette.white,
+        textAlign: "center",
+        height: "80px",
+      }}
+    >
+      <Typography variant="body2" color="inherit">
+        © 2024 Your Company. All rights reserved.
+      </Typography>
+    </Box>
+  </Fragment>
+);

@@ -1,4 +1,4 @@
-import { ProviderProps } from "@/ts/types/providerprops.type";
+import { ProviderProps } from "@/ts/types/shared/ProviderProps.type";
 import { createContext, useContext, useState } from "react";
 
 interface SessionContextProps {

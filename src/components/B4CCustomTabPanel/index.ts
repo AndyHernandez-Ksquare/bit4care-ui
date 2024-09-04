@@ -1,0 +1,1 @@
+export { B4CCustomTabPanel } from "./B4CCustomTabPanel"

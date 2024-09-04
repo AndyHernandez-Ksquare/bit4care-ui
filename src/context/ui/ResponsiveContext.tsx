@@ -1,4 +1,4 @@
-import { ProviderProps } from "@/ts/types/providerprops.type";
+import { ProviderProps } from "@/ts/types/shared/ProviderProps.type";
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 // Definir interfaces para las propiedades y el estado del contexto

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useSession } from "./CollaboratorSessionContext";
-import { ProviderProps } from "@/ts/types/providerprops.type";
+import { useSession } from "../session/CollaboratorSessionContext";
+import { ProviderProps } from "@/ts/types/shared/ProviderProps.type";
 
 const AuthCollaboratorContext = createContext({
   isCollaboratorAuthenticated: true,

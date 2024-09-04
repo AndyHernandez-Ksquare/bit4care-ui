@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import React, { ChangeEventHandler, FocusEventHandler } from "react";
 
-interface IB4CTextfieldProps {
+interface B4CTextfieldProps {
   name?: string;
   className?: string;
   disabled?: boolean;
@@ -29,6 +29,7 @@ interface IB4CTextfieldProps {
   placeholder?: string;
   required?: boolean;
   touched?: boolean;
+  value?: string;
   sx?: SxProps<Theme> | undefined;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -49,11 +50,12 @@ export const B4CTextfield = ({
   required,
   placeholder,
   touched,
+  value,
   sx,
   variant,
   onChange,
   onClick,
-}: IB4CTextfieldProps) => {
+}: B4CTextfieldProps) => {
   return (
     <Box display="flex" flexDirection="column" sx={sx}>
       {label && (
@@ -96,6 +98,7 @@ export const B4CTextfield = ({
         id={id}
         disabled={disabled}
         multiline={isMultiline}
+        value={value}
         placeholder={placeholder}
       />
 

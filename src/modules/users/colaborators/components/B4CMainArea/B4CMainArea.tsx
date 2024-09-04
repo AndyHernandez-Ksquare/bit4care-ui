@@ -21,7 +21,7 @@ export const B4CMainArea = ({ children, sx }: IB4CMainArea) => {
         backgroundColor: colorPalette.white,
         border: `1px solid ${colorPalette.grey4}`,
 
-        width: "50vw",
+        width: "55vw",
         maxWidth: "1235px",
         ...sx,
       }}
@@ -33,7 +33,7 @@ export const B4CMainArea = ({ children, sx }: IB4CMainArea) => {
           paddingInline: spacings.spacing6,
           paddingTop: spacings.spacing6,
           paddingBottom: spacings.spacing8,
-          minHeight: "95vh",
+          minHeight: "90vh",
         }}
       >
         {children}
