@@ -21,10 +21,14 @@ import { ClientsHome } from "./modules/users/clients/pages/ClientsHome";
 import { ClientsServices } from "./modules/users/clients/pages/ClientsServices";
 import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
 import { B4CColaboradorDetail } from "./modules/users/clients/pages/ClientsCollaboratorDetail/B4CColaboradorDetail.tsx";
-import { User } from "./ts/types/User.type.ts";
+import { User } from "./ts/types/api/User.type.ts";
 import { ClientsReservationDetail } from "./modules/users/clients/pages/ClientsReservationDetail/ClientsReservationDetail.tsx";
 import { B4CClientsNewService } from "./modules/users/clients/pages/ClientsNewService/B4CClientsNewService.tsx";
 import { ClientPaymentPage } from "./modules/users/clients/pages/ClientPaymentPage/ClientPaymentPage.tsx";
+import { AdminLogin } from "./modules/admin/AdminLogin.tsx";
+import { AdminSessionProvider } from "./context/session/AdminSessionContext.tsx";
+import { ForgotPassword } from "./modules/admin/ForgotPassword.tsx";
+import { AdminLoginForm } from "./modules/admin/AdminForms/AdminLoginForm/AdminLoginForm.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -136,6 +140,20 @@ const router = createBrowserRouter([
     element: <ClientLogin />,
   },
   {
+    path: "/admin/login",
+    element: <AdminLogin />,
+    children: [
+      {
+        path: "/admin/login/",
+        element: <AdminLoginForm />,
+      },
+      {
+        path: "/admin/login/olvide-contrasena",
+        element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
     path: "/clientepago",
     element: <ClientPaymentPage />,
   },
@@ -143,8 +161,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider theme={customTheme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <AdminSessionProvider>
+      <ThemeProvider theme={customTheme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </AdminSessionProvider>
   </React.StrictMode>
 );

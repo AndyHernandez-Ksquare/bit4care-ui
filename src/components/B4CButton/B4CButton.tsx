@@ -1,6 +1,6 @@
 import { Size } from "@/ts/enums/Size";
-import { ButtonColor } from "@/ts/types/ButtonColor";
-import { Box, Button, Typography } from "@mui/material";
+import { ButtonColor } from "@/ts/types/shared/ButtonColor";
+import { Box, Button, SxProps, Theme, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
 interface IB4CButtonProps {
@@ -11,7 +11,7 @@ interface IB4CButtonProps {
   startIcon?: ReactNode;
   isSubmit?: boolean;
   size?: Size;
-
+  sx?: SxProps<Theme>;
   onClick?: () => void;
 }
 
@@ -23,6 +23,7 @@ export const B4CButton = ({
   isSubmit,
   size = Size.Normal,
   startIcon,
+  sx,
   onClick,
 }: IB4CButtonProps) => {
   const sizes = {
@@ -62,6 +63,7 @@ export const B4CButton = ({
         paddingInline: sizes[size].paddingInline,
         paddingBlock: sizes[size].paddingBlock,
         borderRadius: "8px",
+        ...sx,
       }}
     >
       <Typography
