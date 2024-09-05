@@ -1,4 +1,4 @@
-import { B4CStepperProps } from "@/ts/types";
+import { B4CStepperProps } from "@/ts/types/components/B4CStepperProps";
 import {
   Box,
   Stack,

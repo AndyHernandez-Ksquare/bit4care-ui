@@ -4,12 +4,12 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import customTheme from "./style/theme/customTheme.ts";
-import { ColaboratosPage } from "./modules/admin/ColaboratorsPage/ColaboratosPage.tsx";
-import { HomePage } from "./modules/admin/HomePage/HomePage.tsx";
-import { ServicePage } from "./modules/admin/ServicesPage/ServicePage.tsx";
-import { ClientsPage } from "./modules/admin/ClientsPage/ClientsPage.tsx";
-import { Settings } from "./modules/admin/SettingsPage/Settings.tsx";
-import { AdminLayout } from "./modules/admin/AdminLayout.tsx";
+import { ColaboratosPage } from "./modules/admin/pages/ColaboratorsPage/ColaboratosPage.tsx";
+import { HomePage } from "./modules/admin/pages/HomePage/HomePage.tsx";
+import { ServicePage } from "./modules/admin/pages/ServicesPage/ServicePage.tsx";
+import { ClientsPage } from "./modules/admin/pages/ClientsPage/ClientsPage.tsx";
+import { Settings } from "./modules/admin/pages/SettingsPage/Settings.tsx";
+import { AdminLayout } from "./modules/admin/components/AdminLayout.tsx";
 import { ColaboratorsLayout } from "./modules/users/colaborators/ColaboratorsLayout.tsx";
 import { ColaboratorsHome } from "./modules/users/colaborators/pages/ColaboratorsHome/ColaboratorsHome.tsx";
 import { ColaboratorLogin } from "./modules/users/colaborators/pages/Login/index.ts";
@@ -25,10 +25,13 @@ import { User } from "./ts/types/api/User.type.ts";
 import { ClientsReservationDetail } from "./modules/users/clients/pages/ClientsReservationDetail/ClientsReservationDetail.tsx";
 import { B4CClientsNewService } from "./modules/users/clients/pages/ClientsNewService/B4CClientsNewService.tsx";
 import { ClientPaymentPage } from "./modules/users/clients/pages/ClientPaymentPage/ClientPaymentPage.tsx";
-import { AdminLogin } from "./modules/admin/AdminLogin.tsx";
+import { AdminLogin } from "./modules/admin/pages/AdminLogin.tsx";
 import { AdminSessionProvider } from "./context/session/AdminSessionContext.tsx";
 import { ForgotPassword } from "./modules/admin/ForgotPassword.tsx";
 import { AdminLoginForm } from "./modules/admin/AdminForms/AdminLoginForm/AdminLoginForm.tsx";
+import { AcceptedPage } from "./modules/admin/pages/AcceptedUserPage/AcceptedPage.tsx";
+import { PendingPage } from "./modules/admin/pages/PendingUserPage/PendingPage.tsx";
+import { CheckUserRequest } from "./modules/admin/pages/CheckUserRequest/CheckUserRequest.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -56,6 +59,20 @@ const router = createBrowserRouter([
       {
         path: "/admin/colaboradores",
         element: <ColaboratosPage />,
+        children: [
+          {
+            path: "/admin/colaboradores/",
+            element: <AcceptedPage />,
+          },
+          {
+            path: "/admin/colaboradores/pendientes",
+            element: <PendingPage />,
+          },
+          {
+            path: "/admin/colaboradores/solicitud",
+            element: <CheckUserRequest />,
+          },
+        ],
       },
       {
         path: "/admin/servicios",

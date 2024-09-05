@@ -4,17 +4,11 @@ import { spacings } from "@/style/partials/spacings";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { PendingCollaboratorsCard } from "./PendingCollaboratorsCard";
+import { useNavigate } from "react-router-dom";
 
 export const PendingPage = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
-  const handleOpen = (user: User | null) => () => {
-    setSelectedUser(user);
-    setOpenModal(!!user);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -66,18 +60,13 @@ export const PendingPage = () => {
             <B4CButton
               label="Revisar solicitud"
               size={Size.Small}
-              onClick={handleOpen(user)}
+              onClick={() =>
+                navigate(`/admin/colaboradores/solicitud?id=${user.id}`)
+              }
             />
           </Box>
         </Grid>
       ))}
-      <PendingCollaboratorsCard
-        user={selectedUser}
-        open={openModal}
-        onClose={() => {
-          setOpenModal(false);
-        }}
-      />
     </Grid>
   );
 };

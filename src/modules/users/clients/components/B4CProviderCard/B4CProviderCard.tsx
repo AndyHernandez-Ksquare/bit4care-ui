@@ -3,7 +3,7 @@ import { FavIcon } from "@/assets/svgIcons/favoriteIcons/FavIcon";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { B4CProviderCardProps } from "@/ts/types/B4CProviderCard";
+import { B4CProviderCardProps } from "@/ts/types/components/B4CProviderCard";
 import {
   Avatar,
   Box,

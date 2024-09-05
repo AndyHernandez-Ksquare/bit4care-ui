@@ -3,10 +3,7 @@ export interface B4CReviewComponentProps {
 }
 
 
-export interface B4CStepperProps {
-  activeStep: number;
-  steps: string[];
-}
+
 
 interface Review {
   user: string;
