@@ -1,40 +1,48 @@
 import { LocationIcons } from "@/assets/svgIcons/locationIcons/LocationIcons";
 import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CButton } from "@/components/B4CButton";
-import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
 import {
   Avatar,
   Box,
+  Breadcrumbs,
   Grid,
+  Link,
   Rating,
   TextField,
   Typography,
 } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import React from "react";
+import React, { Fragment } from "react";
+import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
+import { colorPalette } from "@/style/partials/colorPalette";
 
-interface IServiceDetailModalPage {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const ServiceDetailModalPage = ({
-  isOpen,
-  onClose,
-}: IServiceDetailModalPage) => {
+export const ServiceDetailAdminPage = () => {
   return (
-    <B4CModal open={isOpen} onClose={onClose}>
-      <Grid container spacing={16}>
+    <Fragment>
+      <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href="/admin/servicios/">
+          <Typography typography="body-normal">Servicios</Typography>
+        </Link>
+        <Typography typography="body-normal-bold" color={colorPalette.primary}>
+          Usuario
+        </Typography>
+      </Breadcrumbs>
+      <Grid container spacing={32}>
         {/* Left Section */}
         <Grid
           item
           xs={12}
-          desktop={7}
+          desktop={6}
           container
-          sx={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+          sx={{ display: "flex", flexDirection: "column", gap: "56px" }}
         >
-          <Box display="flex" alignItems="center" mb={2}>
+          <Box
+            display="flex"
+            alignItems="center"
+            mb={2}
+            sx={{ flexDirection: "row", gap: "8px" }}
+          >
             <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
             <Box>
               <Typography variant="h6">Darel Caldwell</Typography>
@@ -86,12 +94,12 @@ export const ServiceDetailModalPage = ({
           </Box>
         </Grid>
         {/* Right Section */}
-        <Grid item xs={12} desktop={5}>
+        <Grid item xs={12} desktop={6}>
           <Box
             display="flex"
             alignItems="center"
             marginBottom="2rem"
-            sx={{ flexDirection: "column", gap: "0.5rem" }}
+            sx={{ flexDirection: "column", gap: "32px" }}
           >
             <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
 
@@ -132,6 +140,6 @@ export const ServiceDetailModalPage = ({
           </Box>
         </Grid>
       </Grid>
-    </B4CModal>
+    </Fragment>
   );
 };

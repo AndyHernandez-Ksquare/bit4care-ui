@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import customTheme from "./style/theme/customTheme.ts";
@@ -32,6 +31,8 @@ import { AdminLoginForm } from "./modules/admin/AdminForms/AdminLoginForm/AdminL
 import { AcceptedPage } from "./modules/admin/pages/AcceptedUserPage/AcceptedPage.tsx";
 import { PendingPage } from "./modules/admin/pages/PendingUserPage/PendingPage.tsx";
 import { CheckUserRequest } from "./modules/admin/pages/CheckUserRequest/CheckUserRequest.tsx";
+import { ServiceTable } from "./modules/admin/pages/ServicesPage/components/ServiceTable.tsx";
+import { ServiceDetailAdminPage } from "./modules/admin/pages/ServicesPage/components/ServiceDetailAdminPage.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -77,6 +78,16 @@ const router = createBrowserRouter([
       {
         path: "/admin/servicios",
         element: <ServicePage />,
+        children: [
+          {
+            path: "/admin/servicios/",
+            element: <ServiceTable />,
+          },
+          {
+            path: "/admin/servicios/detalle",
+            element: <ServiceDetailAdminPage />,
+          },
+        ],
       },
       {
         path: "/admin/clientes",

@@ -5,6 +5,7 @@ import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./components/NavBar/NavBar";
 import { B4CSidebar } from "./components/B4CSidebar";
+import { AdminLayoutBlob } from "@/assets/svgIcons/backgroundIcons/AdminLayoutBlob";
 
 export const ColaboratorsLayout = () => {
   return (
@@ -19,6 +20,7 @@ export const ColaboratorsLayout = () => {
         }}
       >
         <B4CSidebar />
+        <AdminLayoutBlob />
         <Box
           sx={{
             display: "flex",
