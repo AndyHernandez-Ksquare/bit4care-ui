@@ -6,7 +6,7 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import React from "react";
+
 import { color } from "@/ts/types/shared/colors";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import "./ColaboratorsServicesCard.css";

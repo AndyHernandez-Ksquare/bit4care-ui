@@ -1,6 +1,6 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import { B4CReviewComponentProps } from "@/ts/types";
-import React from "react";
+
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CButton } from "@/components/B4CButton";

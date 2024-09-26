@@ -9,7 +9,6 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import React from "react";
 
 export const B4CMakeAppointment = () => {
   return (

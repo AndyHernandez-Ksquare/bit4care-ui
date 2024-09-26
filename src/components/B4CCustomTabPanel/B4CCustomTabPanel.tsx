@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+
 import "./B4CCustomTabPanel.css";
 
 interface TabPanelProps {

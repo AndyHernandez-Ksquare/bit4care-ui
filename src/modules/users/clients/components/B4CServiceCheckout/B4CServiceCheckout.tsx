@@ -2,7 +2,6 @@ import { B4CDefinitionComponent } from "@/components/B4CDefinitionComponent/B4CD
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
-import React from "react";
 
 export const B4CServiceCheckout = () => {
   return (

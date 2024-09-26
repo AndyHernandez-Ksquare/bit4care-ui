@@ -1,4 +1,3 @@
-import React from "react";
 import { B4CDragPhotoItem } from "@/components/B4CDragPhotoItem";
 import { Box, Typography } from "@mui/material";
 import { B4CTextfield } from "@/components/B4CTextfield";

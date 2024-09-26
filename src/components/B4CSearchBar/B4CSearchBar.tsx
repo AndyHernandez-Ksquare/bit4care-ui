@@ -1,5 +1,4 @@
 import { InputBase, Paper } from "@mui/material";
-import React from "react";
 
 export const B4CSearchBar = () => {
   return (

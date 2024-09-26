@@ -2,7 +2,6 @@ import { Photos } from "@/assets/svgIcons/photos/photos";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { PageLayout } from "@/modules/admin/PageLayout";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
-import React from "react";
 
 export const Settings = () => {
   return (

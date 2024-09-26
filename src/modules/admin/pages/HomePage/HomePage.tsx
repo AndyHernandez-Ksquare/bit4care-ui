@@ -3,7 +3,7 @@ import { summaryData } from "@/constants/mockData/summary";
 import { PageLayout } from "@/modules/admin/PageLayout";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
+
 import { HomePageChart } from "./HomePageChart";
 import { colorPalette } from "@/style/partials/colorPalette";
 

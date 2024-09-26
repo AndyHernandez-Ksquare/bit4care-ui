@@ -3,7 +3,7 @@ import { B4CMainArea } from "@/components/B4CMainArea";
 import { B4CSidebar } from "@/components/B4CSidebar";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box } from "@mui/material";
-import React from "react";
+
 import { Outlet } from "react-router-dom";
 
 export const AdminLayout = () => {

@@ -1,6 +1,6 @@
 import { ListItemButton, ListItemProps, ListItemText } from "@mui/material";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import React from "react";
+
 import { spacings } from "@/style/partials/spacings";
 import { colorPalette } from "@/style/partials/colorPalette";
 

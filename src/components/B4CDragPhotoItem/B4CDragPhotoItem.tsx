@@ -1,6 +1,6 @@
 import { AddPhotoIcon } from "@/assets/svgIcons/addPhoto/AddPhotoIcon";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+
 import { useDropzone } from "react-dropzone";
 
 export const B4CDragPhotoItem = () => {

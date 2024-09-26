@@ -1,6 +1,5 @@
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import React from "react";
 
 export const B4CClientBigCalendar = () => {
   return (

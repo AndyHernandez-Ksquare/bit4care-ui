@@ -2,7 +2,6 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box } from "@mui/material";
-import React from "react";
 
 export const B4CServiceSpecs = () => {
   return (

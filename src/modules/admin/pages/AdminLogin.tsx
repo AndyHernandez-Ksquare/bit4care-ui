@@ -4,7 +4,7 @@ import { AdminLoginLeftBlob } from "@/assets/svgIcons/backgroundIcons/AdminLogin
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+
 import { Outlet } from "react-router-dom";
 
 export const AdminLogin = () => {

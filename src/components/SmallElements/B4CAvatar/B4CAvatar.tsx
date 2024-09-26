@@ -1,6 +1,5 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Avatar } from "@mui/material";
-import React from "react";
 
 interface B4CAvatar {
   alt?: string;

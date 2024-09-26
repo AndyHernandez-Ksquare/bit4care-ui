@@ -1,6 +1,5 @@
 import { color } from "@/ts/types/colors";
 import { Chip } from "@mui/material";
-import React from "react";
 
 interface IB4CTagProps {
   label: string;

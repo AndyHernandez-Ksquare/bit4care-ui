@@ -1,6 +1,5 @@
-import { B4CDefinitionComponentProps } from "@/ts/types/B4CComponents.type";
+import { B4CDefinitionComponentProps } from "@/ts/types/components/B4CComponents.type";
 import { Box, Typography } from "@mui/material";
-import React from "react";
 
 export const B4CDefinitionComponent = ({
   label,

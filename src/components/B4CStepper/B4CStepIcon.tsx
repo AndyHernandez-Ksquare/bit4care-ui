@@ -2,7 +2,6 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import Box from "@mui/material/Box/Box";
 import { StepIconProps } from "@mui/material/StepIcon";
-import React from "react";
 
 export const B4CStepIcon = ({ active, completed }: StepIconProps) => {
   return (

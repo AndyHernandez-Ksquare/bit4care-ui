@@ -1,7 +1,7 @@
 import { PageLayout } from "@/modules/admin/PageLayout";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid } from "@mui/material";
-import React from "react";
+
 import { ColaboratorsTab } from "./ColaboratorsTab";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 

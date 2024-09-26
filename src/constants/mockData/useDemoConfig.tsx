@@ -1,5 +1,3 @@
-import React from "react";
-
 //
 
 const options = {
@@ -176,7 +174,7 @@ function makeDataFrom(
   dataType: DataType,
   series: number,
   datums: number,
-  useR?: boolean
+  useR?: boolean,
 ) {
   return [
     ...new Array(series || Math.max(Math.round(Math.random() * 5), 1)),
@@ -187,7 +185,7 @@ function makeSeries(
   i: number,
   dataType: DataType,
   datums: number,
-  useR?: boolean
+  useR?: boolean,
 ) {
   const start = 0;
   const startDate = new Date();
@@ -233,7 +231,7 @@ function makeSeries(
         : rMax -
           Math.floor(
             Math.log(Math.random() * (distribution ** rMax - rMin) + rMin) /
-              Math.log(distribution)
+              Math.log(distribution),
           );
 
       return {

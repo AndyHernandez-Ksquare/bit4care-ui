@@ -1,5 +1,4 @@
 import { FormControlLabel, Radio } from "@mui/material";
-import React from "react";
 
 export const enum Positions {
   Top = "top",

@@ -1,7 +1,6 @@
 import { SelectedStarIcon } from "@/assets/svgIcons/ratingIcons/SelectedStarIcon";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
-import React from "react";
 
 interface IStarRatingProps {
   rating: number;

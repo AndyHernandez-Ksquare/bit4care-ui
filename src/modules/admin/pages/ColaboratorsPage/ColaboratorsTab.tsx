@@ -1,7 +1,6 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Typography } from "@mui/material";
-import React from "react";
 
 interface IColaboratorsTab {
   active?: boolean;

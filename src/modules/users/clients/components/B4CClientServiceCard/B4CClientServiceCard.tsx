@@ -7,7 +7,6 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { color } from "@/ts/types/colors";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import React from "react";
 
 interface B4CClientServicesCardProps {
   name: string;

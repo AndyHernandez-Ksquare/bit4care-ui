@@ -12,7 +12,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
 
 export const ClientPaymentPage = () => (
   <Box
@@ -106,7 +105,7 @@ export const ClientPaymentPage = () => (
           height: "100%",
         }}
       >
-        <Box  sx={{ padding: 4 }}>
+        <Box sx={{ padding: 4 }}>
           <Typography variant="h6" gutterBottom>
             Resumen de Orden
           </Typography>

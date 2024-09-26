@@ -1,4 +1,3 @@
-import React from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -26,7 +25,7 @@ export interface IB4CDatepickerProps {
   value?: Date;
   onChange?: (
     value: Date | null,
-    context: PickerChangeHandlerContext<DateValidationError>
+    context: PickerChangeHandlerContext<DateValidationError>,
   ) => void;
 }
 

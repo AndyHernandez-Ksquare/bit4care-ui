@@ -7,7 +7,6 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import React from "react";
 
 interface PhoneInputProps {
   countryCode: string;

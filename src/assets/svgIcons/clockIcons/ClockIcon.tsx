@@ -1,5 +1,4 @@
 import { colorPalette } from "@/style/partials/colorPalette";
-import React from "react";
 
 export const ClockIcon = () => {
   return (

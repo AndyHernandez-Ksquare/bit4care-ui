@@ -1,7 +1,6 @@
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import React from "react";
 
 interface CaregiverCardProps {
   name: string;

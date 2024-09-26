@@ -1,5 +1,3 @@
-import React from "react";
-
 export const AdminLayoutBlob = () => {
   return (
     <svg

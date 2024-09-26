@@ -4,7 +4,6 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
-import React from "react";
 
 interface IB4CAccordionProps {
   info: { title: string; details: string }[];

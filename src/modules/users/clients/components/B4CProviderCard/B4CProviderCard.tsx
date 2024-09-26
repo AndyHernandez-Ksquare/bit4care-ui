@@ -15,7 +15,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import React from "react";
+
 import "./B4CProviderCard.css";
 
 export const B4CProviderCard = ({

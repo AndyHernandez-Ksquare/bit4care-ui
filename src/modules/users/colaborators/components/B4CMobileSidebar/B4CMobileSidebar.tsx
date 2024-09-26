@@ -1,4 +1,3 @@
-import React from "react";
 import "./B4CMobileSidebar.css";
 import { Box, Button, Drawer, List, Typography } from "@mui/material";
 import { ListItemLink } from "../B4CSidebar/ListItemLink";
