@@ -13,7 +13,7 @@ import {
   SelectChangeEvent,
   Grid,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { PhoneInput } from "./PhoneInput";
 import { CodeInput } from "./CodeInput";
 import { colorPalette } from "@/style/partials/colorPalette";
@@ -36,9 +36,7 @@ export const ChangeMobileNum = ({ open, onClose }: ChangeMobileNumProps) => {
     setActiveStep(step);
   };
 
-  const handlePhoneNumberChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handlePhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
   };
 

@@ -2,9 +2,9 @@ import { LocationIcons } from "@/assets/svgIcons/locationIcons/LocationIcons";
 import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
-import { Status } from "@/modules/users/colaborators/components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { Status } from "@/ts/types/components";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { color } from "@/ts/types/colors";
+import { color } from "@/ts/types/shared/colors";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 

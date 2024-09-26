@@ -1,5 +1,5 @@
 import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
-import { Status } from "@/modules/users/colaborators/components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { Status } from "@/ts/types/components";
 import { Box, Typography } from "@mui/material";
 import { Fragment } from "react";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";

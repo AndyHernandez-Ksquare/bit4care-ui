@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import { B4CReviewComponentProps } from "@/ts/types";
+import { B4CReviewComponentProps } from "@/ts/types/components/B4CClientComponents.type";
 
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { colorPalette } from "@/style/partials/colorPalette";

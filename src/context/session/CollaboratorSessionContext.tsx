@@ -1,17 +1,23 @@
 import { ProviderProps } from "@/ts/types/shared/ProviderProps.type";
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 
 interface SessionContextProps {
   token: string | null;
-  setToken: React.Dispatch<React.SetStateAction<string | null>>;
+  setToken: Dispatch<SetStateAction<string | null>>;
   name: string | null;
-  setName: React.Dispatch<React.SetStateAction<string | null>>;
+  setName: Dispatch<SetStateAction<string | null>>;
   id: number | null;
-  setId: React.Dispatch<React.SetStateAction<number | null>>;
+  setId: Dispatch<SetStateAction<number | null>>;
 }
 
 const SessionContext = createContext<SessionContextProps | undefined>(
-  undefined
+  undefined,
 );
 
 export const SessionProvider = ({ children }: ProviderProps) => {
@@ -20,7 +26,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
   const [id, setId] = useState(
     localStorage.getItem("userId")
       ? Number(localStorage.getItem("userId"))
-      : null
+      : null,
   );
   return (
     <SessionContext.Provider

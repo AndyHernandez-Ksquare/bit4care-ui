@@ -1,4 +1,4 @@
-import { color } from "@/ts/types/colors";
+import { color } from "@/ts/types/shared/colors";
 import { Badge } from "@mui/material";
 import { ReactNode } from "react";
 

@@ -1,4 +1,4 @@
-import { color } from "@/ts/types/colors";
+import { color } from "@/ts/types/shared/colors";
 import { Chip } from "@mui/material";
 
 interface IB4CTagProps {

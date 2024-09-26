@@ -1,10 +1,8 @@
 import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Box, Typography } from "@mui/material";
 import { Fragment } from "react";
-import {
-  ColaboratorsServicesCard,
-  Status,
-} from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { Status } from "@/ts/types/components";
 
 export const InactiveServices = () => {
   const colaboratorsServicesData = [

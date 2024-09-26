@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { ChangeEvent, Fragment } from "react";
 import {
   DataGrid,
   gridPageCountSelector,
@@ -34,7 +34,7 @@ function CustomPagination() {
         count={pageCount}
         // @ts-expect-error: Some description
         renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
-        onChange={(event: React.ChangeEvent<unknown>, value: number) =>
+        onChange={(event: ChangeEvent<unknown>, value: number) =>
           apiRef.current.setPage(value - 1)
         }
       />

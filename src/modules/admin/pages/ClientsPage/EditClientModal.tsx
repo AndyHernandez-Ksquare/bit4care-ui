@@ -3,7 +3,7 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface IEditClientModal {
   open: boolean;
@@ -14,11 +14,11 @@ export const EditClientModal = ({ open, onClose }: IEditClientModal) => {
   const [phone, setPhone] = useState("33-55-54-54-55");
   const [email, setEmail] = useState("mar.hdz@test.com");
 
-  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 

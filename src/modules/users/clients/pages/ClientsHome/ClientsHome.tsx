@@ -15,7 +15,7 @@ import {
   TextField,
   Theme,
 } from "@mui/material";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { B4CHogarProviders } from "../../components/B4CHogarProviders/B4CHogarProviders";
 import "./ClientsHome.css";
 
@@ -38,7 +38,7 @@ export const ClientsHome = () => {
   const [tabValue, setTabValue] = useState(0);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 

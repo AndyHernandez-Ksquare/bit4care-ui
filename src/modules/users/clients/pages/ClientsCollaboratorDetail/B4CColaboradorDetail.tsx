@@ -16,7 +16,7 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { B4CReviewComponent } from "../../components/B4CReviewComponent";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
@@ -38,7 +38,7 @@ const tabStyle: SxProps<Theme> = {
 export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
   const [tabValue, setTabValue] = useState(0);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     console.log(tabValue);
     setTabValue(newValue);
   };

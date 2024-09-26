@@ -1,6 +1,6 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { UserSettings } from "./components/UserSettings";
 import { PaymentInfo } from "./components/PaymentInfo";
 import { AvailabilitySettings } from "./components/AvailabilitySettings";
@@ -9,7 +9,7 @@ import { B4CCustomTabPanel } from "@/components/B4CCustomTabPanel";
 export const SettingsAndProfile = () => {
   const [tabValue, setTabValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 

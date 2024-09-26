@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
-import { Status } from "@/modules/users/colaborators/components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { Status } from "@/ts/types/components";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { colorPalette } from "@/style/partials/colorPalette";
 

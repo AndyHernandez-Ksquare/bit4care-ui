@@ -7,12 +7,13 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
+import { ChangeEvent } from "react";
 
 interface PhoneInputProps {
   countryCode: string;
   handleCountryCodeChange: (event: SelectChangeEvent<string>) => void;
   phoneNumber: string;
-  handlePhoneNumberChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePhoneNumberChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const PhoneInput = ({

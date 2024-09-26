@@ -3,10 +3,8 @@ import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
-import {
-  ColaboratorsServicesCard,
-  Status,
-} from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
+import { Status } from "@/ts/types/components";
 import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
 
 export const ActiveServices = () => {

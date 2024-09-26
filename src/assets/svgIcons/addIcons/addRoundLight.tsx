@@ -1,9 +1,11 @@
+import { CSSProperties } from "react";
+
 interface IIconProps {
-  sx?: React.CSSProperties;
+  sx?: CSSProperties;
 }
 
 export const addRoundLight = ({ sx }: IIconProps) => {
-  const defaultStyles: React.CSSProperties = {
+  const defaultStyles: CSSProperties = {
     // Define aquí los estilos por defecto que desees
     // Por ejemplo:
     stroke: "white",

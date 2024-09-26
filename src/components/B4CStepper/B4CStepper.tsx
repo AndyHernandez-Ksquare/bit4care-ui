@@ -4,7 +4,7 @@ import { B4CStepperConnector } from "./B4CStepperConnector";
 import { getStepType } from "./helper";
 import { StepType } from "@/ts/enums";
 import { B4CStepIcon } from "./B4CStepIcon";
-import { B4CStepperProps } from "@/ts/types";
+import { B4CStepperProps } from "@/ts/types/components/B4CStepperProps";
 
 export const B4CStepper = ({ activeStep, steps }: B4CStepperProps) => {
   return (

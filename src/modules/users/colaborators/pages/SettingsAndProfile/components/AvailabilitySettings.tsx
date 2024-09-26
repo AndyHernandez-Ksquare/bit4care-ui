@@ -10,7 +10,7 @@ import {
   Radio,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export const AvailabilitySettings = () => {
   const [hoursPerWeek, setHoursPerWeek] = useState<string>(
@@ -18,11 +18,11 @@ export const AvailabilitySettings = () => {
   );
   const [openToFullTime, setOpenToFullTime] = useState<boolean>(false);
 
-  const handleHoursChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHoursChange = (event: ChangeEvent<HTMLInputElement>) => {
     setHoursPerWeek((event.target as HTMLInputElement).value);
   };
 
-  const handleFullTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFullTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setOpenToFullTime(event.target.checked);
   };
 

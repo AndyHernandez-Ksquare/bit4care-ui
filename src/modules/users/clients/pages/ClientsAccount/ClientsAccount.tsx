@@ -1,13 +1,13 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { B4CCustomTabPanel } from "../../../../../components/B4CCustomTabPanel";
 import { B4CClientProfileSettings } from "../../components/B4CClientProfileSettings";
 
 export const ClientsAccount = () => {
   const [tabValue, setTabValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
