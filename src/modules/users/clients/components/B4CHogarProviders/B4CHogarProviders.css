@@ -1,0 +1,7 @@
+@media (max-width: 768px) {
+  div.client-providers-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

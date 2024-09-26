@@ -6,16 +6,16 @@ import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import map from "@/assets/images/hero_maps_static_api.png";
-
 import React, { useState } from "react";
 import { colorPalette } from "@/style/partials/colorPalette";
+import "./B4CDetailService.css";
 
-interface IServiceDetailPage {
+interface ServiceDetailPage {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const B4CDetailService = ({ isOpen, onClose }: IServiceDetailPage) => {
+export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
   const [rejectConfirmation, setRejectConfirmation] = useState<boolean>(false);
 
   const handleRejecConfirmation = () => {
@@ -32,8 +32,8 @@ export const B4CDetailService = ({ isOpen, onClose }: IServiceDetailPage) => {
             container
             sx={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
           >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Box display="flex" alignItems="center" mb={2}>
+            <Grid container>
+              <Grid item xs={12} desktop={6} className="header">
                 <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
                 <Box>
                   <Typography variant="h6">Darel Caldwell</Typography>
@@ -41,8 +41,8 @@ export const B4CDetailService = ({ isOpen, onClose }: IServiceDetailPage) => {
                     Cuidado de adulto mayor con Alzheimer
                   </Typography>
                 </Box>
-              </Box>
-              <Box width={"60%"}>
+              </Grid>
+              <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
                 <Typography variant="body-normal">
                   El paciente es mi papá. Él tiene problemas para recordar
                   cosas, entonces requiere a un cuidador/a que cuente con
@@ -50,9 +50,9 @@ export const B4CDetailService = ({ isOpen, onClose }: IServiceDetailPage) => {
                   alguien con un perfil con experiencia en pacientes con
                   enfermedades neurodegenerativas.
                 </Typography>
-              </Box>
-            </Box>
-            <Grid container>
+              </Grid>
+            </Grid>
+            <Grid container spacing={16}>
               <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
                 <LocationIcons />
                 <Typography variant="body-normal">
@@ -74,12 +74,20 @@ export const B4CDetailService = ({ isOpen, onClose }: IServiceDetailPage) => {
                 </Typography>
               </Grid>
             </Grid>
-            <img src={map} alt="moc data del servicio google maps" />
+            <img
+              src={map}
+              alt="moc data del servicio google maps"
+              style={{
+                width: "100%",
+                height: "300px",
+              }}
+            />
 
             <B4CButton fullWidth size={Size.Small} label="Aceptar solicitud" />
             <Button
               onClick={handleRejecConfirmation}
               sx={{
+                width: "100%",
                 backgroundColor: colorPalette.error,
                 color: colorPalette.white,
                 fontWeight: 700,

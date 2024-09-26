@@ -1,0 +1,13 @@
+button.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  div.avatar {
+    display: none;
+  }
+
+  button.mobile-menu {
+    display: block;
+  }
+}

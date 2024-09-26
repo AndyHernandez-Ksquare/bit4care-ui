@@ -1,0 +1,51 @@
+.left-panel {
+  width: 50vw;
+  background: linear-gradient(180deg, #e4eefc 0%, #ffffff 100%);
+  display: flex;
+}
+
+.right-panel {
+  width: 50vw;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.left-panel-container {
+  margin: auto;
+  margin-inline: 14rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.login-modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-block: 6rem;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .left-panel {
+    width: 100vw; /* El panel izquierdo ahora ocupa todo el ancho */
+  }
+
+  .right-panel {
+    display: none; /* El panel derecho desaparece */
+  }
+
+  .left-panel-container {
+    margin-inline: auto;
+    align-items: center;
+    text-align: center;
+    padding-inline: 32px;
+    gap: 3rem;
+  }
+
+  .login-modal-container {
+    text-align: center;
+    gap: 16px;
+  }
+}

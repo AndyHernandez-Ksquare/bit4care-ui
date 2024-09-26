@@ -63,12 +63,13 @@ export const B4CButton = ({
         paddingInline: sizes[size].paddingInline,
         paddingBlock: sizes[size].paddingBlock,
         borderRadius: "8px",
+
         ...sx,
       }}
     >
       <Typography
         variant={`body-${size}-bold`}
-        sx={{ textTransform: "none", opacity: 0.8 }}
+        sx={{ textTransform: "none", opacity: 0.8, flexWrap: "wrap" }}
       >
         {label}
       </Typography>

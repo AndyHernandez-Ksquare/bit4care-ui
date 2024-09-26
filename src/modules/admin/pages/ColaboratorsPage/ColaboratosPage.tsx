@@ -1,19 +1,21 @@
-"use client";
 import { PageLayout } from "@/modules/admin/PageLayout";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { ColaboratorsTab } from "./ColaboratorsTab";
-import { AcceptedPage } from "./AcceptedPage";
-import { PendingPage } from "./PendingPage";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export const ColaboratosPage = () => {
-  const [tab, setTab] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const colaboratorsStatus = [
-    <AcceptedPage key={"colaborators"} />,
-    <PendingPage key={"Pendientes"} />,
-  ];
+  // Determina cuál ruta está activa
+  const activeTab =
+    location.pathname.includes("pendientes") ||
+    location.pathname.includes("solicitud")
+      ? 1
+      : 0;
+
   return (
     <PageLayout title="Colaboradores">
       <Grid container>
@@ -28,18 +30,18 @@ export const ColaboratosPage = () => {
           >
             <ColaboratorsTab
               label="Registrados"
-              active={tab === 0}
-              onClick={() => setTab(0)}
+              active={activeTab === 0}
+              onClick={() => navigate("/admin/colaboradores/")}
             />
             <ColaboratorsTab
               label="Pendientes de registrar"
-              active={tab === 1}
-              onClick={() => setTab(1)}
+              active={activeTab === 1}
+              onClick={() => navigate("/admin/colaboradores/pendientes")}
             />
           </Box>
         </Grid>
         <Grid item xs={12} marginBottom={spacings.spacing2}>
-          {colaboratorsStatus[tab]}
+          <Outlet />
         </Grid>
       </Grid>
     </PageLayout>

@@ -1,7 +1,7 @@
 import { B4CDefinitionComponent } from "@/components/B4CDefinitionComponent/B4CDefinitionComponent";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { User } from "@/ts/types/User.type";
+
 import {
   Avatar,
   Box,
@@ -21,6 +21,7 @@ import { Fragment } from "react/jsx-runtime";
 import { B4CReviewComponent } from "../../components/B4CReviewComponent";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
+import { User } from "@/ts/types/api/User.type";
 
 interface UserProfileProps {
   user: User;

@@ -41,6 +41,7 @@ export const AvailabilitySettings = () => {
         flexDirection: "column",
         gap: 32,
         margin: "auto",
+        paddingTop: "2rem",
       }}
     >
       <Typography variant="h6">Horas por semana</Typography>

@@ -7,22 +7,10 @@ import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 import React from "react";
-import { color } from "@/ts/types/colors";
+import { color } from "@/ts/types/shared/colors";
 import { B4CStarRating } from "@/components/B4CStarRating";
-
-export type Status = "solicitado" | "aceptado" | "realizado" | "no realizado";
-interface IColaboratorsServicesCardProps {
-  name: string;
-  address: string;
-  fee: string;
-  schedule: string;
-  hours: number;
-  service: string;
-  status: Status;
-  skills: string[];
-  isAssigned?: boolean;
-  onClick?: () => void;
-}
+import "./ColaboratorsServicesCard.css";
+import { ColaboratorsServicesCardProps } from "@/ts/types/components";
 
 export const ColaboratorsServicesCard = ({
   name,
@@ -35,7 +23,7 @@ export const ColaboratorsServicesCard = ({
   skills,
   isAssigned = false,
   onClick,
-}: IColaboratorsServicesCardProps) => {
+}: ColaboratorsServicesCardProps) => {
   const statusTagInfo = {
     solicitado: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
@@ -43,25 +31,9 @@ export const ColaboratorsServicesCard = ({
     "no realizado": { color: "error", label: "No Realizado" },
   };
   return (
-    <Box
-      sx={{
-        width: "100%",
-        border: `1px solid ${colorPalette.grey5}`,
-        borderRadius: "20px",
-        padding: "24px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.5rem",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+    <Box className="colaborator-service-card-container">
+      <Box className="colaborator-service-card-header">
+        <Box className="colaborator-service-card-header">
           <Avatar sx={{ width: "64px", height: "64px" }} />
           <Box>
             <Typography variant="h5" sx={{ color: colorPalette.primary }}>
@@ -93,8 +65,13 @@ export const ColaboratorsServicesCard = ({
           </Box>
         </Box>
       </Box>
-      <Grid container>
-        <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+      <Grid container spacing={16}>
+        <Grid
+          item
+          xs={12}
+          desktop={6}
+          sx={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}
+        >
           <LocationIcons />
           <Typography variant="body-normal">{address}</Typography>
         </Grid>

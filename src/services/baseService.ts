@@ -5,10 +5,7 @@ const REMOTE_API_URL = "http://bid4care-dev.us-east-1.elasticbeanstalk.com";
 
 export const BASE_HEADERS = {
   "Content-Type": "application/json",
-  "Content-Length": "<calculated when request is sent>",
   "Accept": "*/*",
-  "Accept-Encoding": "gzip, deflate, br",
-  "Connection": "keep-alive"
 };
 
 if (!REMOTE_API_URL) {

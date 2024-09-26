@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+import React, { useState } from "react";
 import { B4CTable } from "@/components/BigElements/B4CTable";
 import {
   Box,
@@ -16,12 +16,12 @@ import {
   GridColumnHeaderParams,
   GridRowParams,
 } from "@mui/x-data-grid";
-import React, { useState } from "react";
 import { PageLayout } from "@/modules/admin/PageLayout";
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
 import { EditClientModal } from "./EditClientModal";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums/Size";
+import { colorPalette } from "@/style/partials/colorPalette";
 export const ClientsPage = () => {
   const [open, setOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
@@ -52,6 +52,17 @@ export const ClientsPage = () => {
         <Typography variant="body-normal-bold">{"NOMBRE"}</Typography>
       ),
       width: 200,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <Typography
+            variant="body-small-bold"
+            sx={{ cursor: "pointer", color: colorPalette.primary }}
+            onClick={() => handleRowClick({ row: params.row } as GridRowParams)}
+          >
+            {params.value as string}
+          </Typography>
+        );
+      },
     },
     {
       field: "status",
@@ -167,11 +178,7 @@ export const ClientsPage = () => {
             width: "100%",
           }}
         >
-          <B4CTable
-            dataTable={data}
-            columns={columns}
-            onRowClick={handleRowClick}
-          />
+          <B4CTable dataTable={data} columns={columns} />
         </Box>
       </Box>
       <EditClientModal open={open} onClose={() => setOpen(false)} />

@@ -2,7 +2,7 @@ import { getAcceptedUsers, User } from "@/services/colaboratorsServices";
 import { spacings } from "@/style/partials/spacings";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SingleCollaboratorsCard } from "./SingleCollaboratorsCard";
+import { SingleCollaboratorsCard } from "../ColaboratorsPage/SingleCollaboratorsCard";
 
 export const AcceptedPage = () => {
   const [users, setUsers] = useState<User[]>([]);

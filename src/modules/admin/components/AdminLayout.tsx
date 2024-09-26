@@ -1,3 +1,4 @@
+import { AdminLayoutBlob } from "@/assets/svgIcons/backgroundIcons/AdminLayoutBlob";
 import { B4CMainArea } from "@/components/B4CMainArea";
 import { B4CSidebar } from "@/components/B4CSidebar";
 import { colorPalette } from "@/style/partials/colorPalette";
@@ -21,6 +22,7 @@ export const AdminLayout = () => {
       <Box width={"22vw"} display={"flex"}>
         <B4CSidebar />
       </Box>
+      <AdminLayoutBlob />
       <Box
         sx={{
           display: "flex",

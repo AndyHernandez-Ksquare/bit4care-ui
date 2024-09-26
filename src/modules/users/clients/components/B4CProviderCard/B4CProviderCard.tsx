@@ -3,7 +3,7 @@ import { FavIcon } from "@/assets/svgIcons/favoriteIcons/FavIcon";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { B4CProviderCardProps } from "@/ts/types/B4CProviderCard";
+import { B4CProviderCardProps } from "@/ts/types/components/B4CProviderCard";
 import {
   Avatar,
   Box,
@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import "./B4CProviderCard.css";
 
 export const B4CProviderCard = ({
   name,
@@ -30,13 +31,8 @@ export const B4CProviderCard = ({
 }: B4CProviderCardProps) => {
   return (
     <Card
-      sx={{
-        maxWidth: 278,
-        borderRadius: "16px",
-        border: `1px solid ${colorPalette.secondary}`,
-        background: "linear-gradient(180deg, #FFFFFF 0%, #E4EEFC 100%)",
-        boxShadow: "none",
-      }}
+      className="main-card-available-colaborator"
+      sx={{ border: `1px solid ${colorPalette.secondary}` }}
     >
       <CardHeader
         sx={{ display: "flex", justifyContent: "center" }}
@@ -46,39 +42,31 @@ export const B4CProviderCard = ({
           </IconButton>
         }
       />
-      <CardContent
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
+      <CardContent className="available-colaborator">
         <Avatar
           aria-label="nurse"
           sx={{ width: "70px", height: "70px" }}
         ></Avatar>
-        <Typography variant="h6" component="div">
-          {name}
-        </Typography>
+        <Box className="available-colaborator-profile">
+          <Typography variant="h6" component="div">
+            {name}
+          </Typography>
 
-        <Typography
-          variant="body2"
-          color={colorPalette.primary}
-          sx={{ fontWeight: 600 }}
-        >
-          {specialty}
-        </Typography>
-        <B4CStarRating rating={rating} />
+          <Typography
+            variant="body2"
+            color={colorPalette.primary}
+            sx={{ fontWeight: 600 }}
+          >
+            {specialty}
+          </Typography>
+          <B4CStarRating rating={rating} />
+        </Box>
 
         <Box
+          className="white-colaborator-card"
           sx={{
-            mt: 2,
             backgroundColor: colorPalette.white,
             border: `1px solid ${colorPalette.primary}`,
-            borderRadius: "8px",
-            p: "1rem",
-            display: "flex",
           }}
         >
           <Box

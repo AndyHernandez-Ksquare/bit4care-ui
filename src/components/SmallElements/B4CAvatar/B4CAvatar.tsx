@@ -2,21 +2,24 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { Avatar } from "@mui/material";
 import React from "react";
 
-interface IB4CAvatar {
+interface B4CAvatar {
   alt?: string;
   imageLink?: string;
   width?: number;
   height?: number;
+  className?: string;
 }
 
 export const B4CAvatar = ({
   alt,
+  className,
   imageLink,
   width = 64,
   height = 64,
-}: IB4CAvatar) => {
+}: B4CAvatar) => {
   return (
     <Avatar
+      className={className}
       alt={alt}
       src={imageLink}
       sx={{

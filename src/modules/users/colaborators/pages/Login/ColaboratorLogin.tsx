@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { B4CTextfield } from "@/components/B4CTextfield";
+import "./ColaboratorLogin.css";
 
 export const ColaboratorLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -19,22 +20,8 @@ export const ColaboratorLogin = () => {
 
   return (
     <Box display={{ display: "flex", flexDirection: "row", height: "100vh" }}>
-      <Box
-        sx={{
-          width: "50vw",
-          background: "linear-gradient(180deg, #E4EEFC 0%, #FFFFFF 100%)",
-          display: "flex",
-        }}
-      >
-        <Box
-          sx={{
-            margin: "auto",
-            marginInline: "14rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2rem",
-          }}
-        >
+      <Box className="left-panel">
+        <Box className="left-panel-container">
           <B4CLogo />
           <Typography variant="h2">Plataforma de cuidador</Typography>
           <Typography>
@@ -54,24 +41,13 @@ export const ColaboratorLogin = () => {
         </Box>
       </Box>
       <Box
+        className="right-panel"
         sx={{
-          width: "50vw",
           backgroundImage: `url(${loginColaboratorImg})`,
-          backgroundSize: "cover", // Esto hará que la imagen cubra todo el Box
-          backgroundPosition: "center", // Esto centrará la imagen
-          backgroundRepeat: "no-repeat",
         }} // Evita que la imagen se repita
       ></Box>
       <B4CModal open={isOpen} onClose={onClose}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "2rem",
-            paddingInline: "4rem",
-            paddingBlock: "6rem",
-          }}
-        >
+        <Box className="login-modal-container">
           <Typography variant="h4">Bienvenido/a de vuelta</Typography>
           <Typography color="#545454">
             Ingresa tu correo y contraseña registrados

@@ -22,7 +22,7 @@ export const SingleCollaboratorsCard = ({
     <B4CModal
       open={open}
       onClose={onClose}
-      bgColor={`linear-gradient( #F6F9FE, #FFFFFF)`}
+      bgColor={"linear-gradient(180deg, #FFFFFF 0%, #E4EEFC 100%)"}
     >
       {user ? (
         <Fragment>
@@ -131,7 +131,7 @@ export const SingleCollaboratorsCard = ({
                 flexWrap: "wrap",
                 gap: "1rem",
                 marginInline: "auto",
-                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               {user.carrerProfile.qualifications.map((qualification, index) => {

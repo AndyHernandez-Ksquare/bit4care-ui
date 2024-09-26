@@ -5,15 +5,7 @@ import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
-
-const styles = {
-  contentContainer: {
-    marginTop: "5vh",
-    display: "flex",
-    flexGrow: 1,
-    gap: "1vw",
-  },
-};
+import "./ClientsLayout.css";
 
 export const ClientsLayout = () => (
   <Fragment>
@@ -28,15 +20,8 @@ export const ClientsLayout = () => (
       }}
     >
       <B4CCLientSidebar />
-
-      <Box sx={styles.contentContainer}>
-        <Box
-          sx={{
-            display: "flex",
-            paddingLeft: "20%",
-            zIndex: 2,
-          }}
-        >
+      <Box className="client-separator-main">
+        <Box className="main-client-wraper">
           <B4CMainClientArea profileName="Braulio" profileRole="Admin">
             <Outlet />
           </B4CMainClientArea>

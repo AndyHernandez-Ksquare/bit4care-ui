@@ -1,9 +1,8 @@
-import { colorPalette } from "@/style/partials/colorPalette";
-import { spacings } from "@/style/partials/spacings";
 import { Box, SxProps, Theme } from "@mui/material";
 import React, { ReactNode } from "react";
+import "./B4CMainClientArea.css";
 
-interface IB4CMainArea {
+interface B4CMainArea {
   profileName: string;
   profileRole: string;
   children: ReactNode;
@@ -11,31 +10,15 @@ interface IB4CMainArea {
   sx?: SxProps<Theme> | undefined;
 }
 
-export const B4CMainClientArea = ({ children, sx }: IB4CMainArea) => {
+export const B4CMainClientArea = ({ children, sx }: B4CMainArea) => {
   return (
     <Box
+      className="b4c-main-client-area"
       sx={{
-        borderTopLeftRadius: "8px",
-        borderTopRightRadius: "8px",
-        backgroundColor: colorPalette.white,
-        border: `none`,
-        // maxWidth: "1235px",
-        display: "flex",
-        flexDirection: "column",
-        width: "65vw",
-        flexGrow: 1,
         ...sx,
       }}
     >
-      <Box
-        sx={{
-          paddingInline: spacings.spacing6,
-          paddingTop: spacings.spacing6,
-          paddingBottom: spacings.spacing8,
-        }}
-      >
-        {children}
-      </Box>
+      {children}
     </Box>
   );
 };
