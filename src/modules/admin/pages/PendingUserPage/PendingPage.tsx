@@ -3,7 +3,7 @@ import { getUnacceptedUsers, User } from "@/services/colaboratorsServices";
 import { spacings } from "@/style/partials/spacings";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const PendingPage = () => {

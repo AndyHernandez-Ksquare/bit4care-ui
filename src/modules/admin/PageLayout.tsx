@@ -1,7 +1,7 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import { Grid, Typography } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface PageLayoutProps {
   title: string;

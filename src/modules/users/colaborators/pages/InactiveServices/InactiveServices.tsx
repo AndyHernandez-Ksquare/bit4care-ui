@@ -1,6 +1,6 @@
 import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Box, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import {
   ColaboratorsServicesCard,
   Status,

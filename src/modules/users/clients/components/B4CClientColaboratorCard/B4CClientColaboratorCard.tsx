@@ -5,7 +5,7 @@ import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { User } from "@/services/colaboratorsServices";
 import { Size } from "@/ts/enums";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 interface ISingleCollaboratorsCardProps {
   user: User | null;

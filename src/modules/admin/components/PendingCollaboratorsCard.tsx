@@ -5,7 +5,7 @@ import { User } from "@/services/colaboratorsServices";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ISingleCollaboratorsCardProps {
   user: User | null;

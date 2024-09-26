@@ -6,7 +6,7 @@ import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import map from "@/assets/images/hero_maps_static_api.png";
-import React, { useState } from "react";
+import { useState } from "react";
 import { colorPalette } from "@/style/partials/colorPalette";
 import "./B4CDetailService.css";
 

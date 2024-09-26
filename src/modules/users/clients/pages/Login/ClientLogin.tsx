@@ -4,7 +4,7 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Box, Typography } from "@mui/material";
 import loginClientsImg from "@/assets/images/clients-login.png";
-import React, { useState } from "react";
+import { useState } from "react";
 import "./ClientLogin.css";
 
 export const ClientLogin = () => {

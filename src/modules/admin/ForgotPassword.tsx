@@ -1,6 +1,6 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Link, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 export const ForgotPassword = () => {
   return (

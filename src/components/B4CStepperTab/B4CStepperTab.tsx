@@ -7,7 +7,7 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { getStepType } from "./helper";
 import { StepType } from "@/ts/enums";
 import { B4CStepTabIcon } from "./B4CStepTabIcon";

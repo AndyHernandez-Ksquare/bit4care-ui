@@ -3,7 +3,7 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface IEditClientModal {
   open: boolean;

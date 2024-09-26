@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import "./B4CMainClientArea.css";
 
 interface B4CMainArea {

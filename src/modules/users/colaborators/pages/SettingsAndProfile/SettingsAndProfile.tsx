@@ -1,6 +1,6 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { UserSettings } from "./components/UserSettings";
 import { PaymentInfo } from "./components/PaymentInfo";
 import { AvailabilitySettings } from "./components/AvailabilitySettings";

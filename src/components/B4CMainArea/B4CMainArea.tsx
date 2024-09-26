@@ -1,7 +1,7 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid, SxProps, Theme, Typography } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { B4CSearchBar } from "../B4CSearchBar";
 import { B4CAvatar } from "../SmallElements/B4CAvatar";
 

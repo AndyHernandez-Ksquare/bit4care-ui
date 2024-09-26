@@ -2,7 +2,7 @@ import { PageLayout } from "@/components/B4CPageLayout";
 import { B4CTab } from "@/components/B4CTab/B4CTab";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { B4CClientActiveServices } from "../../components/B4CClientActiveServices";
 import { B4CInactiveServices } from "../../components/B4CInactiveServices";
 

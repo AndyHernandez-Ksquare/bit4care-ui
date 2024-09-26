@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import React, { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 interface IB4CTooltipProps {
   label: ReactNode;

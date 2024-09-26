@@ -1,7 +1,7 @@
 "use client";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface IB4CImageProps {
   alt: string;

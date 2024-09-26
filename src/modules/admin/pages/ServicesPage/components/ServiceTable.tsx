@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import {
   Box,

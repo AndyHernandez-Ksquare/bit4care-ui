@@ -1,6 +1,6 @@
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
 import { Box } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { B4CAvailableColaboratorCard } from "../B4CAvailableColaboratorCard";
 import { B4CClientColaboratorCard } from "../B4CClientColaboratorCard";
 

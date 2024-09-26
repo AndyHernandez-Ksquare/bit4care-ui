@@ -1,5 +1,5 @@
 import { Stack, Step, StepLabel, Stepper } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { B4CStepperConnector } from "./B4CStepperConnector";
 import { getStepType } from "./helper";
 import { StepType } from "@/ts/enums";

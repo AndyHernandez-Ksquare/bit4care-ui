@@ -1,7 +1,7 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import { Box } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface IB4CBannerProps {
   children: ReactNode;

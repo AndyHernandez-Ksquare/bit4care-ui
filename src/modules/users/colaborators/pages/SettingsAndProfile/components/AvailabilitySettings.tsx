@@ -10,11 +10,11 @@ import {
   Radio,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export const AvailabilitySettings = () => {
   const [hoursPerWeek, setHoursPerWeek] = useState<string>(
-    "Menos de 30 horas a la semana"
+    "Menos de 30 horas a la semana",
   );
   const [openToFullTime, setOpenToFullTime] = useState<boolean>(false);
 

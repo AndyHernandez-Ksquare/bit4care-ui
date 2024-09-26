@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import loginColaboratorImg from "@/assets/images/colaborators-login.png";
 import { B4CLogo } from "@/assets/images/B4CLogo";
-import React, { useState } from "react";
+import { useState } from "react";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { B4CTextfield } from "@/components/B4CTextfield";

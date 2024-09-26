@@ -1,5 +1,5 @@
 import { Grid, SxProps, Theme } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import "./B4CMainArea.css";
 interface IB4CMainArea {
   profileName: string;

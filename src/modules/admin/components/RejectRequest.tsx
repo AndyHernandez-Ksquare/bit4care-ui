@@ -5,7 +5,7 @@ import { User } from "@/services/colaboratorsServices";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ModalController } from "@/ts/types/shared/ModalController";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface RejectRequestProps extends ModalController {
   userId: number;
@@ -21,7 +21,7 @@ export const RejectRequest = ({
   useEffect(() => {
     if (userId) {
       const foundUser = unacceptedUsersMockData.find(
-        (user) => user.id === userId
+        (user) => user.id === userId,
       );
       if (foundUser) setUser(foundUser); // Asigna el usuario encontrado
     }

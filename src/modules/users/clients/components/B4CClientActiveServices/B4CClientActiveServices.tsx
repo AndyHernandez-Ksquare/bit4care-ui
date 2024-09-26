@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
 import { Status } from "@/modules/users/colaborators/components/ColaboratorsServicesCard/ColaboratorsServicesCard";

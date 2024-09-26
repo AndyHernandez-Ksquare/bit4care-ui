@@ -1,7 +1,7 @@
 import { B4CMainClientArea } from "./components/B4CMainClientArea/B4CMainClientArea";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";

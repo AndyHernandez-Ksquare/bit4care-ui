@@ -1,6 +1,6 @@
 import { color } from "@/ts/types/colors";
 import { Badge } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface IB4CBadgeProps {
   badgeContent: ReactNode;

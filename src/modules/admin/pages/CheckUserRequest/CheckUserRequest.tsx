@@ -14,7 +14,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const CheckUserRequest = () => {
@@ -33,7 +33,7 @@ export const CheckUserRequest = () => {
   useEffect(() => {
     if (userId) {
       const foundUser = unacceptedUsersMockData.find(
-        (user) => user.id === parseInt(userId as string)
+        (user) => user.id === parseInt(userId as string),
       );
       if (foundUser) setUser(foundUser); // Asigna el usuario encontrado
     }

@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { B4CStepperTab } from "@/components/B4CStepperTab";
 import { Box, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { B4CClientBigCalendar } from "../../components/B4CClientBigCalendar";
 import { B4CAvailableColaborator } from "../../components/B4CAvailableColaborator";
 import { B4CServiceSpecs } from "../../components/B4CServiceSpecs";

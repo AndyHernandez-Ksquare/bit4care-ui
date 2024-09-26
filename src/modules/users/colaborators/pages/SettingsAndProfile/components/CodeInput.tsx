@@ -1,7 +1,7 @@
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
 import { RepeatIcon } from "@/assets/svgIcons/ReturnIcon/RepeatIcon";
 import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 interface CodeInputProps {
   countryCode: string;

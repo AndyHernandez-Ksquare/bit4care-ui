@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import {

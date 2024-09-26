@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import { useState } from "react";
 import { B4CTable } from "@/components/BigElements/B4CTable";
 import {
   Box,

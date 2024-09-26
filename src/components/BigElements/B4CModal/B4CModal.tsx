@@ -1,6 +1,6 @@
 import { spacings } from "@/style/partials/spacings";
 import { Box, Dialog } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface B4CModalProps {
   children: ReactNode;

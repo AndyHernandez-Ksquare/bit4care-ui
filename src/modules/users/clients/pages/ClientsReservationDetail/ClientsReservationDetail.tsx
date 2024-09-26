@@ -11,7 +11,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { B4CServiceCheckout } from "../../components/B4CServiceCheckout";
 
 export const ClientsReservationDetail = () => {

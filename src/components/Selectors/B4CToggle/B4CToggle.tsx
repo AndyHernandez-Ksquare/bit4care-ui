@@ -1,5 +1,5 @@
 import { Switch } from "@mui/material";
-import React, { ChangeEvent, KeyboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 
 export interface IB4CToggleProps {
   checked: boolean;

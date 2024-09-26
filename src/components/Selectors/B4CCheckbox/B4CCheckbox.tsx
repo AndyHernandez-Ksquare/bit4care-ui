@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
-import React, { ChangeEventHandler, KeyboardEvent } from "react";
+import { ChangeEventHandler, KeyboardEvent } from "react";
 
 export interface IB4CCheckboxProps {
   disabled?: boolean;

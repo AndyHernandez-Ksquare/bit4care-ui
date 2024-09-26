@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { colorPalette } from "@/style/partials/colorPalette";
 
