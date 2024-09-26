@@ -1,6 +1,5 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { SvgColor } from "@/ts/types/shared/SvgColors.types";
-import React from "react";
 
 export const SelectedStarIcon = ({ color }: SvgColor) => {
   return (

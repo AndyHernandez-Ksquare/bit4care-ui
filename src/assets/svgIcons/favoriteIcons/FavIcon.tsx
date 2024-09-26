@@ -1,5 +1,4 @@
-import { SvgColor } from "@/ts/types/SvgColors.types";
-import React from "react";
+import { SvgColor } from "@/ts/types/shared/SvgColors.types";
 
 export const FavIcon = ({ color }: SvgColor) => {
   return (

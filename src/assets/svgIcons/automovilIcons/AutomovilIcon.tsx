@@ -1,5 +1,4 @@
-import { SvgColor } from "@/ts/types/svgColors.types";
-import React from "react";
+import { SvgColor } from "@/ts/types/shared/SvgColors.types";
 
 export const AutomovilIcon = ({ color = "#828282" }: SvgColor) => {
   return (
