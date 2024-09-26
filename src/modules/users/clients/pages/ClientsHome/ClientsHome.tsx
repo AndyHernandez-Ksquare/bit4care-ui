@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { B4CHogarProviders } from "../../components/B4CHogarProviders/B4CHogarProviders";
+import "./ClientsHome.css";
 
 const tabStyle: SxProps<Theme> = {
   textTransform: "none",
@@ -28,8 +29,9 @@ const tabStyle: SxProps<Theme> = {
 
 const filterButtonStyle: SxProps<Theme> = {
   textTransform: "none",
-  marginInline: "16px",
+
   borderRadius: "8px",
+  whiteSpace: "nowrap",
 };
 
 export const ClientsHome = () => {
@@ -72,6 +74,7 @@ export const ClientsHome = () => {
         <Box
           sx={{
             width: "100%",
+
             display: "flex",
             justifyContent: "center",
           }}
@@ -122,9 +125,11 @@ export const ClientsHome = () => {
         </Box>
         <Box
           sx={{
+            minWidth: "700px",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
+            gap: "16px",
           }}
         >
           <Button

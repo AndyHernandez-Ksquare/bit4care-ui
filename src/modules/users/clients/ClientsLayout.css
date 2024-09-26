@@ -1,0 +1,22 @@
+.client-separator-main {
+  margin-top: 5vh;
+  display: flex;
+  flex-grow: 1;
+}
+
+.main-client-wraper {
+  display: flex;
+  padding-left: 20%;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .client-separator-main {
+    display: block;
+    width: 100%;
+  }
+
+  .main-client-wraper {
+    padding-inline: 16px;
+  }
+}

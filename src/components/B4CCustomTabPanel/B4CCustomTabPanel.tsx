@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
+import "./B4CCustomTabPanel.css";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -21,7 +22,7 @@ export const B4CCustomTabPanel = ({
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 8, display: "flex" }}>{children}</Box>}
+      {value === index && <Box className="custom-tab-panel">{children}</Box>}
     </div>
   );
 };

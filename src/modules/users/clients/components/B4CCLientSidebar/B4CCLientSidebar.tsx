@@ -2,21 +2,11 @@ import { ListItemLink } from "./ListItemLink";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Button, List, Typography } from "@mui/material";
 import React from "react";
+import "./B4CCLientSidebar.css";
 
 export const B4CCLientSidebar = () => {
   return (
-    <Box
-      sx={{
-        width: "223px",
-        display: "flex",
-        flexDirection: "column",
-        position: "fixed",
-        left: "5%",
-        marginTop: "5vh",
-        gap: "4vh",
-        zIndex: 3,
-      }}
-    >
+    <Box className="sidebar-main-container">
       <List
         sx={{
           listStyle: "none",

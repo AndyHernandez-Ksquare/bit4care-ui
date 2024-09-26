@@ -1,6 +1,7 @@
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useState } from "react";
 import { B4CProviderCard } from "../B4CProviderCard";
+import "./B4CHogarProviders.css";
 
 export const B4CHogarProviders = () => {
   const [favorites, setFavorites] = useState<Record<string, boolean>>({
@@ -57,14 +58,22 @@ export const B4CHogarProviders = () => {
     },
   ];
   return (
-    <Box sx={{ display: "flex", gap: 16, justifyContent: "center", mt: 4 }}>
+    <Grid container spacing={32} sx={{ mt: 4 }}>
       {providers.map((nurse) => (
-        <B4CProviderCard
+        <Grid
+          className="client-providers-container"
+          item
+          xs={12}
+          desktop={3}
           key={nurse.name}
-          {...nurse}
-          onFavoriteToggle={() => handleFavoriteToggle(nurse.name)}
-        />
+        >
+          <B4CProviderCard
+            key={nurse.name}
+            {...nurse}
+            onFavoriteToggle={() => handleFavoriteToggle(nurse.name)}
+          />
+        </Grid>
       ))}
-    </Box>
+    </Grid>
   );
 };

@@ -1,0 +1,24 @@
+div.b4c-main-client-area {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #ffffff; /* Reemplaza con la variable o valor correspondiente */
+  border: none;
+  /* max-width: 1235px;  Descomentar si lo necesitas */
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  flex-grow: 1;
+  padding-inline: 56px; /* Reemplaza "spacings.spacing6" con el valor en px adecuado */
+  padding-top: 56px; /* Reemplaza "spacings.spacing6" con el valor en px adecuado */
+  padding-bottom: 80px; /* Reemplaza "spacings.spacing8" con el valor en px adecuado */
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  div.b4c-main-client-area {
+    width: 90vw;
+    padding-inline: 0;
+    margin-inline: auto;
+    background-color: transparent;
+  }
+}

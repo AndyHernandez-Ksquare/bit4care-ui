@@ -63,7 +63,7 @@ export const ChangeMobileNum = ({ open, onClose }: ChangeMobileNumProps) => {
       PaperProps={{
         sx: {
           borderRadius: "64px",
-          padding: "40px", // Agrega cualquier estilo adicional aquí
+          padding: "20px", // Agrega cualquier estilo adicional aquí
         },
       }}
     >

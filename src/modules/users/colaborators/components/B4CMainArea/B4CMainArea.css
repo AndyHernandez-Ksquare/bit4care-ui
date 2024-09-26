@@ -1,0 +1,21 @@
+div.main-area-container {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  width: 55vw;
+}
+
+div.main-area-layout {
+  padding-inline: 56px;
+  padding-top: 56px;
+  padding-bottom: 80px;
+  min-height: 90vh;
+}
+@media (max-width: 768px) {
+  div.main-area-container {
+    width: 100vw;
+    background-color: transparent;
+    border: none;
+  }
+}

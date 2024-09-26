@@ -7,7 +7,7 @@ import {
   GridColDef,
   GridColumnHeaderParams,
 } from "@mui/x-data-grid";
-import { color } from "@/ts/types/colors";
+import { color } from "@/ts/types/shared/colors";
 import React, { Fragment } from "react";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums/Size";

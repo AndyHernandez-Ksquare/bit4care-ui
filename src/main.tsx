@@ -160,11 +160,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/ColaboradorLogin",
+    path: "/colaborador/login",
     element: <ColaboratorLogin />,
   },
   {
-    path: "/ClienteLogin",
+    path: "/cliente/login",
     element: <ClientLogin />,
   },
   {

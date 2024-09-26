@@ -61,7 +61,6 @@ export const B4CStepperTab = ({
                             : colorPalette.grey1
                         }
                         sx={{
-                          marginInline: "70px",
                           marginBottom: "16px",
                           whiteSpace: "nowrap",
                         }}

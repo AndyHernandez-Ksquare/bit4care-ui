@@ -1,0 +1,16 @@
+.custom-tab-panel {
+  p: 8;
+  display: "flex";
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .custom-tab-panel {
+    border-radius: 32px;
+    margin-block: 32px;
+    left: 8%;
+    position: absolute;
+    width: 70vw;
+    padding-inline: 32px;
+  }
+}

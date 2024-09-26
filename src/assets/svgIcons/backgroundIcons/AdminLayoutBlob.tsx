@@ -8,7 +8,7 @@ export const AdminLayoutBlob = () => {
       viewBox="0 0 613 559"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ zIndex: -1, position: "absolute", bottom: 0, right: 0 }}
+      style={{ zIndex: 0, position: "fixed", bottom: 0, right: 0 }}
     >
       <path
         fillRule="evenodd"

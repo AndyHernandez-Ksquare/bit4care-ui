@@ -5,6 +5,7 @@ import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Box, Typography } from "@mui/material";
 import loginClientsImg from "@/assets/images/clients-login.png";
 import React, { useState } from "react";
+import "./ClientLogin.css";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -18,22 +19,8 @@ export const ClientLogin = () => {
   };
   return (
     <Box display={{ display: "flex", flexDirection: "row", height: "100vh" }}>
-      <Box
-        sx={{
-          width: "50vw",
-          background: "linear-gradient(180deg, #E4EEFC 0%, #FFFFFF 100%)",
-          display: "flex",
-        }}
-      >
-        <Box
-          sx={{
-            margin: "auto",
-            marginInline: "14rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2rem",
-          }}
-        >
+      <Box className="left-panel">
+        <Box className="left-panel-container">
           <B4CLogo />
           <Typography variant="h2">Plataforma de cliente</Typography>
           <Typography>
@@ -53,12 +40,9 @@ export const ClientLogin = () => {
         </Box>
       </Box>
       <Box
+        className="right-panel"
         sx={{
-          width: "50vw",
           backgroundImage: `url(${loginClientsImg})`,
-          backgroundSize: "cover", // Esto hará que la imagen cubra todo el Box
-          backgroundPosition: "center", // Esto centrará la imagen
-          backgroundRepeat: "no-repeat",
         }} // Evita que la imagen se repita
       ></Box>
       <B4CModal open={isOpen} onClose={onClose}>

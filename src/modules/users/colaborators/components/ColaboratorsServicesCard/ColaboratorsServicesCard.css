@@ -1,0 +1,22 @@
+.colaborator-service-card-container {
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.colaborator-service-card-header {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .colaborator-service-card-header {
+    flex-direction: column;
+  }
+}

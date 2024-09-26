@@ -2,6 +2,7 @@ import { B4CLogo } from "@/assets/images/B4CLogo";
 import { B4CAvatar } from "@/components/SmallElements/B4CAvatar";
 import { AppBar, Box, Toolbar } from "@mui/material";
 import React from "react";
+import "./ClientsNavbar.css";
 
 export const ClientsNavbar = () => {
   return (

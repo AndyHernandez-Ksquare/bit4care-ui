@@ -1,11 +1,12 @@
 import { spacings } from "@/style/partials/spacings";
-import { Box, Modal } from "@mui/material";
+import { Box, Dialog } from "@mui/material";
 import React, { ReactNode } from "react";
 
-interface IB4CModalProps {
+interface B4CModalProps {
   children: ReactNode;
   open: boolean;
   bgColor?: string;
+  className?: string;
   onClose?: () => void;
 }
 
@@ -13,24 +14,28 @@ export const B4CModal = ({
   children,
   open,
   bgColor,
+  className,
   onClose,
-}: IB4CModalProps) => {
+}: B4CModalProps) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Dialog
+      className={className}
+      open={open}
+      onClose={onClose}
+      sx={{ borderRadius: "32px" }}
+      PaperProps={{
+        sx: {
+          borderRadius: "32px", // Aquí se aplica el borderRadius directamente al Paper
+        },
+      }}
+    >
       <Box
         sx={{
-          position: "absolute" as const,
-          top: "50%",
-          left: "50%",
-          transform: `translate(-50%, -50%)`,
           background: bgColor ? bgColor : "white",
-          borderRadius: `8px`,
           paddingX: spacings.spacing3,
           paddingY: spacings.spacing4,
           boxShadow: 24,
-          "@media (max-width: 600px)": {
-            width: "95%",
-          },
+          maxWidth: "1224px",
         }}
       >
         <Box
@@ -44,6 +49,6 @@ export const B4CModal = ({
           {children}
         </Box>
       </Box>
-    </Modal>
+    </Dialog>
   );
 };
