@@ -1,9 +1,9 @@
+import { AdminLayoutBlob } from "@/assets/svgIcons/backgroundIcons/AdminLayoutBlob";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box } from "@mui/material";
-import { B4CSignupSteps } from "../../components/B4CSignupSteps";
-import { AdminLayoutBlob } from "@/assets/svgIcons/backgroundIcons/AdminLayoutBlob";
+import { B4CFogetPasswordSteps } from "../../components/B4CFogetPasswordSteps";
 
-export const ClientsSignup = () => {
+export const ClientsForgotPassword = () => {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ export const ClientsSignup = () => {
     >
       <AdminLayoutBlob />
       <Box sx={{ marginInline: "auto", marginTop: "200px", zIndex: 1 }}>
-        <B4CSignupSteps />
+        <B4CFogetPasswordSteps />
       </Box>
     </Box>
   );

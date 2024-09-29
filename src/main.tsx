@@ -35,6 +35,7 @@ import { ServiceDetailAdminPage } from "./modules/admin/pages/ServicesPage/compo
 import { StrictMode } from "react";
 import { Index } from "./modules/admin/pages/Index/Index.tsx";
 import { ClientsSignup } from "./modules/users/clients/pages/ClientsSignup/index.ts";
+import { ClientsForgotPassword } from "./modules/users/clients/pages/ClientsForgotPassword/ClientsForgotPassword.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -194,6 +195,10 @@ const router = createBrowserRouter([
   {
     path: "/cliente/registro",
     element: <ClientsSignup />,
+  },
+  {
+    path: "/cliente/olvide-contrasena",
+    element: <ClientsForgotPassword />,
   },
 ]);
 

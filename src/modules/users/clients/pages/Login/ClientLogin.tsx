@@ -5,13 +5,19 @@ import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Box, Typography } from "@mui/material";
 import loginClientsImg from "@/assets/images/clients-login.png";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./ClientLogin.css";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignUp = () => {
+    navigate(`/cliente/registro`);
   };
 
   const onClose = () => {
@@ -36,6 +42,7 @@ export const ClientLogin = () => {
             variant="secondary"
             fullWidth
             label="Registrarme"
+            onClick={handleSignUp}
           ></B4CButton>
         </Box>
       </Box>
@@ -62,7 +69,12 @@ export const ClientLogin = () => {
           <B4CTextfield placeholder="Usuario"></B4CTextfield>
           <B4CTextfield placeholder="Contraseña" isPassword></B4CTextfield>
           <B4CButton fullWidth label="Entrar"></B4CButton>
-          <Typography>Olvidé mi contraseña</Typography>
+          <Link
+            to="/cliente/olvide-contrasena"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Typography variant="body-normal">Olvidé mi contraseña</Typography>
+          </Link>
         </Box>
       </B4CModal>
     </Box>

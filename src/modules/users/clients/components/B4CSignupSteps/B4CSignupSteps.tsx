@@ -51,6 +51,7 @@ export const B4CSignupSteps = () => {
           width: "50%",
           display: "flex",
           justifyContent: "start",
+          marginLeft: "-32px",
         }}
       >
         <B4CStepper activeStep={activeStep} steps={steps} />
@@ -110,67 +111,6 @@ export const B4CSignupSteps = () => {
               marginBottom: "32px",
             }}
           >
-            <Box>
-              <Grid
-                container
-                spacing={8}
-                sx={{
-                  border: `1px solid #E2E4E5`,
-                  padding: "16px",
-                  borderRadius: "8px",
-                }}
-              >
-                <Grid item xs={12}>
-                  <B4CTextfield label="Nombre(s)" />
-                </Grid>
-                <Grid item xs={12} desktop={6}>
-                  <B4CTextfield label="Apellido paterno" />
-                </Grid>
-                <Grid item xs={12} desktop={6}>
-                  <B4CTextfield label="Apellido materno" />
-                </Grid>
-              </Grid>
-            </Box>
-            <Box>
-              <Grid
-                container
-                spacing={8}
-                sx={{
-                  border: `1px solid #E2E4E5`,
-                  padding: "16px",
-                  borderRadius: "8px",
-                }}
-                justifyContent={"center"}
-              >
-                <Grid item xs={12}>
-                  <B4CTextfield label="Direccion" />
-                </Grid>
-                <Grid item xs={12} desktop={4}>
-                  <B4CTextfield label="Codigo postal" />
-                </Grid>
-                <Grid item xs={12} desktop={4}>
-                  <B4CTextfield label="Estado" />
-                </Grid>
-                <Grid item xs={12} desktop={4}>
-                  <B4CTextfield label="Ciudad" />
-                </Grid>
-              </Grid>
-            </Box>
-            <Box>
-              <Grid
-                container
-                spacing={8}
-                sx={{
-                  border: `1px solid #E2E4E5`,
-                  padding: "16px",
-                  borderRadius: "8px",
-                }}
-              >
-                <Grid item xs={12}>
-                  <B4CTextfield label="Correo electronico" />
-                </Grid>
-              </Grid>
-            </Box>
             <Grid
               container
               spacing={8}
@@ -181,7 +121,65 @@ export const B4CSignupSteps = () => {
               }}
             >
               <Grid item xs={12}>
-                <B4CTextfield label="Contrase;a" isPassword />
+                <B4CTextfield label="Nombre(s)" />
+              </Grid>
+              <Grid item xs={12} desktop={6}>
+                <B4CTextfield label="Apellido paterno" />
+              </Grid>
+              <Grid item xs={12} desktop={6}>
+                <B4CTextfield label="Apellido materno" />
+              </Grid>
+            </Grid>
+
+            <Grid
+              container
+              spacing={8}
+              sx={{
+                border: `1px solid #E2E4E5`,
+                padding: "16px",
+                borderRadius: "8px",
+              }}
+              justifyContent={"center"}
+            >
+              <Grid item xs={12}>
+                <B4CTextfield label="Direccion" />
+              </Grid>
+              <Grid item xs={12} desktop={4}>
+                <B4CTextfield label="Codigo postal" />
+              </Grid>
+              <Grid item xs={12} desktop={4}>
+                <B4CTextfield label="Estado" />
+              </Grid>
+              <Grid item xs={12} desktop={4}>
+                <B4CTextfield label="Ciudad" />
+              </Grid>
+            </Grid>
+
+            <Grid
+              container
+              spacing={8}
+              sx={{
+                border: `1px solid #E2E4E5`,
+                padding: "16px",
+                borderRadius: "8px",
+              }}
+            >
+              <Grid item xs={12}>
+                <B4CTextfield label="Correo electronico" />
+              </Grid>
+            </Grid>
+
+            <Grid
+              container
+              spacing={8}
+              sx={{
+                border: `1px solid #E2E4E5`,
+                padding: "16px",
+                borderRadius: "8px",
+              }}
+            >
+              <Grid item xs={12}>
+                <B4CTextfield label="Contraseña" isPassword />
               </Grid>
             </Grid>
             <B4CButton
