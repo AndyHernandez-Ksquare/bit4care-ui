@@ -6,7 +6,7 @@ div.b4c-main-client-area {
   /* max-width: 1235px;  Descomentar si lo necesitas */
   display: flex;
   flex-direction: column;
-  width: 70vw;
+  width: 65vw;
   flex-grow: 1;
   padding-inline: 56px; /* Reemplaza "spacings.spacing6" con el valor en px adecuado */
   padding-top: 56px; /* Reemplaza "spacings.spacing6" con el valor en px adecuado */

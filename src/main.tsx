@@ -34,6 +34,7 @@ import { ServiceTable } from "./modules/admin/pages/ServicesPage/components/Serv
 import { ServiceDetailAdminPage } from "./modules/admin/pages/ServicesPage/components/ServiceDetailAdminPage.tsx";
 import { StrictMode } from "react";
 import { Index } from "./modules/admin/pages/Index/Index.tsx";
+import { ClientsSignup } from "./modules/users/clients/pages/ClientsSignup/index.ts";
 
 const user: User = {
   name: "María Pérez",
@@ -189,6 +190,10 @@ const router = createBrowserRouter([
   {
     path: "/clientepago",
     element: <ClientPaymentPage />,
+  },
+  {
+    path: "/cliente/registro",
+    element: <ClientsSignup />,
   },
 ]);
 

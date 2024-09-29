@@ -58,7 +58,7 @@ export const B4CHogarProviders = () => {
     },
   ];
   return (
-    <Grid container spacing={32} sx={{ mt: 4 }}>
+    <Grid container spacing={16} sx={{ mt: 4 }}>
       {providers.map((nurse) => (
         <Grid
           className="client-providers-container"
