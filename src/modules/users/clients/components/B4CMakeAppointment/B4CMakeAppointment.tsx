@@ -10,7 +10,13 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
-export const B4CMakeAppointment = () => {
+interface B4CMakeAppointmentProps {
+  handleSchedule: () => void;
+}
+
+export const B4CMakeAppointment = ({
+  handleSchedule,
+}: B4CMakeAppointmentProps) => {
   return (
     <Box
       sx={{
@@ -125,7 +131,11 @@ export const B4CMakeAppointment = () => {
           defaultValue={dayjs("2022-04-17T15:30")}
         />
       </LocalizationProvider>
-      <B4CButton label="Agendar" size={Size.Small}></B4CButton>
+      <B4CButton
+        label="Agendar"
+        onClick={handleSchedule}
+        size={Size.Small}
+      ></B4CButton>
       <Typography variant="body-small" color={colorPalette.grey3}>
         Deberás completar tu solicitud antes de pagar y confirmar el servicio.
       </Typography>

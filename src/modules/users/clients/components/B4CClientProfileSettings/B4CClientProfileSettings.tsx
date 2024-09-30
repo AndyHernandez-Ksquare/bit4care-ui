@@ -11,9 +11,10 @@ export const B4CClientProfileSettings = () => {
         flexDirection: "column",
         gap: "32px",
         width: "100%",
+        paddingTop: "32px",
       }}
     >
-      <Typography>Tu foto de perfil</Typography>
+      <Typography variant="h6">Tu foto de perfil</Typography>
       <B4CDragPhotoItem />
       <Box
         sx={{
