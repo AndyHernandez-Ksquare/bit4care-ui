@@ -32,6 +32,7 @@ import { PendingPage } from "./modules/admin/pages/PendingUserPage/PendingPage.t
 import { CheckUserRequest } from "./modules/admin/pages/CheckUserRequest/CheckUserRequest.tsx";
 import { ServiceTable } from "./modules/admin/pages/ServicesPage/components/ServiceTable.tsx";
 import { ServiceDetailAdminPage } from "./modules/admin/pages/ServicesPage/components/ServiceDetailAdminPage.tsx";
+import ColaboratorsRegister from "./modules/users/register/pages/ColaboratorsRegister.tsx";
 import { StrictMode } from "react";
 import { Index } from "./modules/admin/pages/Index/Index.tsx";
 
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
           {
             path: "/colaborador/ajustes-y-perfil",
             element: <SettingsAndProfile />,
+          },
+          {
+            path: "/colaborador/registro",
+            element: <ColaboratorsRegister />,
           },
         ],
       },

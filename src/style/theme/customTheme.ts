@@ -146,53 +146,52 @@ const customTheme = createTheme({
     "body-small-bold": {
       ...bodyStyle(14, true),
     },
+    subtitle1: {
+      ...bodyStyle(20),
+      color: colorPalette.subtitleGrey,
+    },
   },
   components: {
     MuiAccordion: {
       styleOverrides: {
         root: {
-
           border: `1px solid ${colorPalette.grey4}`,
           boxShadow: "none",
 
-          '&:not(:last-child)': {
+          "&:not(:last-child)": {
             borderBottom: 0,
           },
-          '&::before': {
-            display: 'none',
+          "&::before": {
+            display: "none",
           },
 
-          '& .Mui-expanded': {
+          "& .Mui-expanded": {
             backgroundColor: colorPalette.primary,
-            color: colorPalette.white
+            color: colorPalette.white,
           },
-
-        }
-      }
+        },
+      },
     },
     MuiAccordionSummary: {
       styleOverrides: {
         root: {
           color: colorPalette.primary,
 
-
           padding: 0,
-          '& .MuiAccordionSummary-content': {
+          "& .MuiAccordionSummary-content": {
             margin: 0,
             paddingLeft: spacings.spacing2,
           },
-
-        }
-      }
+        },
+      },
     },
     MuiAccordionDetails: {
       styleOverrides: {
-
         root: {
           padding: spacings.spacing2,
           backgroundColor: colorPalette.grey5,
-        }
-      }
+        },
+      },
     },
     MuiStepConnector: {
       styleOverrides: {
@@ -202,11 +201,11 @@ const customTheme = createTheme({
           right: `calc(50% + ${spacings.spacing2})`,
         },
         line: {
-          marginTop: '8px',
+          marginTop: "8px",
           height: 2,
           borderRadius: spacings.spacing1,
           backgroundColor: colorPalette.grey3,
-          minWidth: '10px',
+          minWidth: "10px",
           width: "100%",
           borderTopStyle: "hidden",
         },
@@ -227,21 +226,25 @@ const customTheme = createTheme({
           borderRadius: "10px",
           paddingInline: "8px",
           paddingBlock: "16px",
-          backgroundColor: colorPalette.primary
-
+          backgroundColor: colorPalette.primary,
         },
         arrow: {
           fontSize: "25px",
-          color: colorPalette.primary
+          color: colorPalette.primary,
         },
-      }
-
+      },
     },
     MuiBadge: {
       styleOverrides: {
-
-        root: { "& .MuiBadge-badge": { borderRadius: "30px", height: "24px", border: `2px solid ${colorPalette.white}`, color: colorPalette.white } }
-      }
+        root: {
+          "& .MuiBadge-badge": {
+            borderRadius: "30px",
+            height: "24px",
+            border: `2px solid ${colorPalette.white}`,
+            color: colorPalette.white,
+          },
+        },
+      },
     },
     MuiSwitch: {
       styleOverrides: {
@@ -287,15 +290,15 @@ const customTheme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 500,
-          fontSize: '14px',
+          fontSize: "14px",
           color: colorPalette.white,
           borderRadius: "7px",
-          paddingBlock: '8px'
+          paddingBlock: "8px",
         },
         colorWarning: {
-          color: colorPalette.black1
-        }
-      }
+          color: colorPalette.black1,
+        },
+      },
     },
     MuiButton: {
       defaultProps: {
