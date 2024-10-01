@@ -1,3 +1,4 @@
+import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
 import { ButtonColor } from "@/ts/types/shared/ButtonColor";
 import { Box, Button, SxProps, Theme, Typography } from "@mui/material";
@@ -58,8 +59,8 @@ export const B4CButton = ({
       startIcon={renderIcon(startIcon)}
       disabled={disabled}
       onClick={onClick}
+      fullWidth={fullWidth}
       sx={{
-        width: fullWidth ? "100%" : "inherit",
         paddingInline: sizes[size].paddingInline,
         paddingBlock: sizes[size].paddingBlock,
         borderRadius: "8px",
@@ -69,7 +70,12 @@ export const B4CButton = ({
     >
       <Typography
         variant={`body-${size}-bold`}
-        sx={{ textTransform: "none", opacity: 0.8, flexWrap: "wrap" }}
+        sx={{
+          textTransform: "none",
+          opacity: 0.8,
+          flexWrap: "wrap",
+          color: colorPalette.white,
+        }}
       >
         {label}
       </Typography>

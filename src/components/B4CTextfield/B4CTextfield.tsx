@@ -29,6 +29,7 @@ interface B4CTextfieldProps {
   placeholder?: string;
   required?: boolean;
   touched?: boolean;
+  type?: string;
   value?: string;
   sx?: SxProps<Theme> | undefined;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -50,16 +51,22 @@ export const B4CTextfield = ({
   required,
   placeholder,
   touched,
+  type,
   value,
   sx,
   variant,
   onChange,
   onClick,
 }: B4CTextfieldProps) => {
+  const anchorName = id ? id : name;
+
   return (
-    <Box display="flex" flexDirection="column" sx={sx}>
+    <Box display="flex" flexDirection="column" sx={sx} width={"100%"}>
       {label && (
-        <InputLabel htmlFor={id} sx={{ marginBottom: spacings.spacing1 }}>
+        <InputLabel
+          htmlFor={anchorName}
+          sx={{ marginBottom: spacings.spacing1 }}
+        >
           <Typography variant="body-normal-bold" color={colorPalette.black1}>
             {label}
           </Typography>
@@ -70,33 +77,35 @@ export const B4CTextfield = ({
         name={name}
         onChange={onChange}
         variant={variant}
-        type={isPassword && !isVisible ? "password" : "text"}
-        InputProps={{
-          endAdornment: isPassword && (
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={onClick}
-              edge="end"
-            >
-              {isVisible ? <NotViewPasswordIcon /> : <ViewPasswordIcon />}
-            </IconButton>
-          ),
-          className: className,
-          sx: {
-            paddingBlock: "4px",
-            paddingLeft: `${4 * 2}px`,
+        type={isPassword && !isVisible ? "password" : type ? type : "text"}
+        slotProps={{
+          input: {
+            endAdornment: isPassword && (
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={onClick}
+                edge="end"
+              >
+                {isVisible ? <NotViewPasswordIcon /> : <ViewPasswordIcon />}
+              </IconButton>
+            ),
+            className: className,
+            sx: {
+              paddingBlock: "4px",
+              paddingLeft: `${4 * 2}px`,
 
-            "&::placeholder": {
-              color: colorPalette.black1, // Modifica el color del placeholder
-              opacity: 1,
-              fontSize: "16px", // Modifica el estilo del placeholder
-              // Otros estilos que desees aplicar al placeholder
+              "&::placeholder": {
+                color: colorPalette.black1,
+                opacity: 1,
+                fontSize: "16px",
+              },
             },
           },
         }}
         className={className}
-        id={id}
+        id={anchorName}
         disabled={disabled}
+        size="small"
         multiline={isMultiline}
         value={value}
         placeholder={placeholder}

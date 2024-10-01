@@ -6,10 +6,14 @@ import { StepType } from "@/ts/enums";
 import { B4CStepIcon } from "./B4CStepIcon";
 import { B4CStepperProps } from "@/ts/types/components/B4CStepperProps";
 
-export const B4CStepper = ({ activeStep, steps }: B4CStepperProps) => {
+export const B4CStepper = ({
+  activeStep,
+  steps,
+  spacing = 4,
+}: B4CStepperProps) => {
   return (
     <Fragment>
-      <Stack spacing={4} sx={{ width: "100%" }}>
+      <Stack spacing={spacing} sx={{ width: "100%" }}>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
