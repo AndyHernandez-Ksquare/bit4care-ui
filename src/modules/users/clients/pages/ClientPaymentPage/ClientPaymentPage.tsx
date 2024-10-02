@@ -162,7 +162,7 @@ export const ClientPaymentPage = () => {
             gap: "32px",
           }}
         >
-          <Typography variant="h6">Resumen de Orden</Typography>
+          <Typography variant="h5">Resumen de Orden</Typography>
           <Divider />
           <Box sx={{ display: "flex", flexDirection: "row", gap: "64px" }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
