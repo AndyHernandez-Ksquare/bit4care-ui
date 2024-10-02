@@ -6,7 +6,7 @@ import {
   Avatar,
   Box,
   Breadcrumbs,
-  Grid,
+  Grid2 as Grid,
   Link,
   Rating,
   TextField,
@@ -31,9 +31,7 @@ export const ServiceDetailAdminPage = () => {
       <Grid container spacing={32}>
         {/* Left Section */}
         <Grid
-          item
-          xs={12}
-          desktop={6}
+          size={{ xs: 12, desktop: 6 }}
           container
           sx={{ display: "flex", flexDirection: "column", gap: "56px" }}
         >
@@ -94,7 +92,7 @@ export const ServiceDetailAdminPage = () => {
           </Box>
         </Grid>
         {/* Right Section */}
-        <Grid item xs={12} desktop={6}>
+        <Grid size={{ xs: 12, desktop: 6 }}>
           <Box
             display="flex"
             alignItems="center"

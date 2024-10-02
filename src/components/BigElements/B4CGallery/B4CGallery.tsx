@@ -1,5 +1,4 @@
-import { Grid, Typography } from "@mui/material";
-
+import { Grid2 as Grid, Typography } from "@mui/material";
 import { B4CImage } from "../B4CImage";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
@@ -17,13 +16,13 @@ export const B4CGallery = ({
 }: IB4CGalleryProps) => {
   return (
     <Grid container sx={{ width: "1056px" }} gap={spacings.spacing4}>
-      <Grid item xs={6}>
+      <Grid size={{ xs: 6 }}>
         <Typography variant="h5" sx={{ color: colorPalette.primary }}>
           {title}
         </Typography>
         <Typography variant="body-normal">{description}</Typography>
       </Grid>
-      <Grid item xs={12} sx={{ display: "flex", gap: spacings.spacing4 }}>
+      <Grid size={{ xs: 12 }} sx={{ display: "flex", gap: spacings.spacing4 }}>
         {gallery.map(({ title, src, alt }, index) => {
           return (
             <B4CImage

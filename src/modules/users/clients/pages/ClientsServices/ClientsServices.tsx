@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { B4CTab } from "@/components/B4CTab/B4CTab";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid2 as Grid } from "@mui/material";
 import { useState } from "react";
 import { B4CClientActiveServices } from "../../components/B4CClientActiveServices";
 import { B4CInactiveServices } from "../../components/B4CInactiveServices";
@@ -24,8 +24,7 @@ export const ClientsServices = () => {
   return (
     <PageLayout title="Mis Servicios">
       <Grid
-        item
-        xs={12}
+        size={{ xs: 12 }}
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <Box
@@ -52,7 +51,7 @@ export const ClientsServices = () => {
           onClick={handleNewServiceClick}
         />
       </Grid>
-      <Grid item xs={12} marginBottom={spacings.spacing2}>
+      <Grid size={{ xs: 12 }} marginBottom={spacings.spacing2}>
         {serviceStatus[tab]}
       </Grid>
     </PageLayout>

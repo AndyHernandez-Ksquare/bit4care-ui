@@ -4,7 +4,7 @@ import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Button, Grid2 as Grid, Typography } from "@mui/material";
 import map from "@/assets/images/hero_maps_static_api.png";
 import { useState } from "react";
 import { colorPalette } from "@/style/partials/colorPalette";
@@ -27,13 +27,12 @@ export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
       {!rejectConfirmation && (
         <Grid container spacing={16}>
           <Grid
-            item
-            xs={12}
+            size={{ xs: 12 }}
             container
             sx={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
           >
             <Grid container>
-              <Grid item xs={12} desktop={6} className="header">
+              <Grid size={{ xs: 12, desktop: 6 }} className="header">
                 <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
                 <Box>
                   <Typography variant="h6">Darel Caldwell</Typography>
@@ -42,7 +41,7 @@ export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
                 <Typography variant="body-normal">
                   El paciente es mi papá. Él tiene problemas para recordar
                   cosas, entonces requiere a un cuidador/a que cuente con
@@ -53,21 +52,21 @@ export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
               </Grid>
             </Grid>
             <Grid container spacing={16}>
-              <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
                 <LocationIcons />
                 <Typography variant="body-normal">
                   Colonia Los Álamos, Benito Juárez CDMX. CP: 05040
                 </Typography>
               </Grid>
-              <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
                 <MoneyIcons />
                 <Typography variant="body-normal">$8100</Typography>
               </Grid>
-              <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
                 <ClockIcon />
                 <Typography variant="body-normal">{`5 horas`}</Typography>
               </Grid>
-              <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
                 <ClockIcon />
                 <Typography variant="body-normal">
                   Lunes, 9 de abril - Viernes, 13 de abril de 2024 (54 horas)
@@ -107,8 +106,7 @@ export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
       {rejectConfirmation && (
         <Grid container spacing={16}>
           <Grid
-            item
-            xs={12}
+            size={{ xs: 12 }}
             container
             sx={{
               display: "flex",

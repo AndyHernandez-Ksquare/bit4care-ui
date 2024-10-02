@@ -6,7 +6,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  Grid,
+  Grid2 as Grid,
   Radio,
   RadioGroup,
   TextField,
@@ -33,9 +33,7 @@ export const ClientPaymentPage = () => {
     >
       {/* Sección del formulario de pago */}
       <Grid
-        item
-        xs={12}
-        desktop={6}
+        size={{ xs: 12, desktop: 6 }}
         sx={{
           height: "100%",
           display: "flex",
@@ -82,36 +80,36 @@ export const ClientPaymentPage = () => {
 
           {paymentMethod === "tarjeta" && (
             <Grid container spacing={16}>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Número de tarjeta"
                   placeholder="1234 5678 9101 1121"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <TextField
                   fullWidth
                   label="Fecha de expiración"
                   placeholder="MM/YY"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <TextField fullWidth label="CVV" placeholder="123" />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Guardar detalles de tarjeta"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Acepto Términos y condiciones"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <B4CButton label="Pagar $8100 MXN" fullWidth />
               </Grid>
             </Grid>
@@ -141,9 +139,7 @@ export const ClientPaymentPage = () => {
 
       {/* Sección del resumen de la orden */}
       <Grid
-        item
-        xs={12}
-        desktop={6}
+        size={{ xs: 12, desktop: 6 }}
         sx={{
           backgroundColor: "#fafafa",
           height: "100%",

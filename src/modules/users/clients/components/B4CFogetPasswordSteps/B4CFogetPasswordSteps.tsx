@@ -2,7 +2,7 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CStepper } from "@/components/B4CStepper";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { Size } from "@/ts/enums";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid2 as Grid, Typography } from "@mui/material";
 import { Fragment, useState } from "react";
 
 export const B4CFogetPasswordSteps = () => {
@@ -64,7 +64,7 @@ export const B4CFogetPasswordSteps = () => {
               borderRadius: "8px",
             }}
           >
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <B4CTextfield label="Ingresa tu electrónico registrado" />
             </Grid>
           </Grid>
@@ -102,11 +102,11 @@ export const B4CFogetPasswordSteps = () => {
               borderRadius: "8px",
             }}
           >
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <B4CTextfield label="Contraseña" isPassword />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <B4CTextfield label="Contraseña" isPassword />
             </Grid>
           </Grid>

@@ -1,7 +1,7 @@
 import { Photos } from "@/assets/svgIcons/photos/photos";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { PageLayout } from "@/modules/admin/PageLayout";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Grid2 as Grid, IconButton, Typography } from "@mui/material";
 
 export const Settings = () => {
   return (
@@ -16,8 +16,7 @@ export const Settings = () => {
       >
         <Grid container>
           <Grid
-            item
-            xs={12}
+            size={{ xs: 12 }}
             display={"flex"}
             flexDirection={"column"}
             sx={{ marginBottom: "2rem" }}
@@ -37,8 +36,7 @@ export const Settings = () => {
             </Typography>
           </Grid>
           <Grid
-            item
-            desktop={6}
+            size={{ desktop: 6 }}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -49,8 +47,7 @@ export const Settings = () => {
             <B4CTextfield label="Nombre de administrador" />
           </Grid>
           <Grid
-            item
-            desktop={6}
+            size={{ desktop: 6 }}
             sx={{
               display: "flex",
               flexDirection: "column",

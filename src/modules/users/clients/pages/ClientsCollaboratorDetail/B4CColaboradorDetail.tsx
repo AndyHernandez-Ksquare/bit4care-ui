@@ -7,7 +7,7 @@ import {
   Breadcrumbs,
   Chip,
   Divider,
-  Grid,
+  Grid2 as Grid,
   Link,
   SxProps,
   Tab,
@@ -89,7 +89,7 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
       </Box>
 
       <Grid container spacing={24} sx={{ height: "100%" }}>
-        <Grid item xs={12} desktop={9}>
+        <Grid size={{ xs: 12, desktop: 9 }}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
@@ -263,7 +263,7 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} desktop={3}>
+        <Grid size={{ xs: 12, desktop: 3 }}>
           <B4CMakeAppointment handleSchedule={handleSchedule} />
         </Grid>
       </Grid>

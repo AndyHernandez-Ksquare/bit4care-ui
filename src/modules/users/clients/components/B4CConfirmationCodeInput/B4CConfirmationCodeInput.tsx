@@ -1,7 +1,13 @@
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
 import { RepeatIcon } from "@/assets/svgIcons/ReturnIcon/RepeatIcon";
 import { B4CConfirmationCodeInputProps } from "@/ts/types/components/B4CConfirmationCodeInput.type";
-import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid2 as Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Fragment } from "react";
 
 export const B4CConfirmationCodeInput = ({
@@ -22,13 +28,13 @@ export const B4CConfirmationCodeInput = ({
           maxHeight: "80px",
         }}
       >
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography>{`${countryCode}-${phoneNumber}`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={11}>
+        <Grid size={{ xs: 12, desktop: 11 }}>
           <Typography>{`Numero aun no confirmado`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={1}>
+        <Grid size={{ xs: 12, desktop: 1 }}>
           <IconButton>
             <EditFieldIcons />
           </IconButton>
@@ -42,7 +48,10 @@ export const B4CConfirmationCodeInput = ({
           width: "100%",
         }}
       >
-        <Grid item xs={12} desktop={8} sx={{ paddingLeft: "0px!important" }}>
+        <Grid
+          size={{ xs: 12, desktop: 8 }}
+          sx={{ paddingLeft: "0px!important" }}
+        >
           <TextField
             fullWidth
             variant="outlined"
@@ -54,7 +63,7 @@ export const B4CConfirmationCodeInput = ({
             (SMS)
           </Typography>
         </Grid>
-        <Grid item xs={12} desktop={4}>
+        <Grid size={{ xs: 12, desktop: 4 }}>
           <Button
             startIcon={<RepeatIcon />}
             sx={{

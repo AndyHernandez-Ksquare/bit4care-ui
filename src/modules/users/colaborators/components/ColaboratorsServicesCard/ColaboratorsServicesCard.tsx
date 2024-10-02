@@ -4,7 +4,7 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
-import { Avatar, Box, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 
 import { color } from "@/ts/types/shared/colors";
@@ -67,23 +67,21 @@ export const ColaboratorsServicesCard = ({
       </Box>
       <Grid container spacing={16}>
         <Grid
-          item
-          xs={12}
-          desktop={6}
+          size={{ xs: 12, desktop: 6 }}
           sx={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}
         >
           <LocationIcons />
           <Typography variant="body-normal">{address}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+        <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
           <MoneyIcons />
           <Typography variant="body-normal">{fee}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+        <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
           <ClockIcon />
           <Typography variant="body-normal">{`${hours} horas`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={6} sx={{ display: "flex" }}>
+        <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
           <ClockIcon />
           <Typography variant="body-normal">{schedule}</Typography>
         </Grid>

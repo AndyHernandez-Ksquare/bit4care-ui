@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@mui/material";
+import { Grid2 as Grid, TextField } from "@mui/material";
 
 export const NewPasswordInput = () => {
   return (
@@ -14,7 +14,7 @@ export const NewPasswordInput = () => {
         width: "100%",
       }}
     >
-      <Grid item xs={12} desktop={10} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12, desktop: 10 }} sx={{ display: "flex" }}>
         <TextField
           fullWidth
           variant="outlined"
@@ -22,7 +22,7 @@ export const NewPasswordInput = () => {
           sx={{ marginBlock: "auto" }}
         />
       </Grid>
-      <Grid item xs={12} desktop={10} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12, desktop: 10 }} sx={{ display: "flex" }}>
         <TextField
           fullWidth
           variant="outlined"

@@ -2,7 +2,12 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CPhoneInput } from "@/components/B4CPhoneInput";
 import { B4CStepper } from "@/components/B4CStepper";
 import { Size } from "@/ts/enums";
-import { Box, Grid, SelectChangeEvent, Typography } from "@mui/material";
+import {
+  Box,
+  Grid2 as Grid,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { ChangeEvent, Fragment, useState } from "react";
 import { B4CConfirmationCodeInput } from "../B4CConfirmationCodeInput";
 import { B4CTextfield } from "@/components/B4CTextfield";
@@ -120,13 +125,13 @@ export const B4CSignupSteps = () => {
                 borderRadius: "8px",
               }}
             >
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <B4CTextfield label="Nombre(s)" />
               </Grid>
-              <Grid item xs={12} desktop={6}>
+              <Grid size={{ xs: 12, desktop: 6 }}>
                 <B4CTextfield label="Apellido paterno" />
               </Grid>
-              <Grid item xs={12} desktop={6}>
+              <Grid size={{ xs: 12, desktop: 6 }}>
                 <B4CTextfield label="Apellido materno" />
               </Grid>
             </Grid>
@@ -141,16 +146,16 @@ export const B4CSignupSteps = () => {
               }}
               justifyContent={"center"}
             >
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <B4CTextfield label="Direccion" />
               </Grid>
-              <Grid item xs={12} desktop={4}>
+              <Grid size={{ xs: 12, desktop: 4 }}>
                 <B4CTextfield label="Codigo postal" />
               </Grid>
-              <Grid item xs={12} desktop={4}>
+              <Grid size={{ xs: 12, desktop: 4 }}>
                 <B4CTextfield label="Estado" />
               </Grid>
-              <Grid item xs={12} desktop={4}>
+              <Grid size={{ xs: 12, desktop: 4 }}>
                 <B4CTextfield label="Ciudad" />
               </Grid>
             </Grid>
@@ -164,7 +169,7 @@ export const B4CSignupSteps = () => {
                 borderRadius: "8px",
               }}
             >
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <B4CTextfield label="Correo electronico" />
               </Grid>
             </Grid>
@@ -178,7 +183,7 @@ export const B4CSignupSteps = () => {
                 borderRadius: "8px",
               }}
             >
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <B4CTextfield label="Contraseña" isPassword />
               </Grid>
             </Grid>

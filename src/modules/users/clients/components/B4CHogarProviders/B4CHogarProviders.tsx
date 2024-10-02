@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid2 as Grid } from "@mui/material";
 import { useState } from "react";
 import { B4CProviderCard } from "../B4CProviderCard";
 import "./B4CHogarProviders.css";
@@ -62,9 +62,7 @@ export const B4CHogarProviders = () => {
       {providers.map((nurse) => (
         <Grid
           className="client-providers-container"
-          item
-          xs={12}
-          desktop={3}
+          size={{ xs: 12, desktop: 3 }}
           key={nurse.name}
         >
           <B4CProviderCard
