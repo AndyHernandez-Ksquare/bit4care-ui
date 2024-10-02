@@ -1,6 +1,6 @@
 import { PageLayout } from "@/modules/admin/PageLayout";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid2 as Grid } from "@mui/material";
 
 import { ColaboratorsTab } from "./ColaboratorsTab";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ export const ColaboratosPage = () => {
   return (
     <PageLayout title="Colaboradores">
       <Grid container>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Box
             sx={{
               display: "flex",
@@ -40,7 +40,7 @@ export const ColaboratosPage = () => {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} marginBottom={spacings.spacing2}>
+        <Grid size={{ xs: 12 }} marginBottom={spacings.spacing2}>
           <Outlet />
         </Grid>
       </Grid>

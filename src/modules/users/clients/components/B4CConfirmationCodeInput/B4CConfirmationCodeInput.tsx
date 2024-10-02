@@ -1,5 +1,6 @@
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
 import { RepeatIcon } from "@/assets/svgIcons/ReturnIcon/RepeatIcon";
+import { B4CConfirmationCodeInputProps } from "@/ts/types/components/B4CConfirmationCodeInput.type";
 import {
   Button,
   Grid2 as Grid,
@@ -9,12 +10,10 @@ import {
 } from "@mui/material";
 import { Fragment } from "react";
 
-interface CodeInputProps {
-  countryCode: string;
-  phoneNumber: string;
-}
-
-export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
+export const B4CConfirmationCodeInput = ({
+  countryCode,
+  phoneNumber,
+}: B4CConfirmationCodeInputProps) => {
   return (
     <Fragment>
       <Grid
@@ -43,13 +42,16 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
       </Grid>
       <Grid
         container
+        spacing={8}
         sx={{
           marginLeft: 0,
-          maxWidth: "100%",
           width: "100%",
         }}
       >
-        <Grid size={{ xs: 12, desktop: 10 }}>
+        <Grid
+          size={{ xs: 12, desktop: 8 }}
+          sx={{ paddingLeft: "0px!important" }}
+        >
           <TextField
             fullWidth
             variant="outlined"
@@ -61,11 +63,10 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
             (SMS)
           </Typography>
         </Grid>
-        <Grid size={{ xs: 12, desktop: 2 }}>
+        <Grid size={{ xs: 12, desktop: 4 }}>
           <Button
             startIcon={<RepeatIcon />}
             sx={{
-              backgroundColor: "white",
               boxShadow: "none",
               textTransform: "none",
               color: "#2F80ED",

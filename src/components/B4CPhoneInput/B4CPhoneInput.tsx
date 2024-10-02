@@ -1,41 +1,32 @@
+import { B4CPhoneInputProps } from "@/ts/types/components/B4CPhoneInput.type";
 import {
   FormControl,
-  Grid2 as Grid,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { ChangeEvent } from "react";
 
-interface PhoneInputProps {
-  countryCode: string;
-  handleCountryCodeChange: (event: SelectChangeEvent<string>) => void;
-  phoneNumber: string;
-  handlePhoneNumberChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
-
-export const PhoneInput = ({
+export const B4CPhoneInput = ({
   countryCode,
   phoneNumber,
   handleCountryCodeChange,
   handlePhoneNumberChange,
-}: PhoneInputProps) => {
+}: B4CPhoneInputProps) => {
   return (
     <Grid
       container
-      spacing={16}
+      spacing={8}
       sx={{
         marginLeft: 0,
         maxWidth: "100%",
         border: `1px solid #BDBDBD`,
         borderRadius: "8px",
-        p: "32px",
-        width: "100%",
+        p: "16px",
       }}
     >
-      <Grid size={{ xs: 12, desktop: 2 }} sx={{ display: "flex" }}>
+      <Grid item xs={12} desktop={3} sx={{ display: "flex" }}>
         <FormControl
           fullWidth
           variant="outlined"
@@ -59,7 +50,7 @@ export const PhoneInput = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid size={{ xs: 12, desktop: 10 }} sx={{ display: "flex" }}>
+      <Grid item xs={12} desktop={9} sx={{ display: "flex" }}>
         <TextField
           fullWidth
           variant="outlined"

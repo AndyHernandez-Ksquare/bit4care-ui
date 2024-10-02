@@ -7,7 +7,7 @@ import {
   Box,
   Breadcrumbs,
   Divider,
-  Grid,
+  Grid2 as Grid,
   Link,
   Typography,
 } from "@mui/material";
@@ -42,7 +42,7 @@ export const ClientsReservationDetail = () => {
       </Box>
 
       <Grid container spacing={24} sx={{ height: "100%" }}>
-        <Grid item xs={12} desktop={8}>
+        <Grid size={{ xs: 12, desktop: 8 }}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
@@ -137,7 +137,7 @@ export const ClientsReservationDetail = () => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} desktop={4}>
+        <Grid size={{ xs: 12, desktop: 4 }}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,

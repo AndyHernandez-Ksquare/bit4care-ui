@@ -109,6 +109,7 @@ export const B4CTextfield = ({
         multiline={isMultiline}
         value={value}
         placeholder={placeholder}
+        rows={isMultiline ? 6 : 0}
       />
 
       {helper && (

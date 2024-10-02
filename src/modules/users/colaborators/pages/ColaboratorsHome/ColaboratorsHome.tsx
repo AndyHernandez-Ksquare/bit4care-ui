@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { B4CTab } from "@/components/B4CTab/B4CTab";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid2 as Grid } from "@mui/material";
 import { useState } from "react";
 import { ActiveServices } from "../ActiveServices/ActiveServices";
 import { InactiveServices } from "../InactiveServices/InactiveServices";
@@ -16,7 +16,7 @@ export const ColaboratorsHome = () => {
   return (
     <PageLayout title="Mis Servicios">
       <Grid container>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Box
             sx={{
               display: "flex",
@@ -36,7 +36,7 @@ export const ColaboratorsHome = () => {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} marginBottom={spacings.spacing2}>
+        <Grid size={{ xs: 12 }} marginBottom={spacings.spacing2}>
           {serviceStatus[tab]}
         </Grid>
       </Grid>

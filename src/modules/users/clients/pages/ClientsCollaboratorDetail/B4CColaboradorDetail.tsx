@@ -1,14 +1,13 @@
 import { B4CDefinitionComponent } from "@/components/B4CDefinitionComponent/B4CDefinitionComponent";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { colorPalette } from "@/style/partials/colorPalette";
-
 import {
   Avatar,
   Box,
   Breadcrumbs,
   Chip,
   Divider,
-  Grid,
+  Grid2 as Grid,
   Link,
   SxProps,
   Tab,
@@ -22,6 +21,7 @@ import { B4CReviewComponent } from "../../components/B4CReviewComponent";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { User } from "@/ts/types/api/User.type";
+import { useNavigate } from "react-router-dom";
 
 interface UserProfileProps {
   user: User;
@@ -37,10 +37,14 @@ const tabStyle: SxProps<Theme> = {
 
 export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
   const [tabValue, setTabValue] = useState(0);
-
+  const navigate = useNavigate();
   const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     console.log(tabValue);
     setTabValue(newValue);
+  };
+
+  const handleSchedule = () => {
+    navigate("/cliente/confirmar-y-pagar");
   };
 
   const reviews = [
@@ -85,7 +89,7 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
       </Box>
 
       <Grid container spacing={24} sx={{ height: "100%" }}>
-        <Grid item xs={12} desktop={9}>
+        <Grid size={{ xs: 12, desktop: 9 }}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
@@ -259,8 +263,8 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} desktop={3}>
-          <B4CMakeAppointment />
+        <Grid size={{ xs: 12, desktop: 3 }}>
+          <B4CMakeAppointment handleSchedule={handleSchedule} />
         </Grid>
       </Grid>
     </Fragment>

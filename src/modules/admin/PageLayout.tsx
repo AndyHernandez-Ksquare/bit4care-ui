@@ -1,6 +1,6 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
-import { Grid, Typography } from "@mui/material";
+import { Grid2 as Grid, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
 interface PageLayoutProps {
@@ -11,14 +11,12 @@ interface PageLayoutProps {
 export const PageLayout = ({ title, children }: PageLayoutProps) => {
   return (
     <Grid container>
-      <Grid item xs={12} sx={{ marginBottom: spacings.spacing4 }}>
+      <Grid size={{ xs: 12 }} sx={{ marginBottom: spacings.spacing4 }}>
         <Typography variant="h3" sx={{ color: colorPalette.grey1 }}>
           {title}
         </Typography>
       </Grid>
-      <Grid item container xs={12}>
-        {children}
-      </Grid>
+      <Grid size={{ xs: 12 }}>{children}</Grid>
     </Grid>
   );
 };

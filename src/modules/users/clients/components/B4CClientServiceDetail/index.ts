@@ -1,0 +1,1 @@
+export { B4CClientServiceDetail } from "./B4CClientServiceDetail";

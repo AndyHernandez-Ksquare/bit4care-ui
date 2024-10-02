@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FavIcon } from "@/assets/svgIcons/favoriteIcons/FavIcon";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CProviderCardProps } from "@/ts/types/components/B4CProviderCard";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
   Card,
   CardContent,
   CardHeader,
-  Chip,
   Divider,
   IconButton,
   Typography,
@@ -22,13 +21,17 @@ export const B4CProviderCard = ({
   name,
   specialty,
   rating,
-  reviews,
   availability,
   rate,
   skills,
-  isFavorite,
   onFavoriteToggle,
 }: B4CProviderCardProps) => {
+  const navigate = useNavigate();
+
+  const handleNewServiceClick = () => {
+    navigate("/cliente/colaborador");
+  };
+
   return (
     <Card
       className="main-card-available-colaborator"
@@ -43,10 +46,12 @@ export const B4CProviderCard = ({
         }
       />
       <CardContent className="available-colaborator">
-        <Avatar
-          aria-label="nurse"
-          sx={{ width: "70px", height: "70px" }}
-        ></Avatar>
+        <Box onClick={handleNewServiceClick} sx={{ cursor: "pointer" }}>
+          <Avatar
+            aria-label="nurse"
+            sx={{ width: "70px", height: "70px" }}
+          ></Avatar>
+        </Box>
         <Box className="available-colaborator-profile">
           <Typography variant="h6" component="div">
             {name}

@@ -1,13 +1,21 @@
 import { PageLayout } from "@/components/B4CPageLayout";
 import { B4CTab } from "@/components/B4CTab/B4CTab";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid2 as Grid } from "@mui/material";
 import { useState } from "react";
 import { B4CClientActiveServices } from "../../components/B4CClientActiveServices";
 import { B4CInactiveServices } from "../../components/B4CInactiveServices";
+import { B4CButton } from "@/components/B4CButton";
+import { Size } from "@/ts/enums";
+import { useNavigate } from "react-router-dom";
 
 export const ClientsServices = () => {
   const [tab, setTab] = useState(0);
+  const navigate = useNavigate();
+
+  const handleNewServiceClick = () => {
+    navigate("/cliente/mis-servicios/nueva-solicitud");
+  };
 
   const serviceStatus = [
     <B4CClientActiveServices key={"activeServices"} />,
@@ -15,7 +23,10 @@ export const ClientsServices = () => {
   ];
   return (
     <PageLayout title="Mis Servicios">
-      <Grid item xs={12}>
+      <Grid
+        size={{ xs: 12 }}
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -34,8 +45,13 @@ export const ClientsServices = () => {
             onClick={() => setTab(1)}
           />
         </Box>
+        <B4CButton
+          label="Nuevo servicio"
+          size={Size.Small}
+          onClick={handleNewServiceClick}
+        />
       </Grid>
-      <Grid item xs={12} marginBottom={spacings.spacing2}>
+      <Grid size={{ xs: 12 }} marginBottom={spacings.spacing2}>
         {serviceStatus[tab]}
       </Grid>
     </PageLayout>
