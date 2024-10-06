@@ -14,7 +14,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const CheckUserRequest = () => {
@@ -40,10 +40,10 @@ export const CheckUserRequest = () => {
   }, [userId]);
 
   return (
-    <Fragment>
+    <>
       {user &&
         (page === 1 ? (
-          <Fragment>
+          <>
             <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
               <Link
                 underline="hover"
@@ -186,7 +186,7 @@ export const CheckUserRequest = () => {
                 </Box>
               </Grid>
             </Grid>
-          </Fragment>
+          </>
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
@@ -239,6 +239,6 @@ export const CheckUserRequest = () => {
             </Box>
           </Box>
         ))}
-    </Fragment>
+    </>
   );
 };

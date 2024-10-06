@@ -13,13 +13,13 @@ import {
   Typography,
 } from "@mui/material";
 import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import { Fragment } from "react";
+
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { colorPalette } from "@/style/partials/colorPalette";
 
 export const ServiceDetailAdminPage = () => {
   return (
-    <Fragment>
+    <>
       <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/admin/servicios/">
           <Typography typography="body-normal">Servicios</Typography>
@@ -138,6 +138,6 @@ export const ServiceDetailAdminPage = () => {
           </Box>
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };

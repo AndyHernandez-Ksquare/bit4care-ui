@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
@@ -91,7 +91,7 @@ export const ActiveServices = () => {
           />
         ))
       ) : (
-        <Fragment>
+        <>
           <Typography variant="h4">Aun no tienes servicios activos</Typography>
           <Typography variant="body1">
             Espera a que algún cliente te escoja para un servicio. Ajusta tu
@@ -111,7 +111,7 @@ export const ActiveServices = () => {
           >
             <Typography variant="body-normal">Ir a perfil y ajustes</Typography>
           </Link>
-        </Fragment>
+        </>
       )}
       <B4CDetailService
         isOpen={openModal}

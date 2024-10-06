@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import {
   Box,
@@ -145,7 +145,7 @@ export const ServiceTable = () => {
     },
   ];
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -243,6 +243,6 @@ export const ServiceTable = () => {
       >
         <B4CTable dataTable={data} columns={columns} />
       </Box>
-    </Fragment>
+    </>
   );
 };

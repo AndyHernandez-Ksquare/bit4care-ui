@@ -1,7 +1,7 @@
 import { B4CMainArea } from "./components/B4CMainArea";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box } from "@mui/material";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./components/NavBar/NavBar";
 import { B4CSidebar } from "./components/B4CSidebar";
@@ -16,7 +16,7 @@ export const ColaboratorsLayout = () => {
   };
 
   return (
-    <Fragment>
+    <>
       <NavBar toggleDrawer={toggleDrawer} />
       <div
         style={{
@@ -38,6 +38,6 @@ export const ColaboratorsLayout = () => {
           </Box>
         </Box>
       </div>
-    </Fragment>
+    </>
   );
 };

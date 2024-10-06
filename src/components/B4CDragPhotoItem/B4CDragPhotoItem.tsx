@@ -7,7 +7,6 @@ export const B4CDragPhotoItem = () => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       console.log(acceptedFiles);
-      // Aquí puedes manejar los archivos subidos
     },
   });
   return (
@@ -25,7 +24,7 @@ export const B4CDragPhotoItem = () => {
         backgroundColor: "#EDF2F6",
         cursor: "pointer",
         textAlign: "center",
-        p: 1, // padding reducido para ajustar al tamaño más pequeño
+        p: 1,
         "&:hover": {
           borderColor: "#90CAF9",
           backgroundColor: "#E1F5FE",

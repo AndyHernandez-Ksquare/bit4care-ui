@@ -5,7 +5,6 @@ import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { User } from "@/services/colaboratorsServices";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
-import { Fragment } from "react";
 
 interface ISingleCollaboratorsCardProps {
   user: User | null;
@@ -25,7 +24,7 @@ export const SingleCollaboratorsCard = ({
       bgColor={"linear-gradient(180deg, #FFFFFF 0%, #E4EEFC 100%)"}
     >
       {user ? (
-        <Fragment>
+        <>
           <Box
             display={"flex"}
             flexDirection={"column"}
@@ -150,7 +149,7 @@ export const SingleCollaboratorsCard = ({
             <B4CButton size={Size.Small} label="Conectar con cliente" />
             <B4CButton size={Size.Small} label="Dar de baja" />
           </Box>
-        </Fragment>
+        </>
       ) : (
         <Typography variant="h3">Error al encontrar usuario</Typography>
       )}

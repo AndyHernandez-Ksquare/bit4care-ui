@@ -1,6 +1,5 @@
 import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 import { Status } from "@/ts/types/components";
 
@@ -42,7 +41,7 @@ export const InactiveServices = () => {
           />
         ))
       ) : (
-        <Fragment>
+        <>
           <Typography variant="h4">
             Aun no tienes servicios finalizados
           </Typography>
@@ -50,8 +49,8 @@ export const InactiveServices = () => {
             Completa tu primer Servicio para que pueda aparecer en tu archivo de
             Servicios. Estos se eliminarán después de un año.
           </Typography>
-          <B4CNoFinishedServices />)
-        </Fragment>
+          <B4CNoFinishedServices />
+        </>
       )}
     </Box>
   );

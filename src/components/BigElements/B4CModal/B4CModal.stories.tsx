@@ -1,6 +1,6 @@
 import { B4CModal } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Fragment } from "react";
+
 import { B4CImage } from "../B4CImage";
 import { Typography } from "@mui/material";
 import { B4CButton } from "@/components/B4CButton";
@@ -27,7 +27,7 @@ export const RegularImage: Story = {
   args: {
     open: true,
     children: (
-      <Fragment>
+      <>
         <B4CImage
           alt="snow-man"
           src="https://img.freepik.com/foto-gratis/pintura-lago-montana-montana-al-fondo_188544-9126.jpg?t=st=1713286467~exp=1713290067~hmac=b1d3e8493213aa953d86b1d33002690de45ae7ed0d67bcd161b95bb2213bafe4&w=1380"
@@ -42,7 +42,7 @@ export const RegularImage: Story = {
           quaerat qui facilis! Consequatur, voluptatem?
         </Typography>
         <B4CButton variant="primary" label="Button Sample" size={Size.Normal} />
-      </Fragment>
+      </>
     ),
   },
 };

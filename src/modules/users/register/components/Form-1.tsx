@@ -1,4 +1,3 @@
-import { B4CRadioButtonGroup } from "@/components/B4CRadioButtonGroup";
 import { B4CSelect } from "@/components/B4CSelect";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
@@ -20,6 +19,9 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
     birthDate: "",
     gender: "",
     email: "",
+    direction: "",
+    postalCode: "",
+    neighborhood: "",
     state: "",
     nacionality: "",
     maritalStatus: "",
@@ -52,7 +54,16 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
       <Typography>
         Comienza por introducir tus <strong>datos personales</strong>
       </Typography>
-      <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
+      <Box
+        mt={24}
+        display={"flex"}
+        gap={24}
+        justifyContent={"space-between"}
+        flexDirection={{
+          mobile: "column",
+          desktop: "row",
+        }}
+      >
         <B4CTextfield
           label="Nombre"
           name="name"
@@ -66,7 +77,16 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
           onChange={handleChange}
         />
       </Box>
-      <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
+      <Box
+        mt={24}
+        display={"flex"}
+        gap={24}
+        justifyContent={"space-between"}
+        flexDirection={{
+          mobile: "column",
+          desktop: "row",
+        }}
+      >
         <B4CTextfield
           label="Fecha de nacimiento"
           name="birthDate"
@@ -83,14 +103,44 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CTextfield
-          label="Dirección de correo electrónico"
+          label="Correo electrónico"
           name="email"
           value={formState.email}
           onChange={handleChange}
           type="email"
         />
       </Box>
-
+      <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
+        <B4CTextfield
+          label="Dirección"
+          name="direction"
+          value={formState.direction}
+          onChange={handleChange}
+        />
+      </Box>
+      <Box
+        mt={24}
+        display={"flex"}
+        gap={24}
+        justifyContent={"space-between"}
+        flexDirection={{
+          mobile: "column",
+          desktop: "row",
+        }}
+      >
+        <B4CTextfield
+          label="Código Postal"
+          name="postalCode"
+          value={formState.postalCode}
+          onChange={handleChange}
+        />
+        <B4CTextfield
+          label="Colonia"
+          name="neighborhood"
+          value={formState.neighborhood}
+          onChange={handleChange}
+        />
+      </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CSelect
           label="Estado de residencia"
@@ -116,25 +166,6 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
           value={formState.maritalStatus}
           options={maritalStatusOptions}
           onChange={handleChange}
-        />
-      </Box>
-      <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
-        <B4CRadioButtonGroup
-          title="Especialidad de trabajo"
-          options={[
-            "Hogar",
-            "Asistencia",
-            "Acompañamiento",
-            "Cuidados",
-            "Motriz",
-            "Mental",
-            "Nutrición",
-            "Psicología",
-            "Terapia",
-            "Especialidad",
-            "Otro",
-          ]}
-          row
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>

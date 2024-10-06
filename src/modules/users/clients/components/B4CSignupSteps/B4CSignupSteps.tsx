@@ -8,7 +8,7 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, Fragment, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { B4CConfirmationCodeInput } from "../B4CConfirmationCodeInput";
 import { B4CTextfield } from "@/components/B4CTextfield";
 
@@ -76,7 +76,7 @@ export const B4CSignupSteps = () => {
         </Typography>
       </Box>
       {activeStep === 0 && (
-        <Fragment>
+        <>
           <B4CPhoneInput
             countryCode={countryCode}
             phoneNumber={phoneNumber}
@@ -89,10 +89,10 @@ export const B4CSignupSteps = () => {
             onClick={handleSendCode}
             size={Size.Small}
           />
-        </Fragment>
+        </>
       )}
       {activeStep === 1 && (
-        <Fragment>
+        <>
           <B4CConfirmationCodeInput
             countryCode={countryCode}
             phoneNumber={phoneNumber}
@@ -103,10 +103,10 @@ export const B4CSignupSteps = () => {
             onClick={handleConfirm}
             size={Size.Small}
           />
-        </Fragment>
+        </>
       )}
       {activeStep === 2 && (
-        <Fragment>
+        <>
           <Box
             component="form"
             sx={{
@@ -194,7 +194,7 @@ export const B4CSignupSteps = () => {
               size={Size.Small}
             />
           </Box>
-        </Fragment>
+        </>
       )}
     </Box>
   );

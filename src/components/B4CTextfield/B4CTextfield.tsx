@@ -24,6 +24,7 @@ interface B4CTextfieldProps {
   id?: string;
   isPassword?: boolean;
   isMultiline?: boolean;
+  rows?: number;
   isVisible?: boolean;
   label?: string;
   placeholder?: string;
@@ -49,6 +50,7 @@ export const B4CTextfield = ({
   isMultiline,
   isVisible,
   required,
+  rows,
   placeholder,
   touched,
   type,
@@ -109,7 +111,7 @@ export const B4CTextfield = ({
         multiline={isMultiline}
         value={value}
         placeholder={placeholder}
-        rows={isMultiline ? 6 : 0}
+        rows={isMultiline ? (rows ? rows : 6) : 0}
       />
 
       {helper && (

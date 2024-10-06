@@ -14,6 +14,7 @@ interface IB4CButtonProps {
   size?: Size;
   sx?: SxProps<Theme>;
   onClick?: () => void;
+  onSubmit?: () => void;
 }
 
 export const B4CButton = ({
@@ -26,6 +27,7 @@ export const B4CButton = ({
   startIcon,
   sx,
   onClick,
+  onSubmit,
 }: IB4CButtonProps) => {
   const sizes = {
     small: {
@@ -59,6 +61,7 @@ export const B4CButton = ({
       startIcon={renderIcon(startIcon)}
       disabled={disabled}
       onClick={onClick}
+      onSubmit={onSubmit}
       fullWidth={fullWidth}
       sx={{
         paddingInline: sizes[size].paddingInline,

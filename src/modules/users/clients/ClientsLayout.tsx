@@ -1,14 +1,13 @@
 import { B4CMainClientArea } from "./components/B4CMainClientArea/B4CMainClientArea";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
 import "./ClientsLayout.css";
 
 export const ClientsLayout = () => (
-  <Fragment>
+  <>
     <ClientsNavbar />
     <Box
       sx={{
@@ -40,5 +39,5 @@ export const ClientsLayout = () => (
         © 2024 Your Company. All rights reserved.
       </Typography>
     </Box>
-  </Fragment>
+  </>
 );

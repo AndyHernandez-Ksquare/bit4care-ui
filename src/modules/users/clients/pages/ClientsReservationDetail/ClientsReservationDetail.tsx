@@ -11,12 +11,12 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
+
 import { B4CServiceCheckout } from "../../components/B4CServiceCheckout";
 
 export const ClientsReservationDetail = () => {
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           marginBottom: "24px",
@@ -152,6 +152,6 @@ export const ClientsReservationDetail = () => {
           </Box>
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };

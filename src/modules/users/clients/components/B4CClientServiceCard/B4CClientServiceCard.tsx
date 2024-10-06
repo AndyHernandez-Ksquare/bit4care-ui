@@ -9,7 +9,6 @@ import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 import { B4CClientServicesCardProps } from "@/ts/types/components/B4CClientServicesCard.type";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
-import { Fragment } from "react/jsx-runtime";
 import { B4CClientServiceDetail } from "../B4CClientServiceDetail";
 import { useState } from "react";
 
@@ -36,7 +35,7 @@ export const B4CClientServiceCard = ({
     setIsOpenModal(true);
   };
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           width: "100%",
@@ -117,6 +116,6 @@ export const B4CClientServiceCard = ({
           setIsOpenModal(false);
         }}
       />
-    </Fragment>
+    </>
   );
 };

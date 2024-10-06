@@ -3,7 +3,7 @@ import { B4CStepper } from "@/components/B4CStepper";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { Size } from "@/ts/enums";
 import { Box, Grid2 as Grid, Typography } from "@mui/material";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 export const B4CFogetPasswordSteps = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -13,8 +13,6 @@ export const B4CFogetPasswordSteps = () => {
   };
 
   const handleSendCode = () => {
-    // Aquí puedes manejar la lógica para enviar el código de verificación
-
     handleActiveStep(1);
   };
 
@@ -41,7 +39,7 @@ export const B4CFogetPasswordSteps = () => {
         <B4CStepper activeStep={activeStep} steps={steps} />
       </Box>
       {activeStep === 0 && (
-        <Fragment>
+        <>
           <Box
             sx={{
               display: "flex",
@@ -76,10 +74,10 @@ export const B4CFogetPasswordSteps = () => {
             onClick={handleSendCode}
             sx={{ width: "100%" }}
           />
-        </Fragment>
+        </>
       )}
       {activeStep === 1 && (
-        <Fragment>
+        <>
           <Box
             sx={{
               display: "flex",
@@ -116,7 +114,7 @@ export const B4CFogetPasswordSteps = () => {
             size={Size.Small}
             sx={{ width: "100%" }}
           />
-        </Fragment>
+        </>
       )}
     </Box>
   );

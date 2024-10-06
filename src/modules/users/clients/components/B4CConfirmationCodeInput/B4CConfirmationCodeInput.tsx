@@ -8,14 +8,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
 
 export const B4CConfirmationCodeInput = ({
   countryCode,
   phoneNumber,
 }: B4CConfirmationCodeInputProps) => {
   return (
-    <Fragment>
+    <>
       <Grid
         container
         spacing={12}
@@ -81,6 +80,6 @@ export const B4CConfirmationCodeInput = ({
           </Button>
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };
