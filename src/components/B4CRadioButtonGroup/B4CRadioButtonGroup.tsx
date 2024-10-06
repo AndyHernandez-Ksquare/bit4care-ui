@@ -8,17 +8,23 @@ import {
   Typography,
 } from "@mui/material";
 
-export interface B4CRadioButtonGruopProps {
+export interface B4CRadioButtonGroupProps {
   options: string[];
+  name: string;
   title?: string;
   row?: boolean;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const B4CRadioButtonGroup = ({
   options,
   title,
+  name,
   row = false,
-}: B4CRadioButtonGruopProps) => {
+  value,
+  onChange,
+}: B4CRadioButtonGroupProps) => {
   return (
     <FormControl>
       {title && (
@@ -30,8 +36,10 @@ export const B4CRadioButtonGroup = ({
       )}
       <RadioGroup
         aria-labelledby="radio-buttons-group-label"
-        name="radio-buttons-group"
+        name={name}
         row={row}
+        value={value}
+        onChange={onChange}
         sx={{
           gap: "10px",
           mt: "10px",
@@ -43,6 +51,7 @@ export const B4CRadioButtonGroup = ({
             value={option.toLowerCase()}
             control={<Radio />}
             label={option}
+            sx={{ minWidth: "125px" }}
           />
         ))}
       </RadioGroup>

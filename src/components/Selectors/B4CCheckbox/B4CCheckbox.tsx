@@ -6,7 +6,7 @@ export interface IB4CCheckboxProps {
   checked?: boolean;
   label?: string;
   name?: string;
-  value?: boolean;
+  value?: boolean | string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
