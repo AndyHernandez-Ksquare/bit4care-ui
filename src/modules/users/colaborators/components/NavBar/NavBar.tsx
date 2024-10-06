@@ -1,16 +1,21 @@
 import { B4CLogo } from "@/assets/images/B4CLogo";
 import { B4CAvatar } from "@/components/SmallElements/B4CAvatar";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-
 import { HamburgerMenu } from "@/assets/svgIcons/hamburgerMenu/HamburgerMenu";
-import "./NavBar.css";
+import { colorPalette } from "@/style/partials/colorPalette";
 
 interface NavBarProps {
   toggleDrawer: (newOpen: boolean) => () => void;
+  alternative?: boolean;
 }
 
-export const NavBar = ({ toggleDrawer }: NavBarProps) => (
-  <AppBar sx={{ height: 100, position: "fixed" }}>
+export const NavBar = ({ toggleDrawer, alternative = false }: NavBarProps) => (
+  <AppBar
+    sx={{
+      height: 90,
+      backgroundColor: alternative ? colorPalette.white : colorPalette.primary,
+    }}
+  >
     <Toolbar sx={{ height: 1, justifyContent: "center" }}>
       <Box
         sx={{
@@ -19,14 +24,32 @@ export const NavBar = ({ toggleDrawer }: NavBarProps) => (
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          margin: { xs: "0 20px", tablet: "0 40px" },
         }}
       >
-        <B4CLogo />
-        <B4CAvatar className="avatar" width={40} height={40} imageLink={""} />
+        <a href="/">
+          <B4CLogo alternative={alternative} />
+        </a>
+        <Box
+          sx={{
+            alignItems: "center",
+            display: {
+              mobile: "none",
+              tablet: "flex",
+            },
+          }}
+        >
+          <B4CAvatar width={40} height={40} imageLink={""} />
+        </Box>
         <IconButton
-          className="mobile-menu"
           aria-label="menu"
           onClick={toggleDrawer(true)}
+          sx={{
+            display: {
+              xs: "block",
+              tablet: "none",
+            },
+          }}
         >
           <HamburgerMenu />
         </IconButton>

@@ -16,7 +16,6 @@ export const AdminLayout = () => {
         display: "flex",
         position: "fixed",
         gap: "2vw",
-        // Altura máxima del componente B4CMainArea
       }}
     >
       <Box width={"22vw"} display={"flex"}>
