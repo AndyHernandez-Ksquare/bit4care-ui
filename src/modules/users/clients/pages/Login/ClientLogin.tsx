@@ -84,10 +84,8 @@ export const ClientLogin = () => {
             fullWidth
             onClick={handleIsOpen}
             label={"Entrar a mi dashboard"}
-            // Desactiva el botón mientras carga
-          >
-            {/* {isLoading && <CircularProgress size={24} />} */}
-          </B4CButton>
+          />
+
           <B4CButton
             variant="secondary"
             fullWidth
@@ -151,9 +149,13 @@ export const ClientLogin = () => {
               isLoading={isLoading}
             ></B4CButton>
           </form>
-          <Link className="custom-link" to="/cliente/olvide-contrasena">
-            <Typography variant="body-normal">Olvidé mi contraseña</Typography>
-          </Link>
+          <Box>
+            <Link className="custom-link" to="/cliente/olvide-contrasena">
+              <Typography variant="body-normal">
+                Olvidé mi contraseña
+              </Typography>
+            </Link>
+          </Box>
         </Box>
       </B4CModal>
     </Box>
