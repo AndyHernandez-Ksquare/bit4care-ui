@@ -22,7 +22,12 @@ export const NavBar = ({ toggleDrawer, alternative = false }: NavBarProps) => (
           width: "100%",
           maxWidth: 1580,
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: alternative
+            ? {
+                xs: "center",
+                tablet: "space-between",
+              }
+            : "space-between",
           alignItems: "center",
           margin: { xs: "0 20px", tablet: "0 40px" },
         }}
@@ -30,29 +35,33 @@ export const NavBar = ({ toggleDrawer, alternative = false }: NavBarProps) => (
         <a href="/">
           <B4CLogo alternative={alternative} />
         </a>
-        <Box
-          sx={{
-            alignItems: "center",
-            display: {
-              mobile: "none",
-              tablet: "flex",
-            },
-          }}
-        >
-          <B4CAvatar width={40} height={40} imageLink={""} />
-        </Box>
-        <IconButton
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-          sx={{
-            display: {
-              xs: "block",
-              tablet: "none",
-            },
-          }}
-        >
-          <HamburgerMenu />
-        </IconButton>
+        {!alternative && (
+          <>
+            <Box
+              sx={{
+                alignItems: "center",
+                display: {
+                  mobile: "none",
+                  tablet: "flex",
+                },
+              }}
+            >
+              <B4CAvatar width={40} height={40} imageLink={""} />
+            </Box>
+            <IconButton
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+              sx={{
+                display: {
+                  xs: "block",
+                  tablet: "none",
+                },
+              }}
+            >
+              <HamburgerMenu />
+            </IconButton>
+          </>
+        )}
       </Box>
     </Toolbar>
   </AppBar>
