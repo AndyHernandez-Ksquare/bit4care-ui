@@ -1,6 +1,6 @@
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
 import { Box } from "@mui/material";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { B4CAvailableColaboratorCard } from "../B4CAvailableColaboratorCard";
 import { B4CClientColaboratorCard } from "../B4CClientColaboratorCard";
 
@@ -8,7 +8,7 @@ export const B4CAvailableColaborator = () => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           width: "100%",
@@ -62,6 +62,6 @@ export const B4CAvailableColaborator = () => {
           setOpenModal(false);
         }}
       />
-    </Fragment>
+    </>
   );
 };

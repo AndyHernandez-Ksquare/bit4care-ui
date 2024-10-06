@@ -7,7 +7,7 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
+
 import { getStepType } from "./helper";
 import { StepType } from "@/ts/enums";
 import { B4CStepTabIcon } from "./B4CStepTabIcon";
@@ -24,7 +24,7 @@ export const B4CStepperTab = ({
   onStepClick,
 }: B4CStepperTabProps) => {
   return (
-    <Fragment>
+    <>
       <Stack sx={{ width: "100%" }}>
         <Stepper
           activeStep={activeStep}
@@ -79,6 +79,6 @@ export const B4CStepperTab = ({
           })}
         </Stepper>
       </Stack>
-    </Fragment>
+    </>
   );
 };

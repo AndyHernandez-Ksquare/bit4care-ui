@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment } from "react";
+import { ChangeEvent } from "react";
 import {
   DataGrid,
   gridPageCountSelector,
@@ -8,13 +8,14 @@ import {
   GridColDef,
   GridColumnVisibilityModel,
   GridRowParams,
+  GridValidRowModel,
 } from "@mui/x-data-grid";
 import { Pagination } from "@mui/material";
 import PaginationItem from "@mui/material/PaginationItem";
 import { colorPalette } from "@/style/partials/colorPalette";
 
 export interface IB4CTableProps {
-  dataTable: any[];
+  dataTable: GridValidRowModel[];
   columns: GridColDef[];
   columnVisibilityModel?: GridColumnVisibilityModel | undefined;
   onRowClick?: (params: GridRowParams) => void;
@@ -25,20 +26,19 @@ function CustomPagination() {
   const page = useGridSelector(apiRef, gridPageSelector);
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   return (
-    <Fragment>
+    <>
       <Pagination
         color="primary"
         variant="outlined"
         shape="rounded"
         page={page + 1}
         count={pageCount}
-        // @ts-expect-error: Some description
-        renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+        renderItem={(props2) => <PaginationItem {...props2} />}
         onChange={(event: ChangeEvent<unknown>, value: number) =>
           apiRef.current.setPage(value - 1)
         }
       />
-    </Fragment>
+    </>
   );
 }
 

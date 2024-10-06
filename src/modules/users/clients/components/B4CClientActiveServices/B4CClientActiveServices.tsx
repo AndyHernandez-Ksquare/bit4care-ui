@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
 import { Status } from "@/ts/types/components";
@@ -85,7 +84,7 @@ export const B4CClientActiveServices = () => {
           />
         ))
       ) : (
-        <Fragment>
+        <>
           <Typography variant="h4">Aun no tienes servicios activos</Typography>
           <Typography variant="body1">
             Da click en el botón para crear una nueva solicitud
@@ -106,7 +105,7 @@ export const B4CClientActiveServices = () => {
               Hacer una nueva solicitud
             </Typography>
           </Link>
-        </Fragment>
+        </>
       )}
     </Box>
   );

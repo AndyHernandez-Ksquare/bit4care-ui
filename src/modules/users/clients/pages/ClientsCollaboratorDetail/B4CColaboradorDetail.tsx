@@ -16,7 +16,6 @@ import {
   Typography,
 } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
-import { Fragment } from "react/jsx-runtime";
 import { B4CReviewComponent } from "../../components/B4CReviewComponent";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
@@ -63,7 +62,7 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
   ];
 
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           marginBottom: "24px",
@@ -231,7 +230,7 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
             </Box>
 
             {tabValue === 0 && (
-              <Fragment>
+              <>
                 <Box
                   mt={16}
                   sx={{ display: "flex", flexDirection: "row", gap: "8px" }}
@@ -254,19 +253,15 @@ export const B4CColaboradorDetail = ({ user }: UserProfileProps) => {
                     ))}
                   </Box>
                 </Box>
-              </Fragment>
+              </>
             )}
-            {tabValue === 1 && (
-              <Fragment>
-                <B4CReviewComponent reviews={reviews} />
-              </Fragment>
-            )}
+            {tabValue === 1 && <B4CReviewComponent reviews={reviews} />}
           </Box>
         </Grid>
         <Grid size={{ xs: 12, desktop: 3 }}>
           <B4CMakeAppointment handleSchedule={handleSchedule} />
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };

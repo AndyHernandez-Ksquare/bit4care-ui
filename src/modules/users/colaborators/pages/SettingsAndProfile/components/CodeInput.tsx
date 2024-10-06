@@ -7,7 +7,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
 
 interface CodeInputProps {
   countryCode: string;
@@ -16,7 +15,7 @@ interface CodeInputProps {
 
 export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
   return (
-    <Fragment>
+    <>
       <Grid
         container
         spacing={12}
@@ -80,6 +79,6 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
           </Button>
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };

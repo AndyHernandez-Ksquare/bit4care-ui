@@ -1,7 +1,6 @@
 import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Status } from "@/ts/types/components";
 import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
 
 export const B4CInactiveServices = () => {
@@ -41,7 +40,7 @@ export const B4CInactiveServices = () => {
           />
         ))
       ) : (
-        <Fragment>
+        <>
           <Typography variant="h4">
             Aun no tienes servicios finalizados
           </Typography>
@@ -50,7 +49,7 @@ export const B4CInactiveServices = () => {
             Servicios. Estos se eliminarán después de un año.
           </Typography>
           <B4CNoFinishedServices />)
-        </Fragment>
+        </>
       )}
       ;
     </Box>

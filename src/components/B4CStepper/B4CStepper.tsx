@@ -1,5 +1,4 @@
 import { Stack, Step, StepLabel, Stepper } from "@mui/material";
-import { Fragment } from "react";
 import { B4CStepperConnector } from "./B4CStepperConnector";
 import { getStepType } from "./helper";
 import { StepType } from "@/ts/enums";
@@ -12,7 +11,7 @@ export const B4CStepper = ({
   spacing = 4,
 }: B4CStepperProps) => {
   return (
-    <Fragment>
+    <>
       <Stack spacing={spacing} sx={{ width: "100%" }}>
         <Stepper
           activeStep={activeStep}
@@ -37,6 +36,6 @@ export const B4CStepper = ({
           })}
         </Stepper>
       </Stack>
-    </Fragment>
+    </>
   );
 };
