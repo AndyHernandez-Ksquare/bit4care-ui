@@ -7,13 +7,23 @@ import loginClientsImg from "@/assets/images/clients-login.png";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./ClientLogin.css";
+import { useFormik } from "formik";
+import { LoginService } from "@/services/auth/LoginService";
+import { ClientSelfService } from "@/services/clientServices/ClientServices";
+import { Roles } from "@/ts/enums";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleVisiblePassword = () => {
+    setVisible(!visible);
   };
 
   const handleSignUp = () => {
@@ -23,6 +33,30 @@ export const ClientLogin = () => {
   const onClose = () => {
     setIsOpen(false);
   };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        const userData = await LoginService(values.email, values.password);
+        if (userData) {
+          const userSessionData = await ClientSelfService(userData.token);
+
+          if (userSessionData) {
+            if (userSessionData.role === Roles.Client) {
+              console.log("Cliente conectado:", userData);
+              navigate(`/cliente`);
+            }
+          }
+        }
+      } catch (error: unknown) {
+        console.log(error);
+      }
+    },
+  });
   return (
     <Box display={{ display: "flex", flexDirection: "row", height: "100vh" }}>
       <Box className="left-panel">
@@ -62,13 +96,39 @@ export const ClientLogin = () => {
             paddingBlock: "6rem",
           }}
         >
-          <Typography variant="h4">Bienvenido/a de vuelta</Typography>
-          <Typography color="#545454">
-            Ingresa tu correo y contraseña registrados
-          </Typography>
-          <B4CTextfield placeholder="Usuario"></B4CTextfield>
-          <B4CTextfield placeholder="Contraseña" isPassword></B4CTextfield>
-          <B4CButton fullWidth label="Entrar"></B4CButton>
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{
+              display: "inherit",
+              flexDirection: "inherit",
+              gap: "inherit",
+            }}
+          >
+            <Typography variant="h4">Bienvenido/a de vuelta</Typography>
+            <Typography color="#545454">
+              Ingresa tu correo y contraseña registrados
+            </Typography>
+            <B4CTextfield
+              placeholder="Usuario"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              name="email"
+            ></B4CTextfield>
+            <B4CTextfield
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              name="password"
+              placeholder="Contraseña"
+              isPassword
+              isVisible={visible}
+              onClick={handleVisiblePassword}
+            ></B4CTextfield>
+            <B4CButton
+              onClick={formik.handleSubmit}
+              fullWidth
+              label="Entrar"
+            ></B4CButton>
+          </form>
           <Link
             to="/cliente/olvide-contrasena"
             style={{ textDecoration: "none", color: "inherit" }}

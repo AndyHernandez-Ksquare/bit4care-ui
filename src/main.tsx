@@ -19,7 +19,7 @@ import { ClientsHome } from "./modules/users/clients/pages/ClientsHome";
 import { ClientsServices } from "./modules/users/clients/pages/ClientsServices";
 import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
 import { B4CColaboradorDetail } from "./modules/users/clients/pages/ClientsCollaboratorDetail/B4CColaboradorDetail.tsx";
-import { User } from "./ts/types/api/User.type.ts";
+import { User } from "./ts/types/api/user/User.type.ts";
 import { ClientsReservationDetail } from "./modules/users/clients/pages/ClientsReservationDetail/ClientsReservationDetail.tsx";
 import { B4CClientsNewService } from "./modules/users/clients/pages/ClientsNewService/B4CClientsNewService.tsx";
 import { ClientPaymentPage } from "./modules/users/clients/pages/ClientPaymentPage/ClientPaymentPage.tsx";
