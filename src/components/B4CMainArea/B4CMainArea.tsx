@@ -1,6 +1,6 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Grid, SxProps, Theme, Typography } from "@mui/material";
+import { Box, Grid2 as Grid, SxProps, Theme, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { B4CSearchBar } from "../B4CSearchBar";
 import { B4CAvatar } from "../SmallElements/B4CAvatar";
@@ -35,8 +35,7 @@ export const B4CMainArea = ({
       }}
     >
       <Grid
-        item
-        xs={12}
+        size={{ xs: 12 }}
         sx={{
           display: "flex",
           height: "64px",
@@ -62,8 +61,7 @@ export const B4CMainArea = ({
         </Box>
       </Grid>
       <Grid
-        item
-        xs={12}
+        size={{ xs: 12 }}
         sx={{
           paddingInline: spacings.spacing4,
           paddingTop: spacings.spacing6,

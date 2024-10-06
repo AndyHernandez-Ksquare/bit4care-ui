@@ -1,7 +1,7 @@
 import { B4CPhoneInputProps } from "@/ts/types/components/B4CPhoneInput.type";
 import {
   FormControl,
-  Grid,
+  Grid2 as Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -26,7 +26,7 @@ export const B4CPhoneInput = ({
         p: "16px",
       }}
     >
-      <Grid item xs={12} desktop={3} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12, desktop: 3 }} sx={{ display: "flex" }}>
         <FormControl
           fullWidth
           variant="outlined"
@@ -50,7 +50,7 @@ export const B4CPhoneInput = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} desktop={9} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12, desktop: 9 }} sx={{ display: "flex" }}>
         <TextField
           fullWidth
           variant="outlined"

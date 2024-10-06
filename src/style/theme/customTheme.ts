@@ -4,9 +4,10 @@ import { CSSProperties } from "react";
 import { colorPalette } from "../partials/colorPalette";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/700.css";
+
 import { stepLabelClasses } from "@mui/material";
 
-const interFontFamily = "'Inter', sans-serif";
+const interFontFamily = "'Poppins', 'Inter', sans-serif";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
@@ -47,12 +48,12 @@ declare module "@mui/material/Typography" {
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
-    xs: true; // removes the `xs` breakpoint
+    xs: true;
     sm: false;
     md: false;
     lg: false;
     xl: false;
-    mobile: true; // adds the `mobile` breakpoint
+    mobile: true;
     tablet: true;
     desktop: true;
     desktopHD: true;

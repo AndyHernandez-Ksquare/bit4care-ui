@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid2 as Grid, Typography } from "@mui/material";
 import { B4CBanner } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 import { B4CButton } from "@/components/B4CButton";
@@ -28,9 +28,10 @@ export const Primary: Story = {
     children: (
       <Grid container>
         <Grid
-          item
-          xs={12}
-          desktop={8}
+          size={{
+            xs: 12,
+            desktop: 8,
+          }}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -47,7 +48,7 @@ export const Primary: Story = {
             <B4CButton label="Sample" variant="secondary" size={Size.Small} />
           </Box>
         </Grid>
-        <Grid item xs={12} desktop={4}>
+        <Grid size={{ xs: 12, desktop: 4 }}>
           <B4CImage
             width={200}
             height={200}

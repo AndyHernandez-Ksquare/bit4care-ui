@@ -1,27 +1,24 @@
 import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
-import { Grid2 as Grid } from "@mui/material";
+import { Box, Grid2 as Grid, Typography } from "@mui/material";
 
 export const Index = () => {
   return (
     <>
-      <Grid>
-        <NavBar toggleDrawer={() => () => {}} alternative />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-            padding: "10px",
-            border: "1px solid black",
-            borderRadius: "5px",
-            backgroundColor: "red",
-            marginTop: "100px",
-          }}
-        >
-          <a href="/admin">admin</a>
-          <a href="/colaborador">colaborador</a>
-          <a href="/cliente">cliente</a>
-        </div>
+      <NavBar toggleDrawer={() => () => {}} alternative />
+      <Grid container mt={90} width={"100%"} justifyContent={"center"}>
+        <Grid maxWidth={1280}>
+          <Box mt={20} display="flex" justifyContent="center">
+            <Typography variant="h1">
+              Encuentra el personal que necesitas
+            </Typography>
+            <Typography variant="h1">
+              Conecta con una amplia red de proveedores de servicios, desde
+              reparaciones del hogar hasta servicios profesionales, ¡todo en un
+              solo lugar!
+            </Typography>
+          </Box>
+          <Box></Box>
+        </Grid>
       </Grid>
     </>
   );
