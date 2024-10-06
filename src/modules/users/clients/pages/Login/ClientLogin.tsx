@@ -6,15 +6,17 @@ import { Box, Typography } from "@mui/material";
 import loginClientsImg from "@/assets/images/clients-login.png";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./ClientLogin.css";
 import { useFormik } from "formik";
 import { LoginService } from "@/services/auth/LoginService";
 import { ClientSelfService } from "@/services/clientServices/ClientServices";
 import { Roles } from "@/ts/enums";
+import "./ClientLogin.css";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -32,6 +34,7 @@ export const ClientLogin = () => {
 
   const onClose = () => {
     setIsOpen(false);
+    setErrorMessage("");
   };
 
   const formik = useFormik({
@@ -40,20 +43,30 @@ export const ClientLogin = () => {
       password: "",
     },
     onSubmit: async (values) => {
+      setIsLoading(true); // Iniciar loading
+      setErrorMessage(""); // Limpiar mensajes de error
       try {
-        const userData = await LoginService(values.email, values.password);
-        if (userData) {
-          const userSessionData = await ClientSelfService(userData.token);
+        const clientResponse = await LoginService(
+          values.email,
+          values.password,
+        );
+        if (clientResponse) {
+          const userSessionData = await ClientSelfService(clientResponse.token);
 
           if (userSessionData) {
             if (userSessionData.role === Roles.Client) {
-              console.log("Cliente conectado:", userData);
+              console.log("Cliente conectado:", clientResponse);
               navigate(`/cliente`);
             }
           }
         }
       } catch (error: unknown) {
         console.log(error);
+        setErrorMessage(
+          "Credenciales incorrectas. Por favor, intenta de nuevo.",
+        );
+      } finally {
+        setIsLoading(false); // Detener loading
       }
     },
   });
@@ -70,8 +83,11 @@ export const ClientLogin = () => {
           <B4CButton
             fullWidth
             onClick={handleIsOpen}
-            label="Entrar a mi dashboard"
-          ></B4CButton>
+            label={"Entrar a mi dashboard"}
+            // Desactiva el botón mientras carga
+          >
+            {/* {isLoading && <CircularProgress size={24} />} */}
+          </B4CButton>
           <B4CButton
             variant="secondary"
             fullWidth
@@ -92,8 +108,8 @@ export const ClientLogin = () => {
             display: "flex",
             flexDirection: "column",
             gap: "2rem",
-            paddingInline: "4rem",
-            paddingBlock: "6rem",
+            paddingInline: "2rem",
+            paddingBlock: "3rem",
           }}
         >
           <form
@@ -108,6 +124,10 @@ export const ClientLogin = () => {
             <Typography color="#545454">
               Ingresa tu correo y contraseña registrados
             </Typography>
+            {/* Mostrar mensaje de error si existe */}
+            {errorMessage && (
+              <Typography color="error">{errorMessage}</Typography>
+            )}
             <B4CTextfield
               placeholder="Usuario"
               value={formik.values.email}
@@ -127,12 +147,11 @@ export const ClientLogin = () => {
               onClick={formik.handleSubmit}
               fullWidth
               label="Entrar"
+              disabled={isLoading}
+              isLoading={isLoading}
             ></B4CButton>
           </form>
-          <Link
-            to="/cliente/olvide-contrasena"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          <Link className="custom-link" to="/cliente/olvide-contrasena">
             <Typography variant="body-normal">Olvidé mi contraseña</Typography>
           </Link>
         </Box>
