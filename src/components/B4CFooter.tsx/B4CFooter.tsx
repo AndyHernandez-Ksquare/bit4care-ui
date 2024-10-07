@@ -13,6 +13,9 @@ export const B4CFooter = () => {
         alignItems: "center",
         padding: "25px 40px",
         backgroundColor: colorPalette.grey1,
+        flexDirection: { xs: "column", tablet: "row" },
+        textAlign: { xs: "center", tablet: "left" },
+        gap: 16,
       }}
     >
       <Box>
