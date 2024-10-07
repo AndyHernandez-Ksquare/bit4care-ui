@@ -23,7 +23,7 @@ export const Index = () => {
           }}
           justifyContent="center"
           alignItems="center"
-          spacing={3}
+          spacing={2}
           columns={24}
         >
           <Grid size={{ xs: 24, tablet: 7 }}>
@@ -45,13 +45,13 @@ export const Index = () => {
             </Box>
           </Grid>
           <Grid
-            size={{ xs: 24, tablet: 8 }}
+            size={{ xs: 24, tablet: 7 }}
             mt={{
               xs: 12,
               tablet: 0,
             }}
           >
-            <Box display="flex" justifyContent="center">
+            <Box display="flex" justifyContent="end">
               <LandingPageVisual />
             </Box>
           </Grid>
@@ -76,7 +76,6 @@ export const Index = () => {
           </Grid>
           <Grid
             container
-            spacing={3}
             justifyContent="center"
             alignItems="center"
             mt={24}
@@ -85,7 +84,7 @@ export const Index = () => {
               mobile: 12,
             }}
             padding={{
-              xs: "0 20px",
+              xs: "0 50px",
             }}
             maxWidth={1280}
           >
@@ -101,6 +100,7 @@ export const Index = () => {
                 }}
                 justifyContent={"center"}
                 display={"flex"}
+                mt={10}
               >
                 <B4CBenefitsCard
                   title={benefit.title}
