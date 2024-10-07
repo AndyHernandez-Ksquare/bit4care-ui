@@ -3,6 +3,7 @@ const enum colorPalette {
   primary = "#7CA4DE", // Define a specific shade of blue for the primary color
   secondary = "#B8D6FF",
   backGroundGray = "#F0F2F4",
+  backgroundLinearGradient = `linear-gradient(#E4EEFC, #FFFFFF)`,
 
   // State colors
   info = "#2F80ED",

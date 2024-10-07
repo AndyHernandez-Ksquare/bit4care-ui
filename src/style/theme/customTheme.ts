@@ -107,6 +107,9 @@ const customTheme = createTheme({
     fontFamily: interFontFamily,
     h1: {
       ...headingStyle(56),
+      "@media (max-width:768px)": {
+        ...headingStyle(48),
+      },
     },
     h2: {
       ...headingStyle(48),
