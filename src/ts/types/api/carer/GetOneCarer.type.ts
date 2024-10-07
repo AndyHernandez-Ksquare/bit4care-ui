@@ -10,6 +10,15 @@ export interface User {
   last_login: string;
 }
 
+export interface CarerReview {
+  id: number;
+  stars: number;
+  comment: string;
+  carerId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface GetOneCarer {
   id: number;
   payment_range: string;
@@ -40,5 +49,6 @@ export interface GetOneCarer {
   reviewed: boolean;
   createdAt: string;
   updatedAt: string;
+  carerReviews?: CarerReview[]
   User: User; // Información del usuario asociada al cuidador
 }

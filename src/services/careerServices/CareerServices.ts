@@ -1,13 +1,14 @@
 import { AxiosResponse } from "axios";
 import axios from "../baseService"
-import { CreateAppReq, GetAllApplication } from "@/ts/types/api/applicationRequest";
+import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 
-const Entity = "application-request";
+const Entity = "carer-profile";
 
-export const GetAllApplicationRequests = async () => {
+export const GetOneCarerRequest = async (carerId: number) => {
+  const controller = "test"
   try {
-    const response: AxiosResponse<GetAllApplication[]> =
-      await axios.get(`/${Entity}`);
+    const response: AxiosResponse<GetOneCarer> =
+      await axios.get(`/${Entity}/${controller}/${carerId}`);
     if (response.data) {
 
       return response.data
@@ -19,10 +20,10 @@ export const GetAllApplicationRequests = async () => {
   }
 };
 
-export const CreateApplicationRequest = async (bodyRequest: CreateAppReq) => {
+export const GetAllCarerProfiles = async () => {
   try {
-    const response: AxiosResponse<GetAllApplication> =
-      await axios.post(`/${Entity}`, bodyRequest);
+    const response: AxiosResponse<GetOneCarer[]> =
+      await axios.get(`/${Entity}`);
     if (response.data) {
       return response.data
     }
