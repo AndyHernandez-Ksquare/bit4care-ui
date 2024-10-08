@@ -18,6 +18,7 @@ import {
 import "./B4CProviderCard.css";
 
 export const B4CProviderCard = ({
+  careerId,
   name,
   specialty,
   rating,
@@ -29,7 +30,11 @@ export const B4CProviderCard = ({
   const navigate = useNavigate();
 
   const handleNewServiceClick = () => {
-    navigate("/cliente/colaborador");
+    const queryParams = new URLSearchParams({
+      careerId: careerId.toString(), // convert rating to string for URL
+    }).toString();
+
+    navigate(`/cliente/colaborador?${queryParams}`);
   };
 
   return (

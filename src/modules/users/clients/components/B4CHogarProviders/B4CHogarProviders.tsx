@@ -1,4 +1,4 @@
-import { Grid2 as Grid } from "@mui/material";
+import { Box, CircularProgress, Grid2 as Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { B4CProviderCard } from "../B4CProviderCard";
 import {
@@ -10,14 +10,16 @@ import { MockGetAllCarerRequests } from "@/services/careerServices/CareerMockDat
 
 export const B4CHogarProviders = () => {
   const [providers, setProviders] = useState<GetOneCarer[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Simula la obtención de datos
+  const fetchProviders = async () => {
+    const data = await MockGetAllCarerRequests();
+    setProviders(data);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    // Simula la obtención de datos
-    const fetchProviders = async () => {
-      const data = await MockGetAllCarerRequests();
-      setProviders(data);
-    };
-
     fetchProviders();
   }, []);
 
@@ -29,22 +31,38 @@ export const B4CHogarProviders = () => {
   };
 
   return (
-    <Grid container spacing={16} sx={{ mt: 4 }}>
-      {providers.map((caretaker) => (
-        <Grid
-          className="client-providers-container"
-          size={{ xs: 12, desktop: 3 }}
-          key={caretaker.id}
+    <>
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ mt: 32 }}
         >
-          <B4CProviderCard
-            name={caretaker.User.name}
-            specialty={caretaker.speciality}
-            rating={calculateAverageRating(caretaker.carerReviews)}
-            rate={caretaker.payment_range}
-            availability="Todos los dias"
-          />
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Grid container spacing={16} sx={{ mt: 4 }}>
+          {providers.map(
+            ({ id, User, speciality, carerReviews, payment_range }) => (
+              <Grid
+                className="client-providers-container"
+                size={{ xs: 12, desktop: 3 }}
+                key={id}
+              >
+                <B4CProviderCard
+                  careerId={id}
+                  name={User.name}
+                  specialty={speciality}
+                  rating={calculateAverageRating(carerReviews)}
+                  rate={payment_range}
+                  availability="Todos los dias"
+                />
+              </Grid>
+            ),
+          )}
         </Grid>
-      ))}
-    </Grid>
+      )}
+    </>
   );
 };
