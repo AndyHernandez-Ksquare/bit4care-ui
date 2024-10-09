@@ -18,7 +18,6 @@ import { ClientsLayout } from "./modules/users/clients/ClientsLayout.tsx";
 import { ClientsHome } from "./modules/users/clients/pages/ClientsHome";
 import { ClientsServices } from "./modules/users/clients/pages/ClientsServices";
 import { ClientsAccount } from "./modules/users/clients/pages/ClientsAccount";
-import { ClientsReservationDetail } from "./modules/users/clients/pages/ClientsReservationDetail/ClientsReservationDetail.tsx";
 import { B4CClientsNewService } from "./modules/users/clients/pages/ClientsNewService/B4CClientsNewService.tsx";
 import { ClientPaymentPage } from "./modules/users/clients/pages/ClientPaymentPage/ClientPaymentPage.tsx";
 import { AdminLogin } from "./modules/admin/pages/AdminLogin.tsx";
@@ -136,10 +135,7 @@ const router = createBrowserRouter([
             path: "/cliente/colaborador",
             element: <NewClientService />,
           },
-          {
-            path: "/cliente/confirmar-y-pagar",
-            element: <ClientsReservationDetail />,
-          },
+
           {
             path: "/cliente/mis-servicios",
             element: <ClientsServices />,

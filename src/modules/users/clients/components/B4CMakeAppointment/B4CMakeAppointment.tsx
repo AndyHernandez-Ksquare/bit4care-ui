@@ -36,100 +36,71 @@ export const B4CMakeAppointment = ({
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           sx={{
-            // "& .MuiBadge-badge": {
-            //   // Adjustment for recordMade badge
-            //   fontSize: "0.7em",
-            //   paddingTop: "4px",
-            // },
-            // // '& .MuiPickersBasePicker-pickerView': {
-            // //     maxHeight: '800px',
-            // //   },
-
-            // "& .MuiDayCalendar-header": {
-            //   // Needed for weekday (ie S M T W T F S )adjustments (and padding if wanted)
-            //   // Adjusts spacing between
-            //   justifyContent: "center",
-            //   width: "100%",
-            //   overflow: "hidden",
-            //   margin: "2px, 0",
-            //   // paddingTop: '1em',
-            //   // paddingBottom: "1em",
-            // },
-            // "& .MuiDayCalendar-weekContainer": {
-            //   // Adjusts spacing between days (ie 1, 2, 3.. 27, 28)
-            //   justifyContent: "center",
-            //   overflow: "hidden",
-            //   width: "100%",
-            //   margin: 0,
-            // },
-            // "& .MuiPickersDay-dayWithMargin": {
-            //   // Grows width/height of day buttons
-            //   width: "calc(100% - 4px)",
-            //   height: "calc(100% - 4px)",
-            //   aspectRatio: "1",
-            //   // height: 'auto',
-
-            //   fontSize: "1.0em",
-            // },
-            // "& .MuiBadge-root": {
-            //   // Parent of button management
-            //   aspectRatio: 1,
-            //   width: "10%",
-            //   display: "flex",
-            //   alignContent: "center",
-            //   justifyContent: "center",
-            // },
-            // "& .MuiDayCalendar-weekDayLabel": {
-            //   // Manages size of weekday labels
-            //   aspectRatio: 1,
-            //   width: "calc(10% - 4px)", // deals with margin
-            //   fontSize: "1.0em",
-            // },
-            // "& .MuiPickersCalendarHeader-label": {
-            //   // Manages month/year size
-            //   fontSize: "1.3em",
-            // },
-            // "& .MuiDayCalendar-monthContainer": {
-            //   // Not sure if needed, currently works tho
-            //   width: "100%",
-            // },
-            // "& .MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer":
-            //   {
-            //     // Handles size of week row parent, 1.6 aspect is good for now
-            //     aspectRatio: "1.6",
-            //     overflow: "hidden",
+            "& .MuiBadge-badge": {
+              // Adjustment for recordMade badge
+              fontSize: "0.7em",
+              paddingTop: "4px",
+            },
+            // '& .MuiPickersBasePicker-pickerView': {
+            //     maxHeight: '800px',
             //   },
-            // "& .MuiDayCalendar-slideTransition": {
-            //   // Handles size of week row parent, 1.6 aspect is good for now
-            //   aspectRatio: 1.6,
-            //   width: "100%",
-            //   overflow: "hidden",
-            // },
-            // "& .MuiDayCalendar-loadingContainer": {
-            //   width: "100%",
-            //   aspectRatio: 1.6,
-            // },
-            // "& .MuiDayCalendarSkeleton-root": {
-            //   width: "100%",
-            // },
-            // "& .MuiDayCalendarSkeleton-week": {
-            //   width: "100%",
-            // },
-            // "& .MuiDayCalendarSkeleton-daySkeleton": {
-            //   width: "calc(10% - 4px) !important", // Deals with the margin calcs
-            //   aspectRatio: "1 !important",
-            //   height: "auto !important",
-            // },
+
+            "& .MuiDayCalendar-header": {
+              // Needed for weekday (ie S M T W T F S )adjustments (and padding if wanted)
+              // Adjusts spacing between
+              width: "100%",
+              margin: " 0",
+            },
+
+            "& .MuiPickersDay-dayWithMargin": {
+              // Grows width/height of day buttons
+              width: "calc(100% - 4px)",
+              height: "calc(100% - 4px)",
+              aspectRatio: "1",
+              fontSize: "1.0em",
+            },
+            "& .MuiBadge-root": {
+              // Parent of button management
+              aspectRatio: 1,
+              width: "10%",
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "center",
+            },
+            "& .MuiDayCalendar-weekDayLabel": {
+              // Manages size of weekday labels
+
+              width: "calc(14% - 4px)", // deals with margin
+              fontSize: "1.0rem",
+            },
+            "& .MuiPickersCalendarHeader-label": {
+              // Manages month/year size
+              fontSize: "1.3em",
+            },
+
+            "& .MuiDayCalendar-slideTransition": {
+              // Handles size of week row parent, 1.6 aspect is good for now
+              aspectRatio: 1.6,
+              width: "100%",
+              overflow: "hidden",
+            },
 
             width: "100%",
             maxHeight: "100%",
           }}
         />
 
-        <TimePicker
-          label="Uncontrolled picker"
-          defaultValue={dayjs("2022-04-17T15:30")}
-        />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+          <TimePicker
+            label="Inicio de servicio"
+            defaultValue={dayjs("2022-04-17T15:30")}
+          />
+
+          <TimePicker
+            label="Final de servicio"
+            defaultValue={dayjs("2022-04-17T15:30")}
+          />
+        </Box>
       </LocalizationProvider>
       <B4CButton
         label="Agendar"

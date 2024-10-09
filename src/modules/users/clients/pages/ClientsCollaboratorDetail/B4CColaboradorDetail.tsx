@@ -9,76 +9,29 @@ import {
   Divider,
   Grid2 as Grid,
   Link,
-  SxProps,
-  Tab,
-  Tabs,
-  Theme,
   Typography,
 } from "@mui/material";
-import { SyntheticEvent, useEffect, useState } from "react";
-import { B4CReviewComponent } from "../../components/B4CReviewComponent";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  CarerReview,
-  GetOneCarer,
-} from "@/ts/types/api/carer/GetOneCarer.type";
-import { MockGetAllCarerRequests } from "@/services/careerServices/CareerMockData";
+import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
+import { ClientAboutAndReview } from "./components/ClientAboutAndReview";
+import { Dispatch, SetStateAction } from "react";
+import { calculateAverageRating } from "@/constants/calculateAverageRating";
 
-const tabStyle: SxProps<Theme> = {
-  textTransform: "none",
-  fontWeight: "700",
-  color: colorPalette.grey3,
-  gap: "8px",
-  margin: 0,
-};
+interface B4CColaboradorDetailProps {
+  provider: GetOneCarer | null;
+  loading: boolean;
+  setServiceStep: Dispatch<SetStateAction<number>>;
+}
 
-export const B4CColaboradorDetail = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [provider, setProvider] = useState<GetOneCarer | null>(null);
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Simula la obtención de datos
-  const fetchProvider = async (providerId: number) => {
-    const data = await MockGetAllCarerRequests();
-    const singleProvider = data.find((provider) => provider.id === providerId);
-    if (singleProvider) {
-      setProvider(singleProvider);
-    } else {
-      setProvider(null);
-    }
-    setLoading(false);
-  };
-
-  const handleTabChange = (event: SyntheticEvent, newValue: number) => {
-    console.log(tabValue);
-    setTabValue(newValue);
-  };
-
+export const B4CColaboradorDetail = ({
+  provider,
+  loading,
+  setServiceStep,
+}: B4CColaboradorDetailProps) => {
   const handleSchedule = () => {
-    navigate("/cliente/confirmar-y-pagar");
+    setServiceStep(1);
   };
-
-  // Función para calcular el promedio de estrellas de las reseñas
-  const calculateAverageRating = (reviews: CarerReview[] = []) => {
-    if (reviews.length === 0) return 0; // Si no hay reseñas, el rating es 0
-    const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
-    return totalStars / reviews.length;
-  };
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const careerId = queryParams.get("careerId");
-
-    if (careerId) {
-      // Fetch user details if userId is present in query params
-      fetchProvider(parseInt(careerId));
-    }
-  }, [location.search]);
 
   return (
     <>
@@ -135,8 +88,8 @@ export const B4CColaboradorDetail = () => {
               <Box
                 display="flex"
                 flexDirection={"row"}
-                justifyContent="start"
                 gap="16px"
+                sx={{ alignText: "center" }}
               >
                 <Avatar
                   alt={provider?.User.name}
@@ -182,7 +135,13 @@ export const B4CColaboradorDetail = () => {
                       </Typography>
                     </B4CDefinitionComponent>
 
-                    <Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.5rem",
+                      }}
+                    >
                       <Typography variant="body-small-bold">
                         Experiencia
                       </Typography>
@@ -248,73 +207,15 @@ export const B4CColaboradorDetail = () => {
                   }}
                 >
                   <Typography variant="body-small-bold">
-                    ${provider?.payment_range}/h
+                    {provider?.payment_range}/h
                   </Typography>
                   <Typography variant="body-small">Tarifa</Typography>
                 </Box>
               </Box>
-
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "start",
-                }}
-              >
-                <Tabs
-                  value={tabValue}
-                  onChange={handleTabChange}
-                  aria-label="basic tabs example"
-                  sx={{ height: "40px" }}
-                >
-                  <Tab sx={tabStyle} label="Acerca de" iconPosition="start" />
-                  <Tab sx={tabStyle} label="Reseñas" iconPosition="start" />
-                </Tabs>
-              </Box>
-
-              {tabValue === 0 && (
-                <>
-                  <Box
-                    mt={16}
-                    sx={{ display: "flex", flexDirection: "row", gap: "8px" }}
-                  >
-                    <Typography variant="body-small-bold">
-                      Biografía:
-                    </Typography>
-                    <Typography variant="body-small">
-                      {provider?.description}
-                    </Typography>
-                  </Box>
-                  {/* <Box
-                  mt={16}
-                  sx={{ display: "flex", flexDirection: "row", gap: "8px" }}
-                >
-                  <Typography variant="body-small-bold">
-                    Habilidades:
-                  </Typography>
-                  <Box
-                    sx={{ display: "flex", flexDirection: "row", gap: "16px" }}
-                  >
-                    {user.skills.map((skill) => (
-                      <Chip color="primary" key={skill} label={skill} />
-                    ))}
-                  </Box>
-                </Box> */}
-                </>
-              )}
-              {tabValue === 1 &&
-                (provider?.carerReviews?.length ? (
-                  <B4CReviewComponent reviews={provider?.carerReviews} />
-                ) : (
-                  <Box sx={{ width: "100%", display: "flex", padding: "1rem" }}>
-                    <Typography
-                      variant="body-small"
-                      sx={{ marginInline: "auto" }}
-                    >
-                      No hay reseñas disponibles para este cuidador
-                    </Typography>
-                  </Box>
-                ))}
+              <ClientAboutAndReview
+                biography={provider?.description}
+                reviews={provider?.carerReviews}
+              />
             </Box>
           )}
         </Grid>

@@ -1,29 +1,8 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
-import { ButtonColor } from "@/ts/types/shared/ButtonColor";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  SxProps,
-  Theme,
-  Typography,
-} from "@mui/material";
+import { B4CButtonProps } from "@/ts/types/components/B4CButton.type";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { ReactNode } from "react";
-
-interface IB4CButtonProps {
-  label: string;
-  disabled?: boolean;
-  fullWidth?: boolean;
-  variant?: ButtonColor;
-  startIcon?: ReactNode;
-  isSubmit?: boolean;
-  size?: Size;
-  isLoading?: boolean;
-  sx?: SxProps<Theme>;
-  onClick?: () => void;
-  onSubmit?: () => void;
-}
 
 export const B4CButton = ({
   variant = "primary",
@@ -37,7 +16,7 @@ export const B4CButton = ({
   sx,
   onClick,
   onSubmit,
-}: IB4CButtonProps) => {
+}: B4CButtonProps) => {
   const sizes = {
     small: {
       paddingBlock: `14px`,
@@ -89,7 +68,6 @@ export const B4CButton = ({
             textTransform: "none",
             opacity: 0.8,
             flexWrap: "wrap",
-            color: colorPalette.white,
           }}
         >
           {label}
