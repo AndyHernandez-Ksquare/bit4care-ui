@@ -11,10 +11,19 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-
 import { B4CServiceCheckout } from "../../components/B4CServiceCheckout";
+import { Dispatch, SetStateAction } from "react";
+import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 
-export const ClientsReservationDetail = () => {
+interface ClientsReservationDetailProps {
+  provider: GetOneCarer | null;
+  setServiceStep: Dispatch<SetStateAction<number>>;
+}
+
+export const ClientsReservationDetail = ({
+  provider,
+  setServiceStep,
+}: ClientsReservationDetailProps) => {
   return (
     <>
       <Box
@@ -32,11 +41,25 @@ export const ClientsReservationDetail = () => {
           <Link underline="hover" color="inherit" href="/cliente/">
             <Typography typography="body-normal">Explorar</Typography>
           </Link>
+          <Box
+            onClick={() => setServiceStep(0)}
+            sx={{
+              cursor: "pointer", // Change cursor to pointer on hover
+              transition: "background-color 0.3s ease", // Smooth transition for hover effect
+              "&:hover": {
+                textDecoration: "underline", // Light grey background on hover
+              },
+            }}
+          >
+            <Typography typography="body-normal">
+              {provider?.User.name}
+            </Typography>
+          </Box>
           <Typography
             typography="body-normal-bold"
             color={colorPalette.primary}
           >
-            user.name
+            Confirmar y pagar
           </Typography>
         </Breadcrumbs>
       </Box>
@@ -148,7 +171,7 @@ export const ClientsReservationDetail = () => {
               flexDirection: "column",
             }}
           >
-            <B4CServiceCheckout />
+            <B4CServiceCheckout provider={provider} />
           </Box>
         </Grid>
       </Grid>

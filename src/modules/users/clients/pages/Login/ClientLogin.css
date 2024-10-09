@@ -19,6 +19,16 @@
   gap: 2rem;
 }
 
+.custom-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.custom-link:hover {
+  color: #1976d2; /* Cambia este color por el que prefieras */
+  text-decoration: underline; /* Agrega un subrayado al hacer hover */
+}
+
 @media (max-width: 768px) {
   .left-panel {
     width: 100vw; /* El panel izquierdo ahora ocupa todo el ancho */

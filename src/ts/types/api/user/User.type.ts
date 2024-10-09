@@ -11,3 +11,4 @@ export interface User {
   bio: string;
   skills: string[];
 }
+

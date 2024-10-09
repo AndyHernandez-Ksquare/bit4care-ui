@@ -163,7 +163,7 @@ export const ClientsHome = () => {
             Menor tarifa
           </Button>
         </Box>
-        {tabValue == 0 && <B4CHogarProviders />}
+        {tabValue === 0 && <B4CHogarProviders />}
       </Box>
     </PageLayout>
   );

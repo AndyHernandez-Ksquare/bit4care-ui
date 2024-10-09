@@ -1,14 +1,7 @@
+import { CloseIcon } from "@/assets/svgIcons/closeIcons/CloseIcon";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Dialog } from "@mui/material";
-import { ReactNode } from "react";
-
-interface B4CModalProps {
-  children: ReactNode;
-  open: boolean;
-  bgColor?: string;
-  className?: string;
-  onClose?: () => void;
-}
+import { B4CModalProps } from "@/ts/types/components";
+import { Box, Dialog, IconButton } from "@mui/material";
 
 export const B4CModal = ({
   children,
@@ -29,6 +22,18 @@ export const B4CModal = ({
         },
       }}
     >
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={(theme) => ({
+          position: "absolute",
+          right: 16,
+          top: 16,
+          color: theme.palette.grey[500],
+        })}
+      >
+        <CloseIcon />
+      </IconButton>
       <Box
         sx={{
           background: bgColor ? bgColor : "white",
