@@ -37,6 +37,7 @@ import { StrictMode } from "react";
 import { Index } from "./modules/admin/pages/Index/Index.tsx";
 import { ClientsSignup } from "./modules/users/clients/pages/ClientsSignup/index.ts";
 import { ClientsForgotPassword } from "./modules/users/clients/pages/ClientsForgotPassword/ClientsForgotPassword.tsx";
+import { GlobalScrollbarStyles } from "./style/theme/thinScrollBar.tsx";
 
 const user: User = {
   name: "María Pérez",
@@ -211,6 +212,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AdminSessionProvider>
       <ThemeProvider theme={customTheme}>
+        <GlobalScrollbarStyles />
         <RouterProvider router={router} />
       </ThemeProvider>
     </AdminSessionProvider>

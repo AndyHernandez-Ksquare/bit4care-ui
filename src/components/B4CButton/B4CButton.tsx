@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 
 interface IB4CButtonProps {
   label: string;
+  labelColor?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   variant?: ButtonColor;
@@ -24,6 +25,7 @@ export const B4CButton = ({
   fullWidth,
   isSubmit,
   size = Size.Normal,
+  labelColor = colorPalette.white,
   startIcon,
   sx,
   onClick,
@@ -67,8 +69,10 @@ export const B4CButton = ({
         paddingInline: sizes[size].paddingInline,
         paddingBlock: sizes[size].paddingBlock,
         borderRadius: "8px",
-
         ...sx,
+        ":hover": {
+          opacity: 0.8,
+        },
       }}
     >
       <Typography
@@ -77,7 +81,7 @@ export const B4CButton = ({
           textTransform: "none",
           opacity: 0.8,
           flexWrap: "wrap",
-          color: colorPalette.white,
+          color: labelColor,
         }}
       >
         {label}
