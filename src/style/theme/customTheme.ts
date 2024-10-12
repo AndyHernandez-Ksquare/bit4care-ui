@@ -345,7 +345,7 @@ const customTheme = createTheme({
           style: {
             border: `2px solid ${colorPalette.primary}`,
             backgroundColor: colorPalette.white,
-            color: colorPalette.grey1,
+            color: colorPalette.black1,
             "&.MuiButton-root": {
               "&:hover": {
                 backgroundColor: "#CED5DB",

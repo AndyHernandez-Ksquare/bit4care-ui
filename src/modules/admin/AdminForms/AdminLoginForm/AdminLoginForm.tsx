@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ValidationSchema } from "./ValidationSchema";
 import { AdminLoginService } from "@/services/adminServices/AdminLoginService";
 import { useAdminSession } from "@/context/session/AdminSessionContext";
+import { ClientSelfService } from "@/services/clientServices/ClientServices";
 
 export const AdminLoginForm = () => {
   const { setToken } = useAdminSession();
@@ -23,9 +24,12 @@ export const AdminLoginForm = () => {
         console.log(values.email, values.password);
         const userData = await AdminLoginService(values.email, values.password);
         if (userData) {
-          console.log("Usuario conectado:", userData);
-
-          localStorage.setItem("userToken", userData.token);
+          const userSessionData = await ClientSelfService(userData.token);
+          console.log(userSessionData);
+          if (userSessionData) {
+            console.log(userSessionData.role);
+            console.log("Usuario conectado:", userData);
+          }
 
           const storedToken = localStorage.getItem("userToken");
           if (storedToken) {

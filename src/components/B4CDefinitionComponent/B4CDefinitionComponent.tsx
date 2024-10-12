@@ -6,7 +6,7 @@ export const B4CDefinitionComponent = ({
   children,
 }: B4CDefinitionComponentProps) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", gap: "4px" }}>
+    <Box sx={{ display: "flex", flexDirection: "row", gap: "16px" }}>
       <Typography variant="body-small">{label}</Typography>
       {children}
     </Box>

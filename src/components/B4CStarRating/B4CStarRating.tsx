@@ -8,11 +8,7 @@ interface IStarRatingProps {
 
 export const B4CStarRating = ({ rating }: IStarRatingProps) => {
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"row"}
-      sx={{ flexDirection: "row", alignItems: "center" }}
-    >
+    <Box display={"flex"} sx={{ flexDirection: "row", alignItems: "center" }}>
       {[...Array(5)].map((_, index) => (
         <SelectedStarIcon
           key={index}

@@ -18,6 +18,7 @@ import {
 import "./B4CProviderCard.css";
 
 export const B4CProviderCard = ({
+  careerId,
   name,
   specialty,
   rating,
@@ -29,7 +30,11 @@ export const B4CProviderCard = ({
   const navigate = useNavigate();
 
   const handleNewServiceClick = () => {
-    navigate("/cliente/colaborador");
+    const queryParams = new URLSearchParams({
+      careerId: careerId.toString(), // convert rating to string for URL
+    }).toString();
+
+    navigate(`/cliente/colaborador?${queryParams}`);
   };
 
   return (
@@ -45,14 +50,35 @@ export const B4CProviderCard = ({
           </IconButton>
         }
       />
-      <CardContent className="available-colaborator">
-        <Box onClick={handleNewServiceClick} sx={{ cursor: "pointer" }}>
+      <CardContent className="available-colaborator" sx={{ paddingTop: 0 }}>
+        <Box
+          onClick={handleNewServiceClick}
+          sx={{
+            cursor: "pointer",
+            padding: 4,
+            borderRadius: 50,
+            border: "1px solid transparent",
+            "&:hover": {
+              border: "1px solid",
+              borderColor: colorPalette.primary,
+            },
+          }}
+        >
           <Avatar
-            aria-label="nurse"
-            sx={{ width: "70px", height: "70px" }}
-          ></Avatar>
+            alt={name}
+            aria-label="caretaker"
+            src="/broken-image.jpg"
+            sx={{
+              width: "80px",
+              height: "80px",
+              bgcolor: colorPalette.info,
+            }}
+          />
         </Box>
-        <Box className="available-colaborator-profile">
+        <Box
+          className="available-colaborator-profile"
+          sx={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+        >
           <Typography variant="h6" component="div">
             {name}
           </Typography>
@@ -121,9 +147,10 @@ export const B4CProviderCard = ({
           >
             Habilidades:
           </Typography>
-          {skills.map((skill) => (
-            <B4CTag color="info" key={skill} label={skill} />
-          ))}
+          {skills?.length &&
+            skills.map((skill) => (
+              <B4CTag color="info" key={skill} label={skill} />
+            ))}
         </Box>
       </CardContent>
     </Card>
