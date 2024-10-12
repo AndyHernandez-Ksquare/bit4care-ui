@@ -5,6 +5,7 @@ import { SxProps, Theme } from "@mui/material";
 
 export interface B4CButtonProps {
   label: string;
+  labelColor?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   variant?: ButtonColor;
