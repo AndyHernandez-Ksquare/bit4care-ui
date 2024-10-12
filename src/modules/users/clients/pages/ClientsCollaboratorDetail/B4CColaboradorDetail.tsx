@@ -13,22 +13,21 @@ import {
 } from "@mui/material";
 import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
-import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 import { ClientAboutAndReview } from "./components/ClientAboutAndReview";
 import { Dispatch, SetStateAction } from "react";
 import { calculateAverageRating } from "@/constants/calculateAverageRating";
+import { useServiceData } from "../../context/NewServiceContext";
 
 interface B4CColaboradorDetailProps {
-  provider: GetOneCarer | null;
   loading: boolean;
   setServiceStep: Dispatch<SetStateAction<number>>;
 }
 
 export const B4CColaboradorDetail = ({
-  provider,
   loading,
   setServiceStep,
 }: B4CColaboradorDetailProps) => {
+  const { provider } = useServiceData();
   const handleSchedule = () => {
     setServiceStep(1);
   };
@@ -78,6 +77,7 @@ export const B4CColaboradorDetail = ({
             <Box
               sx={{
                 border: `1px solid ${colorPalette.secondary}`,
+                backgroundColor: colorPalette.white,
                 borderRadius: "20px",
                 paddingInline: "24px",
                 paddingBlock: "32px",
@@ -207,7 +207,7 @@ export const B4CColaboradorDetail = ({
                   }}
                 >
                   <Typography variant="body-small-bold">
-                    {provider?.payment_range}/h
+                    ${provider?.payment_range}/h
                   </Typography>
                   <Typography variant="body-small">Tarifa</Typography>
                 </Box>

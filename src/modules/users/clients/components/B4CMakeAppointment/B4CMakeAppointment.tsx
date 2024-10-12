@@ -8,7 +8,9 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import { Dayjs } from "dayjs";
+import { useEffect, useState } from "react";
+import { useServiceData } from "../../context/NewServiceContext";
 
 interface B4CMakeAppointmentProps {
   handleSchedule: () => void;
@@ -17,10 +19,56 @@ interface B4CMakeAppointmentProps {
 export const B4CMakeAppointment = ({
   handleSchedule,
 }: B4CMakeAppointmentProps) => {
+  const [error, setError] = useState<string>("");
+  const {
+    provider,
+    startTime,
+    endTime,
+    duration,
+    price,
+    selectedDate,
+    setPrice,
+    setDuration,
+    setStartTime,
+    setEndTime,
+    setSelectedDate,
+  } = useServiceData();
+
+  // Function to calculate the difference in hours between startTime and endTime
+  const calculateDuration = (
+    start: Dayjs | null,
+    end: Dayjs | null,
+  ): number => {
+    if (start && end) {
+      const duration = end.diff(start, "hours", true); // 'true' to get decimal hours
+      return parseFloat(duration.toFixed(1)); // Return the difference rounded to 2 decimal places
+    }
+    return 0;
+  };
+
+  const calculatePrice = (duration: number, payrange: string) => {
+    console.log(`Duracion: ${duration}`);
+    console.log(`Precio: ${parseFloat(payrange)}`);
+    console.log(`Precio: ${duration * parseFloat(payrange)}`);
+    setPrice(duration * parseFloat(payrange));
+  };
+
+  // UseEffect to recalculate duration whenever startTime or endTime changes
+  useEffect(() => {
+    setDuration(calculateDuration(startTime, endTime));
+  }, [startTime, endTime]); // Recalculate duration when either time changes
+
+  useEffect(() => {
+    if (provider) {
+      calculatePrice(duration, provider.payment_range);
+    }
+  }, [duration, provider]); // Recalculate duration when either time changes
+
   return (
     <Box
       sx={{
         border: `1px solid ${colorPalette.secondary}`,
+        backgroundColor: colorPalette.white,
         borderRadius: "20px",
         paddingInline: "24px",
         paddingBlock: "32px",
@@ -29,12 +77,24 @@ export const B4CMakeAppointment = ({
         gap: "8px",
       }}
     >
-      <Typography variant="body-large-bold">$400 MXN (2 horas)</Typography>
-      <Typography variant="body-normal-bold" color={colorPalette.primary}>
+      {/* Show error message if any */}
+      {error || !duration ? (
+        <Typography variant="body-small-bold" color={colorPalette.error}>
+          {error}
+        </Typography>
+      ) : (
+        <Typography variant="body-large-bold">
+          ${price} MXN ({duration} hora{duration === 1 ? "" : "s"})
+        </Typography>
+      )}
+
+      {/* <Typography variant="body-normal-bold" color={colorPalette.primary}>
         $200 en primera visita
-      </Typography>
+      </Typography> */}
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
+          value={selectedDate} // Bind the value to the state
+          onChange={(newDate) => setSelectedDate(newDate)} // Update state on change
           sx={{
             "& .MuiBadge-badge": {
               // Adjustment for recordMade badge
@@ -93,18 +153,42 @@ export const B4CMakeAppointment = ({
         <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
           <TimePicker
             label="Inicio de servicio"
-            defaultValue={dayjs("2022-04-17T15:30")}
+            value={startTime} // Bind the value to the state
+            onChange={(newTime) => {
+              if (newTime && endTime && newTime.isAfter(endTime)) {
+                setError(
+                  "La hora final no puede ser menor que la hora de inicio.",
+                );
+              } else {
+                setError("");
+                setStartTime(newTime); // Update endTime only if valid
+              }
+            }}
           />
 
           <TimePicker
             label="Final de servicio"
-            defaultValue={dayjs("2022-04-17T15:30")}
+            value={endTime} // Bind the value to the state
+            onChange={(newTime) => {
+              if (newTime && startTime && newTime.isBefore(startTime)) {
+                setError(
+                  "La hora final no puede ser menor que la hora de inicio.",
+                );
+              } else {
+                setError("");
+                setEndTime(newTime); // Update endTime only if valid
+              }
+            }}
           />
         </Box>
       </LocalizationProvider>
+
       <B4CButton
         label="Agendar"
-        onClick={handleSchedule}
+        disabled={!!error || !duration}
+        onClick={() => {
+          handleSchedule(); // Call the schedule handler
+        }}
         size={Size.Small}
       ></B4CButton>
       <Typography variant="body-small" color={colorPalette.grey3}>

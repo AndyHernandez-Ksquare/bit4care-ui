@@ -2,17 +2,16 @@ import { B4CDefinitionComponent } from "@/components/B4CDefinitionComponent/B4CD
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { calculateAverageRating } from "@/constants/calculateAverageRating";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
+import { useServiceData } from "../../context/NewServiceContext";
 
-interface B4CServiceCheckoutProps {
-  provider: GetOneCarer | null;
-}
+export const B4CServiceCheckout = () => {
+  const { provider, price, duration } = useServiceData();
 
-export const B4CServiceCheckout = ({ provider }: B4CServiceCheckoutProps) => {
   return (
     <Box display="flex" flexDirection={"column"} alignItems="center" gap="16px">
       <Avatar
+        alt={provider?.User.name}
         src="/static/images/avatar/2.jpg"
         sx={{ width: "130px", height: "130px" }}
       />
@@ -81,8 +80,10 @@ export const B4CServiceCheckout = ({ provider }: B4CServiceCheckoutProps) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="body-normal">$200 x 4 horas</Typography>
-          <Typography variant="body-normal-bold">$800</Typography>
+          <Typography variant="body-normal">
+            ${provider?.payment_range} x {`${duration} horas`}
+          </Typography>
+          <Typography variant="body-normal-bold">${price}</Typography>
         </Box>
       </Box>
       <Divider flexItem />
@@ -95,7 +96,7 @@ export const B4CServiceCheckout = ({ provider }: B4CServiceCheckoutProps) => {
         }}
       >
         <Typography variant="body-normal">Total</Typography>
-        <Typography variant="body-normal-bold">$800</Typography>
+        <Typography variant="body-normal-bold">${price}</Typography>
       </Box>
     </Box>
   );

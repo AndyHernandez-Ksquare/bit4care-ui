@@ -6,24 +6,42 @@ import { Size } from "@/ts/enums";
 import {
   Box,
   Breadcrumbs,
+  Checkbox,
   Divider,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid2 as Grid,
   Link,
+  Radio,
+  RadioGroup,
+  TextField,
   Typography,
 } from "@mui/material";
 import { B4CServiceCheckout } from "../../components/B4CServiceCheckout";
-import { Dispatch, SetStateAction } from "react";
-import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { useServiceData } from "../../context/NewServiceContext";
+import "dayjs/locale/es"; // Import the Spanish locale
 
 interface ClientsReservationDetailProps {
-  provider: GetOneCarer | null;
   setServiceStep: Dispatch<SetStateAction<number>>;
 }
 
 export const ClientsReservationDetail = ({
-  provider,
   setServiceStep,
 }: ClientsReservationDetailProps) => {
+  const { provider, startTime, endTime, selectedDate, price } =
+    useServiceData();
+  const [paymentMethod, setPaymentMethod] = useState("tarjeta");
+
+  const handlePaymentChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPaymentMethod(event.target.value);
+  };
+
+  const formattedDate = selectedDate
+    ? selectedDate.locale("es").format("dddd, D MMMM YYYY")
+    : "Sin fecha seleccionada";
+
   return (
     <>
       <Box
@@ -69,6 +87,7 @@ export const ClientsReservationDetail = ({
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
+              backgroundColor: colorPalette.white,
               borderRadius: "20px",
               paddingInline: "24px",
               paddingBlock: "32px",
@@ -87,17 +106,12 @@ export const ClientsReservationDetail = ({
               <Typography variant="body-large-bold">Tu reservación</Typography>
               <Box mt={"16px"} display="flex" flexDirection={"column"}>
                 <Typography variant="body-normal-bold">Fecha</Typography>
-                <Typography variant="body-normal">
-                  Hoy, 27 de mayo del 2025
-                </Typography>
+                <Typography variant="body-normal">{formattedDate}</Typography>
               </Box>
               <Box mt={"16px"} display="flex" flexDirection={"column"}>
                 <Typography variant="body-normal-bold">Horario</Typography>
                 <Typography variant="body-normal">
-                  Por la mañana: 10:00 AM - 12:00 PM
-                </Typography>
-                <Typography variant="body-normal">
-                  Medio día: 12:00 PM - 2:00 PM
+                  {startTime?.format("HH:mm")} - {endTime?.format("HH:mm")}
                 </Typography>
               </Box>
               <Box mt={"16px"} display="flex" flexDirection={"column"}>
@@ -108,6 +122,70 @@ export const ClientsReservationDetail = ({
               </Box>
             </Box>
             <Divider flexItem></Divider>
+            <FormControl component="fieldset" sx={{ marginY: 2 }}>
+              <FormLabel component="legend">Pagar con:</FormLabel>
+              <RadioGroup
+                row
+                value={paymentMethod}
+                onChange={handlePaymentChange}
+              >
+                <FormControlLabel
+                  value="tarjeta"
+                  control={<Radio />}
+                  label="Tarjeta"
+                />
+                <FormControlLabel
+                  value="transferencia"
+                  control={<Radio />}
+                  label="Transferencia"
+                />
+              </RadioGroup>
+            </FormControl>
+            {paymentMethod === "tarjeta" && (
+              <Grid container spacing={16}>
+                <Grid size={{ xs: 12 }}>
+                  <TextField
+                    fullWidth
+                    label="Número de tarjeta"
+                    placeholder="1234 5678 9101 1121"
+                  />
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                  <TextField
+                    fullWidth
+                    label="Fecha de expiración"
+                    placeholder="MM/YY"
+                  />
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                  <TextField fullWidth label="CVV" placeholder="123" />
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Guardar detalles de tarjeta"
+                  />
+                </Grid>
+              </Grid>
+            )}
+            {paymentMethod === "transferencia" && (
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "32px",
+                }}
+              >
+                <Typography variant="body-normal" sx={{ color: "#ACACAC" }}>
+                  Transferir ${price} MXN a:
+                </Typography>
+                <Typography variant="h6">{provider?.User.name}</Typography>
+                <Typography variant="h5">CLABE: 7658926452917567</Typography>
+                <B4CButton label="Pagar $8100 MXN" fullWidth />
+              </Box>
+            )}
 
             <Box>
               <Box
@@ -164,6 +242,7 @@ export const ClientsReservationDetail = ({
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
+              backgroundColor: colorPalette.white,
               borderRadius: "20px",
               paddingInline: "24px",
               paddingBlock: "32px",
@@ -171,7 +250,7 @@ export const ClientsReservationDetail = ({
               flexDirection: "column",
             }}
           >
-            <B4CServiceCheckout provider={provider} />
+            <B4CServiceCheckout />
           </Box>
         </Grid>
       </Grid>

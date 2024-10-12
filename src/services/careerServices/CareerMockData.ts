@@ -9,7 +9,7 @@ export const MockGetAllCarerRequests = async (): Promise<GetOneCarer[]> => {
   return [
     {
       id: 1,
-      payment_range: "$15 - $20",
+      payment_range: "250",
       availability: { "Monday": true, "Tuesday": false, "Wednesday": true },
       qualifications: "Certified Caregiver",
       residency_status: "Permanent Resident",
@@ -81,7 +81,7 @@ export const MockGetAllCarerRequests = async (): Promise<GetOneCarer[]> => {
     },
     {
       id: 2,
-      payment_range: "$10 - $15",
+      payment_range: "150",
       availability: { "Monday": true, "Thursday": true },
       qualifications: "Home Care Specialist",
       residency_status: "Temporary Resident",

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { B4CColaboradorDetail } from "../ClientsCollaboratorDetail/B4CColaboradorDetail";
-import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 import { MockGetAllCarerRequests } from "@/services/careerServices/CareerMockData";
 import { ClientsReservationDetail } from "../ClientsReservationDetail";
+import { useServiceData } from "../../context/NewServiceContext";
 
 export const NewClientService = () => {
   const [serviceStep, setServiceStep] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [provider, setProvider] = useState<GetOneCarer | null>(null);
+  const { setProvider } = useServiceData();
 
   // Simula la obtención de datos
   const fetchProvider = async (providerId: number) => {
@@ -33,16 +33,12 @@ export const NewClientService = () => {
     <>
       {serviceStep === 0 && (
         <B4CColaboradorDetail
-          provider={provider}
           loading={loading}
           setServiceStep={setServiceStep}
         />
       )}
       {serviceStep === 1 && (
-        <ClientsReservationDetail
-          setServiceStep={setServiceStep}
-          provider={provider}
-        />
+        <ClientsReservationDetail setServiceStep={setServiceStep} />
       )}
     </>
   );
