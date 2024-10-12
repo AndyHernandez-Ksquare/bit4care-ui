@@ -84,6 +84,7 @@ export const B4CReviewComponent = ({ reviews }: B4CReviewComponentProps) => {
       {visibleReviewsCount === 2 && (
         <B4CButton
           label={`Mostar las ${reviews.length} reseñas`}
+          labelColor={colorPalette.grey1}
           size={Size.Small}
           variant="outlined"
           onClick={showAllReviews}
