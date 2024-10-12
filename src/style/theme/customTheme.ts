@@ -85,7 +85,10 @@ const bodyStyle = (fontSize: number, isBold?: boolean) => ({
 const customTheme = createTheme({
   palette: {
     primary: { main: colorPalette.primary },
-    secondary: { main: colorPalette.secondary },
+    secondary: {
+      main: colorPalette.secondary,
+      contrastText: colorPalette.black1,
+    },
     warning: { main: colorPalette.warning },
     success: { main: colorPalette.success },
     info: { main: colorPalette.info },

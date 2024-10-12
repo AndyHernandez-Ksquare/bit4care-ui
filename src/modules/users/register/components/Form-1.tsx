@@ -5,14 +5,16 @@ import { genders } from "@/constants/genders";
 import { maritalStatusOptions } from "@/constants/maritalStatus";
 import { statesOptions } from "@/constants/mexicanStates";
 import { nacionalitiesOptions } from "@/constants/nacionality";
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
+import { TermsAndConditionsModal } from "./TermsAndConditionsModal";
 
 interface RegisterFormProps {
   onFormValidChange: (isValid: boolean) => void;
 }
 
 export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
+  const [open, setOpen] = useState(false);
   const [formState, setFormState] = useState({
     name: "",
     lastName: "",
@@ -31,6 +33,14 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
+  };
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
   };
 
   const onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
@@ -170,11 +180,25 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CCheckbox
-          label="Acepto los términos y condiciones"
+          label={
+            <Typography variant="body-normal">
+              Acepto los{" "}
+              <Link
+                component="button"
+                onClick={handleOpenModal}
+                sx={{
+                  textDecoration: "none",
+                }}
+              >
+                Términos y condiciones
+              </Link>
+            </Typography>
+          }
           checked={formState.acceptedTerms}
           onChange={onChangeCheckbox}
         />
       </Box>
+      <TermsAndConditionsModal open={open} handleClose={handleCloseModal} />
     </Box>
   );
 };

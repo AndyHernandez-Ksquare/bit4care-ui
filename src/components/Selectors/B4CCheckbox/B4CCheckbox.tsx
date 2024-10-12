@@ -4,9 +4,10 @@ import { ChangeEventHandler, KeyboardEvent } from "react";
 export interface IB4CCheckboxProps {
   disabled?: boolean;
   checked?: boolean;
-  label?: string;
+  label?: JSX.Element | string;
   name?: string;
   value?: boolean | string;
+  labelColor?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -14,6 +15,7 @@ export const B4CCheckbox = ({
   disabled,
   checked,
   label,
+  labelColor,
   name,
   value,
   onChange,
@@ -37,6 +39,7 @@ export const B4CCheckbox = ({
           onKeyDown={handleKeyDown}
         />
       }
+      sx={{ color: labelColor || "" }}
       label={label}
     />
   );

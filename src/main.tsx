@@ -36,6 +36,7 @@ import { ClientsSignup } from "./modules/users/clients/pages/ClientsSignup/index
 import { ClientsForgotPassword } from "./modules/users/clients/pages/ClientsForgotPassword/ClientsForgotPassword.tsx";
 import { NewClientService } from "./modules/users/clients/pages/NewClientService/NewClientService.tsx";
 import { ServiceDataProvider } from "./modules/users/clients/context/NewServiceContext.tsx";
+import { GlobalScrollbarStyles } from "./style/theme/thinScrollBar.tsx";
 
 const router = createBrowserRouter([
   {
@@ -198,6 +199,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AdminSessionProvider>
       <ThemeProvider theme={customTheme}>
+        <GlobalScrollbarStyles />
         <RouterProvider router={router} />
       </ThemeProvider>
     </AdminSessionProvider>
