@@ -11,6 +11,7 @@ export const B4CButton = ({
   fullWidth,
   isSubmit,
   size = Size.Normal,
+  labelColor = colorPalette.white,
   isLoading,
   startIcon,
   sx,
@@ -70,6 +71,7 @@ export const B4CButton = ({
             textTransform: "none",
             opacity: 0.8,
             flexWrap: "wrap",
+            color: labelColor,
           }}
         >
           {label}
