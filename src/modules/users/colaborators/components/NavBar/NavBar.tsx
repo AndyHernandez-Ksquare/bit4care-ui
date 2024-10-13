@@ -113,7 +113,9 @@ export const NavBar = ({ alternative = false }: NavBarProps) => {
               <MenuIcon
                 fontSize="large"
                 sx={{
-                  color: colorPalette.primary,
+                  color: alternative
+                    ? colorPalette.primary
+                    : colorPalette.white,
                 }}
               />
             </IconButton>
