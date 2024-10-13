@@ -17,7 +17,7 @@ export const ColaboratorsLayout = () => {
 
   return (
     <>
-      <NavBar toggleDrawer={toggleDrawer} />
+      <NavBar />
       <div
         style={{
           background: `linear-gradient(#E4EEFC, ${colorPalette.white})`,
