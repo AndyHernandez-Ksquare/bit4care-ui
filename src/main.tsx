@@ -37,11 +37,21 @@ import { ClientsForgotPassword } from "./modules/users/clients/pages/ClientsForg
 import { NewClientService } from "./modules/users/clients/pages/NewClientService/NewClientService.tsx";
 import { ServiceDataProvider } from "./modules/users/clients/context/NewServiceContext.tsx";
 import { GlobalScrollbarStyles } from "./style/theme/thinScrollBar.tsx";
+import { TermsAndConditionsPage } from "./modules/common/pages/TermsAndCondition.tsx";
+import { PrivacyPolicyPage } from "./modules/common/pages/PrivacyPolicy.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
+  },
+  {
+    path: "/terminos-y-condiciones",
+    element: <TermsAndConditionsPage />,
+  },
+  {
+    path: "/politica-de-privacidad",
+    element: <PrivacyPolicyPage />,
   },
   {
     path: "/admin",

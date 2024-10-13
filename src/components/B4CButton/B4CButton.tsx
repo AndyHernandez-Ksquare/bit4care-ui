@@ -14,6 +14,7 @@ export const B4CButton = ({
   labelColor = colorPalette.white,
   isLoading,
   startIcon,
+  href,
   sx,
   onClick,
   onSubmit,
@@ -52,6 +53,7 @@ export const B4CButton = ({
       onClick={onClick}
       onSubmit={onSubmit}
       fullWidth={fullWidth}
+      href={href}
       sx={{
         paddingInline: sizes[size].paddingInline,
         paddingBlock: sizes[size].paddingBlock,

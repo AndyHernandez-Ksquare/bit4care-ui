@@ -14,7 +14,7 @@ export const Index = () => {
           background: colorPalette.backgroundLinearGradient,
         }}
       >
-        <NavBar toggleDrawer={() => () => {}} alternative />
+        <NavBar alternative />
         <Grid
           container
           mt={{
@@ -33,6 +33,9 @@ export const Index = () => {
                 xs: "0 20px",
               }}
               textAlign={{ xs: "center", tablet: "left" }}
+              sx={{
+                textWrap: "balance",
+              }}
             >
               <Typography variant="h1" gutterBottom>
                 Encuentra el personal que necesitas
@@ -51,7 +54,13 @@ export const Index = () => {
               tablet: 0,
             }}
           >
-            <Box display="flex" justifyContent="end">
+            <Box
+              display="flex"
+              justifyContent={{
+                xs: "center",
+                tablet: "flex-end",
+              }}
+            >
               <LandingPageVisual />
             </Box>
           </Grid>

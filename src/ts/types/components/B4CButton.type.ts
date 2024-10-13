@@ -12,6 +12,7 @@ export interface B4CButtonProps {
   startIcon?: ReactNode;
   isSubmit?: boolean;
   size?: Size;
+  href?: string;
   isLoading?: boolean;
   sx?: SxProps<Theme>;
   onClick?: () => void;

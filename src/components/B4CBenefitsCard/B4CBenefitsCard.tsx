@@ -96,10 +96,11 @@ export const B4CBenefitsCard = ({
       </Box>
 
       <Typography
-        variant="body-medium"
+        variant="body-normal"
         gutterBottom
         sx={{
           padding: "0 16px",
+          textWrap: "balance",
         }}
       >
         {subtitle}

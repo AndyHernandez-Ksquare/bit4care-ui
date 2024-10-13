@@ -1,8 +1,16 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const TermsText = () => {
   return (
-    <>
+    <Box
+      sx={{
+        overflow: "auto",
+        padding: 12,
+        gap: 12,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="body-normal-bold" gutterBottom>
         ¡Bienvenido a Bid4Care! Por favor, lee estos términos y condiciones
         antes de utilizar nuestra plataforma.
@@ -61,10 +69,23 @@ export const TermsText = () => {
 
       <Typography variant="body-normal" gutterBottom>
         Al utilizar Bid4Care, aceptas cumplir con estos términos y condiciones.
-        La Plataforma tiene tres (3) categorías de Usuarios, a saber: (i)
-        Clientes; (ii) Colaborador; y (iii) administrador de negocio. Los
-        Usuarios deberán registrarse en la Plataforma, accediendo a la misma por
-        medio de la Aplicación Móvil o del Sitio Web, con el propósito de
+        La Plataforma tiene tres (3) categorías de Usuarios, a saber:
+      </Typography>
+
+      <Typography
+        component={"ol"}
+        sx={{
+          listStyleType: "lower-roman",
+        }}
+      >
+        <li> Clientes;</li>
+        <li> Colaborador;</li>
+        <li>administrador de negocio.</li>
+      </Typography>
+
+      <Typography variant="body-normal" gutterBottom>
+        Los Usuarios deberán registrarse en la Plataforma, accediendo a la misma
+        por medio de la Aplicación Móvil o del Sitio Web, con el propósito de
         obtener una cuenta y una contraseña de acceso (la “Cuenta de Usuario”).
       </Typography>
 
@@ -174,6 +195,6 @@ export const TermsText = () => {
       <Typography variant="body-normal" gutterBottom>
         Fecha de entrada en vigencia: 1 de enero de 2025
       </Typography>
-    </>
+    </Box>
   );
 };

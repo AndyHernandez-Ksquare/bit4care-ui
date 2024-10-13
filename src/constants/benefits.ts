@@ -4,7 +4,7 @@ export const benefits: B4CBenefitsCardProps[] = [
   {
     title: "Mantenimiento del hogar",
     subtitle:
-      "Profesionales que se ocupan de reparaciones y limpieza en el hogar, incluyendo plomería, electricidad, pintura y jardinería.",
+      "Profesionales especializados en mantenimiento y reparaciones del hogar, abarcando servicios como plomería, electricidad, pintura, jardinería y más.",
     color: "red",
   },
   {
@@ -14,15 +14,15 @@ export const benefits: B4CBenefitsCardProps[] = [
     color: "green",
   },
   {
-    title: "Servicios de salud",
+    title: "Servicios automotrices",
     subtitle:
-      "Profesionales en el área de la salud, como médicos, enfermeras y terapeutas, brindando atención médica y cuidados especializados.",
+      "Especialistas en mantenimiento y reparación de vehículos, ofreciendo servicios, como lavado, mecánica y cambio de llantas.",
     color: "yellow",
   },
   {
     title: "Servicios técnicos",
     subtitle:
-      "Profesionales en informática, redes y sistemas de seguridad, encargados de instalación y mantenimiento de equipos tecnológicos.",
+      "Profesionales dedicados a la instalación, mantenimiento y reparación en diversas áreas técnicas, adaptándose a las necesidades específicas de cada equipo o sistema.",
     color: "red",
   },
   {
@@ -35,7 +35,7 @@ export const benefits: B4CBenefitsCardProps[] = [
   {
     title: "Entretenimiento y eventos",
     subtitle:
-      "Especialistas en la organización de eventos y actividades recreativas, como fiestas, conciertos y actividades deportivas.",
+      "Especialistas en la organización de eventos y actividades recreativas, abarcando celebraciones, espectáculos, encuentros deportivos y más.",
     color: "yellow",
   },
 ];
