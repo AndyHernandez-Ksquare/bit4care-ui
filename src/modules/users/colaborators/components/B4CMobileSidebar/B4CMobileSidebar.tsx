@@ -3,7 +3,10 @@ import { Box, Drawer, List } from "@mui/material";
 import { ListItemLink } from "../B4CSidebar/ListItemLink";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CButton } from "@/components/B4CButton";
+
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 interface B4CMobileSidebarProps {
   open: boolean;
@@ -28,8 +31,16 @@ export const B4CMobileSidebar = ({
           gap: 16,
         }}
       >
-        <ListItemLink to="/colaborador" />
-        <ListItemLink to="/colaborador/ajustes-y-perfil" />
+        <ListItemLink
+          to="/colaborador"
+          label="Mis Ajustes"
+          icon={<HomeIcon />}
+        />
+        <ListItemLink
+          to="/colaborador/ajustes-y-perfil"
+          label="Perfil y Ajustes"
+          icon={<AccountBoxIcon />}
+        />
       </List>
       <Box
         sx={{
