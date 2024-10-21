@@ -1,2 +1,2 @@
-export * from "./CreateAppReq.type"
-export * from "./GetAll.type"
+export type { CreateAppReq } from "./CreateAppReq.type";
+export type { GetAllApplication } from "./GetAll.type";

@@ -61,6 +61,11 @@ export const B4CSelect = ({
           slotProps={{
             input: { sx: { paddingY: "12px" } },
           }}
+          MenuProps={{
+            sx: {
+              maxHeight: 500,
+            },
+          }}
           disabled={disabled}
         >
           {options.map((option) => (

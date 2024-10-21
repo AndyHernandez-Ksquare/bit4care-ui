@@ -3,6 +3,11 @@ import { B4CRadioButtonGroup } from "@/components/B4CRadioButtonGroup";
 import { B4CSelect } from "@/components/B4CSelect";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
+import {
+  SpecialityOption,
+  WorkSpecialityOptions,
+  workSpecialityOptions,
+} from "@/constants/workSpecialities";
 import { yesOrNoOptions } from "@/constants/yesOrNoOptions";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
@@ -12,36 +17,58 @@ interface RegisterFormProps {
   onFormValidChange: (isValid: boolean) => void;
 }
 
+interface FormState {
+  curp: string;
+  rfc: string;
+  nss: string;
+  driversLicense: string;
+  typeOfLicense: string;
+  workSpeciality: keyof WorkSpecialityOptions;
+  experienceYears: string;
+  specialities: SpecialityOption[];
+  motivationLetter: string;
+}
+
 export const RegisterFormPart2 = ({ onFormValidChange }: RegisterFormProps) => {
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<FormState>({
     curp: "",
     rfc: "",
     nss: "",
     driversLicense: "",
     typeOfLicense: "",
-    workSpeciality: "",
+    workSpeciality: "técnicos",
     experienceYears: "",
-    specialities: [
-      { label: "Cuidados intensivos", value: false },
-      { label: "Geriatría", value: false },
-      { label: "Salud mental", value: false },
-    ],
+    specialities: [],
     motivationLetter: "",
   });
 
+  console.log(formState);
+
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
+
+    if (name === "workSpeciality") {
+      setFormState({
+        ...formState,
+        [name]: value as keyof WorkSpecialityOptions,
+        specialities: [],
+      });
+    } else {
+      setFormState({ ...formState, [name]: value });
+    }
   };
 
   const onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
-    const updatedSpecialities = formState.specialities.map((speciality) =>
-      speciality.label === value
-        ? { ...speciality, value: checked }
-        : speciality,
-    );
+    const updatedSpecialities = checked
+      ? [
+          ...formState.specialities,
+          { value, label: event.target?.labels?.[0]?.innerText || "" },
+        ]
+      : formState.specialities.filter(
+          (speciality) => speciality.value !== value,
+        );
 
     setFormState({
       ...formState,
@@ -58,9 +85,8 @@ export const RegisterFormPart2 = ({ onFormValidChange }: RegisterFormProps) => {
       formState.typeOfLicense.trim() !== "" &&
       formState.workSpeciality.trim() !== "" &&
       formState.experienceYears.trim() !== "" &&
-      formState.specialities.some((speciality) => speciality.value);
-
-    console.log(formState);
+      formState.specialities.length > 0 &&
+      formState.motivationLetter.trim() !== "";
 
     onFormValidChange(isFormValid);
   }, [formState, onFormValidChange]);
@@ -134,31 +160,11 @@ export const RegisterFormPart2 = ({ onFormValidChange }: RegisterFormProps) => {
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CRadioButtonGroup
           title="Especialidad de trabajo"
-          options={[
-            "Hogar",
-            "Asistencia",
-            "Acompañamiento",
-            "Cuidados",
-            "Motriz",
-            "Mental",
-            "Nutrición",
-            "Psicología",
-            "Terapia",
-            "Especialidad",
-            "Otro",
-          ]}
+          options={Object.keys(workSpecialityOptions).map(
+            (key) => key.charAt(0).toUpperCase() + key.slice(1),
+          )}
           name="workSpeciality"
           value={formState.workSpeciality}
-          onChange={handleChange}
-          row
-        />
-      </Box>
-      <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
-        <B4CRadioButtonGroup
-          title="Años de experiencia"
-          options={["Menos de 1 año", "+1 año", "+3 años", "+5 años"]}
-          name="experienceYears"
-          value={formState.experienceYears}
           onChange={handleChange}
           row
         />
@@ -177,16 +183,30 @@ export const RegisterFormPart2 = ({ onFormValidChange }: RegisterFormProps) => {
           </Typography>
         </Box>
         <Box>
-          {formState.specialities.map((speciality) => (
-            <B4CCheckbox
-              key={speciality.label}
-              label={speciality.label}
-              value={speciality.label}
-              checked={speciality.value}
-              onChange={onChangeCheckbox}
-            />
-          ))}
+          {workSpecialityOptions[formState.workSpeciality]?.map(
+            (speciality) => (
+              <B4CCheckbox
+                key={speciality.value}
+                label={speciality.label}
+                value={speciality.value}
+                checked={formState.specialities.some(
+                  (s) => s.value === speciality.value,
+                )}
+                onChange={onChangeCheckbox}
+              />
+            ),
+          )}
         </Box>
+      </Box>
+      <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
+        <B4CRadioButtonGroup
+          title="Años de experiencia"
+          options={["Menos de 1 año", "+1 año", "+3 años", "+5 años"]}
+          name="experienceYears"
+          value={formState.experienceYears}
+          onChange={handleChange}
+          row
+        />
       </Box>
       <Box mt={30}>
         <Typography variant="body-normal-bold" color={colorPalette.black1}>

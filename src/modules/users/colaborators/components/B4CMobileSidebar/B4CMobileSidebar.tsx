@@ -1,7 +1,9 @@
 import "./B4CMobileSidebar.css";
-import { Box, Button, Drawer, List, Typography } from "@mui/material";
+import { Box, Drawer, List } from "@mui/material";
 import { ListItemLink } from "../B4CSidebar/ListItemLink";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { B4CButton } from "@/components/B4CButton";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 interface B4CMobileSidebarProps {
   open: boolean;
@@ -13,29 +15,49 @@ export const B4CMobileSidebar = ({
   toggleDrawer,
 }: B4CMobileSidebarProps) => {
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      className="Hola"
+    >
       <List
         sx={{
-          listStyle: "none",
           display: "flex",
           flexDirection: "column",
-          paddingInline: 0,
-          gap: "32px",
+          gap: 16,
         }}
       >
         <ListItemLink to="/colaborador" />
         <ListItemLink to="/colaborador/ajustes-y-perfil" />
-        <Button sx={{ color: colorPalette.black1 }}>
-          <Typography variant="body-normal-bold">Salir de la cuenta</Typography>
-        </Button>
       </List>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "auto",
+          marginBottom: 5,
+        }}
+      >
+        <B4CButton
+          variant="outlined"
+          label="Cerrar Sesión"
+          labelColor={colorPalette.primary}
+          fullWidth
+          startIcon={<LogoutIcon sx={{ color: colorPalette.primary }} />}
+          sx={{
+            textWrap: "nowrap",
+            mt: "auto",
+          }}
+        />
+      </Box>
     </Box>
   );
   return (
-    <div>
+    <Box>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
-    </div>
+    </Box>
   );
 };

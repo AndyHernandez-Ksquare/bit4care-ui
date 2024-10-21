@@ -31,7 +31,7 @@ import { ServiceTable } from "./modules/admin/pages/ServicesPage/components/Serv
 import { ServiceDetailAdminPage } from "./modules/admin/pages/ServicesPage/components/ServiceDetailAdminPage.tsx";
 import ColaboratorsRegister from "./modules/users/register/pages/ColaboratorsRegister.tsx";
 import { StrictMode } from "react";
-import { Index } from "./modules/admin/pages/Index/Index.tsx";
+import { LandingPage } from "./modules/admin/pages/LandingPage/LandingPage.tsx";
 import { ClientsSignup } from "./modules/users/clients/pages/ClientsSignup/index.ts";
 import { ClientsForgotPassword } from "./modules/users/clients/pages/ClientsForgotPassword/ClientsForgotPassword.tsx";
 import { NewClientService } from "./modules/users/clients/pages/NewClientService/NewClientService.tsx";
@@ -43,7 +43,7 @@ import { PrivacyPolicyPage } from "./modules/common/pages/PrivacyPolicy.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Index />,
+    element: <LandingPage />,
   },
   {
     path: "/terminos-y-condiciones",

@@ -18,8 +18,8 @@ export const ColaboratorsLayout = () => {
   return (
     <>
       <NavBar />
-      <div
-        style={{
+      <Box
+        sx={{
           background: `linear-gradient(#E4EEFC, ${colorPalette.white})`,
           display: "flex",
           paddingTop: "100px",
@@ -37,7 +37,7 @@ export const ColaboratorsLayout = () => {
             </B4CMainArea>
           </Box>
         </Box>
-      </div>
+      </Box>
     </>
   );
 };

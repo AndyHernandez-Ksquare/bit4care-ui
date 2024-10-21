@@ -6,7 +6,7 @@ import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Grid2 as Grid, Typography } from "@mui/material";
 
-export const Index = () => {
+export const LandingPage = () => {
   return (
     <>
       <Grid
@@ -115,6 +115,7 @@ export const Index = () => {
                   title={benefit.title}
                   subtitle={benefit.subtitle}
                   color={benefit.color}
+                  icon={benefit.icon}
                 />
               </Grid>
             ))}
