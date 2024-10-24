@@ -15,7 +15,14 @@ export const ClientsSignup = () => {
       }}
     >
       <AdminLayoutBlob />
-      <Box sx={{ marginInline: "auto", marginTop: "200px", zIndex: 1 }}>
+      <Box
+        sx={{
+          marginInline: "auto",
+          marginTop: { xs: "150px", desktop: "200px" },
+          paddingInline: { xs: "1.25rem", desktop: "0" },
+          zIndex: 1,
+        }}
+      >
         <B4CSignupSteps />
       </Box>
     </Box>

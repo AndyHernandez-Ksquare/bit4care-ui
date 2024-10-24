@@ -87,9 +87,12 @@ export const B4CColaboradorDetail = ({
             >
               <Box
                 display="flex"
-                flexDirection={"row"}
+                flexDirection={{ xs: "column", tablet: "row" }}
                 gap="16px"
-                sx={{ alignText: "center" }}
+                sx={{
+                  alignText: "center",
+                  alignItems: { xs: "center", desktop: "start" },
+                }}
               >
                 <Avatar
                   alt={provider?.User.name}
@@ -102,6 +105,8 @@ export const B4CColaboradorDetail = ({
                     display: "flex",
                     flexDirection: "column",
                     width: "100%",
+                    alignItems: { xs: "center", desktop: "stretch" },
+                    gap: { xs: "0.3rem", desktop: "0" },
                   }}
                 >
                   <Typography variant="body-large-bold">
@@ -127,7 +132,10 @@ export const B4CColaboradorDetail = ({
                     mt={"8px"}
                     display="flex"
                     flexDirection={"row"}
-                    sx={{ justifyContent: "space-between" }}
+                    sx={{
+                      justifyContent: "space-between",
+                      gap: { xs: "2rem" },
+                    }}
                   >
                     <B4CDefinitionComponent label="Locacion:">
                       <Typography variant="body-small-bold">
@@ -139,7 +147,7 @@ export const B4CColaboradorDetail = ({
                       sx={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: "0.5rem",
+                        gap: { xs: "0", desktop: "0.5rem" },
                       }}
                     >
                       <Typography variant="body-small-bold">
@@ -185,12 +193,17 @@ export const B4CColaboradorDetail = ({
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    alignText: "center",
+                    width: "50%",
                   }}
                 >
                   <Typography variant="body-small-bold">
                     {provider?.completed_services}
                   </Typography>
-                  <Typography variant="body-small">
+                  <Typography
+                    variant="body-small"
+                    sx={{ fontSize: { xs: "12px", desktop: "14px" } }}
+                  >
                     Servicios completados
                   </Typography>
                 </Box>
@@ -204,12 +217,18 @@ export const B4CColaboradorDetail = ({
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    width: "50%",
                   }}
                 >
                   <Typography variant="body-small-bold">
                     ${provider?.payment_range}/h
                   </Typography>
-                  <Typography variant="body-small">Tarifa</Typography>
+                  <Typography
+                    variant="body-small"
+                    sx={{ fontSize: { xs: "12px", desktop: "14px" } }}
+                  >
+                    Tarifa
+                  </Typography>
                 </Box>
               </Box>
               <ClientAboutAndReview
