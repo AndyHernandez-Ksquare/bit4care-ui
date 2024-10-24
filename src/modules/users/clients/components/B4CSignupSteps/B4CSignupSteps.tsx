@@ -2,39 +2,34 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CPhoneInput } from "@/components/B4CPhoneInput";
 import { B4CStepper } from "@/components/B4CStepper";
 import { Size } from "@/ts/enums";
-import {
-  Box,
-  Grid2 as Grid,
-  SelectChangeEvent,
-  Typography,
-} from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { Box, Grid2 as Grid, Typography } from "@mui/material";
+import { useState } from "react";
 import { B4CConfirmationCodeInput } from "../B4CConfirmationCodeInput";
 import { B4CTextfield } from "@/components/B4CTextfield";
+import { useFormik } from "formik";
+import { phoneValidationSchema } from "./validators/phoneValidationSchema";
 
 export const B4CSignupSteps = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [countryCode, setCountryCode] = useState<string>("+1");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-
-  const handleActiveStep = (step: number) => {
-    setActiveStep(step);
-  };
-
-  const handleCountryCodeChange = (event: SelectChangeEvent<string>) => {
-    setCountryCode(event.target.value as string);
-  };
-
-  const handlePhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(event.target.value);
-  };
+  const [confirmation, setConfirmation] = useState<boolean>(false);
 
   const steps = ["paso1", "paso2", "paso3"];
 
-  const handleSendCode = () => {
-    // Aquí puedes manejar la lógica para enviar el código de verificación
-    console.log(`Country Code: ${countryCode}, Phone Number: ${phoneNumber}`);
-    handleActiveStep(1);
+  const formik = useFormik({
+    initialValues: {
+      countryCode: "+52", // Default country code
+      phoneNumber: "",
+    },
+    validationSchema: phoneValidationSchema,
+    onSubmit: ({ countryCode, phoneNumber }) => {
+      // Handle form submission
+      console.log("Form Submitted:", `${countryCode}${phoneNumber}`);
+      handleActiveStep(1);
+    },
+  });
+
+  const handleActiveStep = (step: number) => {
+    setActiveStep(step);
   };
 
   const handleConfirm = () => {
@@ -48,15 +43,14 @@ export const B4CSignupSteps = () => {
         display: "flex",
         flexDirection: "column",
         gap: "32px",
-        alignItems: "start",
+        alignItems: { xs: "center", desktop: "start" },
       }}
     >
       <Box
         sx={{
           width: "50%",
           display: "flex",
-          justifyContent: "start",
-          marginLeft: "-32px",
+          marginLeft: { xs: "0", desktop: "-32px" },
         }}
       >
         <B4CStepper activeStep={activeStep} steps={steps} />
@@ -67,41 +61,52 @@ export const B4CSignupSteps = () => {
           display: "flex",
           flexDirection: "column",
           gap: "8px",
+          alignItems: { xs: "center", desktop: "start" },
+          justifyContent: { xs: "center", desktop: "start" },
         }}
       >
         <Typography variant="h4">Registro de cliente</Typography>
-        <Typography variant="body-medium">
+        <Typography
+          variant="body-medium"
+          sx={{ textAlign: { xs: "center", desktop: "start" } }}
+        >
           Rellena los datos de registro. Tomará un par de minutos. Todo lo que
           necesitas es un número de teléfono y un correo electrónico.
         </Typography>
       </Box>
       {activeStep === 0 && (
-        <>
+        <form
+          onSubmit={formik.handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+        >
           <B4CPhoneInput
-            countryCode={countryCode}
-            phoneNumber={phoneNumber}
-            handleCountryCodeChange={handleCountryCodeChange}
-            handlePhoneNumberChange={handlePhoneNumberChange}
+            countryCode={formik.values.countryCode}
+            phoneNumber={formik.values.phoneNumber}
+            phoneNumberError={formik.errors.phoneNumber}
+            handleCountryCodeChange={(e) => {
+              formik.setFieldValue("countryCode", e.target.value);
+            }}
+            handlePhoneNumberChange={(e) => {
+              formik.setFieldValue("phoneNumber", e.target.value);
+            }}
           />
           <B4CButton
+            isSubmit
             label="Enviar código"
             variant="primary"
-            onClick={handleSendCode}
+            disabled={!formik.isValid || !formik.dirty}
             size={Size.Small}
           />
-        </>
+        </form>
       )}
       {activeStep === 1 && (
         <>
           <B4CConfirmationCodeInput
-            countryCode={countryCode}
-            phoneNumber={phoneNumber}
-          />
-          <B4CButton
-            label="Confirmar"
-            variant="primary"
-            onClick={handleConfirm}
-            size={Size.Small}
+            confirmation={confirmation}
+            countryCode={formik.values.countryCode}
+            phoneNumber={formik.values.phoneNumber}
+            setActiveStep={setActiveStep}
+            setConfirmation={setConfirmation}
           />
         </>
       )}

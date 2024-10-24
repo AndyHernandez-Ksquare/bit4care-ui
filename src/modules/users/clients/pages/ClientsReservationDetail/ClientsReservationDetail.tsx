@@ -83,7 +83,7 @@ export const ClientsReservationDetail = ({
       </Box>
 
       <Grid container spacing={24} sx={{ height: "100%" }}>
-        <Grid size={{ xs: 12, desktop: 8 }}>
+        <Grid size={{ xs: 12, desktop: 8 }} order={{ xs: 2, desktop: 1 }}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,
@@ -183,7 +183,7 @@ export const ClientsReservationDetail = ({
                 </Typography>
                 <Typography variant="h6">{provider?.User.name}</Typography>
                 <Typography variant="h5">CLABE: 7658926452917567</Typography>
-                <B4CButton label="Pagar $8100 MXN" fullWidth />
+                <B4CButton label={`Pagar $${price} MXN`} fullWidth />
               </Box>
             )}
 
@@ -238,7 +238,7 @@ export const ClientsReservationDetail = ({
             </Box>
           </Box>
         </Grid>
-        <Grid size={{ xs: 12, desktop: 4 }}>
+        <Grid size={{ xs: 12, desktop: 4 }} order={{ xs: 1, desktop: 2 }}>
           <Box
             sx={{
               border: `1px solid ${colorPalette.secondary}`,

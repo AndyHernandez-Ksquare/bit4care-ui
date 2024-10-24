@@ -7,20 +7,22 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { countryCodes } from "@/constants/countryCodes";
 
 export const B4CPhoneInput = ({
   countryCode,
   phoneNumber,
+  phoneNumberError,
   handleCountryCodeChange,
   handlePhoneNumberChange,
-}: B4CPhoneInputProps) => {
+}: B4CPhoneInputProps & {
+  phoneNumberError?: string;
+}) => {
   return (
     <Grid
       container
-      spacing={8}
+      spacing={{ xs: 24, desktop: 8 }}
       sx={{
-        marginLeft: 0,
-        maxWidth: "100%",
         border: `1px solid #BDBDBD`,
         borderRadius: "8px",
         p: "16px",
@@ -38,15 +40,20 @@ export const B4CPhoneInput = ({
             value={countryCode}
             onChange={handleCountryCodeChange}
             label="Código de país"
+            renderValue={(value) => value}
             inputProps={{
               name: "country-code",
               id: "country-code",
             }}
           >
-            <MenuItem value="+1">+1</MenuItem>
-            <MenuItem value="+44">+44</MenuItem>
-            <MenuItem value="+52">+52</MenuItem>
-            {/* Agrega más códigos de país según sea necesario */}
+            {countryCodes.map(({ code, country }, index) => {
+              return (
+                <MenuItem
+                  key={`${index}-${code}`}
+                  value={code}
+                >{`${country} ${code}`}</MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </Grid>
@@ -58,6 +65,8 @@ export const B4CPhoneInput = ({
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
           sx={{ marginBlock: "auto" }}
+          error={!!phoneNumberError} // Add error state to field
+          helperText={phoneNumberError}
         />
       </Grid>
     </Grid>

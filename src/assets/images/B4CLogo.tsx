@@ -14,8 +14,8 @@ export const B4CLogo = ({
   return (
     <svg
       width={width ? width : "100%"}
-      height={height ? height : "auto"}
-      style={{ maxWidth: "150px" }}
+      height={height ? `${height}` : "100%"} // Ensure height is set properly
+      style={{ maxWidth: "150px", height: "auto" }} // Use CSS for "auto" height
       viewBox="0 0 920 346"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
