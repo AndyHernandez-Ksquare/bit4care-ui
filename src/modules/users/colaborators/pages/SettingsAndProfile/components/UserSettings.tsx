@@ -69,6 +69,7 @@ export const UserSettings = () => {
                   backgroundColor: "white",
                   boxShadow: "none",
                   fontWeight: "600",
+                  mt: 8,
                 },
               }}
             >
@@ -153,7 +154,7 @@ export const UserSettings = () => {
         }}
       >
         <Grid size={{ xs: 12 }}>
-          <B4CTextfield label="Contrase;a" isPassword />
+          <B4CTextfield label="Contraseña" isPassword />
           <Button
             startIcon={<EditFieldIcons />}
             variant="contained"
@@ -164,6 +165,7 @@ export const UserSettings = () => {
               boxShadow: "none",
               textTransform: "none",
               color: "#2F80ED",
+              mt: 8,
               "&:hover": {
                 backgroundColor: "white",
                 boxShadow: "none",

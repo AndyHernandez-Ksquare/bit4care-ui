@@ -7,7 +7,7 @@ export interface GetAllApplication {
   patient_phone: string;
   clientId: number;
   description: string;
-  comments?: string;  // Puede ser opcional si no siempre está presente
+  comments?: string;
   amount: number;
   carerId: number;
   createdAt: string;

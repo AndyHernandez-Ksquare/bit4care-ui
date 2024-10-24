@@ -1,53 +1,55 @@
 import { Box, Card, Typography } from "@mui/material";
-import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
-import AssistantOutlinedIcon from "@mui/icons-material/AssistantOutlined";
 import CelebrationOutlinedIcon from "@mui/icons-material/CelebrationOutlined";
+import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
+import ElderlyIcon from "@mui/icons-material/Elderly";
+import CarRepairIcon from "@mui/icons-material/CarRepair";
+import HandymanIcon from "@mui/icons-material/Handyman";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+
+export type BenefitsIcon =
+  | "cleaning"
+  | "elderly"
+  | "carRepair"
+  | "handyman"
+  | "people"
+  | "celebration";
 
 export interface B4CBenefitsCardProps {
   title: string;
   color?: "red" | "yellow" | "green";
+  icon: BenefitsIcon;
   subtitle: string;
 }
 
 export const B4CBenefitsCard = ({
   title,
   color = "green",
+  icon,
   subtitle,
 }: B4CBenefitsCardProps) => {
+  const fontSize = 45;
+  const colorHex =
+    color === "red" ? "#FF6250" : color === "green" ? "#009379" : "#F8D57E";
+
+  // Mapeo para seleccionar el ícono en base al prop `icon`
+  const iconMapping = {
+    cleaning: <CleaningServicesIcon sx={{ fontSize, color: colorHex }} />,
+    elderly: <ElderlyIcon sx={{ fontSize, color: colorHex }} />,
+    carRepair: <CarRepairIcon sx={{ fontSize, color: colorHex }} />,
+    handyman: <HandymanIcon sx={{ fontSize, color: colorHex }} />,
+    people: <EmojiPeopleIcon sx={{ fontSize, color: colorHex }} />,
+    celebration: <CelebrationOutlinedIcon sx={{ fontSize, color: colorHex }} />,
+  };
+
   const colorPallette = {
     red: {
       backgroundColor: " #FF625033",
-      icon: (
-        <AutoFixHighOutlinedIcon
-          sx={{
-            color: "#FF6250",
-            fontSize: 45,
-          }}
-        />
-      ),
     },
     green: {
       backgroundColor: " #00937933",
-      icon: (
-        <AssistantOutlinedIcon
-          sx={{
-            color: "#009379",
-            fontSize: 45,
-          }}
-        />
-      ),
     },
     yellow: {
       backgroundColor: "#F8D57E33",
-
-      icon: (
-        <CelebrationOutlinedIcon
-          sx={{
-            color: "#F8D57E",
-            fontSize: 45,
-          }}
-        />
-      ),
     },
   };
 
@@ -78,7 +80,7 @@ export const B4CBenefitsCard = ({
           borderRadius: "25%",
         }}
       >
-        {colorPallette[color].icon}
+        {iconMapping[icon]}
       </Box>
 
       <Box

@@ -4,13 +4,13 @@ import { ThemeProvider } from "@mui/material";
 import customTheme from "./style/theme/customTheme.ts";
 import { AdminSessionProvider } from "./context/session/AdminSessionContext.tsx";
 import { StrictMode } from "react";
-import { Index } from "./modules/admin/pages/Index/Index.tsx";
 import { GlobalScrollbarStyles } from "./style/theme/thinScrollBar.tsx";
 import { TermsAndConditionsPage } from "./modules/common/pages/TermsAndCondition.tsx";
 import { PrivacyPolicyPage } from "./modules/common/pages/PrivacyPolicy.tsx";
 import { clientsRouter } from "./modules/users/clients/ClientsRouter.tsx";
 import { colaboratorsRouter } from "./modules/users/colaborators/ColaboratorsRouter.tsx";
 import { adminRouter } from "./modules/admin/pages/AdminRouter.tsx";
+import { LandingPage } from "./modules/admin/pages/LandingPage/LandingPage.tsx";
 
 const combinedRoutes = [
   ...clientsRouter,
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   ...combinedRoutes,
   {
     path: "/",
-    element: <Index />,
+    element: <LandingPage />,
   },
   {
     path: "/terminos-y-condiciones",
