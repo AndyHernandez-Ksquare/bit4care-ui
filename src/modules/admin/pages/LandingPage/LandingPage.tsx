@@ -123,7 +123,10 @@ export const LandingPage = () => {
         </Grid>
         <Grid
           container
-          mt={120}
+          mt={{
+            xs: 40,
+            tablet: 120,
+          }}
           justifyContent="center"
           alignItems="center"
           spacing={3}
