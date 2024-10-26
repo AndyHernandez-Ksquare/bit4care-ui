@@ -1,9 +1,11 @@
 import Visuals from "@/assets/images/Visuals.png";
 import { B4CBenefitsCard } from "@/components/B4CBenefitsCard";
+import { B4CButton } from "@/components/B4CButton";
 import { B4CFooter } from "@/components/B4CFooter.tsx";
 import { benefits } from "@/constants/benefits";
 import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { Size } from "@/ts/enums";
 import { Box, Grid2 as Grid, Typography } from "@mui/material";
 
 export const LandingPage = () => {
@@ -33,11 +35,15 @@ export const LandingPage = () => {
                 xs: "0 20px",
               }}
               textAlign={{ xs: "center", tablet: "left" }}
-              sx={{
-                textWrap: "balance",
-              }}
             >
-              <Typography variant="h1" gutterBottom zIndex={2}>
+              <Typography
+                variant="h1"
+                gutterBottom
+                zIndex={2}
+                sx={{
+                  textWrap: "balance",
+                }}
+              >
                 Encuentra el personal que necesitas
               </Typography>
               <Typography variant="body-normal" mt={2} gutterBottom>
@@ -45,6 +51,40 @@ export const LandingPage = () => {
                 reparaciones del hogar hasta servicios profesionales, ¡todo en
                 un solo lugar!
               </Typography>
+              <Box
+                display={"flex"}
+                my={16}
+                gap={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+                flexDirection={{
+                  xs: "column",
+                  desktopHD: "row",
+                }}
+              >
+                <B4CButton
+                  label="Regístrate como Colaborador"
+                  size={Size.Small}
+                  variant="secondary"
+                  labelColor={colorPalette.info}
+                  href="/colaborador"
+                  sx={{
+                    maxWidth: 280,
+                    textWrap: "nowrap",
+                    background: `${colorPalette.info}33`,
+                  }}
+                />
+                <B4CButton
+                  label="Agenda un servicio"
+                  size={Size.Small}
+                  href="/cliente"
+                  sx={{
+                    maxWidth: 280,
+                    textWrap: "nowrap",
+                    background: colorPalette.info,
+                  }}
+                />
+              </Box>
             </Box>
           </Grid>
           <Grid
@@ -63,22 +103,18 @@ export const LandingPage = () => {
             >
               <Box
                 component={"picture"}
-                style={{
-                  width: "100%",
-                  maxWidth: "650px",
-                }}
+                display={"flex"}
                 justifyContent={{
                   xs: "center",
                   tablet: "flex-end",
                 }}
-                display={"flex"}
               >
                 <img
                   src={Visuals}
                   alt="Landing Page Visual"
                   style={{
-                    zIndex: 1,
-                    position: "relative",
+                    maxWidth: "100%",
+                    justifySelf: "center",
                   }}
                 />
               </Box>
