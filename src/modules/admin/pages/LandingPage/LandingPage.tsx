@@ -1,4 +1,4 @@
-import { LandingPageVisual } from "@/assets/images/LandingPageVisual";
+import Visuals from "@/assets/images/Visuals.png";
 import { B4CBenefitsCard } from "@/components/B4CBenefitsCard";
 import { B4CFooter } from "@/components/B4CFooter.tsx";
 import { benefits } from "@/constants/benefits";
@@ -37,7 +37,7 @@ export const LandingPage = () => {
                 textWrap: "balance",
               }}
             >
-              <Typography variant="h1" gutterBottom>
+              <Typography variant="h1" gutterBottom zIndex={2}>
                 Encuentra el personal que necesitas
               </Typography>
               <Typography variant="body-normal" mt={2} gutterBottom>
@@ -61,7 +61,27 @@ export const LandingPage = () => {
                 tablet: "flex-end",
               }}
             >
-              <LandingPageVisual />
+              <Box
+                component={"picture"}
+                style={{
+                  width: "100%",
+                  maxWidth: "650px",
+                }}
+                justifyContent={{
+                  xs: "center",
+                  tablet: "flex-end",
+                }}
+                display={"flex"}
+              >
+                <img
+                  src={Visuals}
+                  alt="Landing Page Visual"
+                  style={{
+                    zIndex: 1,
+                    position: "relative",
+                  }}
+                />
+              </Box>
             </Box>
           </Grid>
         </Grid>
