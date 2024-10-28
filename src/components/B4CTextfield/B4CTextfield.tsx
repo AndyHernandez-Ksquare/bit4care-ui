@@ -12,7 +12,7 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
-import { ChangeEventHandler, FocusEventHandler } from "react";
+import { ChangeEventHandler, FocusEventHandler, useState } from "react";
 
 interface B4CTextfieldProps {
   name?: string;
@@ -25,7 +25,6 @@ interface B4CTextfieldProps {
   isPassword?: boolean;
   isMultiline?: boolean;
   rows?: number;
-  isVisible?: boolean;
   label?: string;
   placeholder?: string;
   required?: boolean;
@@ -35,7 +34,6 @@ interface B4CTextfieldProps {
   sx?: SxProps<Theme> | undefined;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  onClick?: () => void;
 }
 
 export const B4CTextfield = ({
@@ -48,7 +46,6 @@ export const B4CTextfield = ({
   isPassword,
   label,
   isMultiline,
-  isVisible,
   required,
   rows,
   placeholder,
@@ -57,10 +54,16 @@ export const B4CTextfield = ({
   value,
   sx,
   variant,
+  onBlur,
   onChange,
-  onClick,
 }: B4CTextfieldProps) => {
   const anchorName = id ? id : name;
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleVisibilityToggle = () => {
+    setIsVisible((prev) => !prev);
+  };
 
   return (
     <Box display="flex" flexDirection="column" sx={sx} width={"100%"}>
@@ -77,6 +80,7 @@ export const B4CTextfield = ({
       <TextField
         required={required}
         name={name}
+        onBlur={onBlur}
         onChange={onChange}
         variant={variant}
         type={isPassword && !isVisible ? "password" : type ? type : "text"}
@@ -85,7 +89,7 @@ export const B4CTextfield = ({
             endAdornment: isPassword && (
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={onClick}
+                onClick={handleVisibilityToggle}
                 edge="end"
               >
                 {isVisible ? <NotViewPasswordIcon /> : <ViewPasswordIcon />}

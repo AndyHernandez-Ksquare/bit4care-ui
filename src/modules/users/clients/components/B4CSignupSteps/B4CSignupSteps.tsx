@@ -11,14 +11,30 @@ import { phoneValidationSchema } from "./validators/phoneValidationSchema";
 import { userDataValidationSchema } from "./validators/userValidationSchema";
 import { B4CSelect } from "@/components/B4CSelect";
 import { statesOptions } from "@/constants/mexicanStates";
+import { CreateClient } from "@/ts/types/api/client";
+import { PhoneFormValues, UserDataFormValues } from "@/ts/forms";
+import { useNavigate } from "react-router-dom";
+
+const clientFormToCreateClientParser = (
+  formValues: PhoneFormValues & UserDataFormValues,
+): CreateClient => {
+  return {
+    address: `${formValues.address}, ${formValues.city}, ${formValues.state} ${formValues.postalCode}`,
+    email: formValues.email,
+    phone: `${formValues.countryCode}${formValues.phoneNumber}`,
+    password: formValues.password,
+    name: `${formValues.names} ${formValues.fatherLastName} ${formValues.motherLastName}`.trim(),
+  };
+};
 
 export const B4CSignupSteps = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [confirmation, setConfirmation] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const steps = ["paso1", "paso2", "paso3"];
 
-  const formik = useFormik({
+  const formik = useFormik<PhoneFormValues>({
     initialValues: {
       countryCode: "+52", // Mexico como codigo telefónico default
       phoneNumber: "",
@@ -27,11 +43,11 @@ export const B4CSignupSteps = () => {
     onSubmit: ({ countryCode, phoneNumber }) => {
       // Handle form submission
       console.log("Form Submitted:", `${countryCode}${phoneNumber}`);
-      handleActiveStep(1);
+      setActiveStep(1);
     },
   });
 
-  const userDataFormik = useFormik({
+  const userDataFormik = useFormik<UserDataFormValues>({
     initialValues: {
       names: "",
       fatherLastName: "",
@@ -46,16 +62,15 @@ export const B4CSignupSteps = () => {
     validationSchema: userDataValidationSchema,
     onSubmit: (values) => {
       console.log("Formulario Enviado:", values);
+      console.log(
+        clientFormToCreateClientParser({
+          ...userDataFormik.values,
+          ...formik.values,
+        }),
+      );
+      navigate("/cliente/login");
     },
   });
-
-  const handleActiveStep = (step: number) => {
-    setActiveStep(step);
-  };
-
-  const handleConfirm = () => {
-    handleActiveStep(2);
-  };
 
   return (
     <Box
@@ -156,10 +171,15 @@ export const B4CSignupSteps = () => {
                 label="Nombre(s)"
                 name="names"
                 value={userDataFormik.values.names}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
                 error={!!userDataFormik.errors.names}
-                touched
-                helper={userDataFormik.errors.names}
+                touched={userDataFormik.touched.names}
+                helper={
+                  userDataFormik.touched.names
+                    ? userDataFormik.errors.names
+                    : ""
+                }
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 6 }}>
@@ -167,10 +187,15 @@ export const B4CSignupSteps = () => {
                 label="Apellido paterno"
                 name="fatherLastName"
                 value={userDataFormik.values.fatherLastName}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
                 error={!!userDataFormik.errors.fatherLastName}
-                helper={userDataFormik.errors.fatherLastName}
-                touched
+                touched={userDataFormik.touched.fatherLastName}
+                helper={
+                  userDataFormik.touched.fatherLastName
+                    ? userDataFormik.errors.fatherLastName
+                    : ""
+                }
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 6 }}>
@@ -178,11 +203,10 @@ export const B4CSignupSteps = () => {
                 label="Apellido materno"
                 name="motherLastName"
                 value={userDataFormik.values.motherLastName}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
-                error={
-                  userDataFormik.touched.motherLastName &&
-                  Boolean(userDataFormik.errors.motherLastName)
-                }
+                error={!!userDataFormik.errors.motherLastName}
+                touched={userDataFormik.touched.motherLastName}
                 helper={
                   userDataFormik.touched.motherLastName
                     ? userDataFormik.errors.motherLastName
@@ -206,9 +230,15 @@ export const B4CSignupSteps = () => {
                 label="Dirección"
                 name="address"
                 value={userDataFormik.values.address}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
                 error={!!userDataFormik.errors.address}
-                helper={userDataFormik.errors.address}
+                touched={userDataFormik.touched.address}
+                helper={
+                  userDataFormik.touched.address
+                    ? userDataFormik.errors.address
+                    : ""
+                }
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 4 }}>
@@ -216,10 +246,15 @@ export const B4CSignupSteps = () => {
                 label="Código postal"
                 name="postalCode"
                 value={userDataFormik.values.postalCode}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
                 error={!!userDataFormik.errors.postalCode}
-                helper={userDataFormik.errors.postalCode}
-                touched
+                touched={userDataFormik.touched.postalCode}
+                helper={
+                  userDataFormik.touched.postalCode
+                    ? userDataFormik.errors.postalCode
+                    : ""
+                }
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 4 }}>
@@ -229,6 +264,8 @@ export const B4CSignupSteps = () => {
                 value={userDataFormik.values.state}
                 options={statesOptions}
                 onChange={userDataFormik.handleChange}
+                error={!!userDataFormik.errors.state}
+                touched={userDataFormik.touched.state}
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 4 }}>
@@ -236,11 +273,10 @@ export const B4CSignupSteps = () => {
                 label="Ciudad"
                 name="city"
                 value={userDataFormik.values.city}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
-                error={
-                  userDataFormik.touched.city &&
-                  Boolean(userDataFormik.errors.city)
-                }
+                error={!!userDataFormik.errors.city}
+                touched={userDataFormik.touched.city}
                 helper={
                   userDataFormik.touched.city ? userDataFormik.errors.city : ""
                 }
@@ -262,10 +298,15 @@ export const B4CSignupSteps = () => {
                 label="Correo electronico"
                 name="email"
                 value={userDataFormik.values.email}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
                 error={!!userDataFormik.errors.email}
-                helper={userDataFormik.errors.email}
-                touched
+                touched={userDataFormik.touched.email}
+                helper={
+                  userDataFormik.touched.email
+                    ? userDataFormik.errors.email
+                    : ""
+                }
               />
             </Grid>
           </Grid>
@@ -285,10 +326,15 @@ export const B4CSignupSteps = () => {
                 isPassword
                 name="password"
                 value={userDataFormik.values.password}
+                onBlur={userDataFormik.handleBlur}
                 onChange={userDataFormik.handleChange}
                 error={!!userDataFormik.errors.password}
-                helper={userDataFormik.errors.password}
-                touched
+                touched={userDataFormik.touched.password}
+                helper={
+                  userDataFormik.touched.password
+                    ? userDataFormik.errors.password
+                    : ""
+                }
               />
             </Grid>
           </Grid>
@@ -296,8 +342,8 @@ export const B4CSignupSteps = () => {
             disabled={!userDataFormik.isValid}
             label="Confirmar"
             variant="primary"
-            onClick={handleConfirm}
             size={Size.Small}
+            isSubmit
           />
         </Box>
       )}
