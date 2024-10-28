@@ -14,6 +14,8 @@ import { statesOptions } from "@/constants/mexicanStates";
 import { CreateClient } from "@/ts/types/api/client";
 import { PhoneFormValues, UserDataFormValues } from "@/ts/forms";
 import { useNavigate } from "react-router-dom";
+import { colorPalette } from "@/style/partials/colorPalette";
+import { Check } from "@mui/icons-material";
 
 const clientFormToCreateClientParser = (
   formValues: PhoneFormValues & UserDataFormValues,
@@ -54,7 +56,7 @@ export const B4CSignupSteps = () => {
       motherLastName: "",
       address: "",
       postalCode: "",
-      state: "",
+      state: statesOptions[0].value,
       city: "",
       email: "",
       password: "",
@@ -157,6 +159,30 @@ export const B4CSignupSteps = () => {
             marginBottom: "32px",
           }}
         >
+          <Box
+            sx={{
+              padding: "16px",
+              border: `1px solid ${colorPalette.success}`,
+              borderRadius: "8px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <Typography variant="body-normal">{`${formik.values.countryCode} ${formik.values.phoneNumber}`}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "0.5rem",
+              }}
+            >
+              <Check sx={{ color: colorPalette.success }} />
+              <Typography
+                sx={{ color: colorPalette.success }}
+              >{`Numero confirmado`}</Typography>
+            </Box>
+          </Box>
           <Grid
             container
             spacing={8}
@@ -180,6 +206,7 @@ export const B4CSignupSteps = () => {
                     ? userDataFormik.errors.names
                     : ""
                 }
+                placeholder="Ej. Alberto o Alberto Eugenio"
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 6 }}>
@@ -196,6 +223,7 @@ export const B4CSignupSteps = () => {
                     ? userDataFormik.errors.fatherLastName
                     : ""
                 }
+                placeholder="Ej. Pérez"
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 6 }}>
@@ -212,6 +240,7 @@ export const B4CSignupSteps = () => {
                     ? userDataFormik.errors.motherLastName
                     : ""
                 }
+                placeholder="Ej. Martínez"
               />
             </Grid>
           </Grid>
@@ -239,6 +268,7 @@ export const B4CSignupSteps = () => {
                     ? userDataFormik.errors.address
                     : ""
                 }
+                placeholder="Ej. Calle de la Estrella #4"
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 4 }}>
@@ -255,6 +285,7 @@ export const B4CSignupSteps = () => {
                     ? userDataFormik.errors.postalCode
                     : ""
                 }
+                placeholder="Ej. 45421"
               />
             </Grid>
             <Grid size={{ xs: 12, desktop: 4 }}>
@@ -280,6 +311,7 @@ export const B4CSignupSteps = () => {
                 helper={
                   userDataFormik.touched.city ? userDataFormik.errors.city : ""
                 }
+                placeholder="Ej. Tampico"
               />
             </Grid>
           </Grid>
