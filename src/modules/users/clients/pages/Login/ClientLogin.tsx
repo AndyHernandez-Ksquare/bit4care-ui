@@ -14,7 +14,6 @@ import "./ClientLogin.css";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -22,10 +21,6 @@ export const ClientLogin = () => {
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleVisiblePassword = () => {
-    setVisible(!visible);
   };
 
   const handleSignUp = () => {
@@ -138,8 +133,6 @@ export const ClientLogin = () => {
               name="password"
               placeholder="Contraseña"
               isPassword
-              isVisible={visible}
-              onClick={handleVisiblePassword}
             ></B4CTextfield>
             <B4CButton
               onClick={formik.handleSubmit}

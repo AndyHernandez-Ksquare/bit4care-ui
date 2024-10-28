@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { formatPhoneNumber } from "../B4CSignupSteps/B4CSignupSteps";
 
 export const B4CConfirmationCodeInput = ({
   countryCode,
@@ -62,7 +63,7 @@ export const B4CConfirmationCodeInput = ({
         }}
       >
         <Grid size={{ xs: 12 }}>
-          <Typography variant="body-normal">{`${countryCode}-${phoneNumber}`}</Typography>
+          <Typography variant="body-normal">{`${countryCode} ${formatPhoneNumber(phoneNumber)}`}</Typography>
         </Grid>
         <Grid size={{ xs: 12, desktop: 11 }}>
           {confirmation ? (
