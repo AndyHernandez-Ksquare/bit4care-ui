@@ -29,6 +29,21 @@ const clientFormToCreateClientParser = (
   };
 };
 
+export const formatPhoneNumber = (phoneNumber: string): string => {
+  // Usa una expresión regular para capturar las secciones del número telefónico
+  const match = phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+  // Si coincide con el formato esperado, devuelve el número formateado
+  if (match) {
+    return `(${match[1]})-${match[2]}-${match[3]}`;
+  }
+
+  // En caso de que no coincida, devuelve el número original o lanza un error
+  throw new Error(
+    "El número telefónico no tiene el formato correcto de 10 dígitos",
+  );
+};
+
 export const B4CSignupSteps = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [confirmation, setConfirmation] = useState<boolean>(false);
@@ -169,7 +184,7 @@ export const B4CSignupSteps = () => {
               gap: "1rem",
             }}
           >
-            <Typography variant="body-normal">{`${formik.values.countryCode} ${formik.values.phoneNumber}`}</Typography>
+            <Typography variant="body-normal">{`${formik.values.countryCode} ${formatPhoneNumber(formik.values.phoneNumber)}`}</Typography>
             <Box
               sx={{
                 display: "flex",
