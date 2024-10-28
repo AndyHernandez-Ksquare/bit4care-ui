@@ -13,6 +13,7 @@ export interface B4CButtonProps {
   isSubmit?: boolean;
   size?: Size;
   href?: string;
+  textWrap?: boolean;
   isLoading?: boolean;
   sx?: SxProps<Theme>;
   onClick?: () => void;

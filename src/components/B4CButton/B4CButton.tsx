@@ -57,7 +57,7 @@ export const B4CButton = ({
       sx={{
         paddingInline: sizes[size].paddingInline,
         paddingBlock: sizes[size].paddingBlock,
-        borderRadius: "8px",
+        borderRadius: "16px",
         ...sx,
         ":hover": {
           opacity: 0.8,
