@@ -4,7 +4,6 @@ import { Box, Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
-import "./ClientsLayout.css";
 
 export const ClientsLayout = () => (
   <>
@@ -19,8 +18,24 @@ export const ClientsLayout = () => (
       }}
     >
       <B4CCLientSidebar />
-      <Box className="client-separator-main">
-        <Box className="main-client-wraper">
+      <Box
+        className="client-separator-main"
+        sx={{
+          display: { desktop: "flex" },
+          marginTop: "5vh",
+          width: "100%",
+          flexGrow: 1,
+        }}
+      >
+        <Box
+          className="main-client-wraper"
+          sx={{
+            paddingInline: { xs: "16px" },
+            display: "flex",
+            paddingLeft: { desktop: "20%" },
+            zIndex: 2,
+          }}
+        >
           <B4CMainClientArea profileName="Braulio" profileRole="Admin">
             <Outlet />
           </B4CMainClientArea>

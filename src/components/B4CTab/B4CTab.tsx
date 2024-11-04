@@ -17,8 +17,9 @@ export const B4CTab = ({ active, label, onClick }: IB4CTab) => {
         paddingInline: spacings.spacing2,
         paddingBlock: spacings.spacing1,
         borderRadius: "8px",
-        backgroundColor: active ? colorPalette.secondary : colorPalette.white,
+        backgroundColor: active ? colorPalette.secondary : "transparent",
         color: active ? colorPalette.info : colorPalette.black1,
+        display: "flex",
       }}
     >
       <Typography variant="body-small-bold">{label}</Typography>

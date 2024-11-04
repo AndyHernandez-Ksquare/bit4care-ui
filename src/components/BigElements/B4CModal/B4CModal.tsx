@@ -49,6 +49,7 @@ export const B4CModal = ({
             flexDirection: "column",
             alignItems: "center",
             gap: "16px",
+            paddingTop: "16px",
           }}
         >
           {children}

@@ -1,22 +1,23 @@
-import { LocationIcons } from "@/assets/svgIcons/locationIcons/LocationIcons";
-import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { color } from "@/ts/types/shared/colors";
 import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
-import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
 import { B4CClientServicesCardProps } from "@/ts/types/components/B4CClientServicesCard.type";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
 import { B4CClientServiceDetail } from "../B4CClientServiceDetail";
 import { useState } from "react";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import { spacings } from "@/style/partials/spacings";
+import { calculateTotalHours } from "@/constants/calculateTotalHours";
 
 export const B4CClientServiceCard = ({
+  id,
   name,
-  fee,
   schedule,
-  hours,
   address,
   service,
   status,
@@ -45,13 +46,15 @@ export const B4CClientServiceCard = ({
           display: "flex",
           flexDirection: "column",
           gap: "1.5rem",
+          backgroundColor: colorPalette.white,
         }}
       >
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: { xs: "column", desktop: "row" },
             justifyContent: "space-between",
+            gap: { xs: spacings.spacing2, desktop: spacings.spacing0 },
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
@@ -86,21 +89,49 @@ export const B4CClientServiceCard = ({
             </Box>
           </Box>
         </Box>
-        <Grid container>
-          <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-            <LocationIcons />
+        <Grid container spacing={{ xs: "8px", desktop: "4px" }}>
+          <Grid
+            size={{ xs: 12, desktop: 6 }}
+            sx={{
+              display: "flex",
+              gap: spacings.spacing1,
+              alignItems: "center",
+            }}
+          >
+            <LocationOnIcon sx={{ color: colorPalette.primary }} />
             <Typography variant="body-normal">{address}</Typography>
           </Grid>
-          <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-            <MoneyIcons />
-            <Typography variant="body-normal">{fee}</Typography>
+          <Grid
+            size={{ xs: 12, desktop: 6 }}
+            sx={{
+              display: "flex",
+              gap: spacings.spacing1,
+              alignItems: "center",
+            }}
+          >
+            <MonetizationOnIcon sx={{ color: colorPalette.primary }} />
+            <Typography variant="body-normal">{"Asdasd"}</Typography>
           </Grid>
-          <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-            <ClockIcon />
-            <Typography variant="body-normal">{`${hours} horas`}</Typography>
+          <Grid
+            size={{ xs: 12, desktop: 6 }}
+            sx={{
+              display: "flex",
+              gap: spacings.spacing1,
+              alignItems: "center",
+            }}
+          >
+            <WatchLaterIcon sx={{ color: colorPalette.primary }} />
+            <Typography variant="body-normal">{`${calculateTotalHours(schedule)} horas`}</Typography>
           </Grid>
-          <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-            <ClockIcon />
+          <Grid
+            size={{ xs: 12, desktop: 6 }}
+            sx={{
+              display: "flex",
+              gap: spacings.spacing1,
+              alignItems: "center",
+            }}
+          >
+            <WatchLaterIcon sx={{ color: colorPalette.primary }} />
             <Typography variant="body-normal">{schedule}</Typography>
           </Grid>
         </Grid>
@@ -111,6 +142,7 @@ export const B4CClientServiceCard = ({
         ></B4CButton>
       </Box>
       <B4CClientServiceDetail
+        id={id}
         isOpen={openModal}
         onClose={() => {
           setIsOpenModal(false);

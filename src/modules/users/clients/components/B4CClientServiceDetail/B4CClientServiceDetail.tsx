@@ -1,33 +1,62 @@
-import { LocationIcons } from "@/assets/svgIcons/locationIcons/LocationIcons";
-import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums";
 import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
-import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import map from "@/assets/images/hero_maps_static_api.png";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CTextfield } from "@/components/B4CTextfield";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import { MockGetAllApplicationRequests } from "@/services/applicationRequestServices/ApplicationRequestMockData";
+import { GetAllApplication } from "@/ts/types/api/applicationRequest";
+import { calculateTotalHours } from "@/constants/calculateTotalHours";
+import { spacings } from "@/style/partials/spacings";
 
 interface B4CClientServiceDetailProps {
+  id: number;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export const B4CClientServiceDetail = ({
+  id,
   isOpen,
   onClose,
 }: B4CClientServiceDetailProps) => {
   const [reclaim, setReclaim] = useState<boolean>(false);
+  const [application, setApplication] = useState<GetAllApplication | null>(
+    null,
+  );
+  const [hours, setHours] = useState<number>(0);
+
+  const handleSetHour = (timeRange: string) => {
+    setHours(calculateTotalHours(timeRange));
+  };
+
+  const fetchSingleApplication = async () => {
+    const data = await MockGetAllApplicationRequests();
+    const singleApplication = data.find((application) => application.id === id);
+    if (singleApplication) {
+      setApplication(singleApplication);
+      handleSetHour(singleApplication.time_range);
+    } else {
+      setApplication(null);
+    }
+  };
 
   const handleRejecConfirmation = () => {
     setReclaim(!reclaim);
   };
 
+  useEffect(() => {
+    fetchSingleApplication();
+  }, [id]);
+
   return (
     <B4CModal open={isOpen} onClose={onClose}>
-      {!reclaim && (
+      {!reclaim && application && (
         <Grid container spacing={16}>
           <Grid
             size={{ xs: 12 }}
@@ -36,43 +65,85 @@ export const B4CClientServiceDetail = ({
           >
             <Grid container>
               <Grid size={{ xs: 12, desktop: 6 }} className="header">
-                <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
-                <Box>
-                  <Typography variant="h6">Darel Caldwell</Typography>
+                <Avatar
+                  sx={{ width: 128, height: 128, mr: 2 }}
+                  alt={application.patient_name}
+                  src="/broken-image.jpg"
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    textAlign: { xs: "center", desktop: "start" },
+                  }}
+                >
+                  <Typography variant="h6">
+                    {application.patient_name}
+                  </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Cuidado de adulto mayor con Alzheimer
+                    {application.description}
                   </Typography>
                 </Box>
               </Grid>
-              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
                 <Typography variant="body-normal">
-                  El paciente es mi papá. Él tiene problemas para recordar
-                  cosas, entonces requiere a un cuidador/a que cuente con
-                  técnicas de comunicación efectiva. De preferencia busco a
-                  alguien con un perfil con experiencia en pacientes con
-                  enfermedades neurodegenerativas.
+                  {application.comments}
                 </Typography>
               </Grid>
             </Grid>
             <Grid container spacing={16}>
-              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-                <LocationIcons />
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                sx={{
+                  display: "flex",
+                  gap: spacings.spacing1,
+                  alignItems: "center",
+                }}
+              >
+                <LocationOnIcon sx={{ color: colorPalette.primary }} />
                 <Typography variant="body-normal">
-                  Colonia Los Álamos, Benito Juárez CDMX. CP: 05040
+                  {application.address}
                 </Typography>
               </Grid>
-              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-                <MoneyIcons />
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                sx={{
+                  display: "flex",
+                  gap: spacings.spacing1,
+                  alignItems: "center",
+                }}
+              >
+                <MonetizationOnIcon sx={{ color: colorPalette.primary }} />
                 <Typography variant="body-normal">$8100</Typography>
               </Grid>
-              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-                <ClockIcon />
-                <Typography variant="body-normal">{`5 horas`}</Typography>
-              </Grid>
-              <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-                <ClockIcon />
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                sx={{
+                  display: "flex",
+                  gap: spacings.spacing1,
+                  alignItems: "center",
+                }}
+              >
+                <WatchLaterIcon sx={{ color: colorPalette.primary }} />
                 <Typography variant="body-normal">
-                  Lunes, 9 de abril - Viernes, 13 de abril de 2024 (54 horas)
+                  {hours} {"hora"}
+                  {hours === 1 ? "" : "s"}
+                </Typography>
+              </Grid>
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                sx={{
+                  display: "flex",
+                  gap: spacings.spacing1,
+                  alignItems: "center",
+                }}
+              >
+                <WatchLaterIcon sx={{ color: colorPalette.primary }} />
+                <Typography variant="body-normal">
+                  {application.time_range}
                 </Typography>
               </Grid>
             </Grid>
