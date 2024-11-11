@@ -35,74 +35,104 @@ export const B4CAvailableColaboratorCard = ({
     <Box
       sx={{
         display: "flex",
-        alignItems: "center",
+        justifyContent: "center",
         padding: "16px",
-        maxHeight: "142px",
         border: `1px solid ${colorPalette.grey4}`,
-        borderRadius: "8px",
+        borderRadius: "20px",
       }}
     >
-      <Box sx={{ display: "flex", flexGrow: 1, gap: "24px" }}>
-        <Avatar
-          src={avatarUrl}
-          alt={name}
-          sx={{ width: 87, height: 87, marginRight: "8px" }}
-        />
+      <Box
+        sx={{
+          display: "flex",
+          flexGrow: 1,
+          gap: "16px",
+          flexDirection: { xs: "column", desktop: "row" },
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            flexWrap: "wrap",
-            marginBlock: "auto",
+            flexGrow: 1,
+            flexDirection: "row",
+            textWrap: "wrap",
           }}
         >
-          <Typography variant="body-normal">{name}</Typography>
-          <B4CStarRating rating={rating} />
-          <Typography
-            variant="body-small"
-            sx={{ color: `${colorPalette.grey4}` }}
+          <Avatar
+            src={avatarUrl}
+            alt={name}
+            sx={{ width: 87, height: 87, marginRight: "8px" }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              flexWrap: "wrap",
+              marginBlock: "auto",
+            }}
           >
-            {expertise}
-          </Typography>
+            <Typography variant="body-normal">{name}</Typography>
+            <B4CStarRating rating={rating} />
+            <Typography
+              variant="body-small"
+              sx={{ color: `${colorPalette.grey4}` }}
+            >
+              {expertise}
+            </Typography>
+          </Box>
         </Box>
 
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: "8px",
-            marginBlock: "auto",
+            gap: { xs: "8px", desktop: "8px" },
           }}
         >
-          <Typography variant="body-normal" sx={{ whiteSpace: "nowrap" }}>
-            <strong>Disponible de Tiempo Completo:</strong>
-          </Typography>
-          <Typography variant="body-normal" sx={{ whiteSpace: "nowrap" }}>
-            <strong>Disponible en fines de semana:</strong>
-          </Typography>
-          <Typography variant="body-normal">{fullTimeHours}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", desktop: "row", gap: "24px" },
+              gap: { xs: "8px", desktop: "24px" },
+            }}
+          >
+            <Typography variant="body-normal" sx={{ whiteSpace: "nowrap" }}>
+              <strong>Disponible de Tiempo Completo:</strong>
+            </Typography>
+            <Typography variant="body-normal">${fullTimeRate}/hora</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", desktop: "row" },
+              gap: { xs: "8px", desktop: "35px" },
+            }}
+          >
+            <Typography variant="body-normal" sx={{ whiteSpace: "nowrap" }}>
+              <strong>Disponible en fines de semana:</strong>
+            </Typography>
+            <Typography variant="body-normal">${weekendRate}/hora</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", desktop: "row" },
+              gap: { xs: "8px", desktop: "24px" },
+            }}
+          >
+            <Typography variant="body-normal">{fullTimeHours}</Typography>
+            <Typography variant="body-normal">{weekendHours}</Typography>
+          </Box>
         </Box>
 
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
             gap: "8px",
             marginBlock: "auto",
-          }}
-        >
-          <Typography variant="body-normal">${fullTimeRate}/hora</Typography>
-          <Typography variant="body-normal">${weekendRate}/hora</Typography>
-
-          <Typography variant="body-normal">{weekendHours}</Typography>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            marginBlock: "auto",
+            flexDirection: { xs: "row", desktop: "column" },
+            width: "100%",
           }}
         >
           <Typography variant="body-normal" sx={{ whiteSpace: "nowrap" }}>

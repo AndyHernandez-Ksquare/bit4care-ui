@@ -30,17 +30,20 @@ export const B4CStepperTab = ({
           activeStep={activeStep}
           alternativeLabel
           connector={<B4CStepperTabConnector />}
+          sx={{ display: { xs: "none", desktopHD: "flex" } }}
         >
           {steps.map((label, index) => {
             const stepType = getStepType(activeStep, index);
             // const typographyColor = getTypographyColor(stepType);
             return (
               <Step
+                completed={true}
                 key={`${index}-${label}`}
                 sx={{ paddingInline: 0 }}
                 onClick={() => onStepClick(index)}
               >
                 <StepLabel
+                  sx={{ width: "100%" }}
                   StepIconComponent={(props) => (
                     <Box
                       sx={{
@@ -51,12 +54,14 @@ export const B4CStepperTab = ({
                     >
                       <Typography
                         variant={
-                          StepType.Active === stepType
+                          StepType.Active === stepType ||
+                          StepType.Completed === stepType
                             ? "body-normal-bold"
                             : "body-normal"
                         }
                         color={
-                          StepType.Active === stepType
+                          StepType.Active === stepType ||
+                          StepType.Completed === stepType
                             ? colorPalette.primary
                             : colorPalette.grey1
                         }

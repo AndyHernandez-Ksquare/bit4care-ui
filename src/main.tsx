@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import customTheme from "./style/theme/customTheme.ts";
 import { AdminSessionProvider } from "./context/session/AdminSessionContext.tsx";
 import { StrictMode } from "react";

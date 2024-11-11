@@ -1,17 +1,16 @@
-.sidebar-main-container {
+.sidebar-client-main-container {
   width: 223px;
   position: fixed;
-  margin-top: 5vh;
+  margin-top: 50px;
   gap: 4vh;
   z-index: 3;
   padding-left: 1%;
-  height: 80vh;
   display: flex;
   flex-direction: column;
 }
 
 @media (max-width: 1080px) {
-  .sidebar-main-container {
+  .sidebar-client-main-container {
     display: none;
   }
 }

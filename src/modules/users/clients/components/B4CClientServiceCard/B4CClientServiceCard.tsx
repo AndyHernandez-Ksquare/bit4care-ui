@@ -9,10 +9,11 @@ import { Size } from "@/ts/enums";
 import { B4CClientServiceDetail } from "../B4CClientServiceDetail";
 import { useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import PaymentsIcon from "@mui/icons-material/Payments";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { spacings } from "@/style/partials/spacings";
 import { calculateTotalHours } from "@/constants/calculateTotalHours";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export const B4CClientServiceCard = ({
   id,
@@ -57,8 +58,19 @@ export const B4CClientServiceCard = ({
             gap: { xs: spacings.spacing2, desktop: spacings.spacing0 },
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
-            <Avatar sx={{ width: "64px", height: "64px" }} />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "1rem",
+              alignItems: "center",
+            }}
+          >
+            <Avatar
+              sx={{ width: "64px", height: "64px" }}
+              alt={name}
+              src=" image url"
+            />
             <Box>
               <Typography variant="h5" sx={{ color: colorPalette.primary }}>
                 {name}
@@ -109,7 +121,11 @@ export const B4CClientServiceCard = ({
               alignItems: "center",
             }}
           >
-            <MonetizationOnIcon sx={{ color: colorPalette.primary }} />
+            <PaymentsIcon
+              sx={{
+                color: colorPalette.primary,
+              }}
+            />
             <Typography variant="body-normal">{"Asdasd"}</Typography>
           </Grid>
           <Grid
@@ -131,7 +147,7 @@ export const B4CClientServiceCard = ({
               alignItems: "center",
             }}
           >
-            <WatchLaterIcon sx={{ color: colorPalette.primary }} />
+            <CalendarMonthIcon sx={{ color: colorPalette.primary }} />
             <Typography variant="body-normal">{schedule}</Typography>
           </Grid>
         </Grid>

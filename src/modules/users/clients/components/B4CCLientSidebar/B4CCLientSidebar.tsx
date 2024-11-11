@@ -8,7 +8,10 @@ import { B4CButton } from "@/components/B4CButton";
 
 export const B4CCLientSidebar = () => {
   return (
-    <Box className="sidebar-main-container" height={"80vh"}>
+    <Box
+      className="sidebar-client-main-container"
+      height={"calc(100vh - 250px)"}
+    >
       <List
         sx={{
           display: "flex",

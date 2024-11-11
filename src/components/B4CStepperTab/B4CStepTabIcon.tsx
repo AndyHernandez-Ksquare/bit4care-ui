@@ -6,7 +6,9 @@ export const B4CStepTabIcon = ({ active, completed }: StepIconProps) => {
   return (
     <Box
       sx={{
-        width: "100%",
+        position: "static",
+        zIndex: 99999,
+        width: "22vw",
         height: "4px",
         backgroundColor:
           active || completed

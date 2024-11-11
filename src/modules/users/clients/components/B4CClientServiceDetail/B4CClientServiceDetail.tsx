@@ -7,12 +7,12 @@ import map from "@/assets/images/hero_maps_static_api.png";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import PaymentsIcon from "@mui/icons-material/Payments";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { MockGetAllApplicationRequests } from "@/services/applicationRequestServices/ApplicationRequestMockData";
 import { GetAllApplication } from "@/ts/types/api/applicationRequest";
 import { calculateTotalHours } from "@/constants/calculateTotalHours";
-import { spacings } from "@/style/partials/spacings";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 interface B4CClientServiceDetailProps {
   id: number;
@@ -26,6 +26,7 @@ export const B4CClientServiceDetail = ({
   onClose,
 }: B4CClientServiceDetailProps) => {
   const [reclaim, setReclaim] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [application, setApplication] = useState<GetAllApplication | null>(
     null,
   );
@@ -50,6 +51,10 @@ export const B4CClientServiceDetail = ({
     setReclaim(!reclaim);
   };
 
+  const toggleExpandText = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   useEffect(() => {
     fetchSingleApplication();
   }, [id]);
@@ -61,73 +66,122 @@ export const B4CClientServiceDetail = ({
           <Grid
             size={{ xs: 12 }}
             container
-            sx={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5rem",
+              padding: "1.5rem",
+            }}
           >
-            <Grid container>
-              <Grid size={{ xs: 12, desktop: 6 }} className="header">
+            <Grid container display={"flex"} alignItems={"center"}>
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                className="header"
+                sx={{
+                  textAlign: {
+                    xs: "center",
+                    desktop: "left",
+                  },
+                }}
+              >
                 <Avatar
                   sx={{ width: 128, height: 128, mr: 2 }}
                   alt={application.patient_name}
                   src="/broken-image.jpg"
                 />
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    textAlign: { xs: "center", desktop: "start" },
-                  }}
-                >
-                  <Typography variant="h6">
+                <Box>
+                  <Typography
+                    variant="body-large-bold"
+                    gutterBottom
+                    component={"p"}
+                  >
                     {application.patient_name}
                   </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
+                  <Typography
+                    variant="body-medium"
+                    color="textSecondary"
+                    component={"p"}
+                  >
                     {application.description}
                   </Typography>
                 </Box>
               </Grid>
               <Grid
                 size={{ xs: 12, desktop: 6 }}
-                sx={{ display: "flex", alignItems: "center" }}
+                display={"flex"}
+                flexDirection={"column"}
               >
-                <Typography variant="body-normal">
+                <Typography
+                  variant="body-normal"
+                  sx={{
+                    maxHeight: isExpanded ? "none" : "5.5rem",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: isExpanded ? "none" : 4,
+                    WebkitBoxOrient: "vertical",
+                    transition: "WebkitLineClamp 0.5s ease",
+                    textWrap: "pretty",
+                  }}
+                >
                   {application.comments}
+                </Typography>
+                <Typography
+                  variant="body-normal"
+                  sx={{
+                    cursor: "pointer",
+                    color: "primary.main",
+                    display: "inline-block",
+                    marginLeft: 0,
+                    marginTop: "0.25rem",
+                    textAlign: "right",
+                  }}
+                  onClick={toggleExpandText}
+                >
+                  {isExpanded ? "Ver menos" : "Ver más"}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={16}>
+            <Grid container spacing={16} display={"flex"} alignItems={"center"}>
               <Grid
                 size={{ xs: 12, desktop: 6 }}
-                sx={{
-                  display: "flex",
-                  gap: spacings.spacing1,
-                  alignItems: "center",
-                }}
+                sx={{ display: "flex", alignItems: "center" }}
               >
-                <LocationOnIcon sx={{ color: colorPalette.primary }} />
+                <LocationOnIcon
+                  fontSize="small"
+                  sx={{
+                    marginRight: "0.35rem",
+                    color: colorPalette.primary,
+                  }}
+                />
                 <Typography variant="body-normal">
                   {application.address}
                 </Typography>
               </Grid>
               <Grid
                 size={{ xs: 12, desktop: 6 }}
-                sx={{
-                  display: "flex",
-                  gap: spacings.spacing1,
-                  alignItems: "center",
-                }}
+                sx={{ display: "flex", alignItems: "center" }}
               >
-                <MonetizationOnIcon sx={{ color: colorPalette.primary }} />
+                <PaymentsIcon
+                  fontSize="small"
+                  sx={{
+                    marginRight: "0.35rem",
+                    color: colorPalette.primary,
+                  }}
+                />
                 <Typography variant="body-normal">$8100</Typography>
               </Grid>
               <Grid
                 size={{ xs: 12, desktop: 6 }}
-                sx={{
-                  display: "flex",
-                  gap: spacings.spacing1,
-                  alignItems: "center",
-                }}
+                sx={{ display: "flex", alignItems: "center" }}
               >
-                <WatchLaterIcon sx={{ color: colorPalette.primary }} />
+                <WatchLaterIcon
+                  fontSize="small"
+                  sx={{
+                    marginRight: "0.35rem",
+                    color: colorPalette.primary,
+                  }}
+                />
                 <Typography variant="body-normal">
                   {hours} {"hora"}
                   {hours === 1 ? "" : "s"}
@@ -135,13 +189,15 @@ export const B4CClientServiceDetail = ({
               </Grid>
               <Grid
                 size={{ xs: 12, desktop: 6 }}
-                sx={{
-                  display: "flex",
-                  gap: spacings.spacing1,
-                  alignItems: "center",
-                }}
+                sx={{ display: "flex", alignItems: "center" }}
               >
-                <WatchLaterIcon sx={{ color: colorPalette.primary }} />
+                <CalendarMonthIcon
+                  fontSize="small"
+                  sx={{
+                    marginRight: "0.35rem",
+                    color: colorPalette.primary,
+                  }}
+                />
                 <Typography variant="body-normal">
                   {application.time_range}
                 </Typography>
