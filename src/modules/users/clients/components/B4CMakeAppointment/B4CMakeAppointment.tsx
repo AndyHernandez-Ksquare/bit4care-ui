@@ -91,7 +91,7 @@ export const B4CMakeAppointment = ({
       {/* <Typography variant="body-normal-bold" color={colorPalette.primary}>
         $200 en primera visita
       </Typography> */}
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
         <DateCalendar
           value={selectedDate} // Bind the value to the state
           onChange={(newDate) => setSelectedDate(newDate)} // Update state on change

@@ -13,7 +13,7 @@ export const PageLayout = ({ title, children }: PageLayoutProps) => {
     <>
       {title && (
         <Box sx={{ marginBottom: spacings.spacing4 }}>
-          <Typography variant="h3" sx={{ color: colorPalette.grey1 }}>
+          <Typography variant="h4" sx={{ color: colorPalette.grey1 }}>
             {title}
           </Typography>
         </Box>

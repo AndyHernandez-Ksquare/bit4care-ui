@@ -2,6 +2,8 @@ import { createTheme } from "@mui/material/styles";
 import { spacingScale, spacings } from "../partials/spacings";
 import { CSSProperties } from "react";
 import { colorPalette } from "../partials/colorPalette";
+import { esES } from '@mui/x-date-pickers/locales';
+import { esES as coreEsES } from '@mui/material/locale';
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/700.css";
 
@@ -83,6 +85,7 @@ const bodyStyle = (fontSize: number, isBold?: boolean) => ({
 });
 
 const customTheme = createTheme({
+
   palette: {
     primary: { main: colorPalette.primary },
     secondary: {
@@ -366,6 +369,6 @@ const customTheme = createTheme({
       ],
     },
   },
-});
+}, esES, coreEsES); // x-date-pickers translations;
 
 export default customTheme;

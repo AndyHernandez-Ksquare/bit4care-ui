@@ -10,7 +10,7 @@ export const MockGetAllApplicationRequests = async (): Promise<GetAllApplication
     {
       id: 1,
       time_range: "09:00 - 12:00",
-      status: "Pending",
+      status: "solicitado",
       address: "123 Main St, City",
       patient_name: "John Doe",
       patient_phone: "555-1234",
@@ -25,7 +25,7 @@ export const MockGetAllApplicationRequests = async (): Promise<GetAllApplication
     {
       id: 2,
       time_range: "14:00 - 16:00",
-      status: "Confirmed",
+      status: "aceptado",
       address: "456 Elm St, City",
       patient_name: "Jane Smith",
       patient_phone: "555-5678",
@@ -39,7 +39,7 @@ export const MockGetAllApplicationRequests = async (): Promise<GetAllApplication
     {
       id: 3,
       time_range: "08:00 - 09:00",
-      status: "Completed",
+      status: "realizado",
       address: "789 Oak St, City",
       patient_name: "Alice Johnson",
       patient_phone: "555-9876",
