@@ -25,7 +25,7 @@ export const ClientsServices = () => {
   ];
   return (
     <PageLayout title="Mis Servicios">
-      <Grid size={{ xs: 12 }} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12 }} sx={{ display: "flex", alignItems: "center" }}>
         <Box
           sx={{
             display: "flex",
@@ -50,8 +50,11 @@ export const ClientsServices = () => {
           label="Nuevo servicio"
           size={Size.Small}
           onClick={handleNewServiceClick}
-          startIcon={<AddIcon />}
-          sx={{ display: { xs: "none", desktop: "flex" } }}
+          startIcon={<AddIcon fontSize="small" />}
+          sx={{
+            display: { xs: "none", desktop: "flex" },
+            height: spacings.spacing6,
+          }}
         />
         <IconButton
           aria-label="add"

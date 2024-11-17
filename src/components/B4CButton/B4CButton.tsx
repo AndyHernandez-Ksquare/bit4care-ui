@@ -48,6 +48,7 @@ export const B4CButton = ({
     <Button
       type={isSubmit ? "submit" : "button"}
       variant={variant}
+      size="small"
       startIcon={renderIcon(startIcon)}
       disabled={disabled}
       onClick={onClick}

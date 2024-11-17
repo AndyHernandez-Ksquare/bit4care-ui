@@ -1,20 +1,55 @@
 import { useState } from "react";
 import SnackbarBlock from "@/components/B4CSnackBarBlock";
 import { Box, Typography } from "@mui/material";
-import { RegisterForm } from "../components/Form-1";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CStepper } from "@/components/B4CStepper";
 import { B4CButton } from "@/components/B4CButton";
+import { RegisterForm } from "../components/Form-1";
 import { RegisterFormPart2 } from "../components/Form-2";
 import { RegisterFormPart3 } from "../components/Form-3";
+import { assembleRequestData } from "../functions/assemblyForm";
+import { collaboratorsRegisterService } from "@/services/collaboratorsServices/register/collaborator.service";
+import { FormData1, FormData2 } from "@/ts/types/api/collaborator/requestData";
 
 function ColaboratorsRegister() {
   const [canContinue, setCanContinue] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
 
-  const handleContinue = () => {
+  const [formDataStep1, setFormDataStep1] = useState<FormData1>({
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    birthDate: "",
+    direction: "",
+    gender: "",
+    maritalStatus: "",
+    nacionality: "",
+    postalCode: "",
+    neighborhood: "",
+    state: "",
+  });
+  const [formDataStep2, setFormDataStep2] = useState<FormData2>({
+    curp: "",
+    rfc: "",
+    nss: "",
+    driversLicense: "",
+    experienceYears: "",
+    specialities: [],
+    motivationLetter: "",
+  });
+
+  const handleContinue = async () => {
     if (currentStep < 2) {
       setCurrentStep(currentStep + 1);
+    } else if (currentStep === 2) {
+      const requestData = assembleRequestData(formDataStep1, formDataStep2);
+      try {
+        const response = await collaboratorsRegisterService(requestData);
+        console.log("Registro exitoso:", response);
+      } catch (error) {
+        console.error("Error en el registro:", error);
+      }
     }
   };
 
@@ -57,10 +92,16 @@ function ColaboratorsRegister() {
       >
         {/* Formulario */}
         {currentStep === 0 && (
-          <RegisterForm onFormValidChange={setCanContinue} />
+          <RegisterForm
+            onFormValidChange={setCanContinue}
+            onFormDataChange={setFormDataStep1}
+          />
         )}
         {currentStep === 1 && (
-          <RegisterFormPart2 onFormValidChange={setCanContinue} />
+          <RegisterFormPart2
+            onFormValidChange={setCanContinue}
+            onFormDataChange={setFormDataStep2}
+          />
         )}
         {currentStep === 2 && (
           <RegisterFormPart3 onFormValidChange={setCanContinue} />

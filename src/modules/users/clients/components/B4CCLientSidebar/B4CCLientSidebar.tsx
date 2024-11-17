@@ -10,7 +10,7 @@ export const B4CCLientSidebar = () => {
   return (
     <Box
       className="sidebar-client-main-container"
-      height={"calc(100vh - 250px)"}
+      height={"calc(100vh - 200px)"}
     >
       <List
         sx={{

@@ -10,11 +10,13 @@ import {
 } from "@/constants/workSpecialities";
 import { yesOrNoOptions } from "@/constants/yesOrNoOptions";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { FormData2 } from "@/ts/types/api/collaborator/requestData";
 import { Box, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 
 interface RegisterFormProps {
   onFormValidChange: (isValid: boolean) => void;
+  onFormDataChange: (data: FormData2) => void;
 }
 
 interface FormState {
@@ -29,7 +31,10 @@ interface FormState {
   motivationLetter: string;
 }
 
-export const RegisterFormPart2 = ({ onFormValidChange }: RegisterFormProps) => {
+export const RegisterFormPart2 = ({
+  onFormValidChange,
+  onFormDataChange,
+}: RegisterFormProps) => {
   const [formState, setFormState] = useState<FormState>({
     curp: "",
     rfc: "",
@@ -89,7 +94,8 @@ export const RegisterFormPart2 = ({ onFormValidChange }: RegisterFormProps) => {
       formState.motivationLetter.trim() !== "";
 
     onFormValidChange(isFormValid);
-  }, [formState, onFormValidChange]);
+    onFormDataChange(formState);
+  }, [formState, onFormValidChange, onFormDataChange]);
 
   return (
     <Box
