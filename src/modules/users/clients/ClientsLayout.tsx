@@ -1,11 +1,11 @@
 import { B4CMainClientArea } from "./components/B4CMainClientArea/B4CMainClientArea";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+// import YouTubeIcon from "@mui/icons-material/YouTube";
+// import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export const ClientsLayout = () => {
   return (
@@ -45,7 +45,7 @@ export const ClientsLayout = () => {
           </Box>
         </Box>
       </Box>
-      <Box
+      {/* <Box
         component={"footer"}
         sx={{
           display: "flex",
@@ -90,7 +90,7 @@ export const ClientsLayout = () => {
             <LinkedInIcon />
           </IconButton>
         </Box>
-      </Box>
+      </Box> */}
     </>
   );
 };
