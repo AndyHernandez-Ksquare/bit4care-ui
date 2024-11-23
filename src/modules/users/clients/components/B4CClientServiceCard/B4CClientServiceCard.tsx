@@ -55,6 +55,7 @@ export const B4CClientServiceCard = ({
             display: "flex",
             flexDirection: { xs: "column", desktop: "row" },
             justifyContent: "space-between",
+            alignItems: "center",
             gap: { xs: spacings.spacing2, desktop: spacings.spacing0 },
           }}
         >
@@ -155,7 +156,7 @@ export const B4CClientServiceCard = ({
           onClick={handleOpenModal}
           size={Size.Small}
           label="Ver detalles"
-        ></B4CButton>
+        />
       </Box>
       <B4CClientServiceDetail
         id={id}

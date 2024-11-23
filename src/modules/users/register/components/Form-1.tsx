@@ -8,12 +8,17 @@ import { nacionalitiesOptions } from "@/constants/nacionality";
 import { Box, Link, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { TermsAndConditionsModal } from "./TermsAndConditionsModal";
+import { FormData1 } from "@/ts/types/api/collaborator/requestData";
 
 interface RegisterFormProps {
   onFormValidChange: (isValid: boolean) => void;
+  onFormDataChange: (data: FormData1) => void;
 }
 
-export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
+export const RegisterForm = ({
+  onFormValidChange,
+  onFormDataChange,
+}: RegisterFormProps) => {
   const [open, setOpen] = useState(false);
   const [formState, setFormState] = useState({
     name: "",
@@ -21,6 +26,8 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
     birthDate: "",
     gender: "",
     email: "",
+    password: "",
+    confirmedPassword: "",
     direction: "",
     postalCode: "",
     neighborhood: "",
@@ -50,10 +57,16 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
   useEffect(() => {
     const isFormValid =
       Object.values(formState).every((value) => value) &&
-      formState.acceptedTerms === true;
+      formState.acceptedTerms === true &&
+      formState.password === formState.confirmedPassword;
 
     onFormValidChange(isFormValid);
-  }, [formState, onFormValidChange]);
+    onFormDataChange(formState);
+  }, [formState, onFormDataChange, onFormValidChange]);
+
+  const passwordsMatch = formState.password === formState.confirmedPassword;
+
+  console.log(formState);
 
   return (
     <Box
@@ -118,6 +131,38 @@ export const RegisterForm = ({ onFormValidChange }: RegisterFormProps) => {
           value={formState.email}
           onChange={handleChange}
           type="email"
+        />
+      </Box>
+      <Box
+        mt={24}
+        display={"flex"}
+        gap={24}
+        justifyContent={"space-between"}
+        flexDirection={{
+          mobile: "column",
+          desktop: "row",
+        }}
+      >
+        <B4CTextfield
+          label="Contraseña"
+          name="password"
+          value={formState.password}
+          onChange={handleChange}
+          isPassword={true}
+        />
+        <B4CTextfield
+          label="Confirmar contraseña"
+          name="confirmedPassword"
+          value={formState.confirmedPassword}
+          onChange={handleChange}
+          isPassword={true}
+          touched={formState.confirmedPassword !== ""}
+          error={!passwordsMatch && formState.confirmedPassword !== ""}
+          helper={
+            !passwordsMatch && formState.confirmedPassword !== ""
+              ? "Las contraseñas no coinciden"
+              : ""
+          }
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>

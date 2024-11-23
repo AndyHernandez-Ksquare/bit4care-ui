@@ -1,5 +1,5 @@
-import { NotViewPasswordIcon } from "@/assets/svgIcons/visibleIcons/NotViewPasswordIcon";
-import { ViewPasswordIcon } from "@/assets/svgIcons/visibleIcons/ViewPasswordIcon";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { spacings } from "@/style/partials/spacings";
 import {
@@ -92,7 +92,7 @@ export const B4CTextfield = ({
                 onClick={handleVisibilityToggle}
                 edge="end"
               >
-                {isVisible ? <NotViewPasswordIcon /> : <ViewPasswordIcon />}
+                {!isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
               </IconButton>
             ),
             className: className,

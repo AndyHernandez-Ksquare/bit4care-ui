@@ -4,8 +4,6 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
-// import YouTubeIcon from "@mui/icons-material/YouTube";
-// import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export const ClientsLayout = () => {
   return (
@@ -17,7 +15,7 @@ export const ClientsLayout = () => {
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          paddingTop: "100px",
+          paddingTop: "80px",
         }}
       >
         <B4CCLientSidebar />
@@ -45,52 +43,6 @@ export const ClientsLayout = () => {
           </Box>
         </Box>
       </Box>
-      {/* <Box
-        component={"footer"}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "25px 40px",
-          backgroundColor: colorPalette.primary,
-          flexDirection: { xs: "column-reverse", tablet: "row" },
-          textAlign: { xs: "center", tablet: "left" },
-          gap: 16,
-        }}
-      >
-        <Box>
-          <Typography
-            sx={{
-              color: colorPalette.white,
-            }}
-          >
-            © 2025 Bid4Care. Todos los derechos reservados
-          </Typography>
-        </Box>
-
-        <Box display={"flex"} gap={16}>
-          <IconButton
-            sx={{
-              backgroundColor: colorPalette.grey3,
-              color: colorPalette.white,
-            }}
-            href="https://www.youtube.com/"
-            target="_blank"
-          >
-            <YouTubeIcon />
-          </IconButton>
-          <IconButton
-            sx={{
-              backgroundColor: colorPalette.grey3,
-              color: colorPalette.white,
-            }}
-            href="https://www.linkedin.com/"
-            target="_blank"
-          >
-            <LinkedInIcon />
-          </IconButton>
-        </Box>
-      </Box> */}
     </>
   );
 };
