@@ -52,7 +52,7 @@ export const QuizPage = () => {
   return (
     <Box
       width={"100%"}
-      minHeight={"100vh"}
+      height={"100vh"}
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
@@ -72,7 +72,7 @@ export const QuizPage = () => {
       >
         <Typography variant="h4">Test de Habilidades</Typography>
 
-        <IconButton>
+        <IconButton onClick={() => window.history.back()}>
           <ClearIcon fontSize="large" />
         </IconButton>
       </Box>
@@ -82,6 +82,7 @@ export const QuizPage = () => {
         display={"flex"}
         flexDirection={"column"}
         mt={"auto"}
+        gap={10}
         flex={1}
         alignItems={"center"}
         justifyContent={"center"}
@@ -95,10 +96,17 @@ export const QuizPage = () => {
               flexDirection={"column"}
               justifyContent={"center"}
             >
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" gutterBottom textAlign={"center"}>
                 {`Pregunta #${currentStep + 1} de ${quizQuestions.length}:`}
               </Typography>
-              <Typography variant="h5" gutterBottom>
+              <Typography
+                variant="h5"
+                gutterBottom
+                textAlign={"center"}
+                sx={{
+                  whiteSpace: "pretty",
+                }}
+              >
                 {currentQuestion.question}
               </Typography>
             </Box>
