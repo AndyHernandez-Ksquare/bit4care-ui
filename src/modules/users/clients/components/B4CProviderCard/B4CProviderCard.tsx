@@ -50,7 +50,10 @@ export const B4CProviderCard = ({
           </IconButton>
         }
       />
-      <CardContent className="available-colaborator" sx={{ paddingTop: 0 }}>
+      <CardContent
+        className="available-colaborator"
+        sx={{ paddingTop: 0, paddingInline: { xs: "8px", desktop: "0" } }}
+      >
         <Box
           onClick={handleNewServiceClick}
           sx={{
@@ -69,15 +72,20 @@ export const B4CProviderCard = ({
             aria-label="caretaker"
             src="/broken-image.jpg"
             sx={{
-              width: "80px",
-              height: "80px",
+              width: { xs: "50px", desktop: "80px" },
+              height: { xs: "50px", desktop: "80px" },
               bgcolor: colorPalette.info,
             }}
           />
         </Box>
         <Box
           className="available-colaborator-profile"
-          sx={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.25rem",
+            alignItems: { xs: "start", desktop: "center" },
+          }}
         >
           <Typography variant="h6" component="div">
             {name}
@@ -130,7 +138,7 @@ export const B4CProviderCard = ({
         <Box
           sx={{
             mt: 2,
-            display: "flex",
+            display: { xs: "none", desktop: "flex" },
             flexDirection: "row",
             width: "100%",
             overflow: "hidden",

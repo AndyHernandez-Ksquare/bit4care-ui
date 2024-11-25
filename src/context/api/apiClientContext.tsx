@@ -1,0 +1,29 @@
+import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
+import { B4CProviderProps } from "@/ts/types/components/B4CProvider.type";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
+/**  
+ * Este contexto sirve para almacenar todos los datos provenientes en la API que necesitemos de manera persistente durante la aplicacion
+como la informacion necesaria para hacer updates por ejemplo.
+*/
+
+export interface apiClientContextProps {
+  getCareerData: GetOneCarer[] | null;
+  setGetCareerData: Dispatch<SetStateAction<GetOneCarer[] | null>>;
+}
+
+export const ApiClientContext = createContext<
+  apiClientContextProps | undefined
+>(undefined);
+
+export const ClientApiProvider = ({ children }: B4CProviderProps) => {
+  const [getCareerData, setGetCareerData] = useState<GetOneCarer[] | null>(
+    null,
+  );
+  return (
+    <ApiClientContext.Provider value={{ getCareerData, setGetCareerData }}>
+      {children}
+    </ApiClientContext.Provider>
+  );
+};
+
+// Hook para acceder al contexto
