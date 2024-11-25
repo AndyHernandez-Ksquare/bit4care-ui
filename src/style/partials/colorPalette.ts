@@ -22,6 +22,12 @@ const enum colorPalette {
   grey4 = "#BDBDBD",
   grey5 = "#E0E0E0",
   subtitleGrey = "#575F6E",
+
+  // Blue Tints
+  blue1 = "#E4EEFC",
+
+  // Green Tints
+  green1 = "#E6F4EA",
 }
 
 // Export the colorPalette enum for use in other files

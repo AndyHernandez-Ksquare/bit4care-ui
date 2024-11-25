@@ -5,6 +5,7 @@ import { SettingsAndProfile } from "./pages/SettingsAndProfile";
 import ColaboratorsRegister from "../register/pages/ColaboratorsRegister";
 import { ColaboratorLogin } from "./pages/Login";
 import { RouteObject } from "react-router-dom";
+import { QuizPage } from "../quiz/pages/Quiz";
 
 export const colaboratorsRouter: RouteObject[] = [
   {
@@ -38,5 +39,9 @@ export const colaboratorsRouter: RouteObject[] = [
   {
     path: "/colaborador/login",
     element: <ColaboratorLogin />,
+  },
+  {
+    path: "/colaborador/quiz",
+    element: <QuizPage />,
   },
 ];
