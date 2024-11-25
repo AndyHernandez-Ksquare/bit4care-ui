@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ClientsNavbar } from "./components/ClientsNavbar/ClientsNavbar";
 import { B4CCLientSidebar } from "./components/B4CCLientSidebar/B4CCLientSidebar";
+import { AdminLayoutBlob } from "@/assets/svgIcons/backgroundIcons/AdminLayoutBlob";
 
 export const ClientsLayout = () => {
   return (
@@ -19,6 +20,7 @@ export const ClientsLayout = () => {
         }}
       >
         <B4CCLientSidebar />
+        <AdminLayoutBlob />
         <Box
           className="client-separator-main"
           sx={{
@@ -26,6 +28,7 @@ export const ClientsLayout = () => {
             marginTop: "5vh",
             width: "100%",
             flexGrow: 1,
+            zIndex: 2,
           }}
         >
           <Box

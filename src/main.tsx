@@ -11,6 +11,8 @@ import { clientsRouter } from "./modules/users/clients/ClientsRouter.tsx";
 import { colaboratorsRouter } from "./modules/users/colaborators/ColaboratorsRouter.tsx";
 import { adminRouter } from "./modules/admin/pages/AdminRouter.tsx";
 import { LandingPage } from "./modules/admin/pages/LandingPage/LandingPage.tsx";
+import { ClientAuthProvider } from "./context/auth/ClientAuthProvider.tsx";
+import { ClientSessionProvider } from "./context/session/ClientSessionProvider.tsx";
 
 const combinedRoutes = [
   ...clientsRouter,
@@ -39,7 +41,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <AdminSessionProvider>
       <ThemeProvider theme={customTheme}>
         <GlobalScrollbarStyles />
-        <RouterProvider router={router} />
+        <ClientSessionProvider>
+          <ClientAuthProvider>
+            <RouterProvider router={router} />
+          </ClientAuthProvider>
+        </ClientSessionProvider>
       </ThemeProvider>
     </AdminSessionProvider>
   </StrictMode>,

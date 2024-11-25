@@ -5,19 +5,23 @@ import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Box, Typography } from "@mui/material";
 import loginClientsImg from "@/assets/images/clients-login.png";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { LoginService } from "@/services/auth/LoginService";
 import { ClientSelfService } from "@/services/clientServices/ClientServices";
 import { Roles } from "@/ts/enums";
 import "./ClientLogin.css";
+import { useClientAuth } from "@/context/auth/constants/useClientAuth";
+import { useClientSession } from "@/context/auth/constants/useClientSession";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const { setToken } = useClientSession();
 
   const navigate = useNavigate();
+  const { isAuthenticated } = useClientAuth();
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
@@ -50,7 +54,9 @@ export const ClientLogin = () => {
 
           if (userSessionData) {
             if (userSessionData.role === Roles.Client) {
-              console.log("Cliente conectado:", clientResponse);
+              localStorage.setItem("clientToken", clientResponse.token);
+              setToken(clientResponse.token);
+              console.log("Cliente conectado:", userSessionData);
               navigate(`/cliente`);
             }
           }
@@ -65,6 +71,10 @@ export const ClientLogin = () => {
       }
     },
   });
+
+  if (isAuthenticated) {
+    return <Navigate to="/cliente" />;
+  }
   return (
     <Box display={{ display: "flex", flexDirection: "row", height: "100vh" }}>
       <Box className="left-panel">

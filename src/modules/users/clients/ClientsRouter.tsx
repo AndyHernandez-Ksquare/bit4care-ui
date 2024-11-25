@@ -9,20 +9,23 @@ import { ServiceDataProvider } from "./context/NewServiceContext";
 import { B4CClientsNewService } from "./pages/ClientsNewService";
 import { ClientPaymentPage } from "./pages/ClientPaymentPage/ClientPaymentPage";
 import { ClientsForgotPassword } from "./pages/ClientsForgotPassword";
-import { ProtectedCollaboratorModule } from "../colaborators/pages/ProtectedModule/ProtectedCollaboratorModule";
 import { RouteObject } from "react-router-dom";
+import { ClientProtectedModule } from "./pages/ClientProtectedModule/ClientProtectedModule";
+import { ClientApiProvider } from "@/context/api/apiClientContext";
 
 export const clientsRouter: RouteObject[] = [
   {
     path: "/cliente",
-    element: <ProtectedCollaboratorModule />,
+    element: <ClientProtectedModule />,
     children: [
       {
         path: "/cliente",
         element: (
-          <ServiceDataProvider>
-            <ClientsLayout />
-          </ServiceDataProvider>
+          <ClientApiProvider>
+            <ServiceDataProvider>
+              <ClientsLayout />
+            </ServiceDataProvider>
+          </ClientApiProvider>
         ),
         children: [
           {
