@@ -25,9 +25,9 @@ export const ColaboratorsServicesCard = ({
   onClick,
 }: ColaboratorsServicesCardProps) => {
   const statusTagInfo = {
-    solicitado: { color: "warning", label: "Solicitado" },
+    pending: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
-    aceptado: { color: "success", label: "Aceptado" },
+    accepted: { color: "success", label: "Aceptado" },
     "no realizado": { color: "error", label: "No Realizado" },
   };
   return (
