@@ -4,24 +4,10 @@ import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCa
 import { Status } from "@/ts/types/components";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { useEffect, useState } from "react";
-import { GetAllApplication } from "@/ts/types/api/applicationRequest";
-import { MockGetAllApplicationRequests } from "@/services/applicationRequestServices/ApplicationRequestMockData";
+import { useGetAllApplications } from "@/context/api/hooks/UseGetAllClientApplication";
 
 export const B4CClientActiveServices = () => {
-  const [applications, setApplications] = useState<GetAllApplication[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  // Simula la obtención de datos
-  const fetchApplications = async () => {
-    const data = await MockGetAllApplicationRequests();
-    setApplications(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchApplications();
-  }, []);
+  const { applications, isLoading } = useGetAllApplications();
 
   return (
     <Box
@@ -33,7 +19,7 @@ export const B4CClientActiveServices = () => {
         gap: "2rem",
       }}
     >
-      {applications.length > 0 ? (
+      {applications && applications.length > 0 ? (
         applications.map(
           (
             { id, address, time_range, status, description, patient_name },
@@ -50,7 +36,7 @@ export const B4CClientActiveServices = () => {
             />
           ),
         )
-      ) : loading ? (
+      ) : isLoading ? (
         <Box
           display="flex"
           justifyContent="center"
