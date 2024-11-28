@@ -1,8 +1,21 @@
 import { AxiosResponse } from "axios";
 import axios from "../baseService"
-import { ClientSelf } from "@/ts/types/api/client";
+import { ClientSelf, CreateClient } from "@/ts/types/api/client";
 
 const Entity = "client";
+
+export const CreateClientService = async (requestBody: CreateClient) => {
+
+  try {
+    const response: AxiosResponse<CreateClient> =
+      await axios.post(`/${Entity}`, requestBody);
+    console.log("Client created:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create client:", error);
+    throw error;
+  }
+};
 
 export const ClientSelfService = async (token: string) => {
   const Controller = "self";

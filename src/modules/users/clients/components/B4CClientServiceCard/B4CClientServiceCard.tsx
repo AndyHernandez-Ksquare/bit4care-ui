@@ -26,12 +26,15 @@ export const B4CClientServiceCard = ({
 }: B4CClientServicesCardProps) => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
 
-  const statusTagInfo = {
-    solicitado: { color: "warning", label: "Solicitado" },
+  const statusTagInfo: { [key: string]: { color: string; label: string } } = {
+    pending: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
-    aceptado: { color: "success", label: "Aceptado" },
+    accepted: { color: "success", label: "Aceptado" },
     "no realizado": { color: "error", label: "No Realizado" },
   };
+
+  // Convertir `status` a string y en minúsculas
+  const normalizedStatus = String(status).toLowerCase();
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
@@ -85,8 +88,8 @@ export const B4CClientServiceCard = ({
             </Box>
           </Box>
           <B4CTag
-            label={statusTagInfo[status].label}
-            color={statusTagInfo[status].color as color}
+            label={statusTagInfo[normalizedStatus].label}
+            color={statusTagInfo[normalizedStatus].color as color}
           />
           <Box
             sx={{

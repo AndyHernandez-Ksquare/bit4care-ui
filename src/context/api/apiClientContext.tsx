@@ -9,6 +9,8 @@ como la informacion necesaria para hacer updates por ejemplo.
 export interface apiClientContextProps {
   getCareerData: GetOneCarer[] | null;
   setGetCareerData: Dispatch<SetStateAction<GetOneCarer[] | null>>;
+  getOneCareerData: GetOneCarer | null;
+  setGetOneCareerData: Dispatch<SetStateAction<GetOneCarer | null>>;
 }
 
 export const ApiClientContext = createContext<
@@ -19,8 +21,19 @@ export const ClientApiProvider = ({ children }: B4CProviderProps) => {
   const [getCareerData, setGetCareerData] = useState<GetOneCarer[] | null>(
     null,
   );
+
+  const [getOneCareerData, setGetOneCareerData] = useState<GetOneCarer | null>(
+    null,
+  );
   return (
-    <ApiClientContext.Provider value={{ getCareerData, setGetCareerData }}>
+    <ApiClientContext.Provider
+      value={{
+        getCareerData,
+        setGetCareerData,
+        getOneCareerData,
+        setGetOneCareerData,
+      }}
+    >
       {children}
     </ApiClientContext.Provider>
   );

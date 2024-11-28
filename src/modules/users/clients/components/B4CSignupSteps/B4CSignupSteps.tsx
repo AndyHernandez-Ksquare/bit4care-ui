@@ -16,6 +16,7 @@ import { PhoneFormValues, UserDataFormValues } from "@/ts/forms";
 import { useNavigate } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Check } from "@mui/icons-material";
+import { useCreateClient } from "@/context/api/hooks/useCreateClient";
 
 const clientFormToCreateClientParser = (
   formValues: PhoneFormValues & UserDataFormValues,
@@ -48,6 +49,7 @@ export const B4CSignupSteps = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { createClient } = useCreateClient();
 
   const steps = ["paso1", "paso2", "paso3"];
 
@@ -77,14 +79,13 @@ export const B4CSignupSteps = () => {
       password: "",
     },
     validationSchema: userDataValidationSchema,
-    onSubmit: (values) => {
-      console.log("Formulario Enviado:", values);
-      console.log(
-        clientFormToCreateClientParser({
-          ...userDataFormik.values,
-          ...formik.values,
-        }),
-      );
+    onSubmit: async () => {
+      const clientData = clientFormToCreateClientParser({
+        ...userDataFormik.values,
+        ...formik.values,
+      });
+      const response = await createClient(clientData);
+      console.log("Cliente creado exitosamente:", response);
       navigate("/cliente/login");
     },
   });

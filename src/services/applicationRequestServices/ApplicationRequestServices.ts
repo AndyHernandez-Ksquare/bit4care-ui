@@ -7,9 +7,10 @@ const Entity = "application-request";
 export const GetAllApplicationRequests = async () => {
   try {
     const response: AxiosResponse<GetAllApplication[]> =
-      await axios.get(`/${Entity}`);
+      await axios.get(`/${Entity}?status=pending`);
     if (response.data) {
 
+      console.log(response.data)
       return response.data
     }
     return null;
