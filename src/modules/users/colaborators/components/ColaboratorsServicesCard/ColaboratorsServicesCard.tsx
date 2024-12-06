@@ -29,6 +29,7 @@ export const ColaboratorsServicesCard = ({
     realizado: { color: "success", label: "Realizado" },
     accepted: { color: "success", label: "Aceptado" },
     "no realizado": { color: "error", label: "No Realizado" },
+    solicitado: { color: "warning", label: "Solicitado" },
   };
   return (
     <Box className="colaborator-service-card-container">
