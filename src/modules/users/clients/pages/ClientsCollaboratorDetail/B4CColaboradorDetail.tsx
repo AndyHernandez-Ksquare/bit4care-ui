@@ -28,6 +28,7 @@ export const B4CColaboradorDetail = ({
   setServiceStep,
 }: B4CColaboradorDetailProps) => {
   const { provider } = useServiceData();
+
   const handleSchedule = () => {
     setServiceStep(1);
   };
@@ -119,7 +120,7 @@ export const B4CColaboradorDetail = ({
                     {provider?.speciality}
                   </Typography>
 
-                  {provider?.reviewed && (
+                  {provider?.is_approved && (
                     <Typography
                       variant="body-small-bold"
                       color={colorPalette.success}

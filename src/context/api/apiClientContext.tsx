@@ -1,4 +1,5 @@
 import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
+import { ClientSelf } from "@/ts/types/api/client";
 import { B4CProviderProps } from "@/ts/types/components/B4CProvider.type";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 /**  
@@ -7,6 +8,8 @@ como la informacion necesaria para hacer updates por ejemplo.
 */
 
 export interface apiClientContextProps {
+  getSelfClientData: ClientSelf | null;
+  setGetSelfClientData: Dispatch<SetStateAction<ClientSelf | null>>;
   getCareerData: GetOneCarer[] | null;
   setGetCareerData: Dispatch<SetStateAction<GetOneCarer[] | null>>;
   getOneCareerData: GetOneCarer | null;
@@ -18,6 +21,10 @@ export const ApiClientContext = createContext<
 >(undefined);
 
 export const ClientApiProvider = ({ children }: B4CProviderProps) => {
+  const [getSelfClientData, setGetSelfClientData] = useState<ClientSelf | null>(
+    null,
+  );
+
   const [getCareerData, setGetCareerData] = useState<GetOneCarer[] | null>(
     null,
   );
@@ -28,6 +35,8 @@ export const ClientApiProvider = ({ children }: B4CProviderProps) => {
   return (
     <ApiClientContext.Provider
       value={{
+        getSelfClientData,
+        setGetSelfClientData,
         getCareerData,
         setGetCareerData,
         getOneCareerData,
