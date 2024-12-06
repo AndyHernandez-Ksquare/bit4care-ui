@@ -27,22 +27,24 @@ export const B4CHogarProviders = () => {
         </Box>
       ) : (
         <Grid container spacing={16} sx={{ mt: 4 }}>
-          {data?.map(({ id, speciality, carerReviews, payment_range }) => (
-            <Grid
-              className="client-providers-container"
-              size={{ xs: 12, desktop: 3 }}
-              key={id}
-            >
-              <B4CProviderCard
-                careerId={id}
-                name={"User.name"}
-                specialty={speciality}
-                rating={calculateAverageRating(carerReviews)}
-                rate={payment_range}
-                availability="Todos los dias"
-              />
-            </Grid>
-          ))}
+          {data?.map(
+            ({ id, User, speciality, carerReviews, payment_range }) => (
+              <Grid
+                className="client-providers-container"
+                size={{ xs: 12, desktop: 3 }}
+                key={id}
+              >
+                <B4CProviderCard
+                  careerId={id}
+                  name={User ? User.name : "Usuario"}
+                  specialty={speciality}
+                  rating={calculateAverageRating(carerReviews)}
+                  rate={payment_range}
+                  availability="Todos los dias"
+                />
+              </Grid>
+            ),
+          )}
         </Grid>
       )}
     </>

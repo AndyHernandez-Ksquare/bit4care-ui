@@ -31,6 +31,7 @@ export const ClientSelfService = async (token: string) => {
       // Login exitoso, puedes manejar la respuesta según tus necesidades
       return response.data
     }
+    return null
   } catch (error: unknown) {
     console.log(error);
     throw error;

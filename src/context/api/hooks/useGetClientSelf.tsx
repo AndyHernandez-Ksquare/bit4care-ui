@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AxiosError } from "axios";
-import { GetOneCarerRequest } from "@/services/careerServices/CareerServices";
 import { useClientApi } from "../constans/useClientApi";
+import { ClientSelfService } from "@/services/clientServices/ClientServices";
 
 // Define el estado del hook
 type UseCarerProfilesState = {
@@ -9,29 +9,23 @@ type UseCarerProfilesState = {
   error: string | null;
 };
 
-export const useGetOneCareer = (careerId: number) => {
-  const { getOneCareerData, setGetOneCareerData } = useClientApi();
+export const useGetClientSelf = (userToken: string) => {
+  const { getSelfClientData, setGetSelfClientData } = useClientApi();
   const [state, setState] = useState<UseCarerProfilesState>({
     isLoading: true,
     error: null,
   });
 
   useEffect(() => {
-    // Validar si careerId es válido antes de continuar
-    if (!careerId) {
-      setState((prev) => ({ ...prev, isLoading: false }));
-      return;
-    }
     const fetchProfiles = async () => {
-      if (getOneCareerData) {
+      if (getSelfClientData) {
         // Si los datos ya están cargados en el contexto, no necesitamos volver a llamarlos.
         setState({ isLoading: false, error: null });
         return;
       }
       try {
-        const data = await GetOneCarerRequest(careerId);
-        console.log(data);
-        setGetOneCareerData(data); // Guardamos los datos en el contexto
+        const data = await ClientSelfService(userToken);
+        setGetSelfClientData(data); // Guardamos los datos en el contexto
         setState({ isLoading: false, error: null });
       } catch (error: unknown) {
         let errorMessage = "Ocurrió un error desconocido.";
@@ -49,7 +43,7 @@ export const useGetOneCareer = (careerId: number) => {
     };
 
     fetchProfiles();
-  }, [getOneCareerData, setGetOneCareerData, careerId]); // Ejecuta la función una sola vez al montar el componente
+  }, [getSelfClientData, setGetSelfClientData, userToken]); // Ejecuta la función una sola vez al montar el componente
 
-  return { data: getOneCareerData, ...state }; // Devuelve el estado completo
+  return { data: getSelfClientData, ...state }; // Devuelve el estado completo
 };

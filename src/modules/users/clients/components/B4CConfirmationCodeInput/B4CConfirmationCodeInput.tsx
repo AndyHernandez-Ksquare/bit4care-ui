@@ -13,8 +13,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatPhoneNumber } from "../B4CSignupSteps/B4CSignupSteps";
+import { useValidationCode } from "@/context/api/hooks/useValidationCode";
+import { SendOtpBodyRequest } from "@/ts/types/api/metaRequest/SendOtp.type";
 
 export const B4CConfirmationCodeInput = ({
   countryCode,
@@ -24,28 +26,29 @@ export const B4CConfirmationCodeInput = ({
   setConfirmation,
 }: B4CConfirmationCodeInputProps) => {
   const [inputCode, setInputCode] = useState(""); // Estado para el código ingresado
-  const [generatedCode] = useState("123456"); // Código de confirmación simulado
-  const [loading, setLoading] = useState(false); // Estado para el spinner
-  const [error, setError] = useState(""); // Estado para el mensaje de error
+  const { sendCode, isLoading, error, generatedCode } = useValidationCode(); // Código de confirmación simulado
 
   // Manejo del timeout para simular la confirmación del número
   const handleConfirmCode = () => {
-    setLoading(true); // Mostrar spinner
-    setError(""); // Limpiar el error previo
-
-    setTimeout(() => {
-      setLoading(false); // Ocultar spinner
-
-      if (inputCode === generatedCode) {
-        setConfirmation(true); // Cambia a true si el código coincide
-        setTimeout(() => {
-          setActiveStep(2);
-        }, 3000); // Avanzar al siguiente paso
-      } else {
-        setError("El código es incorrecto. Inténtalo de nuevo."); // Mostrar error
-      }
-    }, 3000); // Simular un delay de 3 segundos
+    if (inputCode === generatedCode) {
+      setConfirmation(true); // Código correcto, confirmar
+      setActiveStep(2); // Pasar al siguiente paso
+    } else {
+      // Código incorrecto, mostrar error
+      alert("El código es incorrecto. Inténtalo de nuevo.");
+    }
   };
+
+  useEffect(() => {
+    if (phoneNumber) {
+      const requestBody: SendOtpBodyRequest = {
+        clientPhoneNumber: `${countryCode}${phoneNumber}`,
+      };
+
+      sendCode(requestBody); // Enviar el código de validación
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -128,14 +131,17 @@ export const B4CConfirmationCodeInput = ({
                 fontWeight: "600",
               },
             }}
+            onClick={() =>
+              sendCode({ clientPhoneNumber: `${countryCode}${phoneNumber}` })
+            }
           >
             Enviar otra vez
           </Button>
         </Grid>
       </Grid>
       <B4CButton
-        disabled={loading || confirmation || inputCode.length === 0}
-        isLoading={loading}
+        disabled={isLoading || confirmation || inputCode.length === 0}
+        isLoading={isLoading}
         label={confirmation ? "Redirigiendo..." : "Confirmar"}
         variant="primary"
         onClick={handleConfirmCode}
