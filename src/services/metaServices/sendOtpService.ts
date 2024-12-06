@@ -6,7 +6,7 @@ interface SendCodeResponse {
   OTP: string;
 }
 
-const Entity = "send-opt";
+const Entity = "send-otp";
 
 export const SendValidationCode = async (requestBody: SendOtpBodyRequest) => {
   const response: AxiosResponse<SendCodeResponse> =
