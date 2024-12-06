@@ -25,10 +25,10 @@ export const B4CClientProfileSettings = () => {
 
   const formik = useFormik({
     initialValues: {
-      fullName: data?.client?.id || "",
+      fullName: data?.name || "",
       address: data?.address || "",
       email: data?.email || "",
-      phoneNumber: "", // Ajusta según los datos disponibles
+      phoneNumber: data?.phone || "", // Ajusta según los datos disponibles
     },
     enableReinitialize: true, // Para actualizar valores iniciales cuando `data` cambie
     validationSchema,

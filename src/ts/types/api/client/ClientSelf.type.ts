@@ -7,7 +7,10 @@ export interface Client {
 
 export interface ClientSelf {
   id: number;
+  name: string;
   email: string;
+  phone: string;
+  last_login: Date;
   stripeAccountId: string | null;
   address: string;
   role: string;

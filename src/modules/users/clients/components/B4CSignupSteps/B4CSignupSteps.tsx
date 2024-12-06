@@ -2,7 +2,14 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CPhoneInput } from "@/components/B4CPhoneInput";
 import { B4CStepper } from "@/components/B4CStepper";
 import { Size } from "@/ts/enums";
-import { Box, Grid2 as Grid, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Grid2 as Grid,
+  Snackbar,
+  SnackbarCloseReason,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { B4CConfirmationCodeInput } from "../B4CConfirmationCodeInput";
 import { B4CTextfield } from "@/components/B4CTextfield";
@@ -48,6 +55,7 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
 export const B4CSignupSteps = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [confirmation, setConfirmation] = useState<boolean>(false);
+  const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
   const navigate = useNavigate();
   const { createClient } = useCreateClient();
 
@@ -65,6 +73,18 @@ export const B4CSignupSteps = () => {
       setActiveStep(1);
     },
   });
+
+  const handleCloseSnack = (
+    event?: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackbar(false);
+    navigate("/cliente/login");
+  };
 
   const userDataFormik = useFormik<UserDataFormValues>({
     initialValues: {
@@ -86,7 +106,8 @@ export const B4CSignupSteps = () => {
       });
       const response = await createClient(clientData);
       console.log("Cliente creado exitosamente:", response);
-      navigate("/cliente/login");
+
+      setOpenSnackbar(true);
     },
   });
 
@@ -395,6 +416,18 @@ export const B4CSignupSteps = () => {
           />
         </Box>
       )}
+
+      {/* Snackbar for confirmation */}
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnack}
+      >
+        <Alert onClose={handleCloseSnack} severity="success">
+          ¡Cliente registrado exitosamente!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
