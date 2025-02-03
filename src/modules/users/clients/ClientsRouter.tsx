@@ -1,10 +1,8 @@
 import { ClientsLayout } from "./ClientsLayout";
-import { ClientsHome } from "./pages/ClientsHome";
 import { ClientsServices } from "./pages/ClientsServices";
 import { ClientsAccount } from "./pages/ClientsAccount";
 import { ClientsSignup } from "./pages/ClientsSignup";
 import { ClientLogin } from "./pages/Login/ClientLogin";
-import { NewClientService } from "./pages/NewClientService";
 import { ServiceDataProvider } from "./context/NewServiceContext";
 import { B4CClientsNewService } from "./pages/ClientsNewService";
 import { ClientPaymentPage } from "./pages/ClientPaymentPage/ClientPaymentPage";
@@ -30,14 +28,8 @@ export const clientsRouter: RouteObject[] = [
         children: [
           {
             path: "/cliente/",
-            element: <ClientsHome />,
+            element: <ClientsServices />,
           },
-          {
-            path: "/cliente/colaborador",
-
-            element: <NewClientService />,
-          },
-
           {
             path: "/cliente/mis-servicios",
             element: <ClientsServices />,

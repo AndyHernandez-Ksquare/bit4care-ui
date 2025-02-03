@@ -1,6 +1,7 @@
 export interface GetAllApplication {
   id: number;
-  time_range: string;
+  start_date: Date;
+  end_date: Date;
   status: string;
   address: string;
   patient_name: string;
@@ -12,4 +13,8 @@ export interface GetAllApplication {
   carerId: number;
   createdAt: string;
   updatedAt: string;
+  carer: {
+    id: number
+  } | null
 }
+

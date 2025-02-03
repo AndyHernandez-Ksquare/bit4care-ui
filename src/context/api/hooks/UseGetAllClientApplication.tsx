@@ -2,7 +2,7 @@ import { GetAllApplicationRequests } from "@/services/applicationRequestServices
 import { GetAllApplication } from "@/ts/types/api/applicationRequest";
 import { useState, useEffect } from "react";
 
-export const useGetAllApplications = () => {
+export const useGetAllApplications = (status: string) => {
   const [applications, setApplications] = useState<GetAllApplication[] | null>(
     null,
   );
@@ -13,9 +13,10 @@ export const useGetAllApplications = () => {
     const fetchApplications = async () => {
       try {
         setIsLoading(true);
-        const data = await GetAllApplicationRequests();
+        const data = await GetAllApplicationRequests(status);
         setApplications(data);
       } catch (err) {
+        console.log(err);
         setError(err);
       } finally {
         setIsLoading(false);

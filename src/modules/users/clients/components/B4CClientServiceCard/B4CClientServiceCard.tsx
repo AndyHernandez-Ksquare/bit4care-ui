@@ -12,13 +12,11 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { spacings } from "@/style/partials/spacings";
-import { calculateTotalHours } from "@/constants/calculateTotalHours";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export const B4CClientServiceCard = ({
   id,
-  name,
-  schedule,
+  carerName,
   address,
   service,
   status,
@@ -43,7 +41,7 @@ export const B4CClientServiceCard = ({
     <>
       <Box
         sx={{
-          width: "100%",
+          maxWidth: "615px",
           border: `1px solid ${colorPalette.grey5}`,
           borderRadius: "20px",
           padding: "24px",
@@ -58,7 +56,7 @@ export const B4CClientServiceCard = ({
             display: "flex",
             flexDirection: { xs: "column", desktop: "row" },
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: { xs: "start", desktop: "center" },
             gap: { xs: spacings.spacing2, desktop: spacings.spacing0 },
           }}
         >
@@ -68,16 +66,17 @@ export const B4CClientServiceCard = ({
               flexDirection: "row",
               gap: "1rem",
               alignItems: "center",
+              flexGrow: 1,
             }}
           >
             <Avatar
               sx={{ width: "64px", height: "64px" }}
-              alt={name}
+              alt={isAssigned || carerName ? carerName : undefined}
               src=" image url"
             />
             <Box>
               <Typography variant="h5" sx={{ color: colorPalette.primary }}>
-                {name}
+                {isAssigned || carerName ? carerName : "Cuidador no asignado"}
               </Typography>
               <Typography
                 variant="body-normal"
@@ -87,38 +86,28 @@ export const B4CClientServiceCard = ({
               </Typography>
             </Box>
           </Box>
-          <B4CTag
-            label={statusTagInfo[normalizedStatus].label}
-            color={statusTagInfo[normalizedStatus].color as color}
-          />
-          <Box
-            sx={{
-              display: isAssigned ? "flex" : "none",
-              flexDirection: "row",
-              gap: "1rem",
-            }}
-          >
-            <Avatar sx={{ width: "48px", height: "48px" }} />
-            <Box>
-              <Typography variant="body-normal">Maria Perez</Typography>
-              <B4CStarRating rating={3} />
-            </Box>
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {carerName && <B4CStarRating rating={4} />}
+            <B4CTag
+              label={statusTagInfo[normalizedStatus].label}
+              color={statusTagInfo[normalizedStatus].color as color}
+            />
           </Box>
         </Box>
-        <Grid container spacing={{ xs: "8px", desktop: "4px" }}>
+        <Grid container spacing={{ xs: "8px" }}>
           <Grid
-            size={{ xs: 12, desktop: 6 }}
+            size={{ xs: 12 }}
             sx={{
               display: "flex",
               gap: spacings.spacing1,
               alignItems: "center",
             }}
           >
-            <LocationOnIcon sx={{ color: colorPalette.primary }} />
-            <Typography variant="body-normal">{address}</Typography>
+            <CalendarMonthIcon sx={{ color: colorPalette.primary }} />
           </Grid>
           <Grid
-            size={{ xs: 12, desktop: 6 }}
+            size={{ xs: 12 }}
             sx={{
               display: "flex",
               gap: spacings.spacing1,
@@ -133,7 +122,7 @@ export const B4CClientServiceCard = ({
             <Typography variant="body-normal">{"Asdasd"}</Typography>
           </Grid>
           <Grid
-            size={{ xs: 12, desktop: 6 }}
+            size={{ xs: 12 }}
             sx={{
               display: "flex",
               gap: spacings.spacing1,
@@ -141,25 +130,42 @@ export const B4CClientServiceCard = ({
             }}
           >
             <WatchLaterIcon sx={{ color: colorPalette.primary }} />
-            <Typography variant="body-normal">{`${calculateTotalHours(schedule)} horas`}</Typography>
           </Grid>
           <Grid
-            size={{ xs: 12, desktop: 6 }}
+            size={{ xs: 12 }}
             sx={{
               display: "flex",
               gap: spacings.spacing1,
               alignItems: "center",
             }}
           >
-            <CalendarMonthIcon sx={{ color: colorPalette.primary }} />
-            <Typography variant="body-normal">{schedule}</Typography>
+            <LocationOnIcon sx={{ color: colorPalette.primary }} />
+            <Typography variant="body-normal">{address}</Typography>
           </Grid>
         </Grid>
-        <B4CButton
-          onClick={handleOpenModal}
-          size={Size.Small}
-          label="Ver detalles"
-        />
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            flexDirection: { xs: "column", desktop: "row" },
+            justifyContent: "space-around",
+            gap: "1rem",
+          }}
+        >
+          <B4CButton
+            fullWidth
+            onClick={handleOpenModal}
+            size={Size.Small}
+            label="Editar solicitud"
+          />
+          <B4CButton
+            fullWidth
+            onClick={handleOpenModal}
+            variant="secondary"
+            size={Size.Small}
+            label="Cancelar solicitud"
+          />
+        </Box>
       </Box>
       <B4CClientServiceDetail
         id={id}

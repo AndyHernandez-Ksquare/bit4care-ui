@@ -36,7 +36,7 @@ export const ClientsLayout = () => {
             sx={{
               paddingInline: { xs: "16px" },
               display: "flex",
-              paddingLeft: { desktop: "20%" },
+              paddingLeft: { desktop: "16%" },
               zIndex: 2,
             }}
           >

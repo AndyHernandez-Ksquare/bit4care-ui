@@ -4,10 +4,10 @@ import { CreateAppReq, GetAllApplication } from "@/ts/types/api/applicationReque
 
 const Entity = "application-request";
 
-export const GetAllApplicationRequests = async () => {
+export const GetAllApplicationRequests = async (status: string) => {
   try {
     const response: AxiosResponse<GetAllApplication[]> =
-      await axios.get(`/${Entity}?status=pending`);
+      await axios.get(`/${Entity}?status=${status}`);
     if (response.data) {
 
       console.log(response.data)

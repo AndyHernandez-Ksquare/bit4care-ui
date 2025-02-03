@@ -11,6 +11,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { useServiceData } from "../../context/NewServiceContext";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
+import { es } from "react-day-picker/locale";
+import { eachDayOfInterval, format } from "date-fns";
+import { es as localeEs } from "date-fns/locale";
 
 interface B4CMakeAppointmentProps {
   handleSchedule: () => void;
@@ -20,6 +25,7 @@ export const B4CMakeAppointment = ({
   handleSchedule,
 }: B4CMakeAppointmentProps) => {
   const [error, setError] = useState<string>("");
+
   const {
     provider,
     startTime,
@@ -27,11 +33,13 @@ export const B4CMakeAppointment = ({
     duration,
     price,
     selectedDate,
+    selectedDateRange,
     setPrice,
     setDuration,
     setStartTime,
     setEndTime,
     setSelectedDate,
+    setSelectedDateRange,
   } = useServiceData();
 
   // Function to calculate the difference in hours between startTime and endTime
@@ -64,6 +72,23 @@ export const B4CMakeAppointment = ({
     }
   }, [duration, provider]); // Recalculate duration when either time changes
 
+  useEffect(() => {
+    if (selectedDateRange?.from && selectedDateRange?.to) {
+      const allDays = eachDayOfInterval({
+        start: selectedDateRange.from,
+        end: selectedDateRange.to,
+      });
+
+      console.log(
+        "Días dentro del rango:",
+        allDays.map((day) => format(day, "dd/MM/yyyy", { locale: localeEs })),
+      );
+      console.log("Cantidad total de días:", allDays.length);
+    } else {
+      console.log("No se ha seleccionado un rango válido.");
+    }
+  }, [selectedDateRange]);
+
   return (
     <Box
       sx={{
@@ -87,10 +112,12 @@ export const B4CMakeAppointment = ({
           ${price} MXN ({duration} hora{duration === 1 ? "" : "s"})
         </Typography>
       )}
-
-      {/* <Typography variant="body-normal-bold" color={colorPalette.primary}>
-        $200 en primera visita
-      </Typography> */}
+      <DayPicker
+        mode="range"
+        locale={es}
+        selected={selectedDateRange}
+        onSelect={setSelectedDateRange}
+      />
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
         <DateCalendar
           value={selectedDate} // Bind the value to the state

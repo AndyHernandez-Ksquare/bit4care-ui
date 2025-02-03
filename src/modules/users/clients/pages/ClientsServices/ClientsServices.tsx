@@ -70,11 +70,7 @@ export const ClientsServices = () => {
           <AddIcon />
         </IconButton>
       </Grid>
-      <Grid
-        size={{ xs: 12 }}
-        marginBottom={spacings.spacing2}
-        sx={{ paddingInline: { xs: "32px", desktop: 0 } }}
-      >
+      <Grid size={{ xs: 12 }} marginBottom={spacings.spacing2}>
         {serviceStatus[tab]}
       </Grid>
     </PageLayout>
