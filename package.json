@@ -16,6 +16,7 @@
     "@mui/material": "^6.1.1",
     "@mui/x-data-grid": "^7.6.2",
     "@mui/x-date-pickers": "^7.6.2",
+    "@react-google-maps/api": "^2.20.5",
     "@storybook/react": "^8.1.11",
     "@storybook/test": "^8.1.11",
     "axios": "^1.7.2",
