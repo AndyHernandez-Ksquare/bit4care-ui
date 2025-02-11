@@ -5,45 +5,48 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import {
   Box,
   Breadcrumbs,
-  FormControl,
-  InputLabel,
   Link,
-  MenuItem,
-  Select,
   TextField,
   Typography,
   Grid2 as Grid,
-  OutlinedInput,
-  InputAdornment,
 } from "@mui/material";
-import {
-  DatePicker,
-  LocalizationProvider,
-  TimePicker,
-} from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import "dayjs/locale/es";
-import { Library } from "@googlemaps/js-api-loader";
-import { B4CButton } from "@/components/B4CButton";
-import { Size } from "@/ts/enums";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { SubmitNewApplication } from "./components/SubmitNewApplication";
+import { CreateAppReq } from "@/ts/types/api/applicationRequest";
+import { ServiceLocation } from "./components/ServiceLocation";
+import { ScheduleForm } from "./components/ScheduleForm";
+import { ServiceSpecs } from "./components/ServiceSpecs";
+import { useParams } from "react-router-dom";
+import { useGetOneAppRequest } from "@/context/api/hooks/useGetOneAppRequest";
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyCK4QwPfMHi-8SXl6s8UaX0L4q4LymW4a0";
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-const googleLibraries: Library[] = ["places", "geometry"];
+const base_google_url =
+  "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 
 // Configurar Day.js para usar el español
 dayjs.locale("es");
 
-interface Schedule {
+export interface Schedule {
   startTime: Dayjs | null;
   endTime: Dayjs | null;
 }
 
-export const B4CClientsNewService = () => {
+interface B4CClientsNewServiceProps {
+  mode?: "create" | "edit";
+}
+
+export const B4CClientsNewService = ({
+  mode = "create",
+}: B4CClientsNewServiceProps) => {
+  const { id } = useParams(); // Obtiene el ID de la URL
+  const { data, loading, error } = useGetOneAppRequest(id);
+
   // State to store the start and end dates selected by the user
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -59,6 +62,111 @@ export const B4CClientsNewService = () => {
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState({ lat: 19.432608, lng: -99.133209 }); // Default: CDMX
 
+  // Nuevo estado para el total de horas
+  const [totalHoursWorked, setTotalHoursWorked] = useState<number>(0);
+
+  const [formData, setFormData] = useState<CreateAppReq>({
+    address: "",
+    patient_name: "",
+    patient_phone: "",
+    description: "",
+    comments: "",
+    amount: 0,
+    start_date: "",
+    end_date: "",
+    job_interval: 2,
+    payment_rate: 6000,
+    carerId: 1, // Simulado, en producción vendría del usuario autenticado
+    is_carer_certified: false,
+    carer_speciality: "",
+    carer_years_of_experience: 0,
+    carer_gender: "",
+    carer_has_driving_license: false,
+  });
+
+  // Función para actualizar el formulario dinámicamente
+  const updateFormData = (key: keyof CreateAppReq, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleMarkerDragEnd = async (event: google.maps.MapMouseEvent) => {
+    if (event.latLng) {
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+      setLocation({ lat, lng });
+
+      const response = await fetch(
+        `${base_google_url}${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`,
+      );
+      const data = await response.json();
+      if (data.results.length > 0) {
+        setAddress(data.results[0].formatted_address);
+      }
+    }
+  };
+
+  // Función para manejar el envío del formulario
+  const handleSubmit = () => {
+    if (!formData.patient_name || !formData.patient_phone) {
+      console.error("Faltan datos obligatorios");
+      return;
+    }
+    // Convertir fechas a formato ISO
+    const formattedStartDate = startDate ? startDate.toISOString() : "";
+    const formattedEndDate = endDate ? endDate.toISOString() : "";
+
+    const finalRequest: CreateAppReq = {
+      ...formData,
+      address: address,
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
+      is_carer_certified: professionalNeeded,
+      amount: totalHoursWorked * formData.payment_rate, // Calcular monto total
+    };
+
+    console.log("Simulando envío de solicitud:", finalRequest);
+  };
+
+  // Cargar datos en el formulario cuando `data` está disponible
+  useEffect(() => {
+    console.log("Data:", data);
+    if (mode === "edit" && data) {
+      setFormData({
+        address: data.address || "",
+        patient_name: data.patient_name || "",
+        patient_phone: data.patient_phone || "",
+        description: data.description || "",
+        comments: data.comments || "",
+        amount: data.amount || 0,
+        start_date: data.start_date || "",
+        end_date: data.end_date || "",
+        job_interval: data.job_interval || 2,
+        payment_rate: data.payment_rate || 6000,
+        carerId: data.carerId || 1,
+        is_carer_certified: data.is_carer_certified || false,
+        carer_speciality: data.carer_speciality || "",
+        carer_years_of_experience: data.carer_years_of_experience || 0,
+        carer_gender: (data.carer_gender as "" | "Male" | "Female") || "",
+        carer_has_driving_license: data.carer_has_driving_license || false,
+      });
+
+      setStartDate(data.start_date ? dayjs(data.start_date) : null);
+      setEndDate(data.end_date ? dayjs(data.end_date) : null);
+      setAddress(data.address || "");
+      setProfessionalNeeded(data.is_carer_certified || false);
+    }
+  }, [data, mode]);
+
+  useEffect(() => {
+    if (mode === "edit" && id) {
+      console.log(`Cargando datos de la solicitud con ID: ${id}`);
+      // Aquí puedes hacer una petición a la API para obtener los datos
+    }
+  }, [id]);
+
   // Fetch the user's location when the component mounts
   useEffect(() => {
     // Check if the browser supports geolocation
@@ -70,7 +178,7 @@ export const B4CClientsNewService = () => {
 
           // Optionally, reverse geocode the coordinates to get a readable address
           fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`,
+            `${base_google_url}${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`,
           )
             .then((response) => response.json())
             .then((data) => {
@@ -93,72 +201,37 @@ export const B4CClientsNewService = () => {
     }
   }, []);
 
-  // Effect to generate dates when startDate or endDate changes
+  // Función para calcular el total de horas trabajadas
   useEffect(() => {
-    if (startDate && endDate) {
-      const start = dayjs(startDate);
-      const end = dayjs(endDate);
-      const newDates: string[] = [];
-      let current = start;
+    let totalHours = 0;
 
-      // Generate all dates between start and end date
-      while (current.isBefore(end) || current.isSame(end, "day")) {
-        newDates.push(current.format("YYYY-MM-DD"));
-        current = current.add(1, "day");
+    dates.forEach((date) => {
+      const { startTime, endTime } = schedules[date] || {};
+      if (startTime && endTime) {
+        const diff = endTime.diff(startTime, "hour", true); // Diferencia en horas con decimales
+        totalHours += diff > 0 ? diff : 0; // Evitar valores negativos
       }
+    });
 
-      // Set the generated dates in state
-      setDates(newDates);
-
-      // Initialize the schedules for each date
-      setSchedules(
-        newDates.reduce((acc: Record<string, Schedule>, date: string) => {
-          acc[date] = { startTime: null, endTime: null };
-          return acc;
-        }, {}),
-      );
-    } else {
-      setDates([]);
-      setSchedules({});
-    }
-  }, [startDate, endDate]);
-
-  // Function to update the schedule (start and end time) for a given date
-  const handleScheduleChange = (
-    date: string,
-    key: keyof Schedule,
-    value: Dayjs | null,
-  ) => {
-    setSchedules((prev) => ({
-      ...prev,
-      [date]: { ...prev[date], [key]: value },
-    }));
-  };
-
-  const handleMarkerDragEnd = async (event: google.maps.MapMouseEvent) => {
-    if (event.latLng) {
-      const lat = event.latLng.lat();
-      const lng = event.latLng.lng();
-      setLocation({ lat, lng });
-
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`,
-      );
-      const data = await response.json();
-      if (data.results.length > 0) {
-        setAddress(data.results[0].formatted_address);
-      }
-    }
-  };
+    setTotalHoursWorked(totalHours);
+  }, [schedules, dates]); // Se ejecuta cuando cambian los horarios o las fechas
 
   return (
-    <PageLayout title="Nueva solicitud de servicio">
+    <PageLayout
+      title={
+        mode === "create"
+          ? "Nueva solicitud de servicio"
+          : "Editar solicitud de servicio"
+      }
+    >
       <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/cliente/">
           <Typography typography="body-normal">Mis servicios</Typography>
         </Link>
         <Typography typography="body-normal-bold" color={colorPalette.primary}>
-          Nueva solicitud de servicio
+          {mode === "create"
+            ? "Nueva solicitud de servicio"
+            : "Editar solicitud de servicio"}
         </Typography>
       </Breadcrumbs>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
@@ -207,65 +280,46 @@ export const B4CClientsNewService = () => {
                     </Typography>
                   </Box>
                 )}
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "1rem",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <DatePicker
-                    label="Fecha inicial"
-                    value={startDate}
-                    onChange={setStartDate}
-                    disablePast
-                    sx={{ width: "100%" }}
-                  />
-                  —
-                  <DatePicker
-                    label="Fecha final"
-                    value={endDate}
-                    onChange={setEndDate}
-                    minDate={startDate || dayjs()}
-                    sx={{ width: "100%" }}
+                {/* Información básica del paciente */}
+                <Box>
+                  <Typography typography="body-normal-bold">
+                    Nombre del paciente
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    value={formData.patient_name}
+                    onChange={(e) =>
+                      updateFormData("patient_name", e.target.value)
+                    }
+                    placeholder="Nombre del paciente"
                   />
                 </Box>
 
-                {dates.length > 0 && (
-                  <Box>
-                    <Typography typography="body-normal-bold">
-                      Horarios de servicio
-                    </Typography>
-                    {dates.map((date) => (
-                      <Box key={date} sx={{ marginTop: "1rem" }}>
-                        <Typography typography="body-normal">
-                          {dayjs(date).format("dddd, D [de] MMMM [del] YYYY")}
-                        </Typography>
-                        <Box sx={{ display: "flex", gap: "1rem" }}>
-                          <TimePicker
-                            label="Hora de inicio"
-                            value={schedules[date]?.startTime || null}
-                            onChange={(value) =>
-                              handleScheduleChange(date, "startTime", value)
-                            }
-                            sx={{ width: "100%" }}
-                          />
-                          <TimePicker
-                            label="Hora de término"
-                            value={schedules[date]?.endTime || null}
-                            onChange={(value) =>
-                              handleScheduleChange(date, "endTime", value)
-                            }
-                            sx={{ width: "100%" }}
-                          />
-                        </Box>
-                      </Box>
-                    ))}
-                  </Box>
-                )}
+                <Box>
+                  <Typography typography="body-normal-bold">
+                    Número del paciente
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    value={formData.patient_phone}
+                    onChange={(e) =>
+                      updateFormData("patient_phone", e.target.value)
+                    }
+                    placeholder="Número de teléfono del paciente"
+                  />
+                </Box>
+
+                <ScheduleForm
+                  mode={mode}
+                  startDate={startDate}
+                  endDate={endDate}
+                  dates={dates}
+                  schedules={schedules}
+                  setStartDate={setStartDate}
+                  setEndDate={setEndDate}
+                  setDates={setDates}
+                  setSchedules={setSchedules}
+                />
 
                 {/* Additional service description and address fields */}
                 <Box>
@@ -274,214 +328,50 @@ export const B4CClientsNewService = () => {
                   </Typography>
                   <TextField
                     fullWidth
+                    value={formData.description}
+                    onChange={(e) =>
+                      updateFormData("description", e.target.value)
+                    }
                     multiline
                     rows={4}
                     placeholder="Describe las actividades de tu cuidador"
                   />
                 </Box>
-                <Box>
-                  <Typography typography="body-normal-bold">
-                    Domicilio de servicio
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Detalla tu dirección o selecciónala en el mapa"
-                  />
-                </Box>
-                <Box>
-                  <LoadScript
-                    googleMapsApiKey={GOOGLE_MAPS_API_KEY}
-                    libraries={googleLibraries}
-                  >
-                    <GoogleMap
-                      center={location}
-                      zoom={15}
-                      mapContainerStyle={{ width: "100%", height: "300px" }}
-                    >
-                      <MarkerF
-                        position={location}
-                        onDragEnd={handleMarkerDragEnd} // added the drag event
-                        draggable
-                      />
-                    </GoogleMap>
-                  </LoadScript>
-                </Box>
+                <ServiceLocation
+                  address={address}
+                  setAddress={setAddress}
+                  location={location}
+                  handleMarkerDragEnd={handleMarkerDragEnd}
+                  googleApiKey={GOOGLE_MAPS_API_KEY ?? ""}
+                />
+                <ServiceSpecs
+                  formData={formData}
+                  updateFormData={updateFormData}
+                />
                 <Box
                   sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
                 >
                   <Typography typography="body-normal-bold">
-                    Especificaciones del servicio
+                    Comentarios adicionales
                   </Typography>
-                  <Box sx={{ display: "flex", gap: "1rem", width: "100%" }}>
-                    <FormControl sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-helper-label">
-                        Especialidad del cuidador
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        label="Age"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-helper-label">
-                        Experiencia del cuidador
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        label="Age"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  <Box sx={{ display: "flex", gap: "1rem", width: "100%" }}>
-                    <FormControl sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-helper-label">
-                        Género del cuidador
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        label="Age"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-helper-label">
-                        Licencia de conducir
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        label="Age"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
+                  <TextField
+                    value={formData.comments}
+                    onChange={(e) => updateFormData("comments", e.target.value)}
+                    fullWidth
+                    multiline
+                    rows={4}
+                    placeholder="Agrega comentarios adicionales para tu cuidador"
+                  />
                 </Box>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, desktop: 3 }}>
-              <Box
-                sx={{
-                  border: `1px solid ${colorPalette.secondary}`,
-                  padding: "1.5rem",
-                  marginTop: "2rem",
-                  borderRadius: "20px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                  backgroundColor: colorPalette.white,
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <Typography
-                    typography="body-normal-bold"
-                    color={colorPalette.primary}
-                  >
-                    Pago mínimo sugerido
-                  </Typography>
-                  <Typography
-                    typography="body-large-bold"
-                    color={colorPalette.grey1}
-                  >
-                    {`$${professionalNeeded ? "2000" : "1500"}`}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.25rem",
-                  }}
-                >
-                  <Typography
-                    typography="body-normal-bold"
-                    color={colorPalette.primary}
-                  >
-                    Precio ofertado
-                  </Typography>
-                  <Typography
-                    typography="body-large-bold"
-                    color={colorPalette.grey1}
-                  >
-                    {`$${2000}`}
-                  </Typography>
-                </Box>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                  <InputLabel htmlFor="outlined-adornment-amount">
-                    Oferta
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-amount"
-                    startAdornment={
-                      <InputAdornment position="start">$</InputAdornment>
-                    }
-                    label="Amount"
-                  />
-                </FormControl>
-                <Box display={"flex"} sx={{ gap: 8 }}>
-                  <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
-                  <Typography
-                    typography={"body-small"}
-                    color={colorPalette.grey3}
-                  >
-                    El precio recomendado puede ser hasta menos 15% sobre el
-                    precio mínimo sugerido.
-                  </Typography>
-                </Box>
-                <B4CButton label="Enviar" size={Size.Small} />\
-                <Box display={"flex"} sx={{ gap: 8 }}>
-                  <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
-                  <Typography
-                    typography={"body-small"}
-                    color={colorPalette.grey3}
-                  >
-                    Tu solicitud será enviada a los cuidadores disponibles,
-                    cuando alguno acepte, deberás confirmar el servicio mediante
-                    el pago del mismo.
-                  </Typography>
-                </Box>
-                <B4CButton
-                  label="Cancelar"
-                  variant="secondary"
-                  size={Size.Small}
-                />
-              </Box>
+              <SubmitNewApplication
+                updateFormData={updateFormData}
+                onSubmit={handleSubmit}
+                hoursWorked={totalHoursWorked}
+                professionalNeeded={professionalNeeded}
+              />
             </Grid>
           </Grid>
         </Box>

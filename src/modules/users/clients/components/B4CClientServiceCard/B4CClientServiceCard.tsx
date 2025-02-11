@@ -6,13 +6,12 @@ import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
 import { B4CClientServicesCardProps } from "@/ts/types/components/B4CClientServicesCard.type";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
-import { B4CClientServiceDetail } from "../B4CClientServiceDetail";
-import { useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { spacings } from "@/style/partials/spacings";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { useNavigate } from "react-router-dom";
 
 export const B4CClientServiceCard = ({
   id,
@@ -22,8 +21,6 @@ export const B4CClientServiceCard = ({
   status,
   isAssigned = false,
 }: B4CClientServicesCardProps) => {
-  const [openModal, setIsOpenModal] = useState<boolean>(false);
-
   const statusTagInfo: { [key: string]: { color: string; label: string } } = {
     pending: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
@@ -34,9 +31,12 @@ export const B4CClientServiceCard = ({
   // Convertir `status` a string y en minúsculas
   const normalizedStatus = String(status).toLowerCase();
 
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
+  const navigate = useNavigate(); // Hook para navegar entre páginas
+
+  const handleEdit = () => {
+    navigate(`/cliente/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
   };
+
   return (
     <>
       <Box
@@ -154,26 +154,18 @@ export const B4CClientServiceCard = ({
         >
           <B4CButton
             fullWidth
-            onClick={handleOpenModal}
             size={Size.Small}
-            label="Editar solicitud"
+            label="Editar"
+            onClick={handleEdit}
           />
           <B4CButton
             fullWidth
-            onClick={handleOpenModal}
             variant="secondary"
             size={Size.Small}
-            label="Cancelar solicitud"
+            label="Cancelar"
           />
         </Box>
       </Box>
-      <B4CClientServiceDetail
-        id={id}
-        isOpen={openModal}
-        onClose={() => {
-          setIsOpenModal(false);
-        }}
-      />
     </>
   );
 };
