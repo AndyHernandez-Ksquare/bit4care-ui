@@ -23,6 +23,8 @@ import { ScheduleForm } from "./components/ScheduleForm";
 import { ServiceSpecs } from "./components/ServiceSpecs";
 import { useParams } from "react-router-dom";
 import { useGetOneAppRequest } from "@/context/api/hooks/useGetOneAppRequest";
+import { useCreateApplicationRequest } from "@/context/api/hooks/useCreateApplicationRequest";
+import { useNavigate } from "react-router-dom";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -45,7 +47,7 @@ export const B4CClientsNewService = ({
   mode = "create",
 }: B4CClientsNewServiceProps) => {
   const { id } = useParams(); // Obtiene el ID de la URL
-  const { data, loading, error } = useGetOneAppRequest(id);
+  const { data } = useGetOneAppRequest(id);
 
   // State to store the start and end dates selected by the user
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
@@ -75,14 +77,17 @@ export const B4CClientsNewService = ({
     start_date: "",
     end_date: "",
     job_interval: 2,
-    payment_rate: 6000,
-    carerId: 1, // Simulado, en producción vendría del usuario autenticado
+    payment_rate: 0,
     is_carer_certified: false,
     carer_speciality: "",
     carer_years_of_experience: 0,
     carer_gender: "",
     carer_has_driving_license: false,
   });
+
+  const navigate = useNavigate();
+  const { createApplication, loading, error, application } =
+    useCreateApplicationRequest();
 
   // Función para actualizar el formulario dinámicamente
   const updateFormData = (key: keyof CreateAppReq, value: any) => {
@@ -109,7 +114,7 @@ export const B4CClientsNewService = ({
   };
 
   // Función para manejar el envío del formulario
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.patient_name || !formData.patient_phone) {
       console.error("Faltan datos obligatorios");
       return;
@@ -127,7 +132,12 @@ export const B4CClientsNewService = ({
       amount: totalHoursWorked * formData.payment_rate, // Calcular monto total
     };
 
-    console.log("Simulando envío de solicitud:", finalRequest);
+    try {
+      await createApplication(finalRequest); // Llama al custom hook para hacer el POST
+      console.log("Solicitud creada exitosamente:", finalRequest);
+    } catch (error) {
+      console.error("Error al crear la solicitud:", error);
+    }
   };
 
   // Cargar datos en el formulario cuando `data` está disponible
@@ -145,7 +155,6 @@ export const B4CClientsNewService = ({
         end_date: data.end_date || "",
         job_interval: data.job_interval || 2,
         payment_rate: data.payment_rate || 6000,
-        carerId: data.carerId || 1,
         is_carer_certified: data.is_carer_certified || false,
         carer_speciality: data.carer_speciality || "",
         carer_years_of_experience: data.carer_years_of_experience || 0,

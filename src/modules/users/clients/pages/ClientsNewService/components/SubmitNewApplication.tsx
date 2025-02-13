@@ -45,6 +45,7 @@ export const SubmitNewApplication = ({
     const newAmount = Number(e.target.value);
     setOfferPrice(newAmount);
     updateFormData("amount", newAmount);
+    updateFormData("payment_rate", hourlyRate);
   };
 
   return (

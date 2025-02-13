@@ -13,8 +13,9 @@ export interface GetAllApplication {
   carerId: number;
   createdAt: string;
   updatedAt: string;
+  carer_speciality: string | null;
   carer: {
-    id: number
-  } | null
+    id: number;
+    description: string;
+  } | null;
 }
-

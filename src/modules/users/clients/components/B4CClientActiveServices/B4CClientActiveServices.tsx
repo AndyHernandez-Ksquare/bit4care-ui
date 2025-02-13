@@ -63,7 +63,18 @@ export const B4CClientActiveServices = () => {
         >
           {applications.map(
             (
-              { id, address, status, description, patient_name, carer },
+              {
+                id,
+                address,
+                status,
+                description,
+                patient_name,
+                carer_speciality,
+                start_date,
+                end_date,
+                amount,
+                carer,
+              },
               index,
             ) => (
               <Grid
@@ -71,13 +82,18 @@ export const B4CClientActiveServices = () => {
                 key={`active-service-grid-${index}`}
               >
                 <B4CClientServiceCard
+                  carerDescription={carer?.description}
+                  carerSpecialty={carer_speciality}
                   key={`active-service-${index}`}
                   id={id}
-                  carerName={patient_name}
+                  startDate={start_date}
+                  endDate={end_date}
+                  carerName={undefined}
                   address={address}
                   service={description}
                   status={status as Status}
-                  isAssigned={carer ? true : false}
+                  isAssigned={!!carer && !!carer.id}
+                  amount={amount}
                 />
               </Grid>
             ),

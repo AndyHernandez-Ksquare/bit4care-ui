@@ -2,16 +2,30 @@ import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { color } from "@/ts/types/shared/colors";
-import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid2 as Grid,
+  Typography,
+} from "@mui/material";
 import { B4CClientServicesCardProps } from "@/ts/types/components/B4CClientServicesCard.type";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PaymentsIcon from "@mui/icons-material/Payments";
+import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { spacings } from "@/style/partials/spacings";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { B4CModal } from "@/components/BigElements/B4CModal";
 
 export const B4CClientServiceCard = ({
   id,
@@ -19,7 +33,12 @@ export const B4CClientServiceCard = ({
   address,
   service,
   status,
+  startDate,
+  endDate,
+  carerSpecialty,
   isAssigned = false,
+  amount,
+  carerDescription,
 }: B4CClientServicesCardProps) => {
   const statusTagInfo: { [key: string]: { color: string; label: string } } = {
     pending: { color: "warning", label: "Solicitado" },
@@ -28,13 +47,33 @@ export const B4CClientServiceCard = ({
     "no realizado": { color: "error", label: "No Realizado" },
   };
 
+  // Estado para controlar la apertura del modal de cancelacion
+  const [openCancelModal, setOpenCancelModal] = useState(false);
   // Convertir `status` a string y en minúsculas
   const normalizedStatus = String(status).toLowerCase();
 
+  // Convertir fechas a un formato legible
+  const formattedStartDate = startDate
+    ? dayjs(startDate).format("DD [de] MMMM [de] YYYY")
+    : "Sin fecha";
+  const formattedEndDate = endDate
+    ? dayjs(endDate).format("DD [de] MMMM [de] YYYY")
+    : "Sin fecha";
   const navigate = useNavigate(); // Hook para navegar entre páginas
 
   const handleEdit = () => {
     navigate(`/cliente/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
+  };
+
+  // Función para abrir y cerrar el modal
+  const handleOpenCloseCancelModal = () => {
+    setOpenCancelModal(!openCancelModal);
+  };
+
+  // Función que se ejecuta al confirmar la cancelación
+  const handleConfirmCancel = () => {
+    console.log("Solicitud cancelada:", id);
+    setOpenCancelModal(false);
   };
 
   return (
@@ -71,24 +110,28 @@ export const B4CClientServiceCard = ({
           >
             <Avatar
               sx={{ width: "64px", height: "64px" }}
-              alt={isAssigned || carerName ? carerName : undefined}
+              alt={isAssigned || carerName ? "Juan Perez" : undefined}
               src=" image url"
             />
             <Box>
               <Typography variant="h5" sx={{ color: colorPalette.primary }}>
-                {isAssigned || carerName ? carerName : "Cuidador no asignado"}
+                {isAssigned || carerName
+                  ? "Juan Perez"
+                  : "Cuidador no asignado"}
               </Typography>
-              <Typography
-                variant="body-normal"
-                sx={{ color: colorPalette.grey4 }}
-              >
-                {service}
-              </Typography>
+              {isAssigned && (
+                <Typography
+                  variant="body-normal"
+                  sx={{ color: colorPalette.grey4 }}
+                >
+                  {carerDescription}
+                </Typography>
+              )}
             </Box>
           </Box>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {carerName && <B4CStarRating rating={4} />}
+            {isAssigned && <B4CStarRating rating={4} />}
             <B4CTag
               label={statusTagInfo[normalizedStatus].label}
               color={statusTagInfo[normalizedStatus].color as color}
@@ -105,6 +148,7 @@ export const B4CClientServiceCard = ({
             }}
           >
             <CalendarMonthIcon sx={{ color: colorPalette.primary }} />
+            <Typography>{`${formattedStartDate} - ${formattedEndDate} `}</Typography>
           </Grid>
           <Grid
             size={{ xs: 12 }}
@@ -114,12 +158,17 @@ export const B4CClientServiceCard = ({
               alignItems: "center",
             }}
           >
-            <PaymentsIcon
+            <AttachMoneyIcon
               sx={{
                 color: colorPalette.primary,
               }}
             />
-            <Typography variant="body-normal">{"Asdasd"}</Typography>
+            <Typography variant="body-normal">
+              {new Intl.NumberFormat("es-MX", {
+                style: "currency",
+                currency: "MXN",
+              }).format(amount)}
+            </Typography>
           </Grid>
           <Grid
             size={{ xs: 12 }}
@@ -129,7 +178,8 @@ export const B4CClientServiceCard = ({
               alignItems: "center",
             }}
           >
-            <WatchLaterIcon sx={{ color: colorPalette.primary }} />
+            <MedicalInformationIcon sx={{ color: colorPalette.primary }} />
+            <Typography variant="body-normal">{carerSpecialty}</Typography>
           </Grid>
           <Grid
             size={{ xs: 12 }}
@@ -143,29 +193,76 @@ export const B4CClientServiceCard = ({
             <Typography variant="body-normal">{address}</Typography>
           </Grid>
         </Grid>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            flexDirection: { xs: "column", desktop: "row" },
-            justifyContent: "space-around",
-            gap: "1rem",
-          }}
-        >
-          <B4CButton
-            fullWidth
-            size={Size.Small}
-            label="Editar"
-            onClick={handleEdit}
-          />
-          <B4CButton
-            fullWidth
-            variant="secondary"
-            size={Size.Small}
-            label="Cancelar"
-          />
-        </Box>
+        {isAssigned && (
+          <B4CButton fullWidth size={Size.Small} label="Pagar solicitud" />
+        )}
+        {isAssigned ? (
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              flexDirection: { xs: "column", desktop: "row" },
+              justifyContent: "space-around",
+              gap: "1rem",
+            }}
+          >
+            <B4CButton
+              variant="secondary"
+              fullWidth
+              size={Size.Small}
+              label="Negociar"
+            />
+            <B4CButton
+              fullWidth
+              variant="secondary"
+              size={Size.Small}
+              label="Ignorar"
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              flexDirection: { xs: "column", desktop: "row" },
+              justifyContent: "space-around",
+              gap: "1rem",
+            }}
+          >
+            <B4CButton
+              fullWidth
+              size={Size.Small}
+              label="Editar"
+              onClick={handleEdit}
+            />
+            <B4CButton
+              fullWidth
+              variant="secondary"
+              size={Size.Small}
+              label="Cancelar"
+              onClick={handleOpenCloseCancelModal}
+            />
+          </Box>
+        )}
       </Box>
+
+      <B4CModal open={openCancelModal} onClose={handleOpenCloseCancelModal}>
+        <DialogTitle>Cancelar solicitud de Servicio</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Al presionar el botón, confirmas la cancelación de tu solicitud y la
+            eliminación del mismo. Tendrás que crear una nueva solicitud para
+            poder acceder a los servicios de nuestros cuidadores.{" "}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <B4CButton
+            fullWidth
+            onClick={handleConfirmCancel}
+            label="Confirmar"
+          />
+        </DialogActions>
+      </B4CModal>
     </>
   );
 };

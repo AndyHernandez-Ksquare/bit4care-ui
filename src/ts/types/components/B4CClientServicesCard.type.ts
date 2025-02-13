@@ -7,4 +7,9 @@ export interface B4CClientServicesCardProps {
   service: string;
   status: Status;
   isAssigned?: boolean;
+  startDate: Date;
+  endDate: Date;
+  carerSpecialty?: string | null;
+  amount: number;
+  carerDescription: string | undefined;
 }

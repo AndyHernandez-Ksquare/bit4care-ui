@@ -9,7 +9,6 @@ export interface CreateAppReq {
   end_date: string;
   job_interval: number;
   payment_rate: number;
-  carerId: number;
   is_carer_certified: boolean;
   carer_speciality: string;
   carer_years_of_experience: number;
