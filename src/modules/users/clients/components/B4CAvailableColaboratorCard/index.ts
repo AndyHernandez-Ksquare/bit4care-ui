@@ -1,1 +1,0 @@
-export { B4CAvailableColaboratorCard } from './B4CAvailableColaboratorCard'

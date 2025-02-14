@@ -1,1 +1,0 @@
-export { B4CAvailableColaborator } from './B4CAvailableColaborator'

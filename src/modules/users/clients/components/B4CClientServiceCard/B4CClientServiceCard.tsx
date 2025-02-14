@@ -3,6 +3,7 @@ import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { color } from "@/ts/types/shared/colors";
 import {
+  Alert,
   Avatar,
   Box,
   Dialog,
@@ -10,7 +11,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
   Grid2 as Grid,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import { B4CClientServicesCardProps } from "@/ts/types/components/B4CClientServicesCard.type";
@@ -18,7 +21,6 @@ import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { spacings } from "@/style/partials/spacings";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +28,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
+import { useDeleteApplicationRequest } from "@/context/api/hooks/useDeleteApplicationRequest";
+import { B4CViewColabModal } from "./components/B4CViewColabModal";
 
 export const B4CClientServiceCard = ({
   id,
@@ -48,7 +52,15 @@ export const B4CClientServiceCard = ({
   };
 
   // Estado para controlar la apertura del modal de cancelacion
+  const [openViewColab, setOpenViewColab] = useState(false);
+  // Estado para controlar la apertura del modal de cancelacion
   const [openCancelModal, setOpenCancelModal] = useState(false);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success",
+  );
   // Convertir `status` a string y en minúsculas
   const normalizedStatus = String(status).toLowerCase();
 
@@ -65,14 +77,31 @@ export const B4CClientServiceCard = ({
     navigate(`/cliente/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
   };
 
+  const { deleteApplicationRequest } = useDeleteApplicationRequest();
+
   // Función para abrir y cerrar el modal
   const handleOpenCloseCancelModal = () => {
     setOpenCancelModal(!openCancelModal);
   };
 
+  // Función para abrir y cerrar el modal
+  const handleOpenViewColabModal = () => {
+    setOpenViewColab(!openViewColab);
+  };
+
   // Función que se ejecuta al confirmar la cancelación
-  const handleConfirmCancel = () => {
-    console.log("Solicitud cancelada:", id);
+  const handleConfirmCancel = async () => {
+    try {
+      await deleteApplicationRequest(id.toString());
+      setSnackbarMessage("Solicitud eliminada con éxito");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+    } catch (error) {
+      console.error("Error al eliminar solicitud:", error);
+      setSnackbarMessage("Error al eliminar la solicitud");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
     setOpenCancelModal(false);
   };
 
@@ -109,9 +138,14 @@ export const B4CClientServiceCard = ({
             }}
           >
             <Avatar
-              sx={{ width: "64px", height: "64px" }}
+              sx={{
+                width: "64px",
+                height: "64px",
+                cursor: isAssigned ? "pointer" : "default",
+              }}
               alt={isAssigned || carerName ? "Juan Perez" : undefined}
               src=" image url"
+              onClick={isAssigned ? handleOpenViewColabModal : undefined}
             />
             <Box>
               <Typography variant="h5" sx={{ color: colorPalette.primary }}>
@@ -263,6 +297,27 @@ export const B4CClientServiceCard = ({
           />
         </DialogActions>
       </B4CModal>
+
+      <B4CViewColabModal
+        colabId={id}
+        openViewColab={openViewColab}
+        handleOpenViewColabModal={handleOpenViewColabModal}
+      />
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000} // Se oculta después de 3 segundos
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
