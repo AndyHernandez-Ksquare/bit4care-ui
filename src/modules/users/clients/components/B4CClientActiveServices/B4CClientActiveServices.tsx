@@ -107,7 +107,7 @@ export const B4CClientActiveServices = () => {
           </Typography>
           <B4CNoActiveServices />
           <Link
-            to="/colaborators/profile&settings"
+            to="/cliente/mis-servicios/nueva-solicitud"
             style={{
               backgroundColor: colorPalette.primary,
               paddingBlock: "1rem",

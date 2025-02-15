@@ -30,6 +30,7 @@ import { useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { useDeleteApplicationRequest } from "@/context/api/hooks/useDeleteApplicationRequest";
 import { B4CViewColabModal } from "./components/B4CViewColabModal";
+import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
 
 export const B4CClientServiceCard = ({
   id,
@@ -53,6 +54,9 @@ export const B4CClientServiceCard = ({
 
   // Estado para controlar la apertura del modal de cancelacion
   const [openViewColab, setOpenViewColab] = useState(false);
+
+  // Estado para controlar la apertura del modal de cancelacion
+  const [openNegotiationModal, setOpenNegotiationModal] = useState(false);
   // Estado para controlar la apertura del modal de cancelacion
   const [openCancelModal, setOpenCancelModal] = useState(false);
 
@@ -82,6 +86,10 @@ export const B4CClientServiceCard = ({
   // Función para abrir y cerrar el modal
   const handleOpenCloseCancelModal = () => {
     setOpenCancelModal(!openCancelModal);
+  };
+
+  const handleOpenCloseNegotiationModal = () => {
+    setOpenNegotiationModal(!openNegotiationModal);
   };
 
   // Función para abrir y cerrar el modal
@@ -245,6 +253,7 @@ export const B4CClientServiceCard = ({
               fullWidth
               size={Size.Small}
               label="Negociar"
+              onClick={handleOpenCloseNegotiationModal}
             />
             <B4CButton
               fullWidth
@@ -302,6 +311,11 @@ export const B4CClientServiceCard = ({
         colabId={id}
         openViewColab={openViewColab}
         handleOpenViewColabModal={handleOpenViewColabModal}
+      />
+
+      <B4CNegotiationModal
+        open={openNegotiationModal}
+        onClose={handleOpenCloseNegotiationModal}
       />
 
       <Snackbar
