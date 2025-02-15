@@ -1,16 +1,14 @@
 import axios from "axios";
 
 //En desarrollo esta variable tendra la URL de la API, pero en produccion vendra de un .env
-// const REMOTE_API_URL = "http://bid4care-dev.us-east-1.elasticbeanstalk.com";
 
-const REMOTE_API_URL = "https://backend-dev.bid4care.com/"
+const REMOTE_API_URL = import.meta.env.VITE_DEV_API_URL;
 
 // const REMOTE_API_URL = "http://localhost:3000/"
 
-
 export const BASE_HEADERS = {
   "Content-Type": "application/json",
-  "Accept": "*/*",
+  Accept: "*/*",
 };
 
 if (!REMOTE_API_URL) {
@@ -30,8 +28,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default api;
-

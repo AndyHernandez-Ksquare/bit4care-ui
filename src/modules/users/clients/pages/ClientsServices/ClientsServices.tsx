@@ -3,13 +3,13 @@ import { B4CTab } from "@/components/B4CTab/B4CTab";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid2 as Grid, IconButton } from "@mui/material";
 import { useState } from "react";
-import { B4CClientActiveServices } from "../../components/B4CClientActiveServices";
 import { B4CInactiveServices } from "../../components/B4CInactiveServices";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { B4CClientActiveServices } from "../../components/B4CClientActiveServices";
 
 export const ClientsServices = () => {
   const [tab, setTab] = useState(0);
@@ -70,11 +70,7 @@ export const ClientsServices = () => {
           <AddIcon />
         </IconButton>
       </Grid>
-      <Grid
-        size={{ xs: 12 }}
-        marginBottom={spacings.spacing2}
-        sx={{ paddingInline: { xs: "32px", desktop: 0 } }}
-      >
+      <Grid size={{ xs: 12 }} marginBottom={spacings.spacing2}>
         {serviceStatus[tab]}
       </Grid>
     </PageLayout>

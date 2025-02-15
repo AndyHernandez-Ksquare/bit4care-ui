@@ -14,14 +14,11 @@ export const useCreateApplicationRequest = () => {
 
   const createApplication = async (bodyRequest: CreateAppReq) => {
     setLoading(true);
-    setError(null);
     try {
       const response = await CreateApplicationRequest(bodyRequest);
-      setApplication(response);
-      return response; // Retornar el resultado, si es necesario
+      setApplication(response); // Retornar el resultado, si es necesario
     } catch (err) {
       setError((err as Error).message || "An unexpected error occurred");
-      throw err; // Relanzar el error si se necesita manejarlo fuera del hook
     } finally {
       setLoading(false);
     }

@@ -14,6 +14,8 @@ export interface apiClientContextProps {
   setGetCareerData: Dispatch<SetStateAction<GetOneCarer[] | null>>;
   getOneCareerData: GetOneCarer | null;
   setGetOneCareerData: Dispatch<SetStateAction<GetOneCarer | null>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ApiClientContext = createContext<
@@ -32,6 +34,10 @@ export const ClientApiProvider = ({ children }: B4CProviderProps) => {
   const [getOneCareerData, setGetOneCareerData] = useState<GetOneCarer | null>(
     null,
   );
+
+  // 🔥 Estado global para loading
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
     <ApiClientContext.Provider
       value={{
@@ -41,6 +47,8 @@ export const ClientApiProvider = ({ children }: B4CProviderProps) => {
         setGetCareerData,
         getOneCareerData,
         setGetOneCareerData,
+        loading, // 🔥 Ahora disponible en toda la app
+        setLoading,
       }}
     >
       {children}

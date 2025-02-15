@@ -2,14 +2,6 @@ export interface Availability {
   [key: string]: boolean; // Permite que las propiedades de disponibilidad sean dinámicas
 }
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  last_login: string;
-}
-
 export interface CarerReview {
   id: number;
   stars: number;
@@ -17,6 +9,14 @@ export interface CarerReview {
   carerId: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  last_login: string;
 }
 
 export interface GetOneCarer {
@@ -49,6 +49,6 @@ export interface GetOneCarer {
   reviewed: boolean;
   createdAt: string;
   updatedAt: string;
-  carerReviews?: CarerReview[]
+  carerReviews?: CarerReview[];
   User: User; // Información del usuario asociada al cuidador
 }

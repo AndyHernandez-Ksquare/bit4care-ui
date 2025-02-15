@@ -9,6 +9,7 @@ import {
   useContext,
   useState,
 } from "react";
+import { DateRange } from "react-day-picker";
 
 // Define the shape of the context data
 interface ServiceDataContextType {
@@ -26,6 +27,8 @@ interface ServiceDataContextType {
   setPrice: Dispatch<SetStateAction<number>>;
   applicationRequest: CreateAppReq | null;
   setApplicationRequest: Dispatch<SetStateAction<CreateAppReq | null>>;
+  selectedDateRange: DateRange | undefined;
+  setSelectedDateRange: Dispatch<SetStateAction<DateRange | undefined>>;
 }
 
 // Create the context
@@ -43,6 +46,9 @@ export const ServiceDataProvider = ({ children }: { children: ReactNode }) => {
   const [endTime, setEndTime] = useState<Dayjs | null>(dayjs());
   const [duration, setDuration] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
+  const [selectedDateRange, setSelectedDateRange] = useState<
+    DateRange | undefined
+  >(undefined);
 
   return (
     <ServiceDataContext.Provider
@@ -61,6 +67,8 @@ export const ServiceDataProvider = ({ children }: { children: ReactNode }) => {
         setPrice,
         applicationRequest,
         setApplicationRequest,
+        selectedDateRange,
+        setSelectedDateRange,
       }}
     >
       {children}

@@ -1,1 +1,0 @@
-export { B4CServiceSpecs } from "./B4CServiceSpecs"

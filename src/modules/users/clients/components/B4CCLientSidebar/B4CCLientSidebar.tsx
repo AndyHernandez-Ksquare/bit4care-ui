@@ -28,7 +28,6 @@ export const B4CCLientSidebar = () => {
         }}
       >
         <ListItemLink to="/cliente" />
-        <ListItemLink to="/cliente/mis-servicios" />
         <ListItemLink to="/cliente/ajustes-y-perfil" />
       </List>
       <Box

@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Check } from "@mui/icons-material";
 import { useCreateClient } from "@/context/api/hooks/useCreateClient";
+import { useWelcomeMessage } from "@/context/api/hooks/useWelcomeMessage";
+import { SendOtpBodyRequest } from "@/ts/types/api/metaRequest/SendOtp.type";
 
 const clientFormToCreateClientParser = (
   formValues: PhoneFormValues & UserDataFormValues,
@@ -58,6 +60,8 @@ export const B4CSignupSteps = () => {
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
   const navigate = useNavigate();
   const { createClient } = useCreateClient();
+
+  const { sendMessage } = useWelcomeMessage();
 
   const steps = ["paso1", "paso2", "paso3"];
 
@@ -105,9 +109,13 @@ export const B4CSignupSteps = () => {
         ...formik.values,
       });
       const response = await createClient(clientData);
-      console.log("Cliente creado exitosamente:", response);
-
-      setOpenSnackbar(true);
+      if (response) {
+        const requestBody: SendOtpBodyRequest = {
+          clientPhoneNumber: `${formik.values.countryCode}${formik.values.phoneNumber}`,
+        };
+        setOpenSnackbar(true);
+        sendMessage(requestBody);
+      }
     },
   });
 
