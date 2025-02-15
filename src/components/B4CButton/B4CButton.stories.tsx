@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { B4CButton } from "./B4CButton";
 import { Size } from "@/ts/enums/Size";
-import { addRoundLight } from "@/assets/svgIcons/addIcons/addRoundLight";
 
 const meta = {
   title: "B4CComponents/B4CButton",
@@ -61,23 +60,5 @@ export const OutlinedDisabled: Story = {
     label: "Outlined Medium Sample",
     size: Size.Medium,
     disabled: true,
-  },
-};
-
-export const PrimaryIcon: Story = {
-  args: {
-    variant: "primary",
-    label: "Primary Medium Sample",
-    size: Size.Normal,
-    startIcon: addRoundLight({ sx: {} }),
-  },
-};
-
-export const SecondaryIcon: Story = {
-  args: {
-    variant: "secondary",
-    label: "Secondary Medium Sample",
-    size: Size.Normal,
-    startIcon: addRoundLight({ sx: {} }),
   },
 };
