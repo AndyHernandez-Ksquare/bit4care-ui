@@ -2,20 +2,9 @@ import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Box, Typography } from "@mui/material";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 import { Status } from "@/ts/types/components";
+import { colaboratorsServicesData } from "../ActiveServices/mockData";
 
 export const InactiveServices = () => {
-  const colaboratorsServicesData = [
-    {
-      name: "Juan Lopez Perez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 23,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Cuidado de adulto mayor",
-      status: "no realizado",
-      skills: ["skill1", "skill2"],
-    },
-  ];
   return (
     <Box
       sx={{
@@ -32,7 +21,9 @@ export const InactiveServices = () => {
             key={index}
             name={colaborator.name}
             schedule={colaborator.schedule}
+            comments={colaborator.comments}
             fee={colaborator.fee}
+            b4cfee={colaborator.b4cfee}
             hours={colaborator.hours}
             address={colaborator.address}
             service={colaborator.service}

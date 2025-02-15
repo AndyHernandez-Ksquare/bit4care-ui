@@ -6,62 +6,11 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 import { Status } from "@/ts/types/components";
 import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
+import { colaboratorsServicesData } from "./mockData";
 
 export const ActiveServices = () => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
-  const colaboratorsServicesData = [
-    {
-      name: "Juan Lopez Perez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 23,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Cuidado de adulto mayor",
-      status: "no realizado",
-      skills: ["skill1", "skill2"],
-    },
-    {
-      name: "Armando Rodriguez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 15,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Limpieza de domicilio",
-      status: "solicitado",
-      skills: ["skill3", "skill4"],
-    },
-    {
-      name: "María Fernanda Ruiz",
-      schedule: "Mañana, en 8 horas",
-      fee: "$1800 ($120/h)",
-      hours: 10,
-      address: "Colonia Condesa, Cuauhtémoc CDMX. CP: 06140",
-      service: "Cuidado de niños",
-      status: "no realizado",
-      skills: ["skill5", "skill6"],
-    },
-    {
-      name: "Carlos Martinez",
-      schedule: "Hoy, en 2 horas",
-      fee: "$3000 ($200/h)",
-      hours: 20,
-      address: "Colonia Roma, Cuauhtémoc CDMX. CP: 06700",
-      service: "Cuidado de mascotas",
-      status: "no realizado",
-      skills: ["skill7", "skill8"],
-    },
-    {
-      name: "Ana Gomez",
-      schedule: "Mañana, en 10 horas",
-      fee: "$2200 ($110/h)",
-      hours: 12,
-      address: "Colonia Polanco, Miguel Hidalgo CDMX. CP: 11560",
-      service: "Asistencia en cocina",
-      status: "solicitado",
-      skills: ["skill9", "skill10"],
-      isAssigned: true,
-    },
-  ];
+
   return (
     <Box
       sx={{
@@ -79,12 +28,15 @@ export const ActiveServices = () => {
             name={colaborator.name}
             schedule={colaborator.schedule}
             fee={colaborator.fee}
+            comments={colaborator.comments}
+            b4cfee={colaborator.b4cfee}
             hours={colaborator.hours}
             address={colaborator.address}
             service={colaborator.service}
             status={colaborator.status as Status}
             skills={colaborator.skills}
             isAssigned={colaborator.isAssigned}
+            profile_picture_url={colaborator.profile_picture_url}
             onClick={() => {
               setIsOpenModal(!openModal);
             }}

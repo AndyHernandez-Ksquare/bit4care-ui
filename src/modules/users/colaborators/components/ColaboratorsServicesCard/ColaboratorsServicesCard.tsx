@@ -1,11 +1,15 @@
-import { LocationIcons } from "@/assets/svgIcons/locationIcons/LocationIcons";
-import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
-import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
+import MessageIcon from "@mui/icons-material/Message";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ClassIcon from "@mui/icons-material/Class";
 
 import { color } from "@/ts/types/shared/colors";
 import { B4CStarRating } from "@/components/B4CStarRating";
@@ -22,6 +26,9 @@ export const ColaboratorsServicesCard = ({
   status,
   skills,
   isAssigned = false,
+  profile_picture_url,
+  comments,
+  b4cfee = 0,
   onClick,
 }: ColaboratorsServicesCardProps) => {
   const statusTagInfo = {
@@ -33,25 +40,44 @@ export const ColaboratorsServicesCard = ({
   };
   return (
     <Box className="colaborator-service-card-container">
-      <Box className="colaborator-service-card-header">
-        <Box className="colaborator-service-card-header">
-          <Avatar sx={{ width: "64px", height: "64px" }} />
+      {/* === Header === */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: {
+            xs: "column",
+            desktop: "row",
+          },
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            gap: "1rem",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            sx={{ width: "64px", height: "64px" }}
+            alt={name}
+            src={profile_picture_url || undefined}
+          />
           <Box>
             <Typography variant="h5" sx={{ color: colorPalette.primary }}>
               {name}
             </Typography>
             <Typography
-              variant="body-normal"
+              variant="body-medium-bold"
               sx={{ color: colorPalette.grey4 }}
             >
               {service}
             </Typography>
           </Box>
         </Box>
-        <B4CTag
-          label={statusTagInfo[status].label}
-          color={statusTagInfo[status].color as color}
-        />
+        {/* === Persona Asignada === */}
         <Box
           sx={{
             display: isAssigned ? "flex" : "none",
@@ -65,28 +91,184 @@ export const ColaboratorsServicesCard = ({
             <B4CStarRating rating={3} />
           </Box>
         </Box>
+        {/* === Chip de Status === */}
+        <Box
+          sx={{
+            mr: { xs: "auto", desktop: 0 },
+          }}
+        >
+          <B4CTag
+            label={statusTagInfo[status].label}
+            color={statusTagInfo[status].color as color}
+          />
+        </Box>
       </Box>
+
+      {/* === Body === */}
       <Grid container spacing={16}>
         <Grid
-          size={{ xs: 12, desktop: 6 }}
-          sx={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}
+          size={{ xs: 12 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
         >
-          <LocationIcons />
-          <Typography variant="body-normal">{address}</Typography>
+          <MessageIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            {comments}
+          </Typography>
         </Grid>
-        <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-          <MoneyIcons />
-          <Typography variant="body-normal">{fee}</Typography>
+        <Grid
+          size={{ xs: 12, desktop: 6 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <CalendarMonthIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            {schedule} <strong>({hours} horas)</strong>
+          </Typography>
         </Grid>
-        <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-          <ClockIcon />
-          <Typography variant="body-normal">{`${hours} horas`}</Typography>
+        <Grid
+          size={{ xs: 12, desktop: 6 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <AttachMoneyIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            ${fee}
+          </Typography>
         </Grid>
-        <Grid size={{ xs: 12, desktop: 6 }} sx={{ display: "flex" }}>
-          <ClockIcon />
-          <Typography variant="body-normal">{schedule}</Typography>
+        <Grid
+          size={{ xs: 12, desktop: 6 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <RequestQuoteIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            Tú recibirás ${fee - b4cfee} por este servicio
+          </Typography>
+        </Grid>
+        <Grid
+          size={{ xs: 12, desktop: 6 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <MonetizationOnIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            La cuota de Bid4Care es de ${b4cfee}
+          </Typography>
+        </Grid>
+        <Grid
+          size={{ xs: 12 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <ClassIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            {skills.join(", ")}
+          </Typography>
+        </Grid>
+        <Grid
+          size={{ xs: 12 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <LocationOnIcon
+            sx={{
+              color: colorPalette.primary,
+              fontSize: "1.25lh",
+              marginRight: "0.5rem",
+            }}
+          />
+          <Typography
+            variant="body-normal"
+            sx={{
+              textWrap: "balance",
+            }}
+          >
+            {address}
+          </Typography>
         </Grid>
       </Grid>
+      {/*  Nota de Sergio: Esto lo voy a comentar porque está cool y seria un desperdicio borrarlo alv
       <Box
         sx={{
           display: "flex",
@@ -99,12 +281,48 @@ export const ColaboratorsServicesCard = ({
         {skills.map((skill) => {
           return <B4CTag label={skill} />;
         })}
+      </Box>*/}
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: "1rem",
+          width: "100%",
+          flexDirection: "column",
+        }}
+      >
+        <B4CButton
+          size={Size.Small}
+          label="Tomar Oferta"
+          fullWidth
+          onClick={onClick}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            gap: "1rem",
+            flexDirection: {
+              xs: "column",
+              desktop: "row",
+            },
+          }}
+        >
+          <B4CButton
+            size={Size.Small}
+            label="Negociar Oferta (Bid)"
+            variant="secondary"
+            fullWidth
+            onClick={onClick}
+          />
+          <B4CButton
+            size={Size.Small}
+            label="Ignorar Solicitud"
+            variant="secondary"
+            fullWidth
+            onClick={onClick}
+          />
+        </Box>
       </Box>
-      <B4CButton
-        size={Size.Small}
-        label="Ver detalles"
-        onClick={onClick}
-      ></B4CButton>
     </Box>
   );
 };
