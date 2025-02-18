@@ -1,4 +1,4 @@
-import { AddPhotoIcon } from "@/assets/svgIcons/addPhoto/AddPhotoIcon";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { Box, Typography } from "@mui/material";
 
 import { useDropzone } from "react-dropzone";
@@ -32,7 +32,12 @@ export const B4CDragPhotoItem = () => {
       }}
     >
       <input {...getInputProps()} />
-      <AddPhotoIcon />
+      <AddPhotoAlternateOutlinedIcon
+        sx={{
+          fontSize: 40,
+          color: "#90A4AE",
+        }}
+      />
       <Typography variant="body2" sx={{ color: "#90A4AE", mt: 0.5 }}>
         Sube tu foto
       </Typography>
