@@ -2,16 +2,25 @@ import { Box, Typography } from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect } from "react";
-import { Schedule } from "../B4CClientsNewService";
+import { FormikErrors } from "formik";
+import { CreateAppReq } from "@/ts/types/api/applicationRequest";
+
+export interface Schedule {
+  startTime: Dayjs | null;
+  endTime: Dayjs | null;
+}
 
 interface ScheduleProps {
   mode?: "create" | "edit";
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
+  startDate: string | null;
+  endDate: string | null;
   dates: string[];
   schedules: Record<string, Schedule>;
-  setStartDate: (value: React.SetStateAction<dayjs.Dayjs | null>) => void;
-  setEndDate: (value: React.SetStateAction<dayjs.Dayjs | null>) => void;
+  onChange: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean,
+  ) => Promise<void> | Promise<FormikErrors<CreateAppReq>>;
   setDates: React.Dispatch<React.SetStateAction<string[]>>;
   setSchedules: React.Dispatch<React.SetStateAction<Record<string, Schedule>>>;
 }
@@ -22,11 +31,18 @@ export const ScheduleForm = ({
   endDate,
   dates,
   schedules,
-  setStartDate,
-  setEndDate,
+  onChange,
   setDates,
   setSchedules,
 }: ScheduleProps) => {
+  // Verifica que startDate y endDate sean instancias de Dayjs
+  const startDateValue = startDate ? dayjs(startDate) : null;
+  const endDateValue = endDate ? dayjs(endDate) : null;
+
+  const handleDateChange = (field: string) => (value: Dayjs | null) => {
+    onChange(field, value ? value.toISOString() : null);
+  };
+
   // Function to update the schedule (start and end time) for a given date
   const handleScheduleChange = (
     date: string,
@@ -69,6 +85,8 @@ export const ScheduleForm = ({
     }
   }, [startDate, endDate]);
 
+  useEffect(() => {}, []);
+
   return (
     <>
       <Box
@@ -81,18 +99,20 @@ export const ScheduleForm = ({
         }}
       >
         <DatePicker
+          name="start_date"
           label="Fecha inicial"
-          value={startDate}
-          onChange={(date: Dayjs | null) => setStartDate(date)}
+          value={startDateValue}
+          onChange={handleDateChange("start_date")}
           disablePast={mode === "create"}
           sx={{ width: "100%" }}
         />
         —
         <DatePicker
+          name="end_date"
           label="Fecha final"
-          value={endDate}
-          onChange={(date: Dayjs | null) => setEndDate(date)}
-          minDate={startDate || dayjs()}
+          value={endDateValue}
+          onChange={handleDateChange("end_date")}
+          minDate={startDateValue ?? undefined}
           sx={{ width: "100%" }}
         />
       </Box>
