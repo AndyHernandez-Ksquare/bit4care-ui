@@ -1,10 +1,11 @@
+import { NewCareProfileRequest } from "@/ts/types/api/carer/CreateCarerProfile.type";
 import { CollaboratorRequest } from "@/ts/types/api/collaborator/registerCollaborator";
 import { FormData1, FormData2 } from "@/ts/types/api/collaborator/requestData";
 
 export const assembleRequestData = (
   formData1: FormData1,
   formData2: FormData2,
-): CollaboratorRequest => {
+): NewCareProfileRequest => {
   const requestData: CollaboratorRequest = {
     name: `${formData1.name} ${formData1.lastName}`,
     email: formData1.email,

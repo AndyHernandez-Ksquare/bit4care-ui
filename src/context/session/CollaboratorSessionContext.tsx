@@ -10,37 +10,18 @@ import {
 interface SessionContextProps {
   token: string | null;
   setToken: Dispatch<SetStateAction<string | null>>;
-  name: string | null;
-  setName: Dispatch<SetStateAction<string | null>>;
-  id: number | null;
-  setId: Dispatch<SetStateAction<number | null>>;
 }
 
-const SessionContext = createContext<SessionContextProps | undefined>(
-  undefined,
-);
+export const CollaboratorSessionContext = createContext<
+  SessionContextProps | undefined
+>(undefined);
 
-export const SessionProvider = ({ children }: ProviderProps) => {
+export const CollaboratorSessionProvider = ({ children }: ProviderProps) => {
   const [token, setToken] = useState(localStorage.getItem("userToken"));
-  const [name, setName] = useState(localStorage.getItem("userName"));
-  const [id, setId] = useState(
-    localStorage.getItem("userId")
-      ? Number(localStorage.getItem("userId"))
-      : null,
-  );
-  return (
-    <SessionContext.Provider
-      value={{ token, setToken, name, setName, id, setId }}
-    >
-      {children}
-    </SessionContext.Provider>
-  );
-};
 
-export const useSession = () => {
-  const context = useContext(SessionContext);
-  if (!context) {
-    throw new Error("use Session must be inside a SessionProvider");
-  }
-  return context;
+  return (
+    <CollaboratorSessionContext.Provider value={{ token, setToken }}>
+      {children}
+    </CollaboratorSessionContext.Provider>
+  );
 };

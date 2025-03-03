@@ -13,6 +13,8 @@ import { adminRouter } from "./modules/admin/pages/AdminRouter.tsx";
 import { LandingPage } from "./modules/admin/pages/LandingPage/LandingPage.tsx";
 import { ClientAuthProvider } from "./context/auth/ClientAuthProvider.tsx";
 import { ClientSessionProvider } from "./context/session/ClientSessionProvider.tsx";
+import { AuthCollaboratorProvider } from "./context/auth/AuthCollaboratorContext.tsx";
+import { CollaboratorSessionProvider } from "./context/session/CollaboratorSessionContext.tsx";
 
 const combinedRoutes = [
   ...clientsRouter,
@@ -43,7 +45,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <GlobalScrollbarStyles />
         <ClientSessionProvider>
           <ClientAuthProvider>
-            <RouterProvider router={router} />
+            <CollaboratorSessionProvider>
+              <AuthCollaboratorProvider>
+                <RouterProvider router={router} />
+              </AuthCollaboratorProvider>
+            </CollaboratorSessionProvider>
           </ClientAuthProvider>
         </ClientSessionProvider>
       </ThemeProvider>

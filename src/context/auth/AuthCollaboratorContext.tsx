@@ -1,23 +1,34 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useSession } from "../session/CollaboratorSessionContext";
+import { createContext, useEffect, useState } from "react";
 import { ProviderProps } from "@/ts/types/shared/ProviderProps.type";
+import { GetSelfCollab } from "@/services/careerServices/CareerServices";
+import { useCollaboratorSession } from "./constants/useCollabSession";
 
-const AuthCollaboratorContext = createContext({
+export const AuthCollaboratorContext = createContext({
   isCollaboratorAuthenticated: true,
 });
 
 export const AuthCollaboratorProvider = ({ children }: ProviderProps) => {
-  const { token } = useSession();
+  const { token } = useCollaboratorSession();
   const [isCollaboratorAuthenticated, setIsCollaboratorAuthenticated] =
     useState(!!token);
 
-  useEffect(() => {
-    // Este efecto se ejecutará solo cuando token cambie
-    if (token) {
-      setIsCollaboratorAuthenticated(true);
-    } else {
-      setIsCollaboratorAuthenticated(true);
+  const fetchUser = async () => {
+    if (!token) {
+      setIsCollaboratorAuthenticated(false);
+      return;
     }
+
+    try {
+      const data = await GetSelfCollab(token);
+      setIsCollaboratorAuthenticated(!!data);
+    } catch (error) {
+      console.error("Error obteniendo el usuario:", error);
+      setIsCollaboratorAuthenticated(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
   }, [token]);
 
   return (
@@ -26,5 +37,3 @@ export const AuthCollaboratorProvider = ({ children }: ProviderProps) => {
     </AuthCollaboratorContext.Provider>
   );
 };
-
-export const useCollaboratorAuth = () => useContext(AuthCollaboratorContext);

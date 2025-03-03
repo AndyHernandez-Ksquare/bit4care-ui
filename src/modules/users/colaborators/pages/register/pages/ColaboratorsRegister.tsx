@@ -10,10 +10,14 @@ import { RegisterFormPart3 } from "../components/Form-3";
 import { assembleRequestData } from "../functions/assemblyForm";
 import { collaboratorsRegisterService } from "@/services/collaboratorsServices/register/collaborator.service";
 import { FormData1, FormData2 } from "@/ts/types/api/collaborator/requestData";
+import { Layout } from "../components/Layout";
+import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile";
 
 function ColaboratorsRegister() {
   const [canContinue, setCanContinue] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
+
+  const { createCarerProfile } = useCreateCarerProfile();
 
   const [formDataStep1, setFormDataStep1] = useState<FormData1>({
     name: "",
@@ -45,7 +49,7 @@ function ColaboratorsRegister() {
     } else if (currentStep === 2) {
       const requestData = assembleRequestData(formDataStep1, formDataStep2);
       try {
-        const response = await collaboratorsRegisterService(requestData);
+        const response = await createCarerProfile(requestData);
         console.log("Registro exitoso:", response);
       } catch (error) {
         console.error("Error en el registro:", error);
@@ -54,7 +58,7 @@ function ColaboratorsRegister() {
   };
 
   return (
-    <>
+    <Layout>
       <Box>
         <Box
           sx={{
@@ -124,7 +128,7 @@ function ColaboratorsRegister() {
           onClick={handleContinue}
         />
       </Box>
-    </>
+    </Layout>
   );
 }
 
