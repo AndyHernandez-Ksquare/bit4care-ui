@@ -3,50 +3,37 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, FormControl, TextField, Typography } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { Size } from "@/ts/enums";
-import { useState } from "react";
-import { CreateAppReq } from "@/ts/types/api/applicationRequest";
+import { getHourlyRate } from "../utils/getHourlyRate";
 
 interface SubmitNewApplicationProps {
+  validForm?: boolean;
+  offerPrice: number;
   professionalNeeded: boolean; // true = Enfermero, false = Cuidador sin título
   hoursWorked: number;
-  updateFormData: (key: keyof CreateAppReq, value: any) => void;
+  onChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   onSubmit: () => void;
+  onBlur?:
+    | React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
 }
 
-const getHourlyRate = (isNurse: boolean, hours: number) => {
-  if (isNurse) {
-    if (hours >= 1 && hours <= 6) return 189;
-    if (hours >= 7 && hours <= 12) return 172;
-    return 155;
-  } else {
-    if (hours >= 1 && hours <= 6) return 85;
-    if (hours >= 7 && hours <= 12) return 77;
-    return 73;
-  }
-};
-
 export const SubmitNewApplication = ({
+  validForm = true,
+  offerPrice,
   professionalNeeded,
   hoursWorked,
-  updateFormData,
+  onBlur,
+  onChange,
   onSubmit,
 }: SubmitNewApplicationProps) => {
-  const [offerPrice, setOfferPrice] = useState<number>(0); // Inicia con el precio sugerido
-
   const hourlyRate = getHourlyRate(professionalNeeded, hoursWorked);
 
   // Calcular tarifa total
   const totalPrice = hourlyRate * hoursWorked;
   const minAllowedPrice = totalPrice * 0.85; // 15% menor al precio total
   const isValidAmount = offerPrice !== null && offerPrice >= minAllowedPrice;
-
-  // Manejar cambios en el input de oferta
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newAmount = Number(e.target.value);
-    setOfferPrice(newAmount);
-    updateFormData("amount", newAmount);
-    updateFormData("payment_rate", hourlyRate);
-  };
 
   return (
     <Box
@@ -86,15 +73,17 @@ export const SubmitNewApplication = ({
           Precio ofertado
         </Typography>
         <Typography typography="body-large-bold" color={colorPalette.grey1}>
-          ${offerPrice.toFixed(2)}
+          ${offerPrice ? offerPrice.toFixed(2) : `0.00`}
         </Typography>
       </Box>
       <FormControl fullWidth sx={{ m: 1 }}>
         <TextField
-          id="oferta-input"
+          id="amount"
+          name="amount"
           type="number"
-          value={offerPrice ?? ""}
-          onChange={handleAmountChange}
+          value={offerPrice}
+          onChange={onChange}
+          onBlur={onBlur}
           error={!isValidAmount}
           helperText={
             !isValidAmount
@@ -110,7 +99,13 @@ export const SubmitNewApplication = ({
           sugerido.
         </Typography>
       </Box>
-      <B4CButton label="Enviar" size={Size.Small} onClick={onSubmit} />
+      <B4CButton
+        label="Enviar"
+        disabled={!validForm}
+        isSubmit
+        size={Size.Small}
+        onClick={onSubmit}
+      />
       <Box display={"flex"} sx={{ gap: 8 }}>
         <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
         <Typography typography={"body-small"} color={colorPalette.grey3}>

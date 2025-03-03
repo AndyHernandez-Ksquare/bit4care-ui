@@ -22,10 +22,15 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("clientToken"); // Token guardado en localStorage
+    const clientToken = localStorage.getItem("clientToken");
+    const userToken = localStorage.getItem("userToken");
+
+    const token = clientToken || userToken; // Prioriza clientToken, pero usa userToken si no está
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error),

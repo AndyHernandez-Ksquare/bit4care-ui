@@ -29,4 +29,12 @@ export interface GetOneApplication {
   updatedAt: string;
   Negotiation: any[]; // Si tiene una estructura específica, se debe tipar mejor
   Complaint: any[];
+  WorkShift: {
+    id: number;
+    start_hour: string;
+    end_hour: string;
+    applicationRequestId: number;
+    createdAt: string;
+    updatedAt: string;
+  }[];
 }

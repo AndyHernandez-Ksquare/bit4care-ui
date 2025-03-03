@@ -4,26 +4,26 @@ import { GetOneAppRequest } from "@/services/applicationRequestServices/Applicat
 
 export const useGetOneAppRequest = (appRequestId: string | undefined) => {
   const [data, setData] = useState<GetOneApplication | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [getOneAppLoading, setGetOneAppLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!appRequestId) return;
 
     const fetchData = async () => {
+      setGetOneAppLoading(true);
       try {
-        setLoading(true);
         const result = await GetOneAppRequest(appRequestId);
         setData(result);
       } catch (err) {
         setError("Error al obtener la solicitud");
       } finally {
-        setLoading(false);
+        setGetOneAppLoading(false);
       }
     };
 
     fetchData();
   }, [appRequestId]); // Se ejecuta cuando cambia el ID
 
-  return { data, loading, error };
+  return { data, getOneAppLoading, error };
 };

@@ -151,15 +151,13 @@ export const B4CClientServiceCard = ({
                 height: "64px",
                 cursor: isAssigned ? "pointer" : "default",
               }}
-              alt={isAssigned || carerName ? "Juan Perez" : undefined}
+              alt={isAssigned || carerName ? carerName : undefined}
               src=" image url"
               onClick={isAssigned ? handleOpenViewColabModal : undefined}
             />
             <Box>
               <Typography variant="h5" sx={{ color: colorPalette.primary }}>
-                {isAssigned || carerName
-                  ? "Juan Perez"
-                  : "Cuidador no asignado"}
+                {isAssigned || carerName ? carerName : "Cuidador no asignado"}
               </Typography>
               {isAssigned && (
                 <Typography

@@ -68,7 +68,7 @@ export const B4CClientActiveServices = () => {
                 address,
                 status,
                 description,
-                patient_name,
+
                 carer_speciality,
                 start_date,
                 end_date,
@@ -88,11 +88,11 @@ export const B4CClientActiveServices = () => {
                   id={id}
                   startDate={start_date}
                   endDate={end_date}
-                  carerName={undefined}
+                  carerName={carer?.User.name}
                   address={address}
                   service={description}
                   status={status as Status}
-                  isAssigned={!!carer && !!carer.id}
+                  isAssigned={!!carer}
                   amount={amount}
                 />
               </Grid>

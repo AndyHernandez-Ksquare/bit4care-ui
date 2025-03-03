@@ -2,7 +2,7 @@ import { ProtectedCollaboratorModule } from "./pages/ProtectedModule/ProtectedCo
 import { ColaboratorsLayout } from "./ColaboratorsLayout";
 import { ColaboratorsHome } from "./pages/ColaboratorsHome/ColaboratorsHome";
 import { SettingsAndProfile } from "./pages/SettingsAndProfile";
-import ColaboratorsRegister from "../register/pages/ColaboratorsRegister";
+import ColaboratorsRegister from "./pages/register/pages/ColaboratorsRegister";
 import { ColaboratorLogin } from "./pages/Login";
 import { RouteObject } from "react-router-dom";
 import { QuizPage } from "../quiz/pages/Quiz";
@@ -24,13 +24,13 @@ export const colaboratorsRouter: RouteObject[] = [
             path: "/colaborador/ajustes-y-perfil",
             element: <SettingsAndProfile />,
           },
-          {
-            path: "/colaborador/registro",
-            element: <ColaboratorsRegister />,
-          },
         ],
       },
     ],
+  },
+  {
+    path: "/colaborador/registro",
+    element: <ColaboratorsRegister />,
   },
   {
     path: "/colaborador/login",

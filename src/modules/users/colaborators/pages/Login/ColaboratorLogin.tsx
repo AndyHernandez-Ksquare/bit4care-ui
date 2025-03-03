@@ -6,12 +6,18 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import "./ColaboratorLogin.css";
+import { useNavigate } from "react-router-dom";
 
 export const ColaboratorLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignUp = () => {
+    navigate(`/colaborador/registro`);
   };
 
   const onClose = () => {
@@ -37,6 +43,7 @@ export const ColaboratorLogin = () => {
             variant="secondary"
             fullWidth
             label="Registrarme"
+            onClick={handleSignUp}
           ></B4CButton>
         </Box>
       </Box>

@@ -6,23 +6,25 @@ import {
 import { CreateApplicationRequest } from "@/services/applicationRequestServices/ApplicationRequestServices";
 
 export const useCreateApplicationRequest = () => {
-  const [loading, setLoading] = useState(false);
+  const [createAppLoading, setCreateAppLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [application, setApplication] = useState<GetAllApplication | null>(
     null,
   );
 
   const createApplication = async (bodyRequest: CreateAppReq) => {
-    setLoading(true);
+    setCreateAppLoading(true);
     try {
       const response = await CreateApplicationRequest(bodyRequest);
+      console.log(response);
       setApplication(response); // Retornar el resultado, si es necesario
     } catch (err) {
       setError((err as Error).message || "An unexpected error occurred");
+      throw error;
     } finally {
-      setLoading(false);
+      setCreateAppLoading(false);
     }
   };
 
-  return { createApplication, loading, error, application };
+  return { createApplication, createAppLoading, error, application };
 };

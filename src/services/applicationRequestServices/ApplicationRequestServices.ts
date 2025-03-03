@@ -33,7 +33,6 @@ export const GetOneAppRequest = async (appRequestId: string) => {
     }
     return null;
   } catch (error: unknown) {
-    console.error("Error creating application request:", error);
     throw error;
   }
 };
@@ -49,7 +48,6 @@ export const CreateApplicationRequest = async (bodyRequest: CreateAppReq) => {
     }
     return null;
   } catch (error: unknown) {
-    console.error("Error creating application request:", error);
     throw error;
   }
 };
@@ -68,7 +66,6 @@ export const UpdateApplicationRequest = async (
     }
     return null;
   } catch (error: unknown) {
-    console.error("Error creating application request:", error);
     throw error;
   }
 };

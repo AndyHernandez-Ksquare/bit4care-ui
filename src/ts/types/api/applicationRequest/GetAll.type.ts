@@ -1,3 +1,5 @@
+import { User } from "../shared";
+
 export interface GetAllApplication {
   id: number;
   start_date: Date;
@@ -15,7 +17,7 @@ export interface GetAllApplication {
   updatedAt: string;
   carer_speciality: string | null;
   carer: {
-    id: number;
     description: string;
+    User: User;
   } | null;
 }

@@ -1,5 +1,4 @@
-import { useCollaboratorAuth } from "@/context/auth/AuthCollaboratorContext";
-
+import { useCollaboratorAuth } from "@/context/auth/constants/useCollabAuth";
 import { Outlet, Navigate } from "react-router-dom";
 
 export const ProtectedCollaboratorModule = () => {
@@ -7,6 +6,6 @@ export const ProtectedCollaboratorModule = () => {
   return isCollaboratorAuthenticated ? (
     <Outlet />
   ) : (
-    <Navigate to="/colaboradorLogin" />
+    <Navigate to="/colaborador/login" />
   );
 };

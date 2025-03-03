@@ -1,6 +1,6 @@
 import { B4CFooter } from "@/components/B4CFooter.tsx";
 import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
-import { TermsText } from "@/modules/users/register/components/termsText";
+import { TermsText } from "@/modules/users/colaborators/pages/register/components/termsText";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
 

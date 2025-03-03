@@ -1,6 +1,6 @@
 import { B4CFooter } from "@/components/B4CFooter.tsx";
 import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
-import { PrivacyPolicy } from "@/modules/users/register/components/privacyPolicyText";
+import { PrivacyPolicy } from "@/modules/users/colaborators/pages/register/components/privacyPolicyText";
 
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
