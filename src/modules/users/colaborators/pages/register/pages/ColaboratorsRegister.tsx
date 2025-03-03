@@ -8,7 +8,6 @@ import { RegisterForm } from "../components/Form-1";
 import { RegisterFormPart2 } from "../components/Form-2";
 import { RegisterFormPart3 } from "../components/Form-3";
 import { assembleRequestData } from "../functions/assemblyForm";
-import { collaboratorsRegisterService } from "@/services/collaboratorsServices/register/collaborator.service";
 import { FormData1, FormData2 } from "@/ts/types/api/collaborator/requestData";
 import { Layout } from "../components/Layout";
 import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile";
