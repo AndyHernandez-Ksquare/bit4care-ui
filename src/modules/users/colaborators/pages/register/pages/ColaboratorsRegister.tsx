@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SnackbarBlock from "@/components/B4CSnackBarBlock";
-import { Box, Typography, Snackbar, Alert } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CStepper } from "@/components/B4CStepper";
 import { B4CButton } from "@/components/B4CButton";
@@ -14,17 +14,12 @@ import { Layout } from "../components/Layout";
 import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile";
 import { useFormik } from "formik";
 import { CarerValidationSchema } from "../validators/CarerValidationSchema";
+import { useSnackbar } from "@/context/ui/SnackbarContext";
 
 function ColaboratorsRegister() {
   const navigate = useNavigate();
   const [canContinue, setCanContinue] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
-    "success",
-  );
 
   const formik = useFormik<FormData>({
     initialValues: {
@@ -59,6 +54,7 @@ function ColaboratorsRegister() {
   });
 
   const { createCarerProfile } = useCreateCarerProfile();
+  const { open } = useSnackbar();
 
   const handleContinue = async () => {
     if (currentStep < 2) {
@@ -68,120 +64,101 @@ function ColaboratorsRegister() {
       try {
         console.log("Enviando solicitud:", requestData);
         const response = await createCarerProfile(requestData);
-        setSnackbarMessage("Solicitud enviada con éxito");
-        setSnackbarSeverity("success");
-        setSnackbarOpen(!!response);
+        open("Solicitud enviada con éxito", "success");
         navigate("/colaborador/login");
       } catch (error) {
-        setSnackbarMessage("Error al enviar la solicitud");
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
+        open("Error al enviar la solicitud", "error");
         console.error("Error en el registro:", error);
       }
     }
   };
 
   return (
-    <>
-      <Layout>
-        <Box>
-          <Box
-            sx={{
-              maxWidth: 200,
-              display: "flex",
-              justifyContent: "flex-start",
-              mb: 24,
-              ml: -20,
-            }}
-          >
-            <B4CStepper
-              activeStep={currentStep}
-              steps={["Paso 1", "Paso 2", "Paso 3"]}
-              spacing={2}
-            />
-          </Box>
-          <Typography variant="h4" gutterBottom>
-            Solicitud de Colaborador(a)
-          </Typography>
-          <Typography variant="subtitle1" mt={24}>
-            Completa el siguiente formulario para solicitar tu registro en
-            nuestra plataforma.
-          </Typography>
-        </Box>
-        <Box sx={{ mt: 24, p: 12 }}>
-          <SnackbarBlock />
-        </Box>
+    <Layout>
+      <Box>
         <Box
           sx={{
-            mt: 24,
-            p: 12,
-            border: `1px solid ${colorPalette.grey4}`,
-            borderRadius: "8px",
+            maxWidth: 200,
+            display: "flex",
+            justifyContent: "flex-start",
+            mb: 24,
+            ml: -20,
           }}
         >
-          {/* Formulario */}
-          {currentStep === 0 && (
-            <RegisterForm
-              values={formik.values}
-              errors={formik.errors}
-              touched={formik.touched}
-              handleBlur={formik.handleBlur}
-              handleChange={formik.handleChange}
-              onFormValidChange={setCanContinue}
-              onFormDataChange={formik.setFieldValue}
-            />
-          )}
-          {currentStep === 1 && (
-            <RegisterFormPart2
-              values={formik.values}
-              errors={formik.errors}
-              touched={formik.touched}
-              handleBlur={formik.handleBlur}
-              handleChange={formik.handleChange}
-              onFormValidChange={setCanContinue}
-              onFormDataChange={formik.setFieldValue}
-            />
-          )}
-          {currentStep === 2 && (
-            <RegisterFormPart3 onFormValidChange={setCanContinue} />
-          )}
-        </Box>
-        <Box mt={24}>
-          <Typography
-            variant="body-medium"
-            mb={24}
-            display={"grid"}
-            sx={{
-              color: colorPalette.warning,
-            }}
-          >
-            Tu solicitud está sujeta a aprobación.
-          </Typography>
-          <B4CButton
-            label={
-              currentStep === 2
-                ? "Enviar solicitud"
-                : "Continuar con la solicitud"
-            }
-            disabled={!canContinue}
-            onClick={handleContinue}
+          <B4CStepper
+            activeStep={currentStep}
+            steps={["Paso 1", "Paso 2", "Paso 3"]}
+            spacing={2}
           />
         </Box>
-      </Layout>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000} // Se oculta después de 3 segundos
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        <Typography variant="h4" gutterBottom>
+          Solicitud de Colaborador(a)
+        </Typography>
+        <Typography variant="subtitle1" mt={24}>
+          Completa el siguiente formulario para solicitar tu registro en nuestra
+          plataforma.
+        </Typography>
+      </Box>
+      <Box sx={{ mt: 24, p: 12 }}>
+        <SnackbarBlock />
+      </Box>
+      <Box
+        sx={{
+          mt: 24,
+          p: 12,
+          border: `1px solid ${colorPalette.grey4}`,
+          borderRadius: "8px",
+        }}
       >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={snackbarSeverity}
+        {/* Formulario */}
+        {currentStep === 0 && (
+          <RegisterForm
+            values={formik.values}
+            errors={formik.errors}
+            touched={formik.touched}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            onFormValidChange={setCanContinue}
+            onFormDataChange={formik.setFieldValue}
+          />
+        )}
+        {currentStep === 1 && (
+          <RegisterFormPart2
+            values={formik.values}
+            errors={formik.errors}
+            touched={formik.touched}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            onFormValidChange={setCanContinue}
+            onFormDataChange={formik.setFieldValue}
+          />
+        )}
+        {currentStep === 2 && (
+          <RegisterFormPart3 onFormValidChange={setCanContinue} />
+        )}
+      </Box>
+      <Box mt={24}>
+        <Typography
+          variant="body-medium"
+          mb={24}
+          display={"grid"}
+          sx={{
+            color: colorPalette.warning,
+          }}
         >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    </>
+          Tu solicitud está sujeta a aprobación.
+        </Typography>
+        <B4CButton
+          label={
+            currentStep === 2
+              ? "Enviar solicitud"
+              : "Continuar con la solicitud"
+          }
+          disabled={!canContinue}
+          onClick={handleContinue}
+        />
+      </Box>
+    </Layout>
   );
 }
 

@@ -15,6 +15,7 @@ import { ClientAuthProvider } from "./context/auth/ClientAuthProvider.tsx";
 import { ClientSessionProvider } from "./context/session/ClientSessionProvider.tsx";
 import { AuthCollaboratorProvider } from "./context/auth/AuthCollaboratorContext.tsx";
 import { CollaboratorSessionProvider } from "./context/session/CollaboratorSessionContext.tsx";
+import { SnackbarProvider } from "./context/ui/SnackbarContext.tsx";
 
 const combinedRoutes = [
   ...clientsRouter,
@@ -47,7 +48,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <ClientAuthProvider>
             <CollaboratorSessionProvider>
               <AuthCollaboratorProvider>
-                <RouterProvider router={router} />
+                <SnackbarProvider>
+                  <RouterProvider router={router} />
+                </SnackbarProvider>
               </AuthCollaboratorProvider>
             </CollaboratorSessionProvider>
           </ClientAuthProvider>
