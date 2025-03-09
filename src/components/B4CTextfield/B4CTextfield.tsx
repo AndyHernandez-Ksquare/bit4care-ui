@@ -20,7 +20,7 @@ interface B4CTextfieldProps {
   disabled?: boolean;
   variant?: TextFieldVariants | undefined;
   error?: boolean;
-  helper?: string;
+  helper?: React.ReactNode;
   id?: string;
   isPassword?: boolean;
   isMultiline?: boolean;

@@ -24,4 +24,19 @@ export const CarerValidationSchema = Yup.object({
     [true],
     "Debes aceptar los términos y condiciones",
   ),
+  curp: Yup.string()
+    .matches(/^[A-Z0-9]{18}$/, "CURP inválida")
+    .required("El CURP es obligatorio"),
+  rfc: Yup.string()
+    .matches(/^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/, "RFC inválido")
+    .required("El RFC es obligatorio"),
+  nss: Yup.string()
+    .matches(/^\d{11}$/, "NSS inválido")
+    .required("El NSS es obligatorio"),
+
+  typeOfLicense: Yup.string(),
+
+  motivationLetter: Yup.string().required(
+    "La carta de motivación es obligatoria",
+  ),
 });

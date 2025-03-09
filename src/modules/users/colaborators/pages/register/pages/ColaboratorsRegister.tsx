@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SnackbarBlock from "@/components/B4CSnackBarBlock";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CStepper } from "@/components/B4CStepper";
 import { B4CButton } from "@/components/B4CButton";
@@ -8,127 +9,179 @@ import { RegisterForm } from "../components/Form-1";
 import { RegisterFormPart2 } from "../components/Form-2";
 import { RegisterFormPart3 } from "../components/Form-3";
 import { assembleRequestData } from "../functions/assemblyForm";
-import { collaboratorsRegisterService } from "@/services/collaboratorsServices/register/collaborator.service";
-import { FormData1, FormData2 } from "@/ts/types/api/collaborator/requestData";
+import { FormData } from "@/ts/types/api/collaborator/requestData";
 import { Layout } from "../components/Layout";
 import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile";
+import { useFormik } from "formik";
+import { CarerValidationSchema } from "../validators/CarerValidationSchema";
 
 function ColaboratorsRegister() {
+  const navigate = useNavigate();
   const [canContinue, setCanContinue] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
 
-  const { createCarerProfile } = useCreateCarerProfile();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
+    "success",
+  );
 
-  const [formDataStep1, setFormDataStep1] = useState<FormData1>({
-    name: "",
-    lastName: "",
-    email: "",
-    password: "",
-    birthDate: "",
-    direction: "",
-    gender: "",
-    maritalStatus: "",
-    nacionality: "",
-    postalCode: "",
-    neighborhood: "",
-    state: "",
+  const formik = useFormik<FormData>({
+    initialValues: {
+      name: "",
+      lastName: "",
+      email: "",
+      password: "",
+      birthDate: "",
+      direction: "",
+      gender: "",
+      maritalStatus: "",
+      nacionality: "",
+      postalCode: "",
+      neighborhood: "",
+      state: "",
+      curp: "",
+      rfc: "",
+      nss: "",
+      driversLicense: "",
+      typeOfLicense: "",
+      experienceYears: "",
+      workSpeciality: "técnicos",
+      specialities: [],
+      motivationLetter: "",
+      acceptedTerms: false,
+      confirmedPassword: "",
+    },
+    validationSchema: CarerValidationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
   });
-  const [formDataStep2, setFormDataStep2] = useState<FormData2>({
-    curp: "",
-    rfc: "",
-    nss: "",
-    driversLicense: "",
-    experienceYears: "",
-    specialities: [],
-    motivationLetter: "",
-  });
+
+  const { createCarerProfile } = useCreateCarerProfile();
 
   const handleContinue = async () => {
     if (currentStep < 2) {
       setCurrentStep(currentStep + 1);
     } else if (currentStep === 2) {
-      const requestData = assembleRequestData(formDataStep1, formDataStep2);
+      const requestData = assembleRequestData(formik.values, formik.values);
       try {
+        console.log("Enviando solicitud:", requestData);
         const response = await createCarerProfile(requestData);
-        console.log("Registro exitoso:", response);
+        setSnackbarMessage("Solicitud enviada con éxito");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(!!response);
+        navigate("/colaborador/login");
       } catch (error) {
+        setSnackbarMessage("Error al enviar la solicitud");
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
         console.error("Error en el registro:", error);
       }
     }
   };
 
   return (
-    <Layout>
-      <Box>
+    <>
+      <Layout>
+        <Box>
+          <Box
+            sx={{
+              maxWidth: 200,
+              display: "flex",
+              justifyContent: "flex-start",
+              mb: 24,
+              ml: -20,
+            }}
+          >
+            <B4CStepper
+              activeStep={currentStep}
+              steps={["Paso 1", "Paso 2", "Paso 3"]}
+              spacing={2}
+            />
+          </Box>
+          <Typography variant="h4" gutterBottom>
+            Solicitud de Colaborador(a)
+          </Typography>
+          <Typography variant="subtitle1" mt={24}>
+            Completa el siguiente formulario para solicitar tu registro en
+            nuestra plataforma.
+          </Typography>
+        </Box>
+        <Box sx={{ mt: 24, p: 12 }}>
+          <SnackbarBlock />
+        </Box>
         <Box
           sx={{
-            maxWidth: 200,
-            display: "flex",
-            justifyContent: "flex-start",
-            mb: 24,
-            ml: -20,
+            mt: 24,
+            p: 12,
+            border: `1px solid ${colorPalette.grey4}`,
+            borderRadius: "8px",
           }}
         >
-          <B4CStepper
-            activeStep={currentStep}
-            steps={["Paso 1", "Paso 2", "Paso 3"]}
-            spacing={2}
+          {/* Formulario */}
+          {currentStep === 0 && (
+            <RegisterForm
+              values={formik.values}
+              errors={formik.errors}
+              touched={formik.touched}
+              handleBlur={formik.handleBlur}
+              handleChange={formik.handleChange}
+              onFormValidChange={setCanContinue}
+              onFormDataChange={formik.setFieldValue}
+            />
+          )}
+          {currentStep === 1 && (
+            <RegisterFormPart2
+              values={formik.values}
+              errors={formik.errors}
+              touched={formik.touched}
+              handleBlur={formik.handleBlur}
+              handleChange={formik.handleChange}
+              onFormValidChange={setCanContinue}
+              onFormDataChange={formik.setFieldValue}
+            />
+          )}
+          {currentStep === 2 && (
+            <RegisterFormPart3 onFormValidChange={setCanContinue} />
+          )}
+        </Box>
+        <Box mt={24}>
+          <Typography
+            variant="body-medium"
+            mb={24}
+            display={"grid"}
+            sx={{
+              color: colorPalette.warning,
+            }}
+          >
+            Tu solicitud está sujeta a aprobación.
+          </Typography>
+          <B4CButton
+            label={
+              currentStep === 2
+                ? "Enviar solicitud"
+                : "Continuar con la solicitud"
+            }
+            disabled={!canContinue}
+            onClick={handleContinue}
           />
         </Box>
-        <Typography variant="h4" gutterBottom>
-          Solicitud de Colaborador(a)
-        </Typography>
-        <Typography variant="subtitle1" mt={24}>
-          Completa el siguiente formulario para solicitar tu registro en nuestra
-          plataforma.
-        </Typography>
-      </Box>
-      <Box sx={{ mt: 24, p: 12 }}>
-        <SnackbarBlock />
-      </Box>
-      <Box
-        sx={{
-          mt: 24,
-          p: 12,
-          border: `1px solid ${colorPalette.grey4}`,
-          borderRadius: "8px",
-        }}
+      </Layout>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000} // Se oculta después de 3 segundos
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        {/* Formulario */}
-        {currentStep === 0 && (
-          <RegisterForm
-            onFormValidChange={setCanContinue}
-            onFormDataChange={setFormDataStep1}
-          />
-        )}
-        {currentStep === 1 && (
-          <RegisterFormPart2
-            onFormValidChange={setCanContinue}
-            onFormDataChange={setFormDataStep2}
-          />
-        )}
-        {currentStep === 2 && (
-          <RegisterFormPart3 onFormValidChange={setCanContinue} />
-        )}
-      </Box>
-      <Box mt={24}>
-        <Typography
-          variant="body-medium"
-          mb={24}
-          display={"grid"}
-          sx={{
-            color: colorPalette.warning,
-          }}
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarSeverity}
         >
-          Tu solicitud está sujeta a aprobación.
-        </Typography>
-        <B4CButton
-          label="Continuar con la solicitud"
-          disabled={!canContinue}
-          onClick={handleContinue}
-        />
-      </Box>
-    </Layout>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { B4CDragNDrop } from "@/components/B4CDragNDrop";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 
 interface RegisterFormProps {
   onFormValidChange: (isValid: boolean) => void;
@@ -10,16 +11,14 @@ export const RegisterFormPart3 = ({ onFormValidChange }: RegisterFormProps) => {
   const idAccepted = true;
   const videoAccepted = true;
 
-  const isFormValid = idAccepted && videoAccepted;
+  const isFormValid = true;
 
-  onFormValidChange(isFormValid);
+  useEffect(() => {
+    onFormValidChange(isFormValid);
+  }, []);
 
   return (
-    <Box
-      component={"form"}
-      onSubmit={() => console.log("Enviar formulario")}
-      sx={{ px: 12, py: 24 }}
-    >
+    <Box sx={{ px: 12, py: 24 }}>
       <Typography>
         Por último, necesitamos verificar tu identidad. Por favor, ingresa una
         imagen de buena calidad de tu identificación oficial y sube un video
