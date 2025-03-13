@@ -1,6 +1,7 @@
 export type Status = "pending" | "accepted" | "realizado" | "no realizado";
 
 export interface ColaboratorsServicesCardProps {
+  id: string;
   name: string;
   address: string;
   fee: number;

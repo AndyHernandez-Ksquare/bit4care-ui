@@ -41,7 +41,7 @@ export const GetAllCarerProfiles = async () => {
 
 export const GetSelfCollab = async (token: string) => {
   try {
-    const response: AxiosResponse<GetOneCarer[]> = await axios.get(
+    const response: AxiosResponse<GetOneCarer> = await axios.get(
       `/${Entity}/self`,
       {
         headers: {
