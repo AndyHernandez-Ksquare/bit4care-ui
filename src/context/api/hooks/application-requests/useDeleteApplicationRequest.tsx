@@ -1,7 +1,7 @@
 import { DeleteApplicationRequest } from "@/services/applicationRequestServices/ApplicationRequestServices";
 import { AxiosError } from "axios";
 import { useContext, useState } from "react";
-import { ApiClientContext } from "../apiClientContext";
+import { ApiClientContext } from "../../apiClientContext";
 
 export const useDeleteApplicationRequest = () => {
   const context = useContext(ApiClientContext);

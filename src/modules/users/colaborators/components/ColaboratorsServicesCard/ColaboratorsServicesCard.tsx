@@ -24,7 +24,7 @@ import "./ColaboratorsServicesCard.css";
 import { ColaboratorsServicesCardProps, Status } from "@/ts/types/components";
 import { useEffect, useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
-import { useNotInterested } from "@/context/api/hooks/useNotInterested";
+import { useNotInterested } from "@/context/api/hooks/application-requests/useNotInterested";
 import { useSnackbar } from "@/context/ui/SnackbarContext";
 
 export const ColaboratorsServicesCard = ({

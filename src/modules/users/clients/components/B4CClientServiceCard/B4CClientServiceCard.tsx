@@ -28,7 +28,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
-import { useDeleteApplicationRequest } from "@/context/api/hooks/useDeleteApplicationRequest";
+import { useDeleteApplicationRequest } from "@/context/api/hooks/application-requests/useDeleteApplicationRequest";
 import { B4CViewColabModal } from "./components/B4CViewColabModal";
 import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
 

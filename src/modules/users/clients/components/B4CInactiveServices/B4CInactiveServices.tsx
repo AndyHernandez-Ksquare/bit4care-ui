@@ -7,7 +7,7 @@ import {
   Grid2 as Grid,
 } from "@mui/material";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
-import { useGetAllApplications } from "@/context/api/hooks/UseGetAllClientApplication";
+import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
 
 export const B4CInactiveServices = () => {
   const { applications, isLoading, error } =

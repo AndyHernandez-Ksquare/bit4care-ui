@@ -9,7 +9,7 @@ import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCa
 import { Status } from "@/ts/types/components";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { useGetAllApplications } from "@/context/api/hooks/UseGetAllClientApplication";
+import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
 
 export const B4CClientActiveServices = () => {
   const { applications, isLoading, error } = useGetAllApplications("pending");

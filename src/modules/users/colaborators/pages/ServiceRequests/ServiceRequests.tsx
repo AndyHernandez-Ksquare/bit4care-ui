@@ -13,7 +13,7 @@ import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
-import { useGetPendingRequests } from "@/context/api/hooks/useGetPendingRequests"; // 🔹 Importamos el custom hook
+import { useGetPendingRequests } from "@/context/api/hooks/application-requests/useGetPendingRequests"; // 🔹 Importamos el custom hook
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { GetOneApplication } from "@/ts/types/api/applicationRequest";
