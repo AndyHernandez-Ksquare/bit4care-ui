@@ -12,7 +12,7 @@ export interface GetAllApplication {
   description: string;
   comments?: string;
   amount: number;
-  carerId: number;
+  carerId: number | null;
   createdAt: string;
   updatedAt: string;
   carer_speciality: string | null;

@@ -17,7 +17,7 @@ const Entity = "application-request";
 export const GetAllApplicationRequests = async (status: string) => {
   try {
     const response: AxiosResponse<GetAllApplication[]> = await axios.get(
-      `/${Entity}?status=${status}`,
+      `/${Entity}`,
     );
     if (response.data) {
       return response.data;
@@ -39,6 +39,21 @@ export const GetOneAppRequest = async (appRequestId: string) => {
     }
     return null;
   } catch (error: unknown) {
+    throw error;
+  }
+};
+
+export const GetCarerRequests = async () => {
+  try {
+    const response: AxiosResponse<GetOneApplication[]> = await axios.get(
+      `/${Entity}/carer`,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error getting application request:", error);
     throw error;
   }
 };
@@ -123,8 +138,8 @@ export const ProceedWithPayment = async (appRequestId: string) => {
 
 export const StartNegotiation = async (requestBody: NegotiationRequestBody) => {
   try {
-    const response: AxiosResponse<Negotiation> = await axios.patch(
-      `/${Entity}/negotiation`,
+    const response: AxiosResponse<Negotiation> = await axios.post(
+      `/${Entity}/negotiationOnNewRequest`,
       requestBody,
     );
     if (response.data) {

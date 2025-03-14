@@ -2,14 +2,7 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid2 as Grid,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Grid2 as Grid, Typography } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -17,7 +10,6 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ClassIcon from "@mui/icons-material/Class";
-
 import { color } from "@/ts/types/shared/colors";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import "./ColaboratorsServicesCard.css";
@@ -26,11 +18,18 @@ import { useEffect, useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { useNotInterested } from "@/context/api/hooks/application-requests/useNotInterested";
 import { useSnackbar } from "@/context/ui/SnackbarContext";
+import { useMarkAsInterested } from "@/context/api/hooks/application-requests/useMarkAsInterested";
+import { B4CCarerNegotiationModal } from "./components/B4CCarerNegotiationModal";
+import {
+  GetAllApplication,
+  GetOneApplication,
+} from "@/ts/types/api/applicationRequest";
 
 export const ColaboratorsServicesCard = ({
   id,
   name,
   fee,
+  data,
   schedule,
   address,
   service,
@@ -41,14 +40,20 @@ export const ColaboratorsServicesCard = ({
   comments,
   b4cfee = 0,
   onClick,
-}: ColaboratorsServicesCardProps) => {
+}: ColaboratorsServicesCardProps & { data: GetOneApplication }) => {
   const statusTagInfo = {
     pending: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
     accepted: { color: "success", label: "Aceptado" },
     "no realizado": { color: "error", label: "No Realizado" },
     solicitado: { color: "warning", label: "Solicitado" },
+    active_negotiation: { color: "info", label: "En negociación" },
+    active: { color: "info", label: "Activo" },
   };
+
+  const normalizedStatus = status.toLowerCase() as Status;
+  const isPending = normalizedStatus === "pending";
+  const isNegotiationActive = normalizedStatus === "active_negotiation";
 
   // Hardcodeando horarios de trabajo 🕒
   const workShifts = [
@@ -57,7 +62,13 @@ export const ColaboratorsServicesCard = ({
 
   const { markAsNotInterested, loading, error, isSuccess } = useNotInterested();
 
+  const { markAsInterested } = useMarkAsInterested();
+
   const [openModal, setOpenModal] = useState(false);
+  const [openNegotiateModal, setOpenNegotiateModal] = useState(false);
+
+  const [selectedRequest, setSelectedRequest] =
+    useState<GetAllApplication | null>(null); // ✅ Estado para la solicitud seleccionada
 
   const { open } = useSnackbar(); // Usa el hook del Snackbar global
 
@@ -72,7 +83,6 @@ export const ColaboratorsServicesCard = ({
 
   useEffect(() => {
     status = status.toLowerCase() as Status;
-    console.log(status);
   }, []);
   return (
     <>
@@ -340,38 +350,51 @@ export const ColaboratorsServicesCard = ({
             flexDirection: "column",
           }}
         >
-          <B4CButton
-            size={Size.Small}
-            label="Tomar Oferta"
-            fullWidth
-            onClick={onClick}
-          />
-          <Box
-            sx={{
-              display: "flex",
-              gap: "1rem",
-              flexDirection: {
-                xs: "column",
-                desktop: "row",
-              },
-            }}
-          >
+          {isNegotiationActive && (
             <B4CButton
               size={Size.Small}
               label="Negociar Oferta (Bid)"
               variant="secondary"
               fullWidth
-              onClick={onClick}
+              onClick={() => setOpenNegotiateModal(true)}
             />
-            <B4CButton
-              size={Size.Small}
-              label={loading ? "Ignorando..." : "Ignorar Solicitud"}
-              variant="secondary"
-              fullWidth
-              onClick={handleIgnoreRequest}
-              disabled={loading} // Deshabilitar mientras se procesa
-            />
-          </Box>
+          )}
+          {isPending && (
+            <>
+              <B4CButton
+                size={Size.Small}
+                label="Tomar Oferta"
+                fullWidth
+                onClick={() => markAsInterested(id.toString())}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  flexDirection: {
+                    xs: "column",
+                    desktop: "row",
+                  },
+                }}
+              >
+                <B4CButton
+                  size={Size.Small}
+                  label="Negociar Oferta (Bid)"
+                  variant="secondary"
+                  fullWidth
+                  onClick={() => setOpenNegotiateModal(true)}
+                />
+                <B4CButton
+                  size={Size.Small}
+                  label={loading ? "Ignorando..." : "Ignorar Solicitud"}
+                  variant="secondary"
+                  fullWidth
+                  onClick={handleIgnoreRequest}
+                  disabled={loading}
+                />
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
 
@@ -395,6 +418,14 @@ export const ColaboratorsServicesCard = ({
           ))}
         </Box>
       </B4CModal>
+
+      {/* Modal de Negociación */}
+      <B4CCarerNegotiationModal
+        serviceId={id}
+        open={openNegotiateModal}
+        onClose={() => setOpenNegotiateModal(false)}
+        data={data}
+      />
     </>
   );
 };

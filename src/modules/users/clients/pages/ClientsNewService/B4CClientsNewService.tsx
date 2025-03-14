@@ -126,8 +126,6 @@ export const B4CClientsNewService = ({
     }
 
     if (mode == "edit") {
-      finalRequest.carer_has_driving_license = `${finalRequest.carer_has_driving_license}`;
-      finalRequest.carer_years_of_experience = `${finalRequest.carer_years_of_experience}`;
       console.log(finalRequest);
       try {
         await updateApplication(id || "", finalRequest); // Llama al custom hook para hacer el POST

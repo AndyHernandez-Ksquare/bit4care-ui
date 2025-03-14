@@ -3,18 +3,19 @@ import { MarkAsInterested } from "@/services/applicationRequestServices/Applicat
 import { AxiosError } from "axios";
 import { GetAllApplication } from "@/ts/types/api/applicationRequest";
 
-export const useNotInterested = () => {
+export const useMarkAsInterested = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [applicationInterest, setApplicationInterest] =
     useState<GetAllApplication | null>(null);
 
-  const useMarkAsInterested = async (appRequestId: string) => {
+  const markAsInterested = async (appRequestId: string) => {
     setLoading(true);
     setError(null);
 
     try {
       const response = await MarkAsInterested(appRequestId);
+      console.log(response);
       setApplicationInterest(response);
     } catch (err) {
       const axiosError = err as AxiosError;
@@ -24,5 +25,5 @@ export const useNotInterested = () => {
     }
   };
 
-  return { useMarkAsInterested, loading, error, applicationInterest };
+  return { markAsInterested, loading, error, applicationInterest };
 };

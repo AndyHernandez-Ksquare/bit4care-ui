@@ -14,8 +14,8 @@ export interface Negotiation {
 }
 
 export interface NegotiationRequestBody {
-  applicationRequestId: 5;
-  caregiver_counter_offer: 4567;
+  applicationRequestId: number;
+  caregiver_counter_offer: number;
 }
 
 export interface MakeNegotiationRequestBody {

@@ -16,55 +16,11 @@ import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailSer
 import { useGetPendingRequests } from "@/context/api/hooks/application-requests/useGetPendingRequests"; // 🔹 Importamos el custom hook
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { GetOneApplication } from "@/ts/types/api/applicationRequest";
+import { getSkills } from "@/constants/getSkillsForCarerCard";
+import { formatDateOnly } from "@/constants/formatDate";
 
 dayjs.extend(localizedFormat);
 dayjs.locale("es");
-
-const formatDateOnly = (isoDate: string) => {
-  return dayjs(isoDate).format("D [de] MMMM [de] YYYY"); // Ejemplo: "9 de marzo de 2025"
-};
-
-const capitalizeFirstLetter = (text: string) => {
-  return text.charAt(0).toUpperCase() + text.slice(1);
-};
-
-const getSkills = (request: GetOneApplication): string[] => {
-  const skills: string[] = [];
-
-  // Especialidad
-  if (request.carer_speciality) {
-    skills.push(capitalizeFirstLetter(request.carer_speciality));
-  } else {
-    skills.push("Especialidad no requerida");
-  }
-
-  // Certificación
-  if (request.is_carer_certified) {
-    skills.push("Cuidador certificado");
-  } else {
-    skills.push("No requiere certificación");
-  }
-
-  // Licencia de manejo
-  if (request.carer_has_driving_license) {
-    skills.push("Con licencia de manejo");
-  } else {
-    skills.push("No requiere licencia");
-  }
-
-  // Experiencia
-  if (
-    request.carer_years_of_experience &&
-    request.carer_years_of_experience > 0
-  ) {
-    skills.push(`Experiencia: ${request.carer_years_of_experience} años`);
-  } else {
-    skills.push("Experiencia no requerida");
-  }
-
-  return skills;
-};
 
 export const ServiceRequests = () => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
@@ -112,6 +68,7 @@ export const ServiceRequests = () => {
                 skills={getSkills(request)} // No hay un campo explícito en GetOneApplication, ajustar según sea necesario
                 profile_picture_url={""} // Ajustar si existe una imagen en la API
                 onClick={() => setIsOpenModal(true)}
+                data={request}
               />
             ))
           ) : (

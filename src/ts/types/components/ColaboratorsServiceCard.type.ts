@@ -1,4 +1,9 @@
-export type Status = "pending" | "accepted" | "realizado" | "no realizado";
+export type Status =
+  | "pending"
+  | "accepted"
+  | "realizado"
+  | "no realizado"
+  | "active_negotiation";
 
 export interface ColaboratorsServicesCardProps {
   id: string;

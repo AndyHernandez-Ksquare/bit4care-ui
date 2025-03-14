@@ -68,7 +68,7 @@ export const B4CClientActiveServices = () => {
                 address,
                 status,
                 description,
-
+                carerId,
                 carer_speciality,
                 start_date,
                 end_date,
@@ -82,6 +82,7 @@ export const B4CClientActiveServices = () => {
                 key={`active-service-grid-${index}`}
               >
                 <B4CClientServiceCard
+                  carerId={carerId}
                   carerDescription={carer?.description}
                   carerSpecialty={carer_speciality}
                   key={`active-service-${index}`}

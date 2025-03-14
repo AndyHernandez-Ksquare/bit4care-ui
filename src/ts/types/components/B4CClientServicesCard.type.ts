@@ -2,6 +2,7 @@ import { Status } from "@/ts/types/components";
 
 export interface B4CClientServicesCardProps {
   id: number;
+  carerId: number | null;
   carerName?: string;
   address: string;
   service: string;
