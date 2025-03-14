@@ -54,7 +54,7 @@ export const B4CClientActiveServices = () => {
       ) : applications && applications.length > 0 ? (
         <Grid
           container
-          spacing={2} // Espaciado entre las tarjetas
+          spacing={16} // Espaciado entre las tarjetas
           sx={{
             width: "100%", // Ancho máximo del grid
             margin: "0 auto", // Centrado del grid

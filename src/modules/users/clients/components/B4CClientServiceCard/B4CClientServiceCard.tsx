@@ -329,6 +329,7 @@ export const B4CClientServiceCard = ({
       )}
 
       <B4CNegotiationModal
+        appRequestId={id.toString()}
         open={openNegotiationModal}
         onClose={handleOpenCloseNegotiationModal}
       />
