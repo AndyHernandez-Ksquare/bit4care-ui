@@ -16,21 +16,7 @@ export const InactiveServices = () => {
       }}
     >
       {colaboratorsServicesData.length > 0 ? (
-        colaboratorsServicesData.map((colaborator, index) => (
-          <ColaboratorsServicesCard
-            key={index}
-            name={colaborator.name}
-            schedule={colaborator.schedule}
-            comments={colaborator.comments}
-            fee={colaborator.fee}
-            b4cfee={colaborator.b4cfee}
-            hours={colaborator.hours}
-            address={colaborator.address}
-            service={colaborator.service}
-            status={colaborator.status as Status}
-            skills={colaborator.skills}
-          />
-        ))
+        colaboratorsServicesData.map((colaborator, index) => <div></div>)
       ) : (
         <>
           <Typography variant="h4">

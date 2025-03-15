@@ -27,7 +27,7 @@ export interface GetOneApplication {
   is_deleted: boolean;
   createdAt: string;
   updatedAt: string;
-  Negotiation: any[]; // Si tiene una estructura específica, se debe tipar mejor
+  Negotiation: Negotiation[] | null; // Si tiene una estructura específica, se debe tipar mejor
   Complaint: any[];
   WorkShift: {
     id: number;
@@ -37,4 +37,17 @@ export interface GetOneApplication {
     createdAt: string;
     updatedAt: string;
   }[];
+}
+
+export interface Negotiation {
+  id: number;
+  applicationRequestId: number;
+  offer_by_client: number;
+  caregiver_counter_offer: number;
+  final_rate: number;
+  status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | string; // Ajusta según los posibles estados
+  last_modifier_user_id: number;
+  carerId: number;
+  createdAt: string; // Fecha en formato ISO
+  updatedAt: string; // Fecha en formato ISO
 }

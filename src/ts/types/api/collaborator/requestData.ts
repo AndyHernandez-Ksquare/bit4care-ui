@@ -23,11 +23,11 @@ export interface FormData2 {
   curp: string;
   rfc: string;
   nss: string;
-  driversLicense: string;
+  driversLicense: "yes" | "no";
   typeOfLicense: string;
+  certified: "yes" | "no";
   experienceYears: string;
-  workSpeciality: keyof WorkSpecialityOptions;
-  specialities: SpecialityOption[];
+  speciality: string;
   motivationLetter: string;
 }
 

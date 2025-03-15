@@ -16,10 +16,8 @@ import {
 import {
   Avatar,
   Box,
-  Button,
   Chip,
   CircularProgress,
-  Divider,
   TextField,
   Typography,
 } from "@mui/material";
@@ -59,13 +57,18 @@ export const B4CNegotiationModal = ({
 
     const requestBody = {
       offer_by_client: offerByClient,
-      caregiver_counter_offer: data.amount, // Se toma el monto actual del servicio
+      caregiver_counter_offer:
+        data?.Negotiation?.[data.Negotiation.length - 1]
+          ?.caregiver_counter_offer ?? 0, // Se toma el monto actual del servicio
       status: "IN_PROGRESS" as const,
     };
 
     try {
-      if (appRequestId) {
-        await makeNegotiation(appRequestId, requestBody);
+      if (data.Negotiation?.length) {
+        await makeNegotiation(
+          `${data.Negotiation[data.Negotiation.length - 1].id}`,
+          requestBody,
+        );
         // Opcional: se puede cerrar el modal o mostrar un mensaje de éxito
         onClose();
       }
@@ -180,9 +183,15 @@ export const B4CNegotiationModal = ({
                 <Typography variant="body2" fontWeight="bold">
                   Oferta actual
                 </Typography>
-                <Typography variant="h4" color="primary">
-                  ${data.amount}
-                </Typography>
+                {data.Negotiation?.length && (
+                  <Typography variant="h4" color="primary">
+                    $
+                    {
+                      data.Negotiation[data.Negotiation.length - 1]
+                        .caregiver_counter_offer
+                    }
+                  </Typography>
+                )}
               </Box>
               <Box
                 display="flex"

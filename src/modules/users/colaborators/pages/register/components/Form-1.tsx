@@ -10,6 +10,10 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { TermsAndConditionsModal } from "./TermsAndConditionsModal";
 import { FormData } from "@/ts/types/api/collaborator/requestData";
 import { FormikErrors, FormikTouched } from "formik";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { colorPalette } from "@/style/partials/colorPalette";
 
 interface RegisterFormProps {
   values: FormData;
@@ -45,6 +49,10 @@ export const RegisterForm = ({
   onFormDataChange,
 }: RegisterFormProps) => {
   const [open, setOpen] = useState(false);
+
+  const handleDateChange = (field: string) => (value: Dayjs | null) => {
+    onFormDataChange(field, value ? value.toISOString() : null);
+  };
 
   const handleFormChange =
     (field: string) => (event: ChangeEvent<HTMLInputElement> | any) => {
@@ -126,17 +134,16 @@ export const RegisterForm = ({
           desktop: "row",
         }}
       >
-        <B4CTextfield
-          id="birthDate"
-          label="Fecha de nacimiento"
-          name="birthDate"
-          value={values.birthDate}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          touched={touched.birthDate}
-          error={touched.birthDate && Boolean(errors.birthDate)}
-          helper={touched.birthDate && errors.birthDate}
-        />
+        {/* Reemplazamos el campo de texto por un DatePicker */}
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+          <DatePicker
+            name="birthDate"
+            label="Fecha de nacimiento"
+            value={values.birthDate ? dayjs(values.birthDate) : null}
+            onChange={handleDateChange("birthDate")}
+            sx={{ width: "100%" }}
+          />
+        </LocalizationProvider>
         <B4CSelect
           label="Género"
           name="gender"

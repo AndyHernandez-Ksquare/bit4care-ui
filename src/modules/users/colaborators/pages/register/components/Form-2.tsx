@@ -5,6 +5,7 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CCheckbox } from "@/components/Selectors/B4CCheckbox";
 import { workSpecialityOptions } from "@/constants/workSpecialities";
 import { yesOrNoOptions } from "@/constants/yesOrNoOptions";
+import { specialityOptions } from "@/modules/users/clients/pages/ClientsNewService/utils/specialityOptions";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { FormData } from "@/ts/types/api/collaborator/requestData";
 import { Box, Typography } from "@mui/material";
@@ -51,20 +52,6 @@ export const RegisterFormPart2 = ({
       onFormDataChange(field, value || null);
     };
 
-  const onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-
-    const updatedSpecialities = checked
-      ? [
-          ...values.specialities,
-          { value, label: event.target?.labels?.[0]?.innerText || "" },
-        ]
-      : values.specialities.filter((speciality) => speciality.value !== value);
-
-    console.log(updatedSpecialities); // Depuración
-    onFormDataChange("specialities", updatedSpecialities, true);
-  };
-
   useEffect(() => {
     const isPartialFormValid =
       !errors.curp &&
@@ -72,10 +59,9 @@ export const RegisterFormPart2 = ({
       !errors.nss &&
       !errors.driversLicense &&
       !errors.typeOfLicense &&
-      !errors.workSpeciality &&
       !errors.experienceYears &&
       !errors.motivationLetter &&
-      values.specialities.length > 0;
+      !errors.speciality;
     onFormValidChange(isPartialFormValid);
   }, [errors, values, onFormValidChange]);
 
@@ -151,36 +137,23 @@ export const RegisterFormPart2 = ({
         />
       </Box>
 
-      <Box mt={24}>
-        <B4CRadioButtonGroup
-          title="Especialidad de trabajo"
-          options={Object.keys(workSpecialityOptions).map(
-            (key) => key.charAt(0).toUpperCase() + key.slice(1),
-          )}
-          name="workSpeciality"
-          value={values.workSpeciality}
+      <Box mt={24} display="flex" gap={24} justifyContent="space-between">
+        <B4CSelect
+          label="¿Cuentas con un grado académico en tu especialidad?"
+          name="certified"
+          value={values.certified}
+          options={yesOrNoOptions}
           onChange={handleChange}
-          row
+          error={touched.certified && !!errors.certified}
         />
-      </Box>
-
-      <Box mt={24} display="flex" flexDirection="column" gap={16}>
-        <Typography variant="body-normal-bold" color={colorPalette.black1}>
-          Especialidades
-        </Typography>
-        <Box>
-          {workSpecialityOptions[values.workSpeciality]?.map((speciality) => (
-            <B4CCheckbox
-              key={speciality.value}
-              label={speciality.label}
-              value={speciality.value}
-              checked={values.specialities.some(
-                (s) => s.value === speciality.value,
-              )}
-              onChange={onChangeCheckbox}
-            />
-          ))}
-        </Box>
+        <B4CSelect
+          label="Selecciona tu especialidad"
+          name="speciality"
+          value={values.speciality}
+          options={specialityOptions}
+          onChange={handleChange}
+          error={touched.speciality && !!errors.speciality}
+        />
       </Box>
 
       <Box mt={24}>

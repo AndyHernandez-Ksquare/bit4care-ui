@@ -171,6 +171,21 @@ export const MakeNegotiation = async (
   }
 };
 
+export const AcceptNegotiation = async (id: string) => {
+  try {
+    const response: AxiosResponse<Negotiation> = await axios.patch(
+      `/${Entity}/negotiation/accept/${id}`,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error making negotiation:", error);
+    throw error;
+  }
+};
+
 export const MarkAsNotInterested = async (appRequestId: string) => {
   try {
     const response: AxiosResponse<unknown> = await axios.put(
