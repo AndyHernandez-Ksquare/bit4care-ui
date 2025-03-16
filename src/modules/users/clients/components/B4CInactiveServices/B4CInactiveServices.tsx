@@ -66,14 +66,14 @@ export const B4CInactiveServices = () => {
                 size={{ xs: 12, desktop: 6 }}
                 key={`active-service-grid-${index}`}
               >
-                <B4CClientServiceCard
+                {/* <B4CClientServiceCard
                   key={`${id}-${index}`}
                   id={id}
                   carerName={patient_name}
                   address={address}
                   service={description}
                   status={status as Status}
-                />
+                /> */}
               </Grid>
             ),
           )}

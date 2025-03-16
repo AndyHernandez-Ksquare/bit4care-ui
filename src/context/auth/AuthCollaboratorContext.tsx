@@ -24,6 +24,7 @@ export const AuthCollaboratorProvider = ({ children }: ProviderProps) => {
     } catch (error) {
       console.error("Error obteniendo el usuario:", error);
       setIsCollaboratorAuthenticated(false);
+      localStorage.clear();
     }
   };
 

@@ -94,6 +94,7 @@ export const B4CClientActiveServices = () => {
                   service={description}
                   status={status as Status}
                   isAssigned={!!carer}
+                  negotiation={carer?.Negotiation}
                   amount={amount}
                 />
               </Grid>

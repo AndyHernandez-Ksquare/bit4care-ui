@@ -13,6 +13,7 @@ import { Roles } from "@/ts/enums";
 import "./ClientLogin.css";
 import { useClientAuth } from "@/context/auth/constants/useClientAuth";
 import { useClientSession } from "@/context/auth/constants/useClientSession";
+import { useClientApi } from "@/context/api/constans/useClientApi";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -56,7 +57,7 @@ export const ClientLogin = () => {
             if (userSessionData.role === Roles.Client) {
               localStorage.setItem("clientToken", clientResponse.token);
               setToken(clientResponse.token);
-              console.log("Cliente conectado:", userSessionData);
+              // console.log("Cliente conectado:", userSessionData);
               onClose(); // Cierra el modal
               setTimeout(() => {
                 navigate("/cliente");

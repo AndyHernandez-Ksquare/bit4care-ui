@@ -1,4 +1,5 @@
 import { Status } from "@/ts/types/components";
+import { Negotiation } from "../api/applicationRequest";
 
 export interface B4CClientServicesCardProps {
   id: number;
@@ -13,4 +14,5 @@ export interface B4CClientServicesCardProps {
   carerSpecialty?: string | null;
   amount: number;
   carerDescription: string | undefined;
+  negotiation: Negotiation[] | null | undefined;
 }

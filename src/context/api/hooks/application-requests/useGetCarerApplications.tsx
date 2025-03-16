@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import { GetOneApplication } from "@/ts/types/api/applicationRequest";
+import {
+  GetAllApplication,
+  GetOneApplication,
+} from "@/ts/types/api/applicationRequest";
 import { GetCarerRequests } from "@/services/applicationRequestServices/ApplicationRequestServices";
 import { AxiosError } from "axios";
 

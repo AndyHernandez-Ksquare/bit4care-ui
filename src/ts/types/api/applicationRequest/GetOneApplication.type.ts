@@ -1,3 +1,6 @@
+import { User } from "../shared";
+import { Negotiation } from "./Negotiation.type";
+
 export interface GetOneApplication {
   id: number;
   status: string;
@@ -29,6 +32,11 @@ export interface GetOneApplication {
   updatedAt: string;
   Negotiation: Negotiation[] | null; // Si tiene una estructura específica, se debe tipar mejor
   Complaint: any[];
+  carer: {
+    description: string;
+    User: User;
+    Negotiation: Negotiation[] | null;
+  } | null;
   WorkShift: {
     id: number;
     start_hour: string;
@@ -37,17 +45,4 @@ export interface GetOneApplication {
     createdAt: string;
     updatedAt: string;
   }[];
-}
-
-export interface Negotiation {
-  id: number;
-  applicationRequestId: number;
-  offer_by_client: number;
-  caregiver_counter_offer: number;
-  final_rate: number;
-  status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | string; // Ajusta según los posibles estados
-  last_modifier_user_id: number;
-  carerId: number;
-  createdAt: string; // Fecha en formato ISO
-  updatedAt: string; // Fecha en formato ISO
 }

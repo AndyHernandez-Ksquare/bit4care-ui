@@ -1,5 +1,5 @@
 import { Box, SxProps, Tab, Tabs, Theme, Typography } from "@mui/material";
-import { B4CReviewComponent } from "../../../components/B4CReviewComponent";
+// import { B4CReviewComponent } from "../../../components/B4CReviewComponent";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { SyntheticEvent, useState } from "react";
 import { CarerReview } from "@/ts/types/api/client";
@@ -72,7 +72,7 @@ export const ClientAboutAndReview = ({
       )}
       {tabValue === 1 &&
         (reviews?.length ? (
-          <B4CReviewComponent reviews={reviews} />
+          <div></div>
         ) : (
           <Box sx={{ width: "100%", display: "flex", padding: "1rem" }}>
             <Typography variant="body-small" sx={{ marginInline: "auto" }}>

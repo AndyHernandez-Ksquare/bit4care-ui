@@ -3,13 +3,13 @@ import { ProceedWithPayment } from "@/services/applicationRequestServices/Applic
 import { AxiosError } from "axios";
 import { GetAllApplication } from "@/ts/types/api/applicationRequest";
 
-export const useNotInterested = () => {
+export const useProceedWithPayment = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [applicationInterest, setApplicationInterest] =
     useState<GetAllApplication | null>(null);
 
-  const useMarkAsInterested = async (appRequestId: string) => {
+  const proceedWithPayment = async (appRequestId: string) => {
     setLoading(true);
     setError(null);
 
@@ -24,5 +24,5 @@ export const useNotInterested = () => {
     }
   };
 
-  return { useMarkAsInterested, loading, error, applicationInterest };
+  return { proceedWithPayment, loading, error, applicationInterest };
 };

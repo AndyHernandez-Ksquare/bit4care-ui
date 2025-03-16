@@ -1,3 +1,5 @@
+import { Negotiation } from "../api/applicationRequest";
+
 export type Status =
   | "pending"
   | "accepted"
@@ -19,5 +21,6 @@ export interface ColaboratorsServicesCardProps {
   b4cfee?: number;
   profile_picture_url?: string;
   isAssigned?: boolean;
+  negotiation?: Negotiation[] | null;
   onClick?: () => void;
 }

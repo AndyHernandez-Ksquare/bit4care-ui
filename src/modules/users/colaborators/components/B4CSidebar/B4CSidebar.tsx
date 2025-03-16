@@ -7,8 +7,17 @@ import "./B4CSiderbar.css";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore"; // Para "Explorar servicios"
 import HandshakeIcon from "@mui/icons-material/Handshake"; // Para "Mis asignaciones"
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { useCollaboratorSession } from "@/context/auth/constants/useCollabSession";
 
 export const B4CSidebar = () => {
+  const { setToken } = useCollaboratorSession();
+
+  const handleLogout = (): void => {
+    // Limpiar el localStorage y cualquier otro paso de cierre de sesión
+    localStorage.clear();
+    setToken(null);
+  };
+
   return (
     <Box className="sidebar-main-container" height={"80vh"}>
       <List
@@ -45,9 +54,7 @@ export const B4CSidebar = () => {
         <ListItemLink
           icon={<LogoutIcon />}
           label="Cerrar Sesión"
-          onClick={() => {
-            window.location.href = "/";
-          }}
+          onClick={handleLogout}
         />
       </Box>
     </Box>

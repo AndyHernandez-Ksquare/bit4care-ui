@@ -33,6 +33,7 @@ export const ColaboratorsServicesCard = ({
   schedule,
   address,
   service,
+  negotiation,
   status,
   skills,
   isAssigned = false,
@@ -48,7 +49,7 @@ export const ColaboratorsServicesCard = ({
     "no realizado": { color: "error", label: "No Realizado" },
     solicitado: { color: "warning", label: "Solicitado" },
     active_negotiation: { color: "info", label: "En negociación" },
-    active: { color: "info", label: "Activo" },
+    active: { color: "success", label: "Agendado" },
   };
 
   const normalizedStatus = status.toLowerCase() as Status;
@@ -81,7 +82,26 @@ export const ColaboratorsServicesCard = ({
     }
   };
 
+  const filteredNegotiations =
+    negotiation?.filter((item) => item.applicationRequestId === parseInt(id)) ||
+    [];
+
+  const amount = fee - b4cfee;
+
+  const priceToDisplay = filteredNegotiations.length
+    ? filteredNegotiations[filteredNegotiations.length - 1]
+        .caregiver_counter_offer
+    : amount;
+
+  const canCarerOffer = filteredNegotiations.length
+    ? filteredNegotiations[filteredNegotiations.length - 1]
+        .last_modifier_role === "CARER"
+    : false;
+
   useEffect(() => {
+    console.log(id);
+    console.log(filteredNegotiations);
+    console.log(canCarerOffer);
     status = status.toLowerCase() as Status;
   }, []);
   return (
@@ -230,7 +250,7 @@ export const ColaboratorsServicesCard = ({
                 textWrap: "balance",
               }}
             >
-              Recibirás <strong>${fee - b4cfee}</strong> por el servicio
+              Recibirás <strong>${priceToDisplay}</strong> por el servicio
             </Typography>
           </Grid>
           <Grid
@@ -356,6 +376,7 @@ export const ColaboratorsServicesCard = ({
               label="Negociar Oferta (Bid)"
               variant="secondary"
               fullWidth
+              disabled={canCarerOffer}
               onClick={() => setOpenNegotiateModal(true)}
             />
           )}

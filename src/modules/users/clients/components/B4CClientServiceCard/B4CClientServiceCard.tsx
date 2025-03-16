@@ -6,12 +6,10 @@ import {
   Alert,
   Avatar,
   Box,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
   Grid2 as Grid,
   Snackbar,
   Typography,
@@ -26,11 +24,12 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { useDeleteApplicationRequest } from "@/context/api/hooks/application-requests/useDeleteApplicationRequest";
 import { B4CViewColabModal } from "./components/B4CViewColabModal";
 import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
+import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
 
 export const B4CClientServiceCard = ({
   id,
@@ -45,12 +44,14 @@ export const B4CClientServiceCard = ({
   isAssigned = false,
   amount,
   carerDescription,
+  negotiation,
 }: B4CClientServicesCardProps) => {
   const statusTagInfo: { [key: string]: { color: string; label: string } } = {
     pending: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
     accepted: { color: "success", label: "Aceptado" },
     active_negotiation: { color: "info", label: "En negociación" },
+    active: { color: "success", label: "Agendado" },
   };
 
   // Estado para controlar la apertura del modal de cancelacion
@@ -85,6 +86,12 @@ export const B4CClientServiceCard = ({
     navigate(`/cliente/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
   };
 
+  const handlePayment = () => {
+    navigate("/cliente/agendar-y-pagar", {
+      state: { appId: id, amount: priceToDisplay, carerName: carerName },
+    });
+  };
+
   const { deleteApplicationRequest } = useDeleteApplicationRequest();
 
   // Función para abrir y cerrar el modal
@@ -117,11 +124,26 @@ export const B4CClientServiceCard = ({
     setOpenCancelModal(false);
   };
 
+  // Filtrar negociaciones según el applicationRequestId
+  const filteredNegotiations =
+    negotiation?.filter((item) => item.applicationRequestId === id) || [];
+
+  const priceToDisplay = filteredNegotiations.length
+    ? filteredNegotiations[filteredNegotiations.length - 1]
+        .caregiver_counter_offer
+    : amount;
+
+  const canClientOffer = filteredNegotiations.length
+    ? filteredNegotiations[filteredNegotiations.length - 1]
+        .last_modifier_role === "CLIENT"
+    : false;
+
   return (
     <>
       <Box
         sx={{
-          maxWidth: "615px",
+          maxHeight: "615px",
+          height: { desktop: "400px" },
           border: `1px solid ${colorPalette.grey5}`,
           borderRadius: "20px",
           padding: "24px",
@@ -134,7 +156,9 @@ export const B4CClientServiceCard = ({
         <Box
           sx={{
             display: "flex",
+
             flexDirection: { xs: "column", desktop: "row" },
+            flexGrow: 1,
             justifyContent: "space-between",
             alignItems: { xs: "start", desktop: "center" },
             gap: { xs: spacings.spacing2, desktop: spacings.spacing0 },
@@ -213,7 +237,7 @@ export const B4CClientServiceCard = ({
               {new Intl.NumberFormat("es-MX", {
                 style: "currency",
                 currency: "MXN",
-              }).format(amount)}
+              }).format(priceToDisplay)}
             </Typography>
           </Grid>
           <Grid
@@ -264,6 +288,7 @@ export const B4CClientServiceCard = ({
                   fullWidth
                   size={Size.Small}
                   label="Pagar solicitud"
+                  onClick={handlePayment}
                 />
               )}
               {isNegotiationActive && (
@@ -272,6 +297,7 @@ export const B4CClientServiceCard = ({
                   fullWidth
                   size={Size.Small}
                   label="Negociar"
+                  disabled={canClientOffer}
                   onClick={handleOpenCloseNegotiationModal}
                 />
               )}

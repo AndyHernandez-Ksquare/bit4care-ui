@@ -1,5 +1,5 @@
 import { B4CFooter } from "@/components/B4CFooter.tsx";
-import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
+import { B4CLandingPageNavBar } from "@/components/B4CLandingPageNavBar/B4CLandingPageNavBar";
 import { TermsText } from "@/modules/users/colaborators/pages/register/components/termsText";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box, Typography } from "@mui/material";
@@ -19,7 +19,7 @@ export const TermsAndConditionsPage = () => {
           flexWrap: "wrap",
         }}
       >
-        <NavBar alternative />
+        <B4CLandingPageNavBar alternative />
         <Box mt={60} textAlign="center">
           <Typography variant="h4" gutterBottom mt={90}>
             Términos y Condiciones

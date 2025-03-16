@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
@@ -13,6 +13,10 @@ import { getSkills } from "@/constants/getSkillsForCarerCard";
 export const ActiveServices = () => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
   const { carerApplications } = useGetCarerApplications();
+
+  useEffect(() => {
+    console.log(carerApplications);
+  }, []);
   return (
     <Box
       sx={{
@@ -34,6 +38,7 @@ export const ActiveServices = () => {
             fee={colaborator.amount}
             comments={colaborator.description}
             b4cfee={colaborator.commision}
+            negotiation={colaborator.carer?.Negotiation}
             hours={colaborator.job_interval}
             address={colaborator.address}
             service={colaborator.carer_speciality || "No especificado"}

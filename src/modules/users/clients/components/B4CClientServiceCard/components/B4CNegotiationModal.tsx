@@ -2,6 +2,7 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { formatDateOnly } from "@/constants/formatDate";
+import { useAcceptNegotiation } from "@/context/api/hooks/application-requests/useAcceptNegotiation";
 import { useGetOneAppRequest } from "@/context/api/hooks/application-requests/useGetOneAppRequest";
 import { useMakeNegotiation } from "@/context/api/hooks/application-requests/useMakeNegotiation";
 import { colorPalette } from "@/style/partials/colorPalette";
@@ -37,6 +38,8 @@ export const B4CNegotiationModal = ({
   const { data, getOneAppLoading, error } = useGetOneAppRequest(appRequestId);
 
   const [clientOffer, setClientOffer] = useState<string>("");
+
+  const { acceptNegotiation } = useAcceptNegotiation();
 
   // Hook para realizar la negociación (contraoferta)
   const {
@@ -76,6 +79,12 @@ export const B4CNegotiationModal = ({
       console.error("Error en contraofertar:", err);
     }
   };
+
+  // Definir el último elemento de Negotiation si existe y tiene elementos
+  const lastNegotiation =
+    data?.Negotiation && data.Negotiation.length > 0
+      ? data.Negotiation[data.Negotiation.length - 1]
+      : null;
 
   return (
     <B4CModal open={open} onClose={onClose}>
@@ -148,12 +157,15 @@ export const B4CNegotiationModal = ({
                 <Box display="flex" alignItems="center">
                   <CalendarMonth color="primary" />
                   <Typography variant="body2">
-                    {data.start_date} - {data.end_date}
+                    {formatDateOnly(data.start_date)} -{" "}
+                    {formatDateOnly(data.end_date)}
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center">
                   <AttachMoney color="primary" />
-                  <Typography variant="body2">${data.amount}</Typography>
+                  <Typography variant="body2">
+                    {lastNegotiation?.caregiver_counter_offer ?? "N/A"}
+                  </Typography>
                 </Box>
               </Box>
               <Box display="flex" flexDirection="column" gap="1rem">
@@ -183,13 +195,13 @@ export const B4CNegotiationModal = ({
                 <Typography variant="body2" fontWeight="bold">
                   Oferta actual
                 </Typography>
-                {data.Negotiation?.length && (
+                {lastNegotiation ? (
                   <Typography variant="h4" color="primary">
-                    $
-                    {
-                      data.Negotiation[data.Negotiation.length - 1]
-                        .caregiver_counter_offer
-                    }
+                    ${lastNegotiation.caregiver_counter_offer}
+                  </Typography>
+                ) : (
+                  <Typography variant="h4" color="primary">
+                    N/A
                   </Typography>
                 )}
               </Box>
@@ -234,7 +246,14 @@ export const B4CNegotiationModal = ({
 
             <B4CButton
               size={Size.Small}
-              label="Pagar y agendar servicio"
+              label="Aceptar servicio"
+              onClick={() => {
+                if (data?.Negotiation && data.Negotiation.length > 0) {
+                  acceptNegotiation(
+                    data.Negotiation[data.Negotiation.length - 1].id.toString(),
+                  );
+                }
+              }}
               fullWidth
             />
             {negotiationError && (
