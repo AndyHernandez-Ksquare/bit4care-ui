@@ -1,4 +1,5 @@
 import { User } from "../shared";
+import { Negotiation } from "./Negotiation.type";
 
 export interface GetAllApplication {
   id: number;
@@ -12,12 +13,13 @@ export interface GetAllApplication {
   description: string;
   comments?: string;
   amount: number;
-  carerId: number;
+  carerId: number | null;
   createdAt: string;
   updatedAt: string;
   carer_speciality: string | null;
   carer: {
     description: string;
     User: User;
+    Negotiation: Negotiation[] | null;
   } | null;
 }

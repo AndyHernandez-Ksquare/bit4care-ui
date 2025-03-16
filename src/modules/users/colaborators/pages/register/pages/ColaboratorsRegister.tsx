@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SnackbarBlock from "@/components/B4CSnackBarBlock";
 import { Box, Typography } from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
@@ -8,50 +9,65 @@ import { RegisterForm } from "../components/Form-1";
 import { RegisterFormPart2 } from "../components/Form-2";
 import { RegisterFormPart3 } from "../components/Form-3";
 import { assembleRequestData } from "../functions/assemblyForm";
-import { collaboratorsRegisterService } from "@/services/collaboratorsServices/register/collaborator.service";
-import { FormData1, FormData2 } from "@/ts/types/api/collaborator/requestData";
+import { FormData } from "@/ts/types/api/collaborator/requestData";
 import { Layout } from "../components/Layout";
 import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile";
+import { useFormik } from "formik";
+import { CarerValidationSchema } from "../validators/CarerValidationSchema";
+import { useSnackbar } from "@/context/ui/SnackbarContext";
 
 function ColaboratorsRegister() {
+  const navigate = useNavigate();
   const [canContinue, setCanContinue] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
 
-  const { createCarerProfile } = useCreateCarerProfile();
+  const formik = useFormik<FormData>({
+    initialValues: {
+      name: "",
+      lastName: "",
+      email: "",
+      password: "",
+      birthDate: "",
+      direction: "",
+      gender: "",
+      maritalStatus: "",
+      nacionality: "",
+      postalCode: "",
+      neighborhood: "",
+      state: "",
+      curp: "",
+      rfc: "",
+      nss: "",
+      driversLicense: "no",
+      certified: "no",
+      typeOfLicense: "",
+      experienceYears: "",
+      speciality: "",
+      motivationLetter: "",
+      acceptedTerms: false,
+      confirmedPassword: "",
+    },
+    validationSchema: CarerValidationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
-  const [formDataStep1, setFormDataStep1] = useState<FormData1>({
-    name: "",
-    lastName: "",
-    email: "",
-    password: "",
-    birthDate: "",
-    direction: "",
-    gender: "",
-    maritalStatus: "",
-    nacionality: "",
-    postalCode: "",
-    neighborhood: "",
-    state: "",
-  });
-  const [formDataStep2, setFormDataStep2] = useState<FormData2>({
-    curp: "",
-    rfc: "",
-    nss: "",
-    driversLicense: "",
-    experienceYears: "",
-    specialities: [],
-    motivationLetter: "",
-  });
+  const { createCarerProfile } = useCreateCarerProfile();
+  const { open } = useSnackbar();
 
   const handleContinue = async () => {
     if (currentStep < 2) {
       setCurrentStep(currentStep + 1);
     } else if (currentStep === 2) {
-      const requestData = assembleRequestData(formDataStep1, formDataStep2);
+      const requestData = assembleRequestData(formik.values, formik.values);
       try {
+        console.log("Enviando solicitud:", requestData);
         const response = await createCarerProfile(requestData);
-        console.log("Registro exitoso:", response);
+        open("Solicitud enviada con éxito", "success");
+        navigate("/colaborador/login");
       } catch (error) {
+        open("Error al enviar la solicitud", "error");
         console.error("Error en el registro:", error);
       }
     }
@@ -97,14 +113,24 @@ function ColaboratorsRegister() {
         {/* Formulario */}
         {currentStep === 0 && (
           <RegisterForm
+            values={formik.values}
+            errors={formik.errors}
+            touched={formik.touched}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
             onFormValidChange={setCanContinue}
-            onFormDataChange={setFormDataStep1}
+            onFormDataChange={formik.setFieldValue}
           />
         )}
         {currentStep === 1 && (
           <RegisterFormPart2
+            values={formik.values}
+            errors={formik.errors}
+            touched={formik.touched}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
             onFormValidChange={setCanContinue}
-            onFormDataChange={setFormDataStep2}
+            onFormDataChange={formik.setFieldValue}
           />
         )}
         {currentStep === 2 && (
@@ -123,7 +149,11 @@ function ColaboratorsRegister() {
           Tu solicitud está sujeta a aprobación.
         </Typography>
         <B4CButton
-          label="Continuar con la solicitud"
+          label={
+            currentStep === 2
+              ? "Enviar solicitud"
+              : "Continuar con la solicitud"
+          }
           disabled={!canContinue}
           onClick={handleContinue}
         />

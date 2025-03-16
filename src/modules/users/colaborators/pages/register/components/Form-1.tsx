@@ -8,72 +8,86 @@ import { nacionalitiesOptions } from "@/constants/nacionality";
 import { Box, Link, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { TermsAndConditionsModal } from "./TermsAndConditionsModal";
-import { FormData1 } from "@/ts/types/api/collaborator/requestData";
+import { FormData } from "@/ts/types/api/collaborator/requestData";
+import { FormikErrors, FormikTouched } from "formik";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { colorPalette } from "@/style/partials/colorPalette";
 
 interface RegisterFormProps {
+  values: FormData;
+  touched: FormikTouched<FormData>;
+  errors: FormikErrors<FormData>;
+  handleChange: {
+    (e: React.ChangeEvent<any>): void;
+    <T_1 = string | React.ChangeEvent<any>>(
+      field: T_1,
+    ): T_1 extends React.ChangeEvent<any>
+      ? void
+      : (e: string | React.ChangeEvent<any>) => void;
+  };
+  handleBlur: {
+    (e: React.FocusEvent<any, Element>): void;
+    <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
+  };
   onFormValidChange: (isValid: boolean) => void;
-  onFormDataChange: (data: FormData1) => void;
+  onFormDataChange: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean,
+  ) => Promise<void> | Promise<FormikErrors<FormData>>;
 }
 
 export const RegisterForm = ({
+  values,
+  touched,
+  errors,
   onFormValidChange,
+  handleChange,
+  handleBlur,
   onFormDataChange,
 }: RegisterFormProps) => {
   const [open, setOpen] = useState(false);
-  const [formState, setFormState] = useState({
-    name: "",
-    lastName: "",
-    birthDate: "",
-    gender: "",
-    email: "",
-    password: "",
-    confirmedPassword: "",
-    direction: "",
-    postalCode: "",
-    neighborhood: "",
-    state: "",
-    nacionality: "",
-    maritalStatus: "",
-    acceptedTerms: false,
-  });
 
-  const handleChange = (event: { target: { name: string; value: string } }) => {
-    const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
+  const handleDateChange = (field: string) => (value: Dayjs | null) => {
+    onFormDataChange(field, value ? value.toISOString() : null);
   };
+
+  const handleFormChange =
+    (field: string) => (event: ChangeEvent<HTMLInputElement> | any) => {
+      let value = event?.target?.value ?? event; // Si es un evento, toma `event.target.value`
+      console.log(field, value); // Depuración
+      onFormDataChange(field, value || null);
+    };
 
   const handleOpenModal = () => {
-    setOpen(true);
+    setOpen(!open);
   };
 
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
-
-  const onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
-    setFormState({ ...formState, acceptedTerms: event.target.checked });
-  };
-
+  // Efecto para verificar la validez del formulario parcial
   useEffect(() => {
-    const isFormValid =
-      Object.values(formState).every((value) => value) &&
-      formState.acceptedTerms === true &&
-      formState.password === formState.confirmedPassword;
+    const isPartialFormValid =
+      !errors.name &&
+      !errors.lastName &&
+      !errors.birthDate &&
+      !errors.gender &&
+      !errors.email &&
+      !errors.password &&
+      !errors.confirmedPassword &&
+      !errors.direction &&
+      !errors.postalCode &&
+      !errors.neighborhood &&
+      !errors.state &&
+      !errors.nacionality &&
+      !errors.maritalStatus &&
+      values.acceptedTerms; // Verifica si los términos están aceptados
 
-    onFormValidChange(isFormValid);
-    onFormDataChange(formState);
-  }, [formState, onFormDataChange, onFormValidChange]);
-
-  const passwordsMatch = formState.password === formState.confirmedPassword;
-
-  console.log(formState);
+    onFormValidChange(isPartialFormValid);
+  }, [errors, values, onFormValidChange]);
 
   return (
-    <Box
-      component={"form"}
-      onSubmit={() => console.log("Enviar formulario")}
-      sx={{ px: 12, py: 24 }}
-    >
+    <Box sx={{ px: 12, py: 24 }}>
       <Typography>
         Comienza por introducir tus <strong>datos personales</strong>
       </Typography>
@@ -88,16 +102,26 @@ export const RegisterForm = ({
         }}
       >
         <B4CTextfield
-          label="Nombre"
+          id="name"
           name="name"
-          value={formState.name}
+          label="Nombre"
+          value={values.name}
           onChange={handleChange}
+          onBlur={handleBlur} // Importante para marcar como "touched"
+          touched={touched.name}
+          error={touched.name && Boolean(errors.name)}
+          helper={touched.name && errors.name}
         />
         <B4CTextfield
+          id="lastName"
           label="Apellido(s)"
           name="lastName"
-          value={formState.lastName}
+          value={values.lastName}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.lastName}
+          error={touched.lastName && Boolean(errors.lastName)}
+          helper={touched.lastName && errors.lastName}
         />
       </Box>
       <Box
@@ -110,26 +134,35 @@ export const RegisterForm = ({
           desktop: "row",
         }}
       >
-        <B4CTextfield
-          label="Fecha de nacimiento"
-          name="birthDate"
-          value={formState.birthDate}
-          onChange={handleChange}
-        />
+        {/* Reemplazamos el campo de texto por un DatePicker */}
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+          <DatePicker
+            name="birthDate"
+            label="Fecha de nacimiento"
+            value={values.birthDate ? dayjs(values.birthDate) : null}
+            onChange={handleDateChange("birthDate")}
+            sx={{ width: "100%" }}
+          />
+        </LocalizationProvider>
         <B4CSelect
           label="Género"
           name="gender"
-          value={formState.gender}
+          value={values.gender}
           options={genders}
-          onChange={handleChange}
+          onChange={handleFormChange("gender")}
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CTextfield
+          id="email"
           label="Correo electrónico"
           name="email"
-          value={formState.email}
+          value={values.email}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.email}
+          error={touched.email && Boolean(errors.email)}
+          helper={touched.email && errors.email}
           type="email"
         />
       </Box>
@@ -144,33 +177,41 @@ export const RegisterForm = ({
         }}
       >
         <B4CTextfield
+          id="password"
           label="Contraseña"
           name="password"
-          value={formState.password}
+          value={values.password}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.password}
+          error={touched.password && Boolean(errors.password)}
+          helper={touched.password && errors.password}
+          type="email"
           isPassword={true}
         />
         <B4CTextfield
+          id="confirmedPassword"
           label="Confirmar contraseña"
           name="confirmedPassword"
-          value={formState.confirmedPassword}
+          value={values.confirmedPassword}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.confirmedPassword}
+          error={touched.confirmedPassword && Boolean(errors.confirmedPassword)}
+          helper={touched.confirmedPassword && errors.confirmedPassword}
           isPassword={true}
-          touched={formState.confirmedPassword !== ""}
-          error={!passwordsMatch && formState.confirmedPassword !== ""}
-          helper={
-            !passwordsMatch && formState.confirmedPassword !== ""
-              ? "Las contraseñas no coinciden"
-              : ""
-          }
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CTextfield
           label="Dirección"
           name="direction"
-          value={formState.direction}
+          value={values.direction}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.direction}
+          error={touched.direction && Boolean(errors.direction)}
+          helper={touched.direction && errors.direction}
         />
       </Box>
       <Box
@@ -184,47 +225,60 @@ export const RegisterForm = ({
         }}
       >
         <B4CTextfield
+          id="postalCode"
           label="Código Postal"
           name="postalCode"
-          value={formState.postalCode}
+          value={values.postalCode}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.postalCode}
+          error={touched.postalCode && Boolean(errors.postalCode)}
+          helper={touched.postalCode && errors.postalCode}
         />
         <B4CTextfield
+          id="neighborhood"
           label="Colonia"
           name="neighborhood"
-          value={formState.neighborhood}
+          value={values.neighborhood}
           onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.neighborhood}
+          error={touched.neighborhood && Boolean(errors.neighborhood)}
+          helper={touched.neighborhood && errors.neighborhood}
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CSelect
           label="Estado de residencia"
           name="state"
-          value={formState.state}
+          value={values.state}
           options={statesOptions}
-          onChange={handleChange}
+          onChange={handleFormChange("state")}
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CSelect
           label="Nacionalidad"
           name="nacionality"
-          value={formState.nacionality}
+          value={values.nacionality}
           options={nacionalitiesOptions}
-          onChange={handleChange}
+          onChange={handleFormChange("nacionality")}
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CSelect
           label="Estado Civil"
           name="maritalStatus"
-          value={formState.maritalStatus}
+          value={values.maritalStatus}
           options={maritalStatusOptions}
-          onChange={handleChange}
+          onChange={handleFormChange("maritalStatus")}
         />
       </Box>
       <Box mt={24} display={"flex"} gap={24} justifyContent={"space-between"}>
         <B4CCheckbox
+          name="acceptedTerms"
+          checked={values.acceptedTerms}
+          onChange={handleChange}
           label={
             <Typography variant="body-normal">
               Acepto los{" "}
@@ -239,11 +293,9 @@ export const RegisterForm = ({
               </Link>
             </Typography>
           }
-          checked={formState.acceptedTerms}
-          onChange={onChangeCheckbox}
         />
       </Box>
-      <TermsAndConditionsModal open={open} handleClose={handleCloseModal} />
+      <TermsAndConditionsModal open={open} handleClose={handleOpenModal} />
     </Box>
   );
 };

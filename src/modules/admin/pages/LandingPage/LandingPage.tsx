@@ -2,8 +2,8 @@ import Visuals from "@/assets/images/Visuals.png";
 import { B4CBenefitsCard } from "@/components/B4CBenefitsCard";
 import { B4CButton } from "@/components/B4CButton";
 import { B4CFooter } from "@/components/B4CFooter.tsx";
+import { B4CLandingPageNavBar } from "@/components/B4CLandingPageNavBar/B4CLandingPageNavBar";
 import { benefits } from "@/constants/benefits";
-import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums";
 import { Box, Grid2 as Grid, Typography } from "@mui/material";
@@ -16,7 +16,7 @@ export const LandingPage = () => {
           background: colorPalette.backgroundLinearGradient,
         }}
       >
-        <NavBar alternative />
+        <B4CLandingPageNavBar alternative />
         <Grid
           container
           mt={{

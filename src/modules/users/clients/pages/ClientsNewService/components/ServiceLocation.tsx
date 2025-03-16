@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const googleLibraries: Library[] = ["places", "geometry"];
 
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAPS_API_KEY = "AIzaSyCK4QwPfMHi-8SXl6s8UaX0L4q4LymW4a0";
 
 const base_google_url =
   "https://maps.googleapis.com/maps/api/geocode/json?latlng=";

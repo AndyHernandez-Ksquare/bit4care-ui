@@ -21,11 +21,10 @@ export const assembleRequestData = (
     CURP: formData2.curp,
     RFC: formData2.rfc,
     NSS: formData2.nss,
-    has_driving_license: formData2.driversLicense === "Sí",
+    has_driving_license: formData2.driversLicense === "yes",
+    //certified: formData2.certified === "yes",
     years_of_experience: parseYearsOfExperience(formData2.experienceYears),
-    speciality: formData2.specialities
-      .map((s: { label: string }) => s.label)
-      .join(", "),
+    speciality: formData2.speciality,
     motivation_letter: formData2.motivationLetter,
     // Datos mock
     payment_range: "5000-7000",

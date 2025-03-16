@@ -42,6 +42,7 @@ export const clientsRouter: RouteObject[] = [
             path: `/cliente/mis-servicios/:id`,
             element: <B4CClientsNewService mode="edit" />,
           },
+
           {
             path: "/cliente/ajustes-y-perfil",
             element: <ClientsAccount />,
@@ -56,7 +57,7 @@ export const clientsRouter: RouteObject[] = [
     element: <ClientLogin />,
   },
   {
-    path: "/clientepago",
+    path: "/cliente/agendar-y-pagar",
     element: <ClientPaymentPage />,
   },
   {

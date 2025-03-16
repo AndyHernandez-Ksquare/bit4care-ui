@@ -52,7 +52,6 @@ export const B4CSelect = ({
         sx={{ marginBottom: spacings.spacing2 }}
       >
         <Select
-          id={name}
           name={name}
           value={value || ""}
           onChange={onChange}

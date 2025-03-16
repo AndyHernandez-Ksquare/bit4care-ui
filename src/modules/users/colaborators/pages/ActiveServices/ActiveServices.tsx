@@ -1,16 +1,22 @@
 import { Box, Typography } from "@mui/material";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 import { Status } from "@/ts/types/components";
 import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
-import { colaboratorsServicesData } from "./mockData";
+import { useGetCarerApplications } from "@/context/api/hooks/application-requests/useGetCarerApplications";
+import { formatDateOnly } from "@/constants/formatDate";
+import { getSkills } from "@/constants/getSkillsForCarerCard";
 
 export const ActiveServices = () => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
+  const { carerApplications } = useGetCarerApplications();
 
+  useEffect(() => {
+    console.log(carerApplications);
+  }, []);
   return (
     <Box
       sx={{
@@ -21,25 +27,25 @@ export const ActiveServices = () => {
         gap: "2rem",
       }}
     >
-      {colaboratorsServicesData.length > 0 ? (
-        colaboratorsServicesData.map((colaborator, index) => (
+      {carerApplications.length > 0 ? (
+        carerApplications.map((colaborator, index) => (
           <ColaboratorsServicesCard
+            data={colaborator} // ✅ Pasar los datos al componente
+            id={`${colaborator.id}`}
             key={index}
-            name={colaborator.name}
-            schedule={colaborator.schedule}
-            fee={colaborator.fee}
-            comments={colaborator.comments}
-            b4cfee={colaborator.b4cfee}
-            hours={colaborator.hours}
+            name={colaborator.patient_name}
+            schedule={`${formatDateOnly(colaborator.start_date)} - ${formatDateOnly(colaborator.end_date)}`}
+            fee={colaborator.amount}
+            comments={colaborator.description}
+            b4cfee={colaborator.commision}
+            negotiation={colaborator.carer?.Negotiation}
+            hours={colaborator.job_interval}
             address={colaborator.address}
-            service={colaborator.service}
-            status={colaborator.status as Status}
-            skills={colaborator.skills}
-            isAssigned={colaborator.isAssigned}
-            profile_picture_url={colaborator.profile_picture_url}
-            onClick={() => {
-              setIsOpenModal(!openModal);
-            }}
+            service={colaborator.carer_speciality || "No especificado"}
+            status={colaborator.status.toLowerCase() as Status}
+            skills={getSkills(colaborator)} // No hay un campo explícito en GetOneApplication, ajustar según sea necesario
+            profile_picture_url={""} // Ajustar si existe una imagen en la API
+            onClick={() => setIsOpenModal(true)}
           />
         ))
       ) : (

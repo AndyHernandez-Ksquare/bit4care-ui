@@ -1,4 +1,5 @@
 import { B4CButton } from "@/components/B4CButton";
+import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
 import {
   Box,
   Checkbox,
@@ -13,12 +14,32 @@ import {
   Typography,
 } from "@mui/material";
 import { ChangeEvent, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const ClientPaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("tarjeta");
 
   const handlePaymentChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(event.target.value);
+  };
+
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const { proceedWithPayment } = useProceedWithPayment();
+  // Asigna valores predeterminados en caso de que no existan
+  const { appId, amount, carerName } = state || {
+    appId: null,
+    amount: 0,
+    carerName: "",
+  };
+
+  // Función para simular el pago y redirigir
+  const handleProceedPayment = async () => {
+    if (!appId) return; // Puedes agregar validaciones adicionales
+    await proceedWithPayment(appId.toString());
+    alert("Simulacion de pago");
+    navigate("/cliente/");
   };
 
   return (
@@ -110,7 +131,11 @@ export const ClientPaymentPage = () => {
                 />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <B4CButton label="Pagar $8100 MXN" fullWidth />
+                <B4CButton
+                  onClick={handleProceedPayment}
+                  label={`Pagar $${amount} MXN`}
+                  fullWidth
+                />
               </Grid>
             </Grid>
           )}
@@ -125,13 +150,15 @@ export const ClientPaymentPage = () => {
               }}
             >
               <Typography variant="body-normal" sx={{ color: "#ACACAC" }}>
-                Transferir $8100 MXN a:
+                {`Transferir $${amount} MXN a`}
               </Typography>
-              <Typography variant="h6">
-                Susana Marta Ortiz de la Cruz
-              </Typography>
+              <Typography variant="h6">{`${carerName}`}</Typography>
               <Typography variant="h5">CLABE: 7658926452917567</Typography>
-              <B4CButton label="Pagar $8100 MXN" fullWidth />
+              <B4CButton
+                onClick={handleProceedPayment}
+                label={`Pagar $${amount} MXN`}
+                fullWidth
+              />
             </Box>
           )}
         </Box>
@@ -164,11 +191,11 @@ export const ClientPaymentPage = () => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               <Typography variant="h6">Servicio de Cuidador/a</Typography>
               <Typography variant="body-medium" sx={{ color: "#ACACAC" }}>
-                María Pérez
+                {`${carerName}`}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <Typography variant="h6">$49.80</Typography>
+              <Typography variant="h6">{`$${amount}`}</Typography>
               <Typography variant="body-medium" sx={{ color: "#ACACAC" }}>
                 5 días (56 horas)
               </Typography>
@@ -184,11 +211,9 @@ export const ClientPaymentPage = () => {
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <Typography variant="body-medium">Subtotal:</Typography>
-              <Typography variant="body-medium">Costos extra: </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <Typography variant="body-medium"> $8100 MXN</Typography>
-              <Typography variant="body-medium">$0</Typography>
+              <Typography variant="body-medium"> {`$${amount}`}</Typography>
             </Box>
           </Box>
           <Divider />
@@ -201,7 +226,7 @@ export const ClientPaymentPage = () => {
               </Typography>
             </Box>
             <Typography variant="h5" sx={{ marginTop: 2 }}>
-              $8100
+              {`$${amount}`}
             </Typography>
           </Box>
         </Box>

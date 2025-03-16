@@ -5,7 +5,8 @@ import { SettingsAndProfile } from "./pages/SettingsAndProfile";
 import ColaboratorsRegister from "./pages/register/pages/ColaboratorsRegister";
 import { ColaboratorLogin } from "./pages/Login";
 import { RouteObject } from "react-router-dom";
-import { QuizPage } from "../quiz/pages/Quiz";
+import { QuizPage } from "./quiz/pages/Quiz";
+import { ServiceRequests } from "./pages/ServiceRequests";
 
 export const colaboratorsRouter: RouteObject[] = [
   {
@@ -18,6 +19,10 @@ export const colaboratorsRouter: RouteObject[] = [
         children: [
           {
             path: "/colaborador/",
+            element: <ServiceRequests />,
+          },
+          {
+            path: "/colaborador/mis-servicios",
             element: <ColaboratorsHome />,
           },
           {

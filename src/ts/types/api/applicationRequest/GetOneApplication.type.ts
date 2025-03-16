@@ -1,3 +1,6 @@
+import { User } from "../shared";
+import { Negotiation } from "./Negotiation.type";
+
 export interface GetOneApplication {
   id: number;
   status: string;
@@ -27,8 +30,13 @@ export interface GetOneApplication {
   is_deleted: boolean;
   createdAt: string;
   updatedAt: string;
-  Negotiation: any[]; // Si tiene una estructura específica, se debe tipar mejor
+  Negotiation: Negotiation[] | null; // Si tiene una estructura específica, se debe tipar mejor
   Complaint: any[];
+  carer: {
+    description: string;
+    User: User;
+    Negotiation: Negotiation[] | null;
+  } | null;
   WorkShift: {
     id: number;
     start_hour: string;

@@ -4,8 +4,8 @@ import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Box, Typography } from "@mui/material";
 import loginClientsImg from "@/assets/images/clients-login.png";
-import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { LoginService } from "@/services/auth/LoginService";
 import { ClientSelfService } from "@/services/clientServices/ClientServices";
@@ -13,6 +13,7 @@ import { Roles } from "@/ts/enums";
 import "./ClientLogin.css";
 import { useClientAuth } from "@/context/auth/constants/useClientAuth";
 import { useClientSession } from "@/context/auth/constants/useClientSession";
+import { useClientApi } from "@/context/api/constans/useClientApi";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -56,8 +57,11 @@ export const ClientLogin = () => {
             if (userSessionData.role === Roles.Client) {
               localStorage.setItem("clientToken", clientResponse.token);
               setToken(clientResponse.token);
-              console.log("Cliente conectado:", userSessionData);
-              navigate(`/cliente`);
+              // console.log("Cliente conectado:", userSessionData);
+              onClose(); // Cierra el modal
+              setTimeout(() => {
+                navigate("/cliente");
+              }, 100); // Pequeño retraso para permitir que se cierre el modal
             }
           }
         }
@@ -72,9 +76,12 @@ export const ClientLogin = () => {
     },
   });
 
-  if (isAuthenticated) {
-    return <Navigate to="/cliente" />;
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/cliente");
+    }
+  }, []);
+
   return (
     <Box display={{ display: "flex", flexDirection: "row", height: "100vh" }}>
       <Box className="left-panel">

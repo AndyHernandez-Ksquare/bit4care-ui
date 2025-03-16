@@ -3,7 +3,7 @@ import { ChangeEventHandler, KeyboardEvent } from "react";
 
 export interface IB4CCheckboxProps {
   disabled?: boolean;
-  checked?: boolean;
+  checked?: boolean | string;
   label?: JSX.Element | string;
   name?: string;
   value?: boolean | string;
@@ -30,7 +30,8 @@ export const B4CCheckbox = ({
     <FormControlLabel
       control={
         <Checkbox
-          checked={checked}
+          id={name}
+          checked={checked === true || checked === "on"}
           disabled={disabled}
           focusRipple={false}
           name={name}

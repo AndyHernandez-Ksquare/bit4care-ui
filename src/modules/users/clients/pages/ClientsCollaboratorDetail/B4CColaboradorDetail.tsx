@@ -11,7 +11,6 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { B4CMakeAppointment } from "../../components/B4CMakeAppointment";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { ClientAboutAndReview } from "./components/ClientAboutAndReview";
 import { Dispatch, SetStateAction } from "react";
@@ -240,7 +239,7 @@ export const B4CColaboradorDetail = ({
           )}
         </Grid>
         <Grid size={{ xs: 12, desktop: 4 }}>
-          <B4CMakeAppointment handleSchedule={handleSchedule} />
+          {/* <B4CMakeAppointment handleSchedule={handleSchedule} /> */}
         </Grid>
       </Grid>
     </>

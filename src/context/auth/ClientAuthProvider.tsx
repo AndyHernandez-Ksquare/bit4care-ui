@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { B4CProviderProps } from "@/ts/types/components/B4CProvider.type";
 import { useClientSession } from "./constants/useClientSession";
 import { ClientSelfService } from "@/services/clientServices/ClientServices";
+import { useClientApi } from "../api/constans/useClientApi";
 
 export const ClientAuthContext = createContext({
   isAuthenticated: false,
@@ -24,6 +25,7 @@ export const ClientAuthProvider = ({ children }: B4CProviderProps) => {
     } catch (error) {
       console.error("Error obteniendo el usuario:", error);
       setIsAuthenticated(false);
+      localStorage.clear();
     }
   };
 

@@ -1,5 +1,6 @@
+import { ClientSelf } from "@/ts/types/api/client";
 import { B4CProviderProps } from "@/ts/types/components/B4CProvider.type";
-import { createContext, useState } from "react";
+import { createContext, SetStateAction, useState } from "react";
 
 interface ClientSessionContextProps {
   token: string | null;

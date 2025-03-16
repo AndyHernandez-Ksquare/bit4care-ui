@@ -1,5 +1,5 @@
 import { B4CFooter } from "@/components/B4CFooter.tsx";
-import { NavBar } from "@/modules/users/colaborators/components/NavBar/NavBar";
+import { B4CLandingPageNavBar } from "@/components/B4CLandingPageNavBar/B4CLandingPageNavBar";
 import { PrivacyPolicy } from "@/modules/users/colaborators/pages/register/components/privacyPolicyText";
 
 import { colorPalette } from "@/style/partials/colorPalette";
@@ -20,7 +20,7 @@ export const PrivacyPolicyPage = () => {
           flexWrap: "wrap",
         }}
       >
-        <NavBar alternative />
+        <B4CLandingPageNavBar alternative />
         <Box mt={60} textAlign="center">
           <Typography variant="h4" gutterBottom mt={90}>
             Política de Privacidad

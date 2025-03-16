@@ -6,12 +6,10 @@ import {
   Alert,
   Avatar,
   Box,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
   Grid2 as Grid,
   Snackbar,
   Typography,
@@ -26,15 +24,17 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
-import { useDeleteApplicationRequest } from "@/context/api/hooks/useDeleteApplicationRequest";
+import { useDeleteApplicationRequest } from "@/context/api/hooks/application-requests/useDeleteApplicationRequest";
 import { B4CViewColabModal } from "./components/B4CViewColabModal";
 import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
+import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
 
 export const B4CClientServiceCard = ({
   id,
   carerName,
+  carerId,
   address,
   service,
   status,
@@ -44,12 +44,14 @@ export const B4CClientServiceCard = ({
   isAssigned = false,
   amount,
   carerDescription,
+  negotiation,
 }: B4CClientServicesCardProps) => {
   const statusTagInfo: { [key: string]: { color: string; label: string } } = {
     pending: { color: "warning", label: "Solicitado" },
     realizado: { color: "success", label: "Realizado" },
     accepted: { color: "success", label: "Aceptado" },
-    "no realizado": { color: "error", label: "No Realizado" },
+    active_negotiation: { color: "info", label: "En negociación" },
+    active: { color: "success", label: "Agendado" },
   };
 
   // Estado para controlar la apertura del modal de cancelacion
@@ -68,6 +70,9 @@ export const B4CClientServiceCard = ({
   // Convertir `status` a string y en minúsculas
   const normalizedStatus = String(status).toLowerCase();
 
+  const isAccepted = normalizedStatus === "accepted";
+  const isNegotiationActive = normalizedStatus === "active_negotiation";
+
   // Convertir fechas a un formato legible
   const formattedStartDate = startDate
     ? dayjs(startDate).format("DD [de] MMMM [de] YYYY")
@@ -79,6 +84,12 @@ export const B4CClientServiceCard = ({
 
   const handleEdit = () => {
     navigate(`/cliente/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
+  };
+
+  const handlePayment = () => {
+    navigate("/cliente/agendar-y-pagar", {
+      state: { appId: id, amount: priceToDisplay, carerName: carerName },
+    });
   };
 
   const { deleteApplicationRequest } = useDeleteApplicationRequest();
@@ -113,11 +124,26 @@ export const B4CClientServiceCard = ({
     setOpenCancelModal(false);
   };
 
+  // Filtrar negociaciones según el applicationRequestId
+  const filteredNegotiations =
+    negotiation?.filter((item) => item.applicationRequestId === id) || [];
+
+  const priceToDisplay = filteredNegotiations.length
+    ? filteredNegotiations[filteredNegotiations.length - 1]
+        .caregiver_counter_offer
+    : amount;
+
+  const canClientOffer = filteredNegotiations.length
+    ? filteredNegotiations[filteredNegotiations.length - 1]
+        .last_modifier_role === "CLIENT"
+    : false;
+
   return (
     <>
       <Box
         sx={{
-          maxWidth: "615px",
+          maxHeight: "615px",
+          height: { desktop: "400px" },
           border: `1px solid ${colorPalette.grey5}`,
           borderRadius: "20px",
           padding: "24px",
@@ -130,7 +156,9 @@ export const B4CClientServiceCard = ({
         <Box
           sx={{
             display: "flex",
+
             flexDirection: { xs: "column", desktop: "row" },
+            flexGrow: 1,
             justifyContent: "space-between",
             alignItems: { xs: "start", desktop: "center" },
             gap: { xs: spacings.spacing2, desktop: spacings.spacing0 },
@@ -153,7 +181,9 @@ export const B4CClientServiceCard = ({
               }}
               alt={isAssigned || carerName ? carerName : undefined}
               src=" image url"
-              onClick={isAssigned ? handleOpenViewColabModal : undefined}
+              onClick={
+                isAssigned && carerId ? handleOpenViewColabModal : undefined
+              }
             />
             <Box>
               <Typography variant="h5" sx={{ color: colorPalette.primary }}>
@@ -170,7 +200,7 @@ export const B4CClientServiceCard = ({
             </Box>
           </Box>
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {isAssigned && <B4CStarRating rating={4} />}
             <B4CTag
               label={statusTagInfo[normalizedStatus].label}
@@ -207,7 +237,7 @@ export const B4CClientServiceCard = ({
               {new Intl.NumberFormat("es-MX", {
                 style: "currency",
                 currency: "MXN",
-              }).format(amount)}
+              }).format(priceToDisplay)}
             </Typography>
           </Grid>
           <Grid
@@ -233,58 +263,69 @@ export const B4CClientServiceCard = ({
             <Typography variant="body-normal">{address}</Typography>
           </Grid>
         </Grid>
-        {isAssigned && (
-          <B4CButton fullWidth size={Size.Small} label="Pagar solicitud" />
-        )}
-        {isAssigned ? (
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              flexDirection: { xs: "column", desktop: "row" },
-              justifyContent: "space-around",
-              gap: "1rem",
-            }}
-          >
-            <B4CButton
-              variant="secondary"
-              fullWidth
-              size={Size.Small}
-              label="Negociar"
-              onClick={handleOpenCloseNegotiationModal}
-            />
-            <B4CButton
-              fullWidth
-              variant="secondary"
-              size={Size.Small}
-              label="Ignorar"
-            />
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              flexDirection: { xs: "column", desktop: "row" },
-              justifyContent: "space-around",
-              gap: "1rem",
-            }}
-          >
-            <B4CButton
-              fullWidth
-              size={Size.Small}
-              label="Editar"
-              onClick={handleEdit}
-            />
-            <B4CButton
-              fullWidth
-              variant="secondary"
-              size={Size.Small}
-              label="Cancelar"
-              onClick={handleOpenCloseCancelModal}
-            />
-          </Box>
-        )}
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            flexDirection: { xs: "column", desktop: "row" },
+            justifyContent: "space-around",
+            gap: "1rem",
+          }}
+        >
+          {isAssigned ? (
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                flexDirection: { xs: "column", desktop: "row" },
+                justifyContent: "space-around",
+                gap: "1rem",
+              }}
+            >
+              {/* Mostrar botón según el status */}
+              {isAccepted && (
+                <B4CButton
+                  fullWidth
+                  size={Size.Small}
+                  label="Pagar solicitud"
+                  onClick={handlePayment}
+                />
+              )}
+              {isNegotiationActive && (
+                <B4CButton
+                  variant="secondary"
+                  fullWidth
+                  size={Size.Small}
+                  label="Negociar"
+                  disabled={canClientOffer}
+                  onClick={handleOpenCloseNegotiationModal}
+                />
+              )}
+              <B4CButton
+                variant="secondary"
+                fullWidth
+                size={Size.Small}
+                label="Ignorar"
+              />
+            </Box>
+          ) : (
+            <>
+              <B4CButton
+                fullWidth
+                size={Size.Small}
+                label="Editar"
+                onClick={handleEdit}
+              />
+              <B4CButton
+                fullWidth
+                variant="secondary"
+                size={Size.Small}
+                label="Cancelar"
+                onClick={handleOpenCloseCancelModal}
+              />
+            </>
+          )}
+        </Box>
       </Box>
 
       <B4CModal open={openCancelModal} onClose={handleOpenCloseCancelModal}>
@@ -305,13 +346,16 @@ export const B4CClientServiceCard = ({
         </DialogActions>
       </B4CModal>
 
-      <B4CViewColabModal
-        colabId={id}
-        openViewColab={openViewColab}
-        handleOpenViewColabModal={handleOpenViewColabModal}
-      />
+      {carerId && (
+        <B4CViewColabModal
+          colabId={carerId}
+          openViewColab={openViewColab}
+          handleOpenViewColabModal={handleOpenViewColabModal}
+        />
+      )}
 
       <B4CNegotiationModal
+        appRequestId={id.toString()}
         open={openNegotiationModal}
         onClose={handleOpenCloseNegotiationModal}
       />

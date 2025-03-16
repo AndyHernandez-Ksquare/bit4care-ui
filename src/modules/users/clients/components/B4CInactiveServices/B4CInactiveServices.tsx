@@ -7,7 +7,7 @@ import {
   Grid2 as Grid,
 } from "@mui/material";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
-import { useGetAllApplications } from "@/context/api/hooks/UseGetAllClientApplication";
+import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
 
 export const B4CInactiveServices = () => {
   const { applications, isLoading, error } =
@@ -66,14 +66,14 @@ export const B4CInactiveServices = () => {
                 size={{ xs: 12, desktop: 6 }}
                 key={`active-service-grid-${index}`}
               >
-                <B4CClientServiceCard
+                {/* <B4CClientServiceCard
                   key={`${id}-${index}`}
                   id={id}
                   carerName={patient_name}
                   address={address}
                   service={description}
                   status={status as Status}
-                />
+                /> */}
               </Grid>
             ),
           )}

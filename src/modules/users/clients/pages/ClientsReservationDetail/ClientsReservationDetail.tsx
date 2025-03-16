@@ -18,7 +18,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { B4CServiceCheckout } from "../../components/B4CServiceCheckout";
+// import { B4CServiceCheckout } from "../../components/B4CServiceCheckout";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { useServiceData } from "../../context/NewServiceContext";
 import "dayjs/locale/es"; // Import the Spanish locale
@@ -250,7 +250,7 @@ export const ClientsReservationDetail = ({
               flexDirection: "column",
             }}
           >
-            <B4CServiceCheckout />
+            {/* <B4CServiceCheckout /> */}
           </Box>
         </Grid>
       </Grid>
