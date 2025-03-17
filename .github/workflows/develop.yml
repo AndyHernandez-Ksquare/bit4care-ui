@@ -2,7 +2,7 @@ name: Deploy to AWS S3
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
@@ -30,7 +30,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync dist s3://${{ secrets.AWS_DEV_S3_PROD_BUCKET }} --delete
+        run: aws s3 sync dist s3://${{ secrets.AWS_DEV_S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront Cached Data
-        run: aws cloudfront create-invalidation --region ${{ secrets.AWS_REGION }} --distribution-id ${{ secrets.AWS_CLOUDFRONT_PROD_DISTRIBUTION_ID }} --paths '/*'
+        run: aws cloudfront create-invalidation --region ${{ secrets.AWS_REGION }} --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
