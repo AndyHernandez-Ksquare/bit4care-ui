@@ -1,25 +1,28 @@
-import { LocationIcons } from "@/assets/svgIcons/locationIcons/LocationIcons";
-import { MoneyIcons } from "@/assets/svgIcons/moneyIcons/MoneyIcons";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums/Size";
 import {
   Avatar,
   Box,
   Breadcrumbs,
-  Grid,
+  Grid2 as Grid,
   Link,
   Rating,
   TextField,
   Typography,
 } from "@mui/material";
-import { ClockIcon } from "@/assets/svgIcons/clockIcons/ClockIcon";
-import { Fragment } from "react";
+
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { colorPalette } from "@/style/partials/colorPalette";
 
+// Aqui si hay muchos detalles a mejorar, ya le cambie los iconos para que sean los que usamos, los de MUI
+
 export const ServiceDetailAdminPage = () => {
   return (
-    <Fragment>
+    <>
       <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/admin/servicios/">
           <Typography typography="body-normal">Servicios</Typography>
@@ -31,9 +34,7 @@ export const ServiceDetailAdminPage = () => {
       <Grid container spacing={32}>
         {/* Left Section */}
         <Grid
-          item
-          xs={12}
-          desktop={6}
+          size={{ xs: 12, desktop: 6 }}
           container
           sx={{ display: "flex", flexDirection: "column", gap: "56px" }}
         >
@@ -62,19 +63,37 @@ export const ServiceDetailAdminPage = () => {
             sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
             <Box sx={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
-              <LocationIcons />
+              <LocationOnIcon
+                sx={{
+                  color: colorPalette.primary,
+                  fontSize: "1.25lh",
+                  marginRight: "0.5rem",
+                }}
+              />
               <Typography variant="body2" color="textSecondary">
                 Colonia Los Álamos, Benito Juárez CDMX. CP: 05040
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
-              <MoneyIcons />
+              <AttachMoneyIcon
+                sx={{
+                  color: colorPalette.primary,
+                  fontSize: "1.25lh",
+                  marginRight: "0.5rem",
+                }}
+              />
               <Typography variant="body2" color="textSecondary">
                 $8100
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
-              <ClockIcon />
+              <CalendarMonthIcon
+                sx={{
+                  color: colorPalette.primary,
+                  fontSize: "1.25lh",
+                  marginRight: "0.5rem",
+                }}
+              />
               <Typography variant="body2" color="textSecondary">
                 Lunes, 9 de abril - Viernes, 13 de abril de 2024 (54 horas)
               </Typography>
@@ -83,7 +102,7 @@ export const ServiceDetailAdminPage = () => {
 
           <Box mt={2}>
             <Typography variant="body-small-bold" gutterBottom>
-              ¿Qué sucedió?
+              ¿Qué sucedió?:{" "}
             </Typography>
             <Typography variant="body-small" color="textSecondary">
               La enfermera llegó tarde el primer día así que no quisiera pagar 8
@@ -94,7 +113,7 @@ export const ServiceDetailAdminPage = () => {
           </Box>
         </Grid>
         {/* Right Section */}
-        <Grid item xs={12} desktop={6}>
+        <Grid size={{ xs: 12, desktop: 6 }}>
           <Box
             display="flex"
             alignItems="center"
@@ -140,6 +159,6 @@ export const ServiceDetailAdminPage = () => {
           </Box>
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };

@@ -1,67 +1,22 @@
 import { Box, Typography } from "@mui/material";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
-import { Fragment, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 import { Status } from "@/ts/types/components";
 import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
+import { useGetCarerApplications } from "@/context/api/hooks/application-requests/useGetCarerApplications";
+import { formatDateOnly } from "@/constants/formatDate";
+import { getSkills } from "@/constants/getSkillsForCarerCard";
 
 export const ActiveServices = () => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
-  const colaboratorsServicesData = [
-    {
-      name: "Juan Lopez Perez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 23,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Cuidado de adulto mayor",
-      status: "no realizado",
-      skills: ["skill1", "skill2"],
-    },
-    {
-      name: "Armando Rodriguez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 15,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Limpieza de domicilio",
-      status: "solicitado",
-      skills: ["skill3", "skill4"],
-    },
-    {
-      name: "María Fernanda Ruiz",
-      schedule: "Mañana, en 8 horas",
-      fee: "$1800 ($120/h)",
-      hours: 10,
-      address: "Colonia Condesa, Cuauhtémoc CDMX. CP: 06140",
-      service: "Cuidado de niños",
-      status: "no realizado",
-      skills: ["skill5", "skill6"],
-    },
-    {
-      name: "Carlos Martinez",
-      schedule: "Hoy, en 2 horas",
-      fee: "$3000 ($200/h)",
-      hours: 20,
-      address: "Colonia Roma, Cuauhtémoc CDMX. CP: 06700",
-      service: "Cuidado de mascotas",
-      status: "no realizado",
-      skills: ["skill7", "skill8"],
-    },
-    {
-      name: "Ana Gomez",
-      schedule: "Mañana, en 10 horas",
-      fee: "$2200 ($110/h)",
-      hours: 12,
-      address: "Colonia Polanco, Miguel Hidalgo CDMX. CP: 11560",
-      service: "Asistencia en cocina",
-      status: "solicitado",
-      skills: ["skill9", "skill10"],
-      isAssigned: true,
-    },
-  ];
+  const { carerApplications } = useGetCarerApplications();
+
+  useEffect(() => {
+    console.log(carerApplications);
+  }, []);
   return (
     <Box
       sx={{
@@ -72,26 +27,29 @@ export const ActiveServices = () => {
         gap: "2rem",
       }}
     >
-      {colaboratorsServicesData.length > 0 ? (
-        colaboratorsServicesData.map((colaborator, index) => (
+      {carerApplications.length > 0 ? (
+        carerApplications.map((colaborator, index) => (
           <ColaboratorsServicesCard
+            data={colaborator} // ✅ Pasar los datos al componente
+            id={`${colaborator.id}`}
             key={index}
-            name={colaborator.name}
-            schedule={colaborator.schedule}
-            fee={colaborator.fee}
-            hours={colaborator.hours}
+            name={colaborator.patient_name}
+            schedule={`${formatDateOnly(colaborator.start_date)} - ${formatDateOnly(colaborator.end_date)}`}
+            fee={colaborator.amount}
+            comments={colaborator.description}
+            b4cfee={colaborator.commision}
+            negotiation={colaborator.carer?.Negotiation}
+            hours={colaborator.job_interval}
             address={colaborator.address}
-            service={colaborator.service}
-            status={colaborator.status as Status}
-            skills={colaborator.skills}
-            isAssigned={colaborator.isAssigned}
-            onClick={() => {
-              setIsOpenModal(!openModal);
-            }}
+            service={colaborator.carer_speciality || "No especificado"}
+            status={colaborator.status.toLowerCase() as Status}
+            skills={getSkills(colaborator)} // No hay un campo explícito en GetOneApplication, ajustar según sea necesario
+            profile_picture_url={""} // Ajustar si existe una imagen en la API
+            onClick={() => setIsOpenModal(true)}
           />
         ))
       ) : (
-        <Fragment>
+        <>
           <Typography variant="h4">Aun no tienes servicios activos</Typography>
           <Typography variant="body1">
             Espera a que algún cliente te escoja para un servicio. Ajusta tu
@@ -111,7 +69,7 @@ export const ActiveServices = () => {
           >
             <Typography variant="body-normal">Ir a perfil y ajustes</Typography>
           </Link>
-        </Fragment>
+        </>
       )}
       <B4CDetailService
         isOpen={openModal}

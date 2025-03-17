@@ -3,14 +3,13 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { Box, Link, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useState } from "react";
 import { ValidationSchema } from "./ValidationSchema";
 import { AdminLoginService } from "@/services/adminServices/AdminLoginService";
 import { useAdminSession } from "@/context/session/AdminSessionContext";
+import { ClientSelfService } from "@/services/clientServices/ClientServices";
 
 export const AdminLoginForm = () => {
   const { setToken } = useAdminSession();
-  const [visible, setVisible] = useState<boolean>(false);
 
   const formik = useFormik({
     initialValues: {
@@ -23,9 +22,12 @@ export const AdminLoginForm = () => {
         console.log(values.email, values.password);
         const userData = await AdminLoginService(values.email, values.password);
         if (userData) {
-          console.log("Usuario conectado:", userData);
-
-          localStorage.setItem("userToken", userData.token);
+          const userSessionData = await ClientSelfService(userData.token);
+          console.log(userSessionData);
+          if (userSessionData) {
+            console.log(userSessionData.role);
+            console.log("Usuario conectado:", userData);
+          }
 
           const storedToken = localStorage.getItem("userToken");
           if (storedToken) {
@@ -37,10 +39,6 @@ export const AdminLoginForm = () => {
       }
     },
   });
-
-  const handleVisiblePassword = () => {
-    setVisible(!visible);
-  };
 
   return (
     <form
@@ -80,8 +78,6 @@ export const AdminLoginForm = () => {
           onChange={formik.handleChange}
           name="password"
           isPassword
-          isVisible={visible}
-          onClick={handleVisiblePassword}
           required
         />
 

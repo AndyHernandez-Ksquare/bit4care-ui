@@ -2,12 +2,20 @@ import { Switch } from "@mui/material";
 import { ChangeEvent, KeyboardEvent } from "react";
 
 export interface IB4CToggleProps {
+  id?: string;
+  name?: string;
   checked: boolean;
   disabled?: boolean;
   onChange?: (checked: boolean) => void;
 }
 
-export const B4CToggle = ({ checked, disabled, onChange }: IB4CToggleProps) => {
+export const B4CToggle = ({
+  id,
+  name,
+  checked,
+  disabled,
+  onChange,
+}: IB4CToggleProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!onChange) {
       return;
@@ -26,6 +34,8 @@ export const B4CToggle = ({ checked, disabled, onChange }: IB4CToggleProps) => {
   };
   return (
     <Switch
+      id={id}
+      name={name}
       checked={checked}
       disabled={disabled}
       focusRipple={false}

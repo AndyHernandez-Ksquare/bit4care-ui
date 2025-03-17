@@ -15,7 +15,7 @@ export const B4CSidebar = () => {
         gap: "4vh",
       }}
     >
-      <B4CLogo />
+      <B4CLogo alternative />
       <List
         sx={{
           listStyle: "none",

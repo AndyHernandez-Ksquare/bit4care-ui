@@ -11,7 +11,7 @@ import {
   Typography,
   Box,
   SelectChangeEvent,
-  Grid,
+  Grid2 as Grid,
 } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { PhoneInput } from "./PhoneInput";
@@ -132,10 +132,10 @@ export const ChangeMobileNum = ({ open, onClose }: ChangeMobileNumProps) => {
                 width: "100%",
               }}
             >
-              <Grid item xs={12} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12 }} sx={{ display: "flex" }}>
                 <Typography>{`${countryCode}-${phoneNumber}`}</Typography>
               </Grid>
-              <Grid item xs={12} desktop={11} sx={{ display: "flex" }}>
+              <Grid size={{ xs: 12, desktop: 11 }} sx={{ display: "flex" }}>
                 <Typography
                   sx={{ color: colorPalette.success }}
                 >{`Numero confirmado`}</Typography>

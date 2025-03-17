@@ -1,10 +1,9 @@
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Link, Typography } from "@mui/material";
-import { Fragment } from "react";
 
 export const ForgotPassword = () => {
   return (
-    <Fragment>
+    <>
       <Typography
         variant="h5"
         sx={{
@@ -36,6 +35,6 @@ export const ForgotPassword = () => {
           {"Regresar al inicio de sesión"}
         </Typography>
       </Link>
-    </Fragment>
+    </>
   );
 };

@@ -1,5 +1,5 @@
 import { B4CTextfield } from "@/components/B4CTextfield";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid2 as Grid } from "@mui/material";
 import { useState } from "react";
 import { ChangeMobileNum } from "./ChangeMobileNum";
 import { ChangePassword } from "./ChangePassword";
@@ -53,7 +53,7 @@ export const UserSettings = () => {
             borderRadius: "8px",
           }}
         >
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <B4CTextfield label="Numero de telefono" />
             <Button
               startIcon={<EditFieldIcons />}
@@ -69,6 +69,7 @@ export const UserSettings = () => {
                   backgroundColor: "white",
                   boxShadow: "none",
                   fontWeight: "600",
+                  mt: 8,
                 },
               }}
             >
@@ -92,13 +93,13 @@ export const UserSettings = () => {
             borderRadius: "8px",
           }}
         >
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <B4CTextfield label="Nombre(s)" />
           </Grid>
-          <Grid item xs={12} desktop={6}>
+          <Grid size={{ xs: 12, desktop: 6 }}>
             <B4CTextfield label="Apellido materno" />
           </Grid>
-          <Grid item xs={12} desktop={6}>
+          <Grid size={{ xs: 12, desktop: 6 }}>
             <B4CTextfield label="Apellido paterno" />
           </Grid>
         </Grid>
@@ -114,16 +115,16 @@ export const UserSettings = () => {
           }}
           justifyContent={"center"}
         >
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <B4CTextfield label="Direccion" />
           </Grid>
-          <Grid item xs={12} desktop={4}>
+          <Grid size={{ xs: 12, desktop: 4 }}>
             <B4CTextfield label="Codigo postal" />
           </Grid>
-          <Grid item xs={12} desktop={4}>
+          <Grid size={{ xs: 12, desktop: 4 }}>
             <B4CTextfield label="Estado" />
           </Grid>
-          <Grid item xs={12} desktop={4}>
+          <Grid size={{ xs: 12, desktop: 4 }}>
             <B4CTextfield label="Ciudad" />
           </Grid>
         </Grid>
@@ -138,7 +139,7 @@ export const UserSettings = () => {
             borderRadius: "8px",
           }}
         >
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <B4CTextfield label="Correo electronico" />
           </Grid>
         </Grid>
@@ -152,8 +153,8 @@ export const UserSettings = () => {
           borderRadius: "8px",
         }}
       >
-        <Grid item xs={12}>
-          <B4CTextfield label="Contrase;a" isPassword />
+        <Grid size={{ xs: 12 }}>
+          <B4CTextfield label="Contraseña" isPassword />
           <Button
             startIcon={<EditFieldIcons />}
             variant="contained"
@@ -164,6 +165,7 @@ export const UserSettings = () => {
               boxShadow: "none",
               textTransform: "none",
               color: "#2F80ED",
+              mt: 8,
               "&:hover": {
                 backgroundColor: "white",
                 boxShadow: "none",

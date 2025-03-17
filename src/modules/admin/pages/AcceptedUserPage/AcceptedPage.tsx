@@ -1,6 +1,6 @@
 import { getAcceptedUsers, User } from "@/services/colaboratorsServices";
 import { spacings } from "@/style/partials/spacings";
-import { Avatar, Box, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SingleCollaboratorsCard } from "../ColaboratorsPage/SingleCollaboratorsCard";
 
@@ -30,7 +30,10 @@ export const AcceptedPage = () => {
   return (
     <Grid container spacing={8}>
       {users.map((user, index) => (
-        <Grid item xs={12} tablet={4} desktop={3} key={`${user.name}-${index}`}>
+        <Grid
+          size={{ xs: 6, tablet: 4, desktop: 3 }}
+          key={`${user.name}-${index}`}
+        >
           <Box
             onClick={handleOpen(user)}
             sx={{

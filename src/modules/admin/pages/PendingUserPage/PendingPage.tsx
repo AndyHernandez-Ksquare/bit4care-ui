@@ -2,7 +2,7 @@ import { B4CButton } from "@/components/B4CButton";
 import { getUnacceptedUsers, User } from "@/services/colaboratorsServices";
 import { spacings } from "@/style/partials/spacings";
 import { Size } from "@/ts/enums/Size";
-import { Avatar, Box, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,10 @@ export const PendingPage = () => {
   return (
     <Grid container spacing={8}>
       {users.map((user, index) => (
-        <Grid item xs={12} tablet={4} desktop={3} key={`${user.name}-${index}`}>
+        <Grid
+          size={{ xs: 3, tablet: 4, desktop: 3 }}
+          key={`${user.name}-${index}`}
+        >
           <Box
             sx={{
               display: "flex",

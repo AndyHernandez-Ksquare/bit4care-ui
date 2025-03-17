@@ -1,25 +1,18 @@
 import { B4CMainArea } from "./components/B4CMainArea";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Box } from "@mui/material";
-import { Fragment, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./components/NavBar/NavBar";
 import { B4CSidebar } from "./components/B4CSidebar";
 import { AdminLayoutBlob } from "@/assets/svgIcons/backgroundIcons/AdminLayoutBlob";
 import "./ColaboratorsLayout.css";
-import { B4CMobileSidebar } from "./components/B4CMobileSidebar";
 
 export const ColaboratorsLayout = () => {
-  const [open, setOpen] = useState(false);
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
   return (
-    <Fragment>
-      <NavBar toggleDrawer={toggleDrawer} />
-      <div
-        style={{
+    <>
+      <NavBar />
+      <Box
+        sx={{
           background: `linear-gradient(#E4EEFC, ${colorPalette.white})`,
           display: "flex",
           paddingTop: "100px",
@@ -27,7 +20,6 @@ export const ColaboratorsLayout = () => {
           overflow: "hidden",
         }}
       >
-        <B4CMobileSidebar open={open} toggleDrawer={toggleDrawer} />
         <B4CSidebar />
         <AdminLayoutBlob />
         <Box className="separator-main">
@@ -37,7 +29,7 @@ export const ColaboratorsLayout = () => {
             </B4CMainArea>
           </Box>
         </Box>
-      </div>
-    </Fragment>
+      </Box>
+    </>
   );
 };

@@ -1,1 +1,0 @@
-export { B4CReviewComponent } from './B4CReviewComponent'

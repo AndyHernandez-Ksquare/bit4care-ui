@@ -10,11 +10,11 @@ import {
   Box,
   Breadcrumbs,
   Button,
-  Grid,
+  Grid2 as Grid,
   Link,
   Typography,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const CheckUserRequest = () => {
@@ -40,10 +40,10 @@ export const CheckUserRequest = () => {
   }, [userId]);
 
   return (
-    <Fragment>
+    <>
       {user &&
         (page === 1 ? (
-          <Fragment>
+          <>
             <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
               <Link
                 underline="hover"
@@ -73,7 +73,7 @@ export const CheckUserRequest = () => {
               gap={"32px"}
               sx={{ paddingInline: "1rem", paddingTop: "3rem" }}
             >
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <Box
                   display={"flex"}
                   flexDirection={"column"}
@@ -131,7 +131,7 @@ export const CheckUserRequest = () => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={5}>
+              <Grid size={{ xs: 5 }}>
                 <Box
                   sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}
                 >
@@ -186,7 +186,7 @@ export const CheckUserRequest = () => {
                 </Box>
               </Grid>
             </Grid>
-          </Fragment>
+          </>
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
@@ -239,6 +239,6 @@ export const CheckUserRequest = () => {
             </Box>
           </Box>
         ))}
-    </Fragment>
+    </>
   );
 };

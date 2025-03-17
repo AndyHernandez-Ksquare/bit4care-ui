@@ -1,65 +1,19 @@
-import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  Grid2 as Grid,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
 import { Status } from "@/ts/types/components";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
 
 export const B4CClientActiveServices = () => {
-  const colaboratorsServicesData = [
-    {
-      name: "Juan Lopez Perez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 23,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Cuidado de adulto mayor",
-      status: "no realizado",
-      skills: ["skill1", "skill2"],
-    },
-    {
-      name: "Armando Rodriguez",
-      schedule: "Hoy, en 6 horas",
-      fee: "$2500 ($150/h)",
-      hours: 15,
-      address: "Colonia Los Álamos, Benito Juárez CDMX. CP: 05040",
-      service: "Limpieza de domicilio",
-      status: "solicitado",
-      skills: ["skill3", "skill4"],
-    },
-    {
-      name: "María Fernanda Ruiz",
-      schedule: "Mañana, en 8 horas",
-      fee: "$1800 ($120/h)",
-      hours: 10,
-      address: "Colonia Condesa, Cuauhtémoc CDMX. CP: 06140",
-      service: "Cuidado de niños",
-      status: "no realizado",
-      skills: ["skill5", "skill6"],
-    },
-    {
-      name: "Carlos Martinez",
-      schedule: "Hoy, en 2 horas",
-      fee: "$3000 ($200/h)",
-      hours: 20,
-      address: "Colonia Roma, Cuauhtémoc CDMX. CP: 06700",
-      service: "Cuidado de mascotas",
-      status: "no realizado",
-      skills: ["skill7", "skill8"],
-    },
-    {
-      name: "Ana Gomez",
-      schedule: "Mañana, en 10 horas",
-      fee: "$2200 ($110/h)",
-      hours: 12,
-      address: "Colonia Polanco, Miguel Hidalgo CDMX. CP: 11560",
-      service: "Asistencia en cocina",
-      status: "solicitado",
-      skills: ["skill9", "skill10"],
-      isAssigned: true,
-    },
-  ];
+  const { applications, isLoading, error } = useGetAllApplications("pending");
+
   return (
     <Box
       sx={{
@@ -70,29 +24,92 @@ export const B4CClientActiveServices = () => {
         gap: "2rem",
       }}
     >
-      {colaboratorsServicesData.length > 0 ? (
-        colaboratorsServicesData.map((colaborator, index) => (
-          <B4CClientServiceCard
-            key={index}
-            name={colaborator.name}
-            schedule={colaborator.schedule}
-            fee={colaborator.fee}
-            hours={colaborator.hours}
-            address={colaborator.address}
-            service={colaborator.service}
-            status={colaborator.status as Status}
-            isAssigned={colaborator.isAssigned}
-          />
-        ))
+      {error ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+          }}
+        >
+          <Typography variant="h4" color="error">
+            Ocurrió un error
+          </Typography>
+          <Typography variant="body1">
+            No pudimos cargar los servicios activos. Por favor, intenta
+            nuevamente más tarde.
+          </Typography>
+        </Box>
+      ) : isLoading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ mt: 32 }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : applications && applications.length > 0 ? (
+        <Grid
+          container
+          spacing={16} // Espaciado entre las tarjetas
+          sx={{
+            width: "100%", // Ancho máximo del grid
+            margin: "0 auto", // Centrado del grid
+            paddingInline: 0,
+          }}
+        >
+          {applications.map(
+            (
+              {
+                id,
+                address,
+                status,
+                description,
+                carerId,
+                carer_speciality,
+                start_date,
+                end_date,
+                amount,
+                carer,
+              },
+              index,
+            ) => (
+              <Grid
+                size={{ xs: 12, desktop: 6 }}
+                key={`active-service-grid-${index}`}
+              >
+                <B4CClientServiceCard
+                  carerId={carerId}
+                  carerDescription={carer?.description}
+                  carerSpecialty={carer_speciality}
+                  key={`active-service-${index}`}
+                  id={id}
+                  startDate={start_date}
+                  endDate={end_date}
+                  carerName={carer?.User.name}
+                  address={address}
+                  service={description}
+                  status={status as Status}
+                  isAssigned={!!carer}
+                  negotiation={carer?.Negotiation}
+                  amount={amount}
+                />
+              </Grid>
+            ),
+          )}
+        </Grid>
       ) : (
-        <Fragment>
+        <>
           <Typography variant="h4">Aun no tienes servicios activos</Typography>
           <Typography variant="body1">
             Da click en el botón para crear una nueva solicitud
           </Typography>
           <B4CNoActiveServices />
           <Link
-            to={"/colaborators/profile&settings"}
+            to="/cliente/mis-servicios/nueva-solicitud"
             style={{
               backgroundColor: colorPalette.primary,
               paddingBlock: "1rem",
@@ -106,7 +123,7 @@ export const B4CClientActiveServices = () => {
               Hacer una nueva solicitud
             </Typography>
           </Link>
-        </Fragment>
+        </>
       )}
     </Box>
   );

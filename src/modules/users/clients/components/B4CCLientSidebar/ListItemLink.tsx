@@ -10,8 +10,7 @@ interface IListItemLinkProps extends ListItemProps {
 }
 
 const breadcrumbNameMap: { [key: string]: string } = {
-  "/cliente": "Explorar",
-  "/cliente/mis-servicios": "Mis servicios",
+  "/cliente": "Mis servicios",
   "/cliente/ajustes-y-perfil": "Perfil y ajustes",
 };
 

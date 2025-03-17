@@ -1,47 +1,54 @@
-import { ListItemButton, ListItemProps, ListItemText } from "@mui/material";
+import {
+  Box,
+  ListItemButton,
+  ListItemProps,
+  ListItemText,
+} from "@mui/material";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-
+import { ReactNode } from "react";
 import { spacings } from "@/style/partials/spacings";
 import { colorPalette } from "@/style/partials/colorPalette";
 
 export interface IListItemLinkProps extends ListItemProps {
-  to: string;
-  open?: boolean;
+  to?: string | undefined;
+  onClick?: () => void;
+  label: string;
+  icon?: ReactNode;
 }
 
-const breadcrumbNameMap: { [key: string]: string } = {
-  "/colaborador": "Mis servicios",
-  "/colaborador/ajustes-y-perfil": "Perfil y ajustes",
-};
-
-export const ListItemLink = ({ to, ...other }: IListItemLinkProps) => {
+export const ListItemLink = ({
+  to,
+  icon,
+  label,
+  onClick,
+}: IListItemLinkProps) => {
   const location = useLocation();
-  const primary = breadcrumbNameMap[to];
-  const isActive = location.pathname === to;
+
+  const isActive = location.pathname === (to || "");
 
   return (
-    <li>
+    <Box component={"li"}>
       <ListItemButton
         component={RouterLink}
-        to={to}
-        {...other}
+        to={to || ""}
+        onClick={onClick}
         sx={{
           width: "100%",
           paddingBlock: spacings.spacing2,
           borderRadius: "8px",
           textDecoration: "none",
-          paddingLeft: spacings.spacing6,
           display: "flex",
-          alignItems: "left",
+          gap: spacings.spacing1,
           color: isActive ? colorPalette.primary : colorPalette.black1,
           backgroundColor: isActive ? colorPalette.white : "none",
         }}
       >
+        {icon}
         <ListItemText
           primaryTypographyProps={{ variant: "body-normal-bold" }}
-          primary={primary}
+          primary={label}
         />
       </ListItemButton>
-    </li>
+    </Box>
   );
 };

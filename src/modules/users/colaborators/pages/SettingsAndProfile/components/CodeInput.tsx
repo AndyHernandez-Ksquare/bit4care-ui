@@ -1,7 +1,12 @@
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
 import { RepeatIcon } from "@/assets/svgIcons/ReturnIcon/RepeatIcon";
-import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
-import { Fragment } from "react";
+import {
+  Button,
+  Grid2 as Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 interface CodeInputProps {
   countryCode: string;
@@ -10,7 +15,7 @@ interface CodeInputProps {
 
 export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
   return (
-    <Fragment>
+    <>
       <Grid
         container
         spacing={12}
@@ -23,13 +28,13 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
           maxHeight: "80px",
         }}
       >
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography>{`${countryCode}-${phoneNumber}`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={11}>
+        <Grid size={{ xs: 12, desktop: 11 }}>
           <Typography>{`Numero aun no confirmado`}</Typography>
         </Grid>
-        <Grid item xs={12} desktop={1}>
+        <Grid size={{ xs: 12, desktop: 1 }}>
           <IconButton>
             <EditFieldIcons />
           </IconButton>
@@ -43,7 +48,7 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
           width: "100%",
         }}
       >
-        <Grid item xs={12} desktop={10}>
+        <Grid size={{ xs: 12, desktop: 10 }}>
           <TextField
             fullWidth
             variant="outlined"
@@ -55,7 +60,7 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
             (SMS)
           </Typography>
         </Grid>
-        <Grid item xs={12} desktop={2}>
+        <Grid size={{ xs: 12, desktop: 2 }}>
           <Button
             startIcon={<RepeatIcon />}
             sx={{
@@ -74,6 +79,6 @@ export const CodeInput = ({ countryCode, phoneNumber }: CodeInputProps) => {
           </Button>
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };

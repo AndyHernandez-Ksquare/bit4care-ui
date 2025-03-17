@@ -14,18 +14,19 @@ export const login = async (usuario: string, contrasena: string) => {
   const Controller = "login";
 
   try {
-    const response: AxiosResponse<LoginResponseData> =
-      await axios.post(`/${Entity}/${Controller}`, {
+    const response: AxiosResponse<LoginResponseData> = await axios.post(
+      `/${Entity}/${Controller}`,
+      {
         usuario: usuario,
         password: contrasena,
-      });
+      },
+    );
     if (response.data) {
-      // Login exitoso, puedes manejar la respuesta según tus necesidades
       const userData = response.data;
       return userData;
     }
   } catch (error) {
     console.log(error);
-    throw error
+    throw error;
   }
 };

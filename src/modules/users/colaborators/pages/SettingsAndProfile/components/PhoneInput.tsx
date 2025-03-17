@@ -1,6 +1,6 @@
 import {
   FormControl,
-  Grid,
+  Grid2 as Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -35,7 +35,7 @@ export const PhoneInput = ({
         width: "100%",
       }}
     >
-      <Grid item xs={12} desktop={2} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12, desktop: 2 }} sx={{ display: "flex" }}>
         <FormControl
           fullWidth
           variant="outlined"
@@ -59,7 +59,7 @@ export const PhoneInput = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} desktop={10} sx={{ display: "flex" }}>
+      <Grid size={{ xs: 12, desktop: 10 }} sx={{ display: "flex" }}>
         <TextField
           fullWidth
           variant="outlined"

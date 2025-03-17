@@ -4,7 +4,7 @@ import { B4CModal } from "@/components/BigElements/B4CModal";
 import { User } from "@/services/colaboratorsServices";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Button, Grid2 as Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 interface ISingleCollaboratorsCardProps {
@@ -38,7 +38,7 @@ export const PendingCollaboratorsCard = ({
             gap={"16px"}
             sx={{ paddingInline: "1rem", paddingTop: "3rem" }}
           >
-            <Grid item xs={6}>
+            <Grid size={{ xs: 6 }}>
               <Box
                 display={"flex"}
                 flexDirection={"column"}
@@ -96,7 +96,7 @@ export const PendingCollaboratorsCard = ({
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={5}>
+            <Grid size={{ xs: 5 }}>
               <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
                 <Typography variant="body-medium-bold">
                   {"Número de teléfono: "}

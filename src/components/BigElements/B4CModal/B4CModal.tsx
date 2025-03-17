@@ -1,14 +1,7 @@
+import { CloseIcon } from "@/assets/svgIcons/closeIcons/CloseIcon";
 import { spacings } from "@/style/partials/spacings";
-import { Box, Dialog } from "@mui/material";
-import { ReactNode } from "react";
-
-interface B4CModalProps {
-  children: ReactNode;
-  open: boolean;
-  bgColor?: string;
-  className?: string;
-  onClose?: () => void;
-}
+import { B4CModalProps } from "@/ts/types/components";
+import { Dialog, DialogContent, IconButton } from "@mui/material";
 
 export const B4CModal = ({
   children,
@@ -22,33 +15,37 @@ export const B4CModal = ({
       className={className}
       open={open}
       onClose={onClose}
-      sx={{ borderRadius: "32px" }}
+      maxWidth="desktop"
       PaperProps={{
         sx: {
-          borderRadius: "32px", // Aquí se aplica el borderRadius directamente al Paper
+          borderRadius: "32px",
+          overflow: "hidden",
         },
       }}
     >
-      <Box
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={(theme) => ({
+          position: "absolute",
+          right: 16,
+          top: 16,
+          color: theme.palette.grey[500],
+        })}
+      >
+        <CloseIcon />
+      </IconButton>
+      <DialogContent
         sx={{
           background: bgColor ? bgColor : "white",
           paddingX: spacings.spacing3,
           paddingY: spacings.spacing4,
-          boxShadow: 24,
-          maxWidth: "1224px",
+          maxHeight: "80vh",
+          overflowY: "auto",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "16px",
-          }}
-        >
-          {children}
-        </Box>
-      </Box>
+        {children}
+      </DialogContent>
     </Dialog>
   );
 };

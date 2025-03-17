@@ -1,4 +1,4 @@
-import { AddPhotoIcon } from "@/assets/svgIcons/addPhoto/AddPhotoIcon";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { Box, Typography } from "@mui/material";
 
 import { useDropzone } from "react-dropzone";
@@ -7,7 +7,6 @@ export const B4CDragPhotoItem = () => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       console.log(acceptedFiles);
-      // Aquí puedes manejar los archivos subidos
     },
   });
   return (
@@ -25,7 +24,7 @@ export const B4CDragPhotoItem = () => {
         backgroundColor: "#EDF2F6",
         cursor: "pointer",
         textAlign: "center",
-        p: 1, // padding reducido para ajustar al tamaño más pequeño
+        p: 1,
         "&:hover": {
           borderColor: "#90CAF9",
           backgroundColor: "#E1F5FE",
@@ -33,7 +32,12 @@ export const B4CDragPhotoItem = () => {
       }}
     >
       <input {...getInputProps()} />
-      <AddPhotoIcon />
+      <AddPhotoAlternateOutlinedIcon
+        sx={{
+          fontSize: 40,
+          color: "#90A4AE",
+        }}
+      />
       <Typography variant="body2" sx={{ color: "#90A4AE", mt: 0.5 }}>
         Sube tu foto
       </Typography>
