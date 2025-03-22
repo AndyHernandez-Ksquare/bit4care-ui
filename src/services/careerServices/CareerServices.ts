@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import axios from "../baseService";
 import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 import {
+  EvaluateCarerRequest,
   NewCareProfileRequest,
   NewCarerProfileResponse,
 } from "@/ts/types/api/carer/CreateCarerProfile.type";
@@ -59,12 +60,46 @@ export const GetSelfCollab = async (token: string) => {
   }
 };
 
+export const GetPendingToAproveCarers = async () => {
+  try {
+    const response: AxiosResponse<GetOneCarer[]> = await axios.get(
+      `/${Entity}/admin/list-carers-pending-to-approve`,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error creating application request:", error);
+    throw error;
+  }
+};
+
 export const CreateCarerProfile = async (
   bodyRequest: NewCareProfileRequest,
 ) => {
   try {
     const response: AxiosResponse<NewCarerProfileResponse> = await axios.post(
       `/${Entity}`,
+      bodyRequest,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error creating new carer profile:", error);
+    throw error;
+  }
+};
+
+export const ReviewCarer = async (
+  bodyRequest: EvaluateCarerRequest,
+  carerId: number,
+) => {
+  try {
+    const response: AxiosResponse<NewCarerProfileResponse> = await axios.patch(
+      `/${Entity}/admin/review-carer/${carerId}`,
       bodyRequest,
     );
     if (response.data) {

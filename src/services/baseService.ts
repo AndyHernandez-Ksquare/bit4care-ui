@@ -24,8 +24,9 @@ api.interceptors.request.use(
   (config) => {
     const clientToken = localStorage.getItem("clientToken");
     const userToken = localStorage.getItem("userToken");
+    const adminToken = localStorage.getItem("adminToken");
 
-    const token = clientToken || userToken; // Prioriza clientToken, pero usa userToken si no está
+    const token = adminToken || clientToken || userToken; // Prioriza clientToken, pero usa userToken si no está
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

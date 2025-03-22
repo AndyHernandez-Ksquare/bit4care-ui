@@ -54,7 +54,7 @@ export const ColaboratorLogin = () => {
               onClose(); // Cierra el modal
               setTimeout(() => {
                 navigate("/colaborador");
-              }, 100); // Pequeño retraso para permitir que se cierre el modal
+              }, 1000); // Pequeño retraso para permitir que se cierre el modal
             }
           }
         }

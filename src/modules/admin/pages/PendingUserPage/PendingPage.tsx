@@ -1,40 +1,47 @@
 import { B4CButton } from "@/components/B4CButton";
-import { getUnacceptedUsers, User } from "@/services/colaboratorsServices";
+import { pendingToAproveCarers } from "@/context/api/hooks/carer/pendingToAproveCarers";
 import { spacings } from "@/style/partials/spacings";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const PendingPage = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  // Utilizamos el custom hook para obtener la lista de carers pendientes
+  const { pendingCarers, isLoading, error } = pendingToAproveCarers();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersData = await getUnacceptedUsers();
-        setUsers(usersData);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    fetchUsers();
-  }, []); // Se ejecuta solo una vez al montar el componente
+  // Mostrar un mensaje de carga mientras se obtienen los datos
+  if (isLoading) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6">Cargando...</Typography>
+      </Box>
+    );
+  }
+
+  // Mostrar un mensaje de error en caso de que ocurra alguno
+  if (error) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6" color="error">
+          Error al cargar los carers pendientes.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Grid container spacing={8}>
-      {users.map((user, index) => (
+      {pendingCarers?.map((carer, index) => (
         <Grid
           size={{ xs: 3, tablet: 4, desktop: 3 }}
-          key={`${user.name}-${index}`}
+          key={`${carer.User.name}-${index}`}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-
-              maxWidth: "262px",
+              width: "262px",
               borderRadius: "8px",
               boxShadow: "0px 8px 30px 0px #0000001F",
               paddingBlock: spacings.spacing4,
@@ -48,23 +55,25 @@ export const PendingPage = () => {
               sx={{ gap: ".8vh", alignItems: "center" }}
             >
               <Avatar
-                src={user.profileImg ? user.profileImg : ""}
-                alt={`${user.name}-${user.roleId}`}
+                src={""}
+                alt={`${carer.User.name}`}
                 sx={{ width: 128, height: 128 }}
               />
-              <Typography variant="body-small-bold">{user.name}</Typography>
-              <Typography variant="body-small" sx={{ fontSize: "14px" }}>
-                {user.roleId}
+              <Typography variant="body-small-bold">
+                {carer.User.name}
               </Typography>
               <Typography variant="body-small" sx={{ fontSize: "14px" }}>
-                {user.email}
+                {carer.speciality}
+              </Typography>
+              <Typography variant="body-small" sx={{ fontSize: "14px" }}>
+                {carer.User.email}
               </Typography>
             </Box>
             <B4CButton
               label="Revisar solicitud"
               size={Size.Small}
               onClick={() =>
-                navigate(`/admin/colaboradores/solicitud?id=${user.id}`)
+                navigate(`/admin/colaboradores/solicitud?id=${carer.id}`)
               }
             />
           </Box>

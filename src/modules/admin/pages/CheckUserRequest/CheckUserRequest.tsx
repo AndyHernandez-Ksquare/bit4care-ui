@@ -1,10 +1,10 @@
 import { B4CButton } from "@/components/B4CButton";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
-import { B4CStarRating } from "@/components/B4CStarRating";
-import { unacceptedUsersMockData } from "@/constants/mockData/colaborators";
-import { User } from "@/services/colaboratorsServices";
+import { useReviewCarer } from "@/context/api/hooks/carer/useReviewCarer";
+import { useGetOneCareer } from "@/context/api/hooks/useGetOneCareer";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
+import { EvaluateCarerRequest } from "@/ts/types/api/carer/CreateCarerProfile.type";
 import {
   Avatar,
   Box,
@@ -18,27 +18,77 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const CheckUserRequest = () => {
-  const [user, setUser] = useState<User | null>(null); // Estado para el usuario
   const [searchParams] = useSearchParams(); // Obtener los query params
-  const userId = searchParams.get("id"); // Obtener el ID del query param
+  const careerId = searchParams.get("id"); // Obtener el ID del query param
 
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    return () => {
-      setPage(1);
+  // Validar que se tenga un careerId válido
+  if (!careerId) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6" color="error">
+          ID de carrera no válido.
+        </Typography>
+      </Box>
+    );
+  }
+
+  // Utilizamos el custom hook para obtener la información del carer
+  const { data: user, isLoading, error } = useGetOneCareer(parseInt(careerId));
+
+  // Custom hook para aceptar al carer
+  const {
+    reviewCarer,
+    isLoading: reviewIsLoading,
+    error: reviewError,
+  } = useReviewCarer();
+
+  const handleAccept = async () => {
+    // Se crea el objeto de request con ambos valores en true.
+    const requestBody: EvaluateCarerRequest = {
+      is_approved: true,
+      is_active: true,
     };
-  }, []);
-
-  useEffect(() => {
-    if (userId) {
-      const foundUser = unacceptedUsersMockData.find(
-        (user) => user.id === parseInt(userId as string),
-      );
-      if (foundUser) setUser(foundUser); // Asigna el usuario encontrado
+    try {
+      await reviewCarer(requestBody, parseInt(careerId));
+      // Aquí puedes agregar lógica adicional: mostrar notificación, redirigir, etc.
+    } catch (err) {
+      // El error ya se maneja en el hook (se guarda en reviewError)
+      console.error("Error al aceptar al carer:", err);
     }
-  }, [userId]);
+  };
 
+  // Estado de carga
+  if (isLoading) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6">Cargando datos...</Typography>
+      </Box>
+    );
+  }
+
+  // Manejo de errores
+  if (error) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6" color="error">
+          {error}
+        </Typography>
+      </Box>
+    );
+  }
+
+  // En caso de que no se encuentre el usuario
+  if (!user) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6" color="error">
+          No se encontró el usuario.
+        </Typography>
+      </Box>
+    );
+  }
   return (
     <>
       {user &&
@@ -65,7 +115,7 @@ export const CheckUserRequest = () => {
                 typography="body-normal-bold"
                 color={colorPalette.primary}
               >
-                {user.name}
+                {user.User.name}
               </Typography>
             </Breadcrumbs>
             <Grid
@@ -75,11 +125,9 @@ export const CheckUserRequest = () => {
             >
               <Grid size={{ xs: 6 }}>
                 <Box
-                  display={"flex"}
-                  flexDirection={"column"}
-                  sx={{
-                    alignItems: "center",
-                  }}
+                  display="flex"
+                  flexDirection="column"
+                  sx={{ alignItems: "center" }}
                 >
                   <Box
                     sx={{
@@ -90,19 +138,18 @@ export const CheckUserRequest = () => {
                     }}
                   >
                     <Avatar
-                      src={user.profileImg ? user.profileImg : ""}
-                      alt={`${user.name}-${user.roleId}`}
+                      src={""}
+                      alt={`${user.User.name}-${user.speciality}`}
                       sx={{ width: 128, height: 128 }}
                     />
                     <Typography variant="h5" style={{ color: "#6C6C6C" }}>
-                      {user.roleId}
+                      {user.speciality}
                     </Typography>
-                    <Typography variant="h4">{user.name}</Typography>
-                    <B4CStarRating rating={user.carrerProfile.stars} />
+                    <Typography variant="h4">{user.User.name}</Typography>
                   </Box>
                   <Box sx={{ marginBottom: "2rem" }}>
                     <Typography variant="body-large" sx={{ color: "#6C6C6C" }}>
-                      {user.carrerProfile.speciality}
+                      {user.speciality}
                     </Typography>
                   </Box>
                   <Box
@@ -113,14 +160,26 @@ export const CheckUserRequest = () => {
                       gap: "1rem",
                     }}
                   >
-                    <B4CButton fullWidth label="Aceptar solicitud" />
+                    <B4CButton
+                      fullWidth
+                      label={
+                        reviewIsLoading ? "Aceptando..." : "Aceptar solicitud"
+                      }
+                      onClick={handleAccept}
+                      disabled={reviewIsLoading}
+                    />
+                    {reviewError && (
+                      <Typography variant="body-small" color="error">
+                        {reviewError}
+                      </Typography>
+                    )}
                     <Button
                       onClick={() => setPage(2)}
                       sx={{
                         backgroundColor: colorPalette.error,
                         color: colorPalette.white,
                         fontWeight: 700,
-                        borderRadius: "8px",
+                        borderRadius: "16px",
                         paddingBlock: "14px",
                         fontSize: "16px",
                         textTransform: "none",
@@ -165,8 +224,18 @@ export const CheckUserRequest = () => {
                     width: "100%",
                   }}
                 >
-                  <B4CButton variant="outlined" label="CV" size={Size.Small} />
-                  <B4CButton variant="outlined" label="CV" size={Size.Small} />
+                  <B4CButton
+                    labelColor={colorPalette.grey1}
+                    variant="outlined"
+                    label="CV"
+                    size={Size.Small}
+                  />
+                  <B4CButton
+                    labelColor={colorPalette.grey1}
+                    variant="outlined"
+                    label="CV"
+                    size={Size.Small}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -181,7 +250,7 @@ export const CheckUserRequest = () => {
                     Carta de motivacion
                   </Typography>
                   <Typography variant="body-medium">
-                    {user.carrerProfile.motivationLetter}
+                    {user.motivation_letter}
                   </Typography>
                 </Box>
               </Grid>
@@ -198,8 +267,8 @@ export const CheckUserRequest = () => {
               }}
             >
               <Avatar
-                src={user.profileImg ? user.profileImg : ""}
-                alt={`${user.name}-${user.roleId}`}
+                src={""}
+                alt={`${user.User.name}-${user.speciality}`}
                 sx={{ width: 128, height: 128 }}
               />
               <Box
@@ -228,7 +297,7 @@ export const CheckUserRequest = () => {
                   backgroundColor: colorPalette.error,
                   color: colorPalette.white,
                   fontWeight: 700,
-                  borderRadius: "8px",
+                  borderRadius: "16px",
                   paddingBlock: "14px",
                   fontSize: "16px",
                   textTransform: "none",

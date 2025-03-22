@@ -60,7 +60,7 @@ export const ClientLogin = () => {
               onClose(); // Cierra el modal
               setTimeout(() => {
                 navigate("/cliente");
-              }, 100); // Pequeño retraso para permitir que se cierre el modal
+              }, 1000); // Pequeño retraso para permitir que se cierre el modal
             } else {
               setErrorMessage(
                 "No tienes permisos para acceder a este panel de cliente.",
