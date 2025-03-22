@@ -1,7 +1,7 @@
-import { CloseIcon } from "@/assets/svgIcons/closeIcons/CloseIcon";
 import { spacings } from "@/style/partials/spacings";
 import { B4CModalProps } from "@/ts/types/components";
 import { Dialog, DialogContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const B4CModal = ({
   children,

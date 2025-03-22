@@ -1,26 +1,39 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ProviderProps } from "@/ts/types/shared";
 import { useAdminSession } from "../session/AdminSessionContext";
+import { UserSelfService } from "@/services/userServices/userServices";
 
-const AdminAuthContext = createContext({
-  isAuthenticated: false,
+export const AdminAuthContext = createContext({
+  isAdminAuthenticated: false,
 });
 
-export const AuthProvider = ({ children }: ProviderProps) => {
+export const AdminAuthProvider = ({ children }: ProviderProps) => {
   const { token } = useAdminSession();
-  const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(!!token);
+
+  const fetchUser = async () => {
+    if (!token) {
+      setIsAdminAuthenticated(false);
+      return;
+    }
+
+    try {
+      const data = await UserSelfService(token);
+      console.log(data);
+      setIsAdminAuthenticated(!!data?.id);
+    } catch (error) {
+      console.error("Error obteniendo el usuario:", error);
+      setIsAdminAuthenticated(false);
+      localStorage.clear();
+    }
+  };
 
   useEffect(() => {
-    // Este efecto se ejecutará solo cuando token cambie
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
+    fetchUser();
   }, [token]);
 
   return (
-    <AdminAuthContext.Provider value={{ isAuthenticated }}>
+    <AdminAuthContext.Provider value={{ isAdminAuthenticated }}>
       {children}
     </AdminAuthContext.Provider>
   );

@@ -113,8 +113,8 @@ export const B4CNoActiveServices = () => {
           y2="150"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E3ECFA" />
-          <stop offset="1" stop-color="#DAE7FF" />
+          <stop stopColor="#E3ECFA" />
+          <stop offset="1" stopColor="#DAE7FF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_674_29843"
@@ -124,8 +124,8 @@ export const B4CNoActiveServices = () => {
           y2="150"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E3ECFA" />
-          <stop offset="1" stop-color="#DAE7FF" />
+          <stop stopColor="#E3ECFA" />
+          <stop offset="1" stopColor="#DAE7FF" />
         </linearGradient>
       </defs>
     </svg>

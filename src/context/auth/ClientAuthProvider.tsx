@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import { B4CProviderProps } from "@/ts/types/components/B4CProvider.type";
 import { useClientSession } from "./constants/useClientSession";
 import { ClientSelfService } from "@/services/clientServices/ClientServices";
-import { useClientApi } from "../api/constans/useClientApi";
 
 export const ClientAuthContext = createContext({
   isAuthenticated: false,

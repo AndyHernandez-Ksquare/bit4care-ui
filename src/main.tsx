@@ -9,13 +9,14 @@ import { TermsAndConditionsPage } from "./modules/common/pages/TermsAndCondition
 import { PrivacyPolicyPage } from "./modules/common/pages/PrivacyPolicy.tsx";
 import { clientsRouter } from "./modules/users/clients/ClientsRouter.tsx";
 import { colaboratorsRouter } from "./modules/users/colaborators/ColaboratorsRouter.tsx";
-import { adminRouter } from "./modules/admin/pages/AdminRouter.tsx";
 import { LandingPage } from "./modules/admin/pages/LandingPage/LandingPage.tsx";
 import { ClientAuthProvider } from "./context/auth/ClientAuthProvider.tsx";
 import { ClientSessionProvider } from "./context/session/ClientSessionProvider.tsx";
 import { AuthCollaboratorProvider } from "./context/auth/AuthCollaboratorContext.tsx";
 import { CollaboratorSessionProvider } from "./context/session/CollaboratorSessionContext.tsx";
 import { SnackbarProvider } from "./context/ui/SnackbarContext.tsx";
+import { adminRouter } from "./modules/admin/AdminRouter.tsx";
+import { AdminAuthProvider } from "./context/auth/AuthAdminContext.tsx";
 
 const combinedRoutes = [
   ...clientsRouter,
@@ -45,15 +46,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ThemeProvider theme={customTheme}>
         <GlobalScrollbarStyles />
         <ClientSessionProvider>
-          <ClientAuthProvider>
-            <CollaboratorSessionProvider>
-              <AuthCollaboratorProvider>
-                <SnackbarProvider>
-                  <RouterProvider router={router} />
-                </SnackbarProvider>
-              </AuthCollaboratorProvider>
-            </CollaboratorSessionProvider>
-          </ClientAuthProvider>
+          <AdminAuthProvider>
+            <ClientAuthProvider>
+              <CollaboratorSessionProvider>
+                <AuthCollaboratorProvider>
+                  <SnackbarProvider>
+                    <RouterProvider router={router} />
+                  </SnackbarProvider>
+                </AuthCollaboratorProvider>
+              </CollaboratorSessionProvider>
+            </ClientAuthProvider>
+          </AdminAuthProvider>
         </ClientSessionProvider>
       </ThemeProvider>
     </AdminSessionProvider>
