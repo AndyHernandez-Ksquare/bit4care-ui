@@ -2,8 +2,17 @@ import { B4CLogo } from "@/assets/images/B4CLogo";
 import { Box, Button, List, Typography } from "@mui/material";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ListItemLink } from "./ListItemLink";
+import { useAdminSession } from "@/context/session/AdminSessionContext";
 
 export const B4CSidebar = () => {
+  const { setToken } = useAdminSession();
+
+  const handleLogout = (): void => {
+    // Limpiar el localStorage y cualquier otro paso de cierre de sesión
+    localStorage.clear();
+    setToken(null);
+  };
+
   return (
     <Box
       sx={{
@@ -31,7 +40,7 @@ export const B4CSidebar = () => {
         <ListItemLink to="/admin/clientes" />
         <ListItemLink to="/admin/ajustes" />
       </List>
-      <Button sx={{ color: colorPalette.black1 }}>
+      <Button onClick={handleLogout} sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>
       </Button>
     </Box>

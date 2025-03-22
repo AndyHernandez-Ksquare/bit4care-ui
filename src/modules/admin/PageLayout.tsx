@@ -11,7 +11,10 @@ interface PageLayoutProps {
 export const PageLayout = ({ title, children }: PageLayoutProps) => {
   return (
     <Grid container>
-      <Grid size={{ xs: 12 }} sx={{ marginBottom: spacings.spacing4 }}>
+      <Grid
+        size={{ xs: 12 }}
+        sx={{ marginBottom: spacings.spacing4, width: "100%" }}
+      >
         <Typography variant="h3" sx={{ color: colorPalette.grey1 }}>
           {title}
         </Typography>

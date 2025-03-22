@@ -10,20 +10,26 @@ import { colorPalette } from "@/style/partials/colorPalette";
 export const HomePage = () => {
   return (
     <PageLayout title="Dashboard">
-      <Grid container sx={{ marginBottom: spacings.spacing4 }}>
+      <Box
+        sx={{
+          marginBottom: spacings.spacing4,
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          gap: "1rem",
+        }}
+      >
         {summaryData.map(({ value, title, lastDay, type }, index) => {
           return (
-            <Grid container size={{ xs: 3 }} key={`${index}-${title}`}>
-              <B4CServiceCard
-                title={title}
-                value={value}
-                type={type}
-                lastRecord={lastDay}
-              />
-            </Grid>
+            <B4CServiceCard
+              title={title}
+              value={value}
+              type={type}
+              lastRecord={lastDay}
+            />
           );
         })}
-      </Grid>
+      </Box>
       <Grid container sx={{ display: "flex" }}>
         <Box
           width={"98%"}
