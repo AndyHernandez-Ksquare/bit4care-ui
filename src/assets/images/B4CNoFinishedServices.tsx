@@ -132,8 +132,8 @@ export const B4CNoFinishedServices = () => {
           y2="167"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E3ECFA" />
-          <stop offset="1" stop-color="#DAE7FF" />
+          <stop stopColor="#E3ECFA" />
+          <stop offset="1" stopColor="#DAE7FF" />
         </linearGradient>
       </defs>
     </svg>

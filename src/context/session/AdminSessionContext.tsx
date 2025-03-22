@@ -10,10 +10,6 @@ import {
 interface SessionContextProps {
   token: string | null;
   setToken: Dispatch<SetStateAction<string | null>>;
-  name: string | null;
-  setName: Dispatch<SetStateAction<string | null>>;
-  id: number | null;
-  setId: Dispatch<SetStateAction<number | null>>;
 }
 
 const SessionContext = createContext<SessionContextProps | undefined>(
@@ -21,17 +17,10 @@ const SessionContext = createContext<SessionContextProps | undefined>(
 );
 
 export const AdminSessionProvider = ({ children }: ProviderProps) => {
-  const [token, setToken] = useState(localStorage.getItem("userToken"));
-  const [name, setName] = useState(localStorage.getItem("userName"));
-  const [id, setId] = useState(
-    localStorage.getItem("userId")
-      ? Number(localStorage.getItem("userId"))
-      : null,
-  );
+  const [token, setToken] = useState(localStorage.getItem("adminToken"));
+
   return (
-    <SessionContext.Provider
-      value={{ token, setToken, name, setName, id, setId }}
-    >
+    <SessionContext.Provider value={{ token, setToken }}>
       {children}
     </SessionContext.Provider>
   );

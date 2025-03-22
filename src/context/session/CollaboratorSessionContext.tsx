@@ -1,11 +1,5 @@
 import { ProviderProps } from "@/ts/types/shared/ProviderProps.type";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 
 interface SessionContextProps {
   token: string | null;

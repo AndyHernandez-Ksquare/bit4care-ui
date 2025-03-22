@@ -13,7 +13,6 @@ import { Roles } from "@/ts/enums";
 import "./ClientLogin.css";
 import { useClientAuth } from "@/context/auth/constants/useClientAuth";
 import { useClientSession } from "@/context/auth/constants/useClientSession";
-import { useClientApi } from "@/context/api/constans/useClientApi";
 
 export const ClientLogin = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -62,14 +61,38 @@ export const ClientLogin = () => {
               setTimeout(() => {
                 navigate("/cliente");
               }, 100); // Pequeño retraso para permitir que se cierre el modal
+            } else {
+              setErrorMessage(
+                "No tienes permisos para acceder a este panel de cliente.",
+              );
             }
           }
         }
-      } catch (error: unknown) {
-        console.log(error);
-        setErrorMessage(
-          "Credenciales incorrectas. Por favor, intenta de nuevo.",
-        );
+      } catch (error: any) {
+        console.log(error.response.data.statusCode);
+        if (error.response) {
+          // Verificar el código de estado de la respuesta
+          if (error.response.data.statusCode === 401) {
+            setErrorMessage(
+              "Credenciales incorrectas. Por favor, intenta de nuevo.",
+            );
+          } else if (error.response.data.statusCode === 403) {
+            setErrorMessage(
+              "No tienes permisos para acceder al portal de clientes.",
+            );
+          } else if (error.response.data.statusCodee >= 500) {
+            setErrorMessage(
+              "Error del servidor. Por favor, intentalo más tarde.",
+            );
+          } else {
+            setErrorMessage("Ocurrió un error. Por favor, intentalo de nuevo.");
+          }
+        } else {
+          // Error sin respuesta (por ejemplo, problemas de red)
+          setErrorMessage(
+            "No se pudo conectar con el servidor. Por favor, verifica tu conexión.",
+          );
+        }
       } finally {
         setIsLoading(false); // Detener loading
       }
