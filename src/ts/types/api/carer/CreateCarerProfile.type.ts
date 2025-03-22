@@ -69,3 +69,8 @@ export interface CarerDetails {
   createdAt: string; // Formato ISO 8601
   updatedAt: string; // Formato ISO 8601
 }
+
+export interface EvaluateCarerRequest {
+  is_approved: boolean;
+  is_active: boolean;
+}
