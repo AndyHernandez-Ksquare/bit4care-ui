@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { ColaboratorsServicesCard } from "../../components/ColaboratorsServicesCard/ColaboratorsServicesCard";
 import { Status } from "@/ts/types/components";
-import { B4CDetailService } from "../../components/B4CDetailService/B4CDetailService";
 import { useGetCarerApplications } from "@/context/api/hooks/application-requests/useGetCarerApplications";
 import { formatDateOnly } from "@/constants/formatDate";
 import { getSkills } from "@/constants/getSkillsForCarerCard";
@@ -71,12 +70,6 @@ export const ActiveServices = () => {
           </Link>
         </>
       )}
-      <B4CDetailService
-        isOpen={openModal}
-        onClose={() => {
-          setIsOpenModal(false);
-        }}
-      />
     </Box>
   );
 };

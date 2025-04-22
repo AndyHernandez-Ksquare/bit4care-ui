@@ -85,7 +85,9 @@ export const B4CClientsNewService = ({
   const pageTitle =
     mode === "create"
       ? "Nueva solicitud de servicio"
-      : "Editar solicitud de servicio";
+      : mode === "edit"
+        ? "Editar solicitud de servicio"
+        : "Detalles de la solicitud";
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -126,6 +128,7 @@ export const B4CClientsNewService = ({
     }
 
     if (mode == "edit") {
+      // Si el modo es "edit" o "details", actualiza la solicitud existente
       console.log(finalRequest);
       try {
         await updateApplication(id || "", finalRequest); // Llama al custom hook para hacer el POST
@@ -162,7 +165,7 @@ export const B4CClientsNewService = ({
 
   // Cargar datos en el formulario cuando `data` está disponible (modo edición)
   useEffect(() => {
-    if (mode === "edit" && data) {
+    if ((mode === "edit" || mode == "details") && data) {
       formik.setValues({
         address: data.address || "",
         patient_name: data.patient_name || "",
@@ -203,7 +206,7 @@ export const B4CClientsNewService = ({
 
   // 🔹 Se activa si cualquiera de los hooks está en loading
   useEffect(() => {
-    if (mode === "edit") {
+    if (mode === "edit" || mode == "details") {
       setThisPageLoading(getOneAppLoading);
     }
   }, [getOneAppLoading]);
@@ -233,7 +236,11 @@ export const B4CClientsNewService = ({
       </Snackbar>
 
       <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/cliente/">
+        <Link
+          underline="hover"
+          color="inherit"
+          href={mode === "details" ? "/colaborador/mis-servicios" : "/cliente/"}
+        >
           <Typography typography="body-normal">Mis servicios</Typography>
         </Link>
         <Typography typography="body-normal-bold" color={colorPalette.primary}>
@@ -269,6 +276,7 @@ export const B4CClientsNewService = ({
                     checked={formik.values.is_carer_certified}
                     focusRipple={false}
                     onChange={formik.handleChange}
+                    disabled={mode === "details"}
                   />
 
                   <Typography typography="body-normal">
@@ -308,6 +316,7 @@ export const B4CClientsNewService = ({
                       formik.touched.patient_name && formik.errors.patient_name
                     }
                     placeholder="Nombre del paciente"
+                    disabled={mode === "details"}
                   />
                 </Box>
 
@@ -332,11 +341,13 @@ export const B4CClientsNewService = ({
                       formik.errors.patient_phone
                     }
                     placeholder="Número de teléfono del paciente"
+                    disabled={mode === "details"}
                   />
                 </Box>
 
                 <ScheduleForm
                   mode={mode}
+                  disabled={mode === "details"}
                   startDate={formik.values.start_date}
                   endDate={formik.values.end_date}
                   onChange={formik.setFieldValue}
@@ -368,9 +379,11 @@ export const B4CClientsNewService = ({
                     multiline
                     rows={4}
                     placeholder="Describe las actividades de tu cuidador"
+                    disabled={mode === "details"}
                   />
                 </Box>
                 <ServiceLocation
+                  disabled={mode === "details"}
                   address={formik.values.address} // ✅ Ahora usa formik
                   onChange={(event) => formik.handleChange(event)}
                   setAddress={(value) => formik.setFieldValue("address", value)} // ✅ Formik maneja el valor
@@ -378,6 +391,7 @@ export const B4CClientsNewService = ({
                   location={location}
                 />
                 <ServiceSpecs
+                  disabled={mode === "details"}
                   formData={formik.values}
                   onChange={formik.handleChange}
                 />
@@ -403,12 +417,14 @@ export const B4CClientsNewService = ({
                     multiline
                     rows={4}
                     placeholder="Agrega comentarios adicionales para tu cuidador"
+                    disabled={mode === "details"}
                   />
                 </Box>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, desktop: 3 }}>
               <SubmitNewApplication
+                isDetails={mode === "details"}
                 validForm={
                   formik.isValid &&
                   !!transformSchedulesToWorkShift(schedules).length &&

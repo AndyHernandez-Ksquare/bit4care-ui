@@ -24,12 +24,11 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { useDeleteApplicationRequest } from "@/context/api/hooks/application-requests/useDeleteApplicationRequest";
 import { B4CViewColabModal } from "./components/B4CViewColabModal";
 import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
-import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
 
 export const B4CClientServiceCard = ({
   id,

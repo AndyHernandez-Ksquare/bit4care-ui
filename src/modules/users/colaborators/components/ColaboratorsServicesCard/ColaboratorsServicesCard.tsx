@@ -24,6 +24,7 @@ import {
   GetAllApplication,
   GetOneApplication,
 } from "@/ts/types/api/applicationRequest";
+import { useNavigate } from "react-router-dom";
 
 export const ColaboratorsServicesCard = ({
   id,
@@ -56,6 +57,8 @@ export const ColaboratorsServicesCard = ({
   const isPending = normalizedStatus === "pending";
   const isNegotiationActive = normalizedStatus === "active_negotiation";
 
+  const isAccepted = normalizedStatus === "accepted";
+
   // Hardcodeando horarios de trabajo 🕒
   const workShifts = [
     { date: "09 de Marzo de 2025", start: "08:00 AM", end: "10:00 AM" },
@@ -82,6 +85,12 @@ export const ColaboratorsServicesCard = ({
     }
   };
 
+  const navigate = useNavigate(); // Hook para navegar entre páginas
+
+  const handleDetail = () => {
+    navigate(`/colaborador/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
+  };
+
   const filteredNegotiations =
     negotiation?.filter((item) => item.applicationRequestId === parseInt(id)) ||
     [];
@@ -100,8 +109,6 @@ export const ColaboratorsServicesCard = ({
 
   useEffect(() => {
     console.log(id);
-    console.log(filteredNegotiations);
-    console.log(canCarerOffer);
     status = status.toLowerCase() as Status;
   }, []);
   return (
@@ -370,6 +377,15 @@ export const ColaboratorsServicesCard = ({
             flexDirection: "column",
           }}
         >
+          {isAccepted && (
+            <B4CButton
+              size={Size.Small}
+              label="Ver detalles de servicio"
+              variant="primary"
+              onClick={handleDetail}
+              fullWidth
+            />
+          )}
           {isNegotiationActive && (
             <B4CButton
               size={Size.Small}
