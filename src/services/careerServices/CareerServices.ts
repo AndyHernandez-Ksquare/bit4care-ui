@@ -6,6 +6,8 @@ import {
   NewCareProfileRequest,
   NewCarerProfileResponse,
 } from "@/ts/types/api/carer/CreateCarerProfile.type";
+import { NewCarerReviewReq } from "@/ts/types/api/carer/NewCarerReviewReq.type";
+import { NewCarerReviewResp } from "@/ts/types/api/carer/NewCarerReviewResp.type";
 
 const Entity = "carer-profile";
 
@@ -100,6 +102,22 @@ export const ReviewCarer = async (
   try {
     const response: AxiosResponse<NewCarerProfileResponse> = await axios.patch(
       `/${Entity}/admin/review-carer/${carerId}`,
+      bodyRequest,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error creating new carer profile:", error);
+    throw error;
+  }
+};
+
+export const NewCarerReview = async (bodyRequest: NewCarerReviewReq) => {
+  try {
+    const response: AxiosResponse<NewCarerReviewResp> = await axios.post(
+      `/${Entity}/review`,
       bodyRequest,
     );
     if (response.data) {

@@ -383,6 +383,7 @@ export const ColaboratorsServicesCard = ({
               label="Ver detalles de servicio"
               variant="primary"
               onClick={handleDetail}
+              disabled={data.payment_intent_id === null}
               fullWidth
             />
           )}
