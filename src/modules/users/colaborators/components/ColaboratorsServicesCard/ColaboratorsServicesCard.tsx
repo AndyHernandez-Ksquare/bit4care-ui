@@ -25,6 +25,7 @@ import {
   GetOneApplication,
 } from "@/ts/types/api/applicationRequest";
 import { useNavigate } from "react-router-dom";
+import { statusTagInfo } from "@/constants/serviceCardsTags";
 
 export const ColaboratorsServicesCard = ({
   id,
@@ -43,16 +44,6 @@ export const ColaboratorsServicesCard = ({
   b4cfee = 0,
   onClick,
 }: ColaboratorsServicesCardProps & { data: GetOneApplication }) => {
-  const statusTagInfo = {
-    pending: { color: "warning", label: "Solicitado" },
-    realizado: { color: "success", label: "Realizado" },
-    accepted: { color: "success", label: "Aceptado" },
-    "no realizado": { color: "error", label: "No Realizado" },
-    solicitado: { color: "warning", label: "Solicitado" },
-    active_negotiation: { color: "info", label: "En negociación" },
-    active: { color: "success", label: "Agendado" },
-  };
-
   const normalizedStatus = status.toLowerCase() as Status;
   const isPending = normalizedStatus === "pending";
   const isNegotiationActive = normalizedStatus === "active_negotiation";

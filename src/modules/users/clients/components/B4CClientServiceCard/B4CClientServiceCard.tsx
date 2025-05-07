@@ -33,6 +33,7 @@ import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
 import { statusTagInfo } from "@/constants/serviceCardsTags";
 import { useMarkAsEnded } from "@/context/api/hooks/application-requests/useMarkAsEnded";
 import { useMakeComplaint } from "@/context/api/hooks/application-requests/useMakeComplaint";
+import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 
 export const B4CClientServiceCard = ({
   id,
@@ -195,6 +196,12 @@ export const B4CClientServiceCard = ({
         .last_modifier_role === "CLIENT"
     : false;
 
+  // 1️⃣ Llamamos al hook
+  const { data: fileUrls, loading: filesLoading } = useFileUrlsByUser(carerId);
+
+  // 2️⃣ Sacamos la URL de la imagen de perfil
+  const profilePicUrl = fileUrls?.find((f) => f.is_profile_pic)?.url;
+
   return (
     <>
       <Box
@@ -237,7 +244,7 @@ export const B4CClientServiceCard = ({
                 cursor: isAssigned ? "pointer" : "default",
               }}
               alt={isAssigned || carerName ? carerName : undefined}
-              src=" image url"
+              src={profilePicUrl || undefined}
               onClick={
                 isAssigned && carerId ? handleOpenViewColabModal : undefined
               }

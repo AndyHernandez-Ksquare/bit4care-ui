@@ -1,6 +1,7 @@
 import { B4CButton } from "@/components/B4CButton";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CModal } from "@/components/BigElements/B4CModal";
+import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 import { useGetOneCareer } from "@/context/api/hooks/useGetOneCareer";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums";
@@ -26,6 +27,12 @@ export const B4CViewColabModal = ({
   handleOpenViewColabModal,
 }: B4CViewColabModalProps) => {
   const { data, isLoading, error } = useGetOneCareer(colabId);
+
+  // 1️⃣ Llamamos al hook
+  const { data: fileUrls, loading: filesLoading } = useFileUrlsByUser(colabId);
+
+  // 2️⃣ Sacamos la URL de la imagen de perfil
+  const profilePicUrl = fileUrls?.find((f) => f.is_profile_pic)?.url;
 
   return (
     <B4CModal open={openViewColab} onClose={handleOpenViewColabModal}>
@@ -57,7 +64,7 @@ export const B4CViewColabModal = ({
               }}
             >
               <Avatar
-                src={""}
+                src={profilePicUrl}
                 alt={data?.User.name}
                 sx={{ width: 128, height: 128 }}
               />

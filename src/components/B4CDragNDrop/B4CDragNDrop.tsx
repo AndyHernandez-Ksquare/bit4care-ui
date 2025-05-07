@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Box, Button, Typography } from "@mui/material";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
@@ -9,13 +9,13 @@ import { Size } from "@/ts/enums";
 
 export interface B4CDragNDropProps {
   type?: "document" | "video";
+  onDrop: (files: File[]) => void;
 }
 
-export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles);
-  }, []);
-
+export const B4CDragNDrop = ({
+  type = "document",
+  onDrop,
+}: B4CDragNDropProps) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
@@ -36,7 +36,6 @@ export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
           borderRadius: "4px",
           textAlign: "center",
           cursor: "pointer",
-          transition: "border-color 0.3s",
         }}
       >
         <input {...getInputProps()} />
@@ -51,17 +50,13 @@ export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
             <UploadFileRoundedIcon
               fontSize="large"
               color="action"
-              sx={{
-                mb: 12,
-              }}
+              sx={{ mb: 12 }}
             />
           ) : (
             <VideoFileRoundedIcon
               fontSize="large"
               color="action"
-              sx={{
-                mb: 12,
-              }}
+              sx={{ mb: 12 }}
             />
           )}
           {isDragActive ? (
@@ -73,9 +68,7 @@ export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
               <Button
                 variant="text"
                 color="primary"
-                sx={{
-                  textTransform: "none",
-                }}
+                sx={{ textTransform: "none" }}
               >
                 <Typography>
                   Buscar {type === "video" ? "video" : "archivo"}
@@ -89,9 +82,7 @@ export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
         label="Subir Ahora"
         fullWidth
         size={Size.Small}
-        sx={{
-          mt: 12,
-        }}
+        sx={{ mt: 12 }}
       />
     </Box>
   );

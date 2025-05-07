@@ -34,6 +34,7 @@ interface RegisterFormProps {
     value: any,
     shouldValidate?: boolean,
   ) => Promise<void> | Promise<FormikErrors<FormData>>;
+  onFileDrop: (file: File) => void;
 }
 
 export const RegisterFormPart2 = ({
@@ -44,6 +45,7 @@ export const RegisterFormPart2 = ({
   onFormValidChange,
   handleBlur,
   onFormDataChange,
+  onFileDrop,
 }: RegisterFormProps) => {
   const handleFormChange =
     (field: string) => (event: ChangeEvent<HTMLInputElement> | any) => {
@@ -171,7 +173,7 @@ export const RegisterFormPart2 = ({
         <Typography variant="body-normal-bold" color={colorPalette.black1}>
           Certificaciones o formación relevante:
         </Typography>
-        <B4CDragNDrop />
+        <B4CDragNDrop onDrop={(files) => onFileDrop(files[0])} />
       </Box>
 
       <Box mt={30}>

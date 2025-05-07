@@ -13,9 +13,6 @@ export const ActiveServices = () => {
   const [openModal, setIsOpenModal] = useState<boolean>(false);
   const { carerApplications } = useGetCarerApplications();
 
-  useEffect(() => {
-    console.log(carerApplications);
-  }, []);
   return (
     <Box
       sx={{

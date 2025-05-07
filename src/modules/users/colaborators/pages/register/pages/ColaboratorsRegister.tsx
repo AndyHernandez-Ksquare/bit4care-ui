@@ -15,11 +15,26 @@ import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile
 import { useFormik } from "formik";
 import { CarerValidationSchema } from "../validators/CarerValidationSchema";
 import { useSnackbar } from "@/context/ui/SnackbarContext";
+import { FileUploadMetadata } from "@/ts/types/api/file";
+import { useFileUpload } from "@/context/api/hooks/file/useFileUpload";
+
+type PendingFile = {
+  meta: Omit<FileUploadMetadata, "userId">;
+  file: File;
+};
 
 function ColaboratorsRegister() {
   const navigate = useNavigate();
+  const { open } = useSnackbar();
+  const { createCarerProfile } = useCreateCarerProfile();
+  const { uploadFile, loading: uploading } = useFileUpload();
+
   const [canContinue, setCanContinue] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
+  // Temp files
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [idFile, setIdFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
 
   const formik = useFormik<FormData>({
     initialValues: {
@@ -53,23 +68,57 @@ function ColaboratorsRegister() {
     },
   });
 
-  const { createCarerProfile } = useCreateCarerProfile();
-  const { open } = useSnackbar();
-
   const handleContinue = async () => {
     if (currentStep < 2) {
       setCurrentStep(currentStep + 1);
-    } else if (currentStep === 2) {
-      const requestData = assembleRequestData(formik.values, formik.values);
-      try {
-        console.log("Enviando solicitud:", requestData);
-        const response = await createCarerProfile(requestData);
-        open("Solicitud enviada con éxito", "success");
-        navigate("/colaborador/login");
-      } catch (error) {
-        open("Error al enviar la solicitud", "error");
-        console.error("Error en el registro:", error);
+      return;
+    }
+
+    const requestData = assembleRequestData(formik.values, formik.values);
+    try {
+      const user = await createCarerProfile(requestData);
+      open("Solicitud enviada con éxito", "success");
+      // now upload files to S3
+
+      if (!user || typeof user.id !== "number") {
+        open("No se pudo obtener el ID de usuario", "error");
+        return;
       }
+
+      const userId = user.id;
+
+      const uploads: Promise<any>[] = [];
+      if (cvFile) {
+        const meta: FileUploadMetadata = {
+          name: cvFile.name,
+          type: cvFile.type,
+          fileSize: cvFile.size,
+          userId,
+        };
+        uploads.push(uploadFile(meta, cvFile));
+      }
+      if (idFile) {
+        const meta: FileUploadMetadata = {
+          name: idFile.name,
+          type: idFile.type,
+          fileSize: idFile.size,
+          userId,
+        };
+        uploads.push(uploadFile(meta, idFile));
+      }
+      if (videoFile) {
+        const meta: FileUploadMetadata = {
+          name: videoFile.name,
+          type: videoFile.type,
+          fileSize: videoFile.size,
+          userId,
+        };
+        uploads.push(uploadFile(meta, videoFile));
+      }
+      await Promise.all(uploads);
+      navigate("/colaborador/login");
+    } catch (err) {
+      open("Error al enviar la solicitud", "error");
     }
   };
 
@@ -131,10 +180,15 @@ function ColaboratorsRegister() {
             handleChange={formik.handleChange}
             onFormValidChange={setCanContinue}
             onFormDataChange={formik.setFieldValue}
+            onFileDrop={(file: File) => setCvFile(file)}
           />
         )}
         {currentStep === 2 && (
-          <RegisterFormPart3 onFormValidChange={setCanContinue} />
+          <RegisterFormPart3
+            onFormValidChange={setCanContinue}
+            onIdDrop={(file: File) => setIdFile(file)}
+            onVideoDrop={(file: File) => setVideoFile(file)}
+          />
         )}
       </Box>
       <Box mt={24}>
