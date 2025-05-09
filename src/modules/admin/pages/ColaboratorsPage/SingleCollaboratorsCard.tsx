@@ -2,12 +2,15 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
-import { User } from "@/services/colaboratorsServices";
+import { calculateAverageRating } from "@/constants/calculateAverageRating";
+import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 import { Size } from "@/ts/enums/Size";
+import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 
 interface ISingleCollaboratorsCardProps {
-  user: User | null;
+  user: GetOneCarer | null;
   open: boolean;
   onClose?: () => void;
 }
@@ -17,6 +20,21 @@ export const SingleCollaboratorsCard = ({
   open,
   onClose,
 }: ISingleCollaboratorsCardProps) => {
+  // 2️⃣ Llamamos siempre el hook (no dentro de useEffect)
+  const { data: fileUrls, loading: filesLoading } = useFileUrlsByUser(
+    user ? user.User.id : 0,
+  );
+
+  // 3️⃣ Estado para la URL de perfil final
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
+
+  // ── 5️⃣ Cuando cambien las URLs, buscamos la que tenga is_profile_pic === true ──
+  useEffect(() => {
+    if (!fileUrls) return;
+    const profile = fileUrls.find((f) => f.is_profile_pic);
+    if (profile) setAvatarUrl(profile.url);
+  }, []);
+
   return (
     <B4CModal
       open={open}
@@ -42,15 +60,17 @@ export const SingleCollaboratorsCard = ({
               }}
             >
               <Avatar
-                src={user.profileImg ? user.profileImg : ""}
+                src={avatarUrl}
                 alt={"asdad"}
                 sx={{ width: 128, height: 128 }}
               />
               <Typography variant="h5" style={{ color: "#6C6C6C" }}>
-                {user.roleId}
+                {user.speciality}
               </Typography>
-              <Typography variant="h4">{user.name}</Typography>
-              <B4CStarRating rating={user.carrerProfile.stars} />
+              <Typography variant="h4">{user.User.name}</Typography>
+              <B4CStarRating
+                rating={calculateAverageRating(user.carerReviews)}
+              />
             </Box>
             <Box
               sx={{
@@ -68,9 +88,7 @@ export const SingleCollaboratorsCard = ({
                   alignItems: "center",
                 }}
               >
-                <Typography variant="h4">
-                  {user.carrerProfile.totalServices}
-                </Typography>
+                <Typography variant="h4">{user.completed_services}</Typography>
                 <Typography variant="h6" sx={{ color: "#6C6C6C" }}>
                   Servicios
                 </Typography>
@@ -90,9 +108,7 @@ export const SingleCollaboratorsCard = ({
                   marginInline: "2rem",
                 }}
               >
-                <Typography variant="h4">
-                  {user.carrerProfile.reviews}
-                </Typography>
+                <Typography variant="h4">{user.worked_hours}</Typography>
                 <Typography variant="h6" sx={{ color: "#6C6C6C" }}>
                   Reseñas
                 </Typography>
@@ -111,9 +127,7 @@ export const SingleCollaboratorsCard = ({
                   alignItems: "center",
                 }}
               >
-                <Typography variant="h4">
-                  {user.carrerProfile.expYears}
-                </Typography>
+                <Typography variant="h4">{user.years_of_experience}</Typography>
                 <Typography variant="h6" sx={{ color: "#6C6C6C" }}>
                   Años de Exp.
                 </Typography>
@@ -121,10 +135,10 @@ export const SingleCollaboratorsCard = ({
             </Box>
             <Box sx={{ marginBottom: "2rem" }}>
               <Typography variant="body-large" sx={{ color: "#6C6C6C" }}>
-                {user.carrerProfile.speciality}
+                {user.speciality}
               </Typography>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 flexWrap: "wrap",
@@ -136,7 +150,7 @@ export const SingleCollaboratorsCard = ({
               {user.carrerProfile.qualifications.map((qualification, index) => {
                 return <B4CTag key={index} label={qualification.name} />;
               })}
-            </Box>
+            </Box> */}
           </Box>
           <Box
             sx={{

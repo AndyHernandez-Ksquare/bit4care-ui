@@ -15,13 +15,11 @@ import { useCreateCarerProfile } from "@/context/api/hooks/useCreateCarerProfile
 import { useFormik } from "formik";
 import { CarerValidationSchema } from "../validators/CarerValidationSchema";
 import { useSnackbar } from "@/context/ui/SnackbarContext";
-import { FileUploadMetadata } from "@/ts/types/api/file";
+import { FileUploadMetadata, FileUploadResponse } from "@/ts/types/api/file";
 import { useFileUpload } from "@/context/api/hooks/file/useFileUpload";
-
-type PendingFile = {
-  meta: Omit<FileUploadMetadata, "userId">;
-  file: File;
-};
+import { LoginService } from "@/services/auth/LoginService";
+import axios from "@/services/baseService";
+import { extractFileMeta } from "@/constants/extractFileMeta";
 
 function ColaboratorsRegister() {
   const navigate = useNavigate();
@@ -75,6 +73,7 @@ function ColaboratorsRegister() {
     }
 
     const requestData = assembleRequestData(formik.values, formik.values);
+
     try {
       const user = await createCarerProfile(requestData);
       open("Solicitud enviada con éxito", "success");
@@ -85,35 +84,35 @@ function ColaboratorsRegister() {
         return;
       }
 
-      const userId = user.id;
+      // 2️⃣ Login temporal (no guardamos en localStorage)
+      let token: string;
 
-      const uploads: Promise<any>[] = [];
+      try {
+        const responseToken = await LoginService(
+          formik.values.email,
+          formik.values.password,
+        );
+        if (!responseToken) {
+          open("Error en login temporal", "error");
+          return;
+        }
+        token = responseToken.token; // ajusta según tu respuesta
+        // inyectamos en axios para las siguientes llamadas
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      } catch (err) {
+        open("Error en login temporal", "error");
+        return;
+      }
+
+      const uploads: Promise<FileUploadResponse>[] = [];
       if (cvFile) {
-        const meta: FileUploadMetadata = {
-          name: cvFile.name,
-          type: cvFile.type,
-          fileSize: cvFile.size,
-          userId,
-        };
-        uploads.push(uploadFile(meta, cvFile));
+        uploads.push(uploadFile(extractFileMeta(cvFile), cvFile));
       }
       if (idFile) {
-        const meta: FileUploadMetadata = {
-          name: idFile.name,
-          type: idFile.type,
-          fileSize: idFile.size,
-          userId,
-        };
-        uploads.push(uploadFile(meta, idFile));
+        uploads.push(uploadFile(extractFileMeta(idFile), idFile));
       }
       if (videoFile) {
-        const meta: FileUploadMetadata = {
-          name: videoFile.name,
-          type: videoFile.type,
-          fileSize: videoFile.size,
-          userId,
-        };
-        uploads.push(uploadFile(meta, videoFile));
+        uploads.push(uploadFile(extractFileMeta(videoFile), videoFile));
       }
       await Promise.all(uploads);
       navigate("/colaborador/login");
@@ -208,7 +207,7 @@ function ColaboratorsRegister() {
               ? "Enviar solicitud"
               : "Continuar con la solicitud"
           }
-          disabled={!canContinue}
+          disabled={!canContinue || uploading}
           onClick={handleContinue}
         />
       </Box>

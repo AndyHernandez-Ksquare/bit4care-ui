@@ -30,9 +30,6 @@ export function useFileUpload() {
         await fetch(presigned.url, {
           method: "PUT",
           body: file,
-          headers: {
-            "Content-Type": meta.type,
-          },
         });
 
         return presigned;
