@@ -8,6 +8,7 @@ export const extractFileMeta = (file: File): FileUploadMetadata => {
 
   // 2️⃣ Normalizamos: si viene "jpg" lo convertimos a "jpeg"
   const normalizedType = ext === "jpg" ? "jpeg" : ext;
+
   return {
     name,
     type: normalizedType,
