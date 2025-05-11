@@ -25,7 +25,10 @@ export const B4CDragPhotoItem = () => {
     if (!file) return;
     const finalMetaData = extractFileMeta(file);
     try {
-      await uploadFile({ ...finalMetaData, action: "userProfilePic" }, file);
+      await uploadFile(
+        { ...finalMetaData, type: "jpeg", action: "userProfilePic" },
+        file,
+      );
       // aquí `response` tendrá la URL pre-firmada
     } catch {
       // el error se muestra abajo
