@@ -106,13 +106,25 @@ function ColaboratorsRegister() {
 
       const uploads: Promise<FileUploadResponse>[] = [];
       if (cvFile) {
-        uploads.push(uploadFile(extractFileMeta(cvFile), cvFile));
+        uploads.push(
+          uploadFile(extractFileMeta({ ...cvFile, name: "cv" }), cvFile),
+        );
       }
       if (idFile) {
-        uploads.push(uploadFile(extractFileMeta(idFile), idFile));
+        uploads.push(
+          uploadFile(
+            extractFileMeta({ ...idFile, name: "identificacion" }),
+            idFile,
+          ),
+        );
       }
       if (videoFile) {
-        uploads.push(uploadFile(extractFileMeta(videoFile), videoFile));
+        uploads.push(
+          uploadFile(
+            extractFileMeta({ ...videoFile, name: "video" }),
+            videoFile,
+          ),
+        );
       }
       await Promise.all(uploads);
       navigate("/colaborador/login");
