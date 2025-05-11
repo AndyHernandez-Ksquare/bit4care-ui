@@ -1,0 +1,1 @@
+export { ClientNewComplaint } from "./ClientNewComplaint";

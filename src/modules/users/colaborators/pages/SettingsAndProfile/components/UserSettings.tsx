@@ -1,14 +1,78 @@
 import { B4CTextfield } from "@/components/B4CTextfield";
-import { Box, Button, Grid2 as Grid } from "@mui/material";
-import { useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Grid2 as Grid,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { ChangeMobileNum } from "./ChangeMobileNum";
 import { ChangePassword } from "./ChangePassword";
 import { EditFieldIcons } from "@/assets/svgIcons/editIcons/EditFieldIcons";
 import { B4CDragPhotoItem } from "@/components/B4CDragPhotoItem";
+import { useFormik } from "formik";
+import { useGetSelfCareer } from "@/context/api/hooks/carer/useGetSelfCareer";
+import { useUpdateCarerProfile } from "@/context/api/hooks/carer/useUpdateCarerProfile";
+import { UpdateCarerProfileDto } from "@/ts/types/api/carer/UpdateCarerProfileDto.type";
+import { B4CButton } from "@/components/B4CButton";
+
+interface FormValues {
+  phone: string;
+  name: string;
+  address: string;
+  postal_code: string;
+  state: string;
+  city: string;
+  email: string;
+}
 
 export const UserSettings = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalPasswordOpen, setModalPasswordOpen] = useState<boolean>(false);
+
+  const { data: profile, loading, error } = useGetSelfCareer();
+
+  // ✏️ Hook para hacer el PATCH
+  const {
+    updateProfile,
+    loading: updating,
+    error: updateError,
+  } = useUpdateCarerProfile();
+
+  const formik = useFormik<FormValues>({
+    initialValues: {
+      phone: profile?.User.phone ?? "",
+      name: profile?.User.name ?? "",
+      address: "",
+      postal_code: profile?.postal_code ?? "",
+      state: profile?.state ?? "",
+      city: "",
+      email: profile?.User.email ?? "",
+    },
+    enableReinitialize: true, // repuebla cuando profile cambie
+    onSubmit: async (values, { setStatus }) => {
+      setStatus(null);
+      const body: UpdateCarerProfileDto = Object.entries(values).reduce(
+        (acc, [key, val]) => {
+          // si val === "" lo dejamos undefined
+          (acc as any)[key] = val === "" ? undefined : val;
+          return acc;
+        },
+        {} as UpdateCarerProfileDto,
+      );
+      const updated = await updateProfile(body);
+      if (updated) {
+        setStatus({ success: "Perfil actualizado correctamente." });
+      } else {
+        setStatus({ success: undefined });
+      }
+    },
+  });
+
+  useEffect(() => {
+    console.log("profile", profile);
+  }, [profile]);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -25,9 +89,15 @@ export const UserSettings = () => {
   const handleCloseModalPassword = () => {
     setModalPasswordOpen(false);
   };
+
+  // cuando profile llegue, Formik re-inicializa porque enableReinitialize=true
+  if (loading) return <CircularProgress />;
+  if (error) return <Alert severity="error">{error.message}</Alert>;
+
   return (
     <Box
       component="form"
+      onSubmit={formik.handleSubmit}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -54,7 +124,12 @@ export const UserSettings = () => {
           }}
         >
           <Grid size={{ xs: 12 }}>
-            <B4CTextfield label="Numero de telefono" />
+            <B4CTextfield
+              name="phone"
+              label="Numero de telefono"
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+            />
             <Button
               startIcon={<EditFieldIcons />}
               variant="contained"
@@ -94,13 +169,7 @@ export const UserSettings = () => {
           }}
         >
           <Grid size={{ xs: 12 }}>
-            <B4CTextfield label="Nombre(s)" />
-          </Grid>
-          <Grid size={{ xs: 12, desktop: 6 }}>
-            <B4CTextfield label="Apellido materno" />
-          </Grid>
-          <Grid size={{ xs: 12, desktop: 6 }}>
-            <B4CTextfield label="Apellido paterno" />
+            <B4CTextfield label="Nombre completo" />
           </Grid>
         </Grid>
       </Box>
@@ -119,13 +188,23 @@ export const UserSettings = () => {
             <B4CTextfield label="Direccion" />
           </Grid>
           <Grid size={{ xs: 12, desktop: 4 }}>
-            <B4CTextfield label="Codigo postal" />
+            <B4CTextfield
+              name="postal_code"
+              label="Codigo postal"
+              value={formik.values.postal_code}
+              onChange={formik.handleChange}
+            />
           </Grid>
           <Grid size={{ xs: 12, desktop: 4 }}>
-            <B4CTextfield label="Estado" />
+            <B4CTextfield
+              name="state"
+              label="Estado"
+              value={formik.values.state}
+              onChange={formik.handleChange}
+            />
           </Grid>
           <Grid size={{ xs: 12, desktop: 4 }}>
-            <B4CTextfield label="Ciudad" />
+            <B4CTextfield label="Ciudad" onChange={formik.handleChange} />
           </Grid>
         </Grid>
       </Box>
@@ -143,6 +222,16 @@ export const UserSettings = () => {
             <B4CTextfield label="Correo electronico" />
           </Grid>
         </Grid>
+        {/* Botón de submit */}
+        <Box sx={{ textAlign: "right", mt: 16 }}>
+          <B4CButton
+            isSubmit
+            variant="primary"
+            disabled={updating}
+            isLoading={updating}
+            label={updating ? "...Guardando" : "Guardar cambios"}
+          />
+        </Box>
       </Box>
       <Grid
         container
@@ -154,7 +243,6 @@ export const UserSettings = () => {
         }}
       >
         <Grid size={{ xs: 12 }}>
-          <B4CTextfield label="Contraseña" isPassword />
           <Button
             startIcon={<EditFieldIcons />}
             variant="contained"

@@ -12,6 +12,7 @@ import {
   DialogTitle,
   Grid2 as Grid,
   Snackbar,
+  TextField,
   Typography,
 } from "@mui/material";
 import { B4CClientServicesCardProps } from "@/ts/types/components/B4CClientServicesCard.type";
@@ -24,12 +25,15 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { useDeleteApplicationRequest } from "@/context/api/hooks/application-requests/useDeleteApplicationRequest";
 import { B4CViewColabModal } from "./components/B4CViewColabModal";
 import { B4CNegotiationModal } from "./components/B4CNegotiationModal";
-import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
+import { statusTagInfo } from "@/constants/serviceCardsTags";
+import { useMarkAsEnded } from "@/context/api/hooks/application-requests/useMarkAsEnded";
+import { useMakeComplaint } from "@/context/api/hooks/application-requests/useMakeComplaint";
+import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 
 export const B4CClientServiceCard = ({
   id,
@@ -46,14 +50,6 @@ export const B4CClientServiceCard = ({
   carerDescription,
   negotiation,
 }: B4CClientServicesCardProps) => {
-  const statusTagInfo: { [key: string]: { color: string; label: string } } = {
-    pending: { color: "warning", label: "Solicitado" },
-    realizado: { color: "success", label: "Realizado" },
-    accepted: { color: "success", label: "Aceptado" },
-    active_negotiation: { color: "info", label: "En negociación" },
-    active: { color: "success", label: "Agendado" },
-  };
-
   // Estado para controlar la apertura del modal de cancelacion
   const [openViewColab, setOpenViewColab] = useState(false);
 
@@ -67,11 +63,22 @@ export const B4CClientServiceCard = ({
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success",
   );
+
+  // 🚩 Nuevo estado para controlar el modal de queja
+  const [openComplaintModal, setOpenComplaintModal] = useState(false);
+  const [complaintText, setComplaintText] = useState("");
+  const {
+    makeComplaint,
+    loading: complaintLoading,
+    error: complaintError,
+  } = useMakeComplaint();
   // Convertir `status` a string y en minúsculas
   const normalizedStatus = String(status).toLowerCase();
 
+  const isActive = normalizedStatus === "active";
   const isAccepted = normalizedStatus === "accepted";
   const isNegotiationActive = normalizedStatus === "active_negotiation";
+  const isCompleted = normalizedStatus === "completed";
 
   // Convertir fechas a un formato legible
   const formattedStartDate = startDate
@@ -124,6 +131,57 @@ export const B4CClientServiceCard = ({
     setOpenCancelModal(false);
   };
 
+  const handleOpenComplaint = () => setOpenComplaintModal(true);
+  const handleCloseComplaint = () => {
+    setOpenComplaintModal(false);
+    setComplaintText("");
+  };
+
+  const handleSubmitComplaint = async () => {
+    try {
+      await makeComplaint({
+        applicationRequestId: id,
+        description: complaintText,
+      });
+      setSnackbarMessage("Queja enviada con éxito");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      // 👉 Una vez finalizado, redirijo a la pantalla de controversia iniciada
+      navigate("/cliente/controversia-iniciada", {
+        state: { appId: id },
+      });
+    } catch {
+      setSnackbarMessage(complaintError || "Error al enviar la queja");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
+  };
+
+  // 🚩 Integración de useMarkAsEnded
+  const {
+    markAsEnded,
+    isLoading: endingLoading,
+    error: endingError,
+  } = useMarkAsEnded();
+
+  const handleEndService = async () => {
+    try {
+      await markAsEnded(id.toString());
+      setSnackbarMessage("Servicio finalizado correctamente");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+
+      // 👉 Una vez finalizado, redirijo a la pantalla de calificar
+      navigate("/cliente/calificar-cuidador", {
+        state: { carerId: carerId, appId: id },
+      });
+    } catch {
+      setSnackbarMessage(endingError || "Error al finalizar el servicio");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
+  };
+
   // Filtrar negociaciones según el applicationRequestId
   const filteredNegotiations =
     negotiation?.filter((item) => item.applicationRequestId === id) || [];
@@ -137,6 +195,12 @@ export const B4CClientServiceCard = ({
     ? filteredNegotiations[filteredNegotiations.length - 1]
         .last_modifier_role === "CLIENT"
     : false;
+
+  // 1️⃣ Llamamos al hook
+  const { data: fileUrls, loading: filesLoading } = useFileUrlsByUser(carerId);
+
+  // 2️⃣ Sacamos la URL de la imagen de perfil
+  const profilePicUrl = fileUrls?.find((f) => f.is_profile_pic)?.url;
 
   return (
     <>
@@ -180,7 +244,7 @@ export const B4CClientServiceCard = ({
                 cursor: isAssigned ? "pointer" : "default",
               }}
               alt={isAssigned || carerName ? carerName : undefined}
-              src=" image url"
+              src={profilePicUrl || undefined}
               onClick={
                 isAssigned && carerId ? handleOpenViewColabModal : undefined
               }
@@ -301,12 +365,33 @@ export const B4CClientServiceCard = ({
                   onClick={handleOpenCloseNegotiationModal}
                 />
               )}
-              <B4CButton
-                variant="secondary"
-                fullWidth
-                size={Size.Small}
-                label="Ignorar"
-              />
+              {!isActive && !isCompleted && (
+                <B4CButton
+                  variant="secondary"
+                  fullWidth
+                  size={Size.Small}
+                  label="Ignorar"
+                />
+              )}
+              {isActive && (
+                <B4CButton
+                  variant="primary"
+                  fullWidth
+                  size={Size.Small}
+                  label="Finalización"
+                  onClick={handleEndService}
+                  disabled={endingLoading}
+                />
+              )}
+              {isCompleted && (
+                <B4CButton
+                  variant="secondary"
+                  fullWidth
+                  size={Size.Small}
+                  label="Presentar queja"
+                  onClick={handleOpenComplaint}
+                />
+              )}
             </Box>
           ) : (
             <>
@@ -327,6 +412,38 @@ export const B4CClientServiceCard = ({
           )}
         </Box>
       </Box>
+
+      {/* Modal de queja */}
+      <B4CModal open={openComplaintModal} onClose={handleCloseComplaint}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            width: "100vh",
+          }}
+        >
+          <Typography variant="h6">Cuéntanos qué pasó</Typography>
+
+          <TextField
+            label="Tu queja"
+            multiline
+            rows={4}
+            fullWidth
+            value={complaintText}
+            onChange={(e) => setComplaintText(e.target.value)}
+            placeholder="Describe brevemente lo sucedido..."
+          />
+
+          <B4CButton
+            fullWidth
+            size={Size.Small}
+            label={complaintLoading ? "Enviando..." : "Enviar queja"}
+            onClick={handleSubmitComplaint}
+            disabled={complaintLoading || !complaintText.trim()}
+          />
+        </Box>
+      </B4CModal>
 
       <B4CModal open={openCancelModal} onClose={handleOpenCloseCancelModal}>
         <DialogTitle>Cancelar solicitud de Servicio</DialogTitle>

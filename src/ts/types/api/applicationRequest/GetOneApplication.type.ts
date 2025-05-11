@@ -23,6 +23,7 @@ export interface GetOneApplication {
   is_carer_certified: boolean;
   completed_at: string | null; // Puede ser `null` si aún no está completado
   payment_due: string;
+  payment_intent_id: string | null;
   carer_speciality: string | null;
   carer_years_of_experience: number | null;
   carer_gender: string | null;

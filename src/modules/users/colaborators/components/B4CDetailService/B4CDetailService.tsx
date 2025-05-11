@@ -3,7 +3,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import { B4CButton } from "@/components/B4CButton";
-import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
 import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
 import map from "@/assets/images/hero_maps_static_api.png";
@@ -16,7 +15,7 @@ interface ServiceDetailPage {
   onClose: () => void;
 }
 
-export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
+export const B4CDetailService = () => {
   const [rejectConfirmation, setRejectConfirmation] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -29,7 +28,7 @@ export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
   };
 
   return (
-    <B4CModal open={isOpen} onClose={onClose}>
+    <>
       {!rejectConfirmation ? (
         <Grid container spacing={16}>
           <Grid
@@ -242,11 +241,10 @@ export const B4CDetailService = ({ isOpen, onClose }: ServiceDetailPage) => {
                 backgroundColor: colorPalette.error,
                 textWrap: "nowrap",
               }}
-              onClick={onClose}
             />
           </Grid>
         </Grid>
       )}
-    </B4CModal>
+    </>
   );
 };

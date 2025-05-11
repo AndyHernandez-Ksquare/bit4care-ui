@@ -10,6 +10,8 @@ import { ClientsForgotPassword } from "./pages/ClientsForgotPassword";
 import { RouteObject } from "react-router-dom";
 import { ClientProtectedModule } from "./pages/ClientProtectedModule/ClientProtectedModule";
 import { ClientApiProvider } from "@/context/api/apiClientContext";
+import { ClientNewReview } from "./pages/ClientNewReview";
+import { ClientNewComplaint } from "./pages/ClientNewComplaint";
 
 export const clientsRouter: RouteObject[] = [
   {
@@ -59,6 +61,14 @@ export const clientsRouter: RouteObject[] = [
   {
     path: "/cliente/agendar-y-pagar",
     element: <ClientPaymentPage />,
+  },
+  {
+    path: "/cliente/calificar-cuidador",
+    element: <ClientNewReview />,
+  },
+  {
+    path: "/cliente/controversia-iniciada",
+    element: <ClientNewComplaint />,
   },
   {
     path: "/cliente/olvide-contrasena",

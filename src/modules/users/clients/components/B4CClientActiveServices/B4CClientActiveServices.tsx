@@ -10,9 +10,14 @@ import { Status } from "@/ts/types/components";
 import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
+import { useEffect } from "react";
 
 export const B4CClientActiveServices = () => {
   const { applications, isLoading, error } = useGetAllApplications("pending");
+
+  useEffect(() => {
+    console.log("applications", applications);
+  }, [applications]);
 
   return (
     <Box

@@ -11,33 +11,65 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { useState, KeyboardEvent, MouseEvent } from "react";
+import { useState, KeyboardEvent, MouseEvent, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { B4CButton } from "@/components/B4CButton";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useClientSession } from "@/context/auth/constants/useClientSession";
 import { ListItemLink } from "../B4CSidebar/ListItemLink";
+import { useCollaboratorSession } from "@/context/auth/constants/useCollabSession";
+import { GetSelfCollab } from "@/services/careerServices/CareerServices";
+import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 
 export const NavBar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { setToken } = useClientSession();
+  const { token, setToken } = useCollaboratorSession();
 
-  const handleLogout = (): void => {
+  // 1️⃣ Estado local para guardar el collaboratorId
+  const [collabId, setCollabId] = useState<number | null>(null);
+
+  // 2️⃣ Llamamos siempre el hook (no dentro de useEffect)
+  const { data: fileUrls, loading: filesLoading } = useFileUrlsByUser(collabId);
+
+  // 3️⃣ Estado para la URL de perfil final
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
+
+  const handleLogout = () => {
     localStorage.clear();
     setToken(null);
   };
 
-  const toggleDrawer =
-    (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
-          (event as KeyboardEvent).key === "Shift")
-      ) {
-        return;
+  const toggleDrawer = (open: boolean) => (e: KeyboardEvent | MouseEvent) => {
+    if (
+      e.type === "keydown" &&
+      ((e as KeyboardEvent).key === "Tab" ||
+        (e as KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
+  // ── 4️⃣ Cargar datos “self” y extraer collaboratorId ──
+  useEffect(() => {
+    if (!token) return;
+    const fetchSelf = async () => {
+      try {
+        const self = await GetSelfCollab(token);
+        if (!self) return;
+        setCollabId(self.id);
+      } catch (err) {
+        console.error("No se pudo cargar el perfil del colaborador:", err);
       }
-      setDrawerOpen(open);
     };
+    fetchSelf();
+  }, [token]);
+
+  // ── 5️⃣ Cuando cambien las URLs, buscamos la que tenga is_profile_pic === true ──
+  useEffect(() => {
+    if (!fileUrls) return;
+    const profile = fileUrls.find((f) => f.is_profile_pic);
+    if (profile) setAvatarUrl(profile.url);
+  }, [fileUrls]);
 
   return (
     <>
@@ -62,7 +94,7 @@ export const NavBar = () => {
                 display: { xs: "none", tablet: "flex" },
               }}
             >
-              <B4CAvatar width={40} height={40} imageLink={""} />
+              <B4CAvatar width={40} height={40} imageLink={avatarUrl} />
             </Box>
             <IconButton
               aria-label="menu"

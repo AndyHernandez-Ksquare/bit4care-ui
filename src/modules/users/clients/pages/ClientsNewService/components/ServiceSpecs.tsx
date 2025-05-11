@@ -16,10 +16,15 @@ import { ReactNode } from "react";
 
 interface ServiceSpecsProps {
   formData: CreateAppReq;
+  disabled?: boolean;
   onChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
 }
 
-export const ServiceSpecs = ({ formData, onChange }: ServiceSpecsProps) => {
+export const ServiceSpecs = ({
+  formData,
+  disabled = false,
+  onChange,
+}: ServiceSpecsProps) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <Typography typography="body-normal-bold">
@@ -37,6 +42,7 @@ export const ServiceSpecs = ({ formData, onChange }: ServiceSpecsProps) => {
             label="Especialidad del cuidador"
             value={formData.carer_speciality} // Conectar valor al estado
             onChange={onChange}
+            disabled={disabled} // Deshabilitar el campo si es necesario
           >
             {specialityOptions.map((speciality) => (
               <MenuItem key={speciality.value} value={speciality.value}>
@@ -56,6 +62,7 @@ export const ServiceSpecs = ({ formData, onChange }: ServiceSpecsProps) => {
             label="Experiencia del cuidador"
             value={String(formData.carer_years_of_experience)} // Convertir número a string
             onChange={onChange}
+            disabled={disabled}
           >
             {experienceNeededOptions.map((experience) => (
               <MenuItem key={experience.value} value={experience.value}>
@@ -75,6 +82,7 @@ export const ServiceSpecs = ({ formData, onChange }: ServiceSpecsProps) => {
             label="Género del cuidador"
             value={formData.carer_gender} // Conectar valor al estado
             onChange={onChange}
+            disabled={disabled}
           >
             {generosOptions.map((genero) => (
               <MenuItem key={genero.value} value={genero.value}>
@@ -92,6 +100,7 @@ export const ServiceSpecs = ({ formData, onChange }: ServiceSpecsProps) => {
             label="Licencia de conducir"
             value={String(formData.carer_has_driving_license)} // Convertir booleano a string
             onChange={onChange}
+            disabled={disabled}
           >
             {driversLicenseNeeded.map((license, index) => (
               <MenuItem key={index} value={String(license.value)}>

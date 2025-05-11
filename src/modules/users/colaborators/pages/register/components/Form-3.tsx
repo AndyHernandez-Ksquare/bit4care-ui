@@ -5,9 +5,15 @@ import { useEffect } from "react";
 
 interface RegisterFormProps {
   onFormValidChange: (isValid: boolean) => void;
+  onIdDrop: (file: File) => void;
+  onVideoDrop: (file: File) => void;
 }
 
-export const RegisterFormPart3 = ({ onFormValidChange }: RegisterFormProps) => {
+export const RegisterFormPart3 = ({
+  onFormValidChange,
+  onIdDrop,
+  onVideoDrop,
+}: RegisterFormProps) => {
   const idAccepted = true;
   const videoAccepted = true;
 
@@ -39,7 +45,7 @@ export const RegisterFormPart3 = ({ onFormValidChange }: RegisterFormProps) => {
           </Typography>
         </Box>
 
-        <B4CDragNDrop />
+        <B4CDragNDrop onDrop={(files) => onIdDrop(files[0])} />
       </Box>
       <Box
         mt={24}
@@ -54,7 +60,7 @@ export const RegisterFormPart3 = ({ onFormValidChange }: RegisterFormProps) => {
           </Typography>
         </Box>
 
-        <B4CDragNDrop type="video" />
+        <B4CDragNDrop type="video" onDrop={(files) => onVideoDrop(files[0])} />
       </Box>
     </Box>
   );

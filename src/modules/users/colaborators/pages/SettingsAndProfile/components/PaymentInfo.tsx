@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { B4CTable } from "@/components/BigElements/B4CTable";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Icon, Typography } from "@mui/material";
 import {
   GridCellParams,
   GridColDef,
@@ -11,6 +10,10 @@ import { color } from "@/ts/types/shared/colors";
 
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums/Size";
+import { colorPalette } from "@/style/partials/colorPalette";
+import { useCreateConnectedAccount } from "@/context/api/hooks/stripe/useCreateConnectedAccount";
+import { useEffect } from "react";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 export const PaymentInfo = () => {
   const columns: GridColDef[] = [
@@ -84,9 +87,69 @@ export const PaymentInfo = () => {
       date: new Date("Jul 12 2011"),
     },
   ];
+
+  const { accountLink, createAccount, loading, error } =
+    useCreateConnectedAccount();
+
+  // Manejo del click en el botón
+  const handleButtonClick = async () => {
+    if (loading) return; // Evitar hacer clic mientras se está cargando
+
+    // Llamar al hook para crear la cuenta conectada
+    await createAccount();
+  };
+
+  // Redirigir automáticamente cuando `accountLink` cambie
+  useEffect(() => {
+    if (accountLink) {
+      console.log("Redirecting to:", accountLink);
+      window.open(accountLink, "_blank"); // Redirige a la URL de Stripe
+    }
+  }, [accountLink]); // Este efecto se ejecutará cada vez que accountLink cambie
+
   return (
-    <Box paddingTop="2rem" sx={{ width: "100%" }}>
-      <B4CButton label="Agregar cuenta a depositar" size={Size.Small} />
+    <Box
+      paddingTop="2rem"
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+      }}
+    >
+      <Button
+        variant="outlined"
+        onClick={handleButtonClick}
+        disabled={loading} // Deshabilita el botón mientras se está cargando
+        sx={{
+          width: { xs: "100%", desktop: "300px" },
+          display: "flex",
+          borderRadius: "8px",
+          backgroundColor: "#fff",
+          justifyContent: "space-between",
+        }}
+      >
+        <img
+          src="https://images.icon-icons.com/2699/PNG/512/stripe_logo_icon_167962.png"
+          alt="Stripe logo"
+          style={{ width: "34px", height: "34px" }}
+        />
+        <Box
+          sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
+        >
+          <Typography variant="button" sx={{ textTransform: "none" }}>
+            Conectar cuenta de Stripe
+          </Typography>
+          <Typography
+            variant="body-small"
+            sx={{ color: colorPalette.grey1, textTransform: "none" }}
+          >
+            https://stripe.com
+          </Typography>
+          {/* Icono openInNew de Material Icons */}
+        </Box>
+        <OpenInNewIcon />
+      </Button>
       <B4CTable dataTable={data} columns={columns} />
     </Box>
   );

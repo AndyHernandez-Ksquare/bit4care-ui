@@ -1,47 +1,120 @@
-import { B4CButton } from "@/components/B4CButton";
-import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
+// Importación de componentes personalizados, Stripe y Material-UI
+import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
+import { Elements, useStripe, useElements } from "@stripe/react-stripe-js";
 import {
   Box,
-  Checkbox,
+  CircularProgress,
   Divider,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid2 as Grid,
-  Radio,
-  RadioGroup,
-  TextField,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+// Hooks personalizados para obtener datos de Stripe y manejar pagos
+import { useStripePublishableKey } from "@/context/api/hooks/stripe/useStripePublishableKey";
+import { useCreatePaymentIntent } from "@/context/api/hooks/stripe/useCreatePaymentIntent";
+import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
+import { useBeginCaptureAndTransfer } from "@/context/api/hooks/stripe/useBeginCaptureAndTransfer";
+import { useSnackbar } from "@/context/ui/SnackbarContext";
+import { PaymentForm } from "./PaymentForm";
+
+// Componente principal que representa la página de pago del cliente
 export const ClientPaymentPage = () => {
-  const [paymentMethod, setPaymentMethod] = useState("tarjeta");
-
-  const handlePaymentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPaymentMethod(event.target.value);
-  };
-
   const navigate = useNavigate();
-  const { state } = useLocation();
-
-  const { proceedWithPayment } = useProceedWithPayment();
-  // Asigna valores predeterminados en caso de que no existan
+  // Hook para mostrar mensajes (snackbar)
+  const { open } = useSnackbar();
+  // Obtener los datos enviados por navegación (appId, monto, nombre del cuidador)
+  const { state } = useLocation() as {
+    state: { appId: number; amount: number; carerName: string };
+  };
   const { appId, amount, carerName } = state || {
-    appId: null,
+    appId: 0,
     amount: 0,
     carerName: "",
   };
 
-  // Función para simular el pago y redirigir
-  const handleProceedPayment = async () => {
-    if (!appId) return; // Puedes agregar validaciones adicionales
-    await proceedWithPayment(appId.toString());
-    alert("Simulacion de pago");
-    navigate("/cliente/");
-  };
+  // 1) Load publishable key
+  const {
+    publishableKey: pubKey,
+    loading: keyLoading,
+    error: keyError,
+  } = useStripePublishableKey();
 
+  // 2) Create payment intent
+  const {
+    paymentIntent,
+    createPaymentIntent,
+    loading: intentLoading,
+  } = useCreatePaymentIntent(appId);
+
+  // Estados locales para stripe, opciones y método de pago seleccionado
+  const [stripePromise, setStripePromise] = useState<ReturnType<
+    typeof loadStripe
+  > | null>(null);
+
+  // the options you’ll pass into <Elements>
+  const [elementsOptions, setElementsOptions] = useState<
+    StripeElementsOptions | undefined
+  >();
+
+  // 1️⃣ Efecto para cargar Stripe.js con la clave pública
+  useEffect(() => {
+    if (pubKey) {
+      setStripePromise(loadStripe(pubKey));
+    }
+  }, [pubKey]);
+
+  // 2️⃣ Efecto para crear PaymentIntent al cargar la página
+  useEffect(() => {
+    if (pubKey && appId) {
+      (async () => {
+        try {
+          await createPaymentIntent();
+        } catch {
+          open("No se pudo iniciar el pago", "error");
+        }
+      })();
+    }
+  }, [pubKey]);
+
+  // 3️⃣ Efecto para configurar las opciones de Stripe Elements una vez obtenido el client_secret
+  useEffect(() => {
+    if (pubKey && appId && paymentIntent) {
+      (async () => {
+        try {
+          setElementsOptions({ clientSecret: paymentIntent?.client_secret });
+        } catch {
+          open("No se pudo iniciar el pago", "error");
+        }
+      })();
+    }
+  }, [pubKey, appId, paymentIntent]);
+
+  // Mostrar loading general mientras cargan claves o intentos
+  if (keyLoading || intentLoading) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Mostrar error si no se pudo inicializar el pago
+  if (keyError) {
+    return (
+      <Typography color="error">No se pudo inicializar el pago</Typography>
+    );
+  }
+
+  // Render principal de la página con diseño responsivo en dos columnas
   return (
     <Grid
       container
@@ -52,7 +125,7 @@ export const ClientPaymentPage = () => {
         alignItems: "center",
       }}
     >
-      {/* Sección del formulario de pago */}
+      {/* Columna izquierda: formulario de pago */}
       <Grid
         size={{ xs: 12, desktop: 6 }}
         sx={{
@@ -65,7 +138,6 @@ export const ClientPaymentPage = () => {
             maxWidth: "572px",
             marginTop: "100px",
             marginLeft: "auto",
-
             display: "flex",
             flexDirection: "column",
             gap: "32px",
@@ -79,92 +151,20 @@ export const ClientPaymentPage = () => {
             con tu servicio tu dinero puede ser devuelto parcialmente...
           </Typography>
 
-          <FormControl component="fieldset" sx={{ marginY: 2 }}>
-            <FormLabel component="legend">Pagar con:</FormLabel>
-            <RadioGroup
-              row
-              value={paymentMethod}
-              onChange={handlePaymentChange}
-            >
-              <FormControlLabel
-                value="tarjeta"
-                control={<Radio />}
-                label="Tarjeta"
+          {/* Renderizado condicional según método de pago */}
+          {stripePromise && elementsOptions && (
+            <Elements stripe={stripePromise} options={elementsOptions}>
+              <PaymentForm
+                amount={amount}
+                appId={appId}
+                onSuccess={() => navigate("/cliente")}
               />
-              <FormControlLabel
-                value="transferencia"
-                control={<Radio />}
-                label="Transferencia"
-              />
-            </RadioGroup>
-          </FormControl>
-
-          {paymentMethod === "tarjeta" && (
-            <Grid container spacing={16}>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Número de tarjeta"
-                  placeholder="1234 5678 9101 1121"
-                />
-              </Grid>
-              <Grid size={{ xs: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Fecha de expiración"
-                  placeholder="MM/YY"
-                />
-              </Grid>
-              <Grid size={{ xs: 6 }}>
-                <TextField fullWidth label="CVV" placeholder="123" />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Guardar detalles de tarjeta"
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Acepto Términos y condiciones"
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <B4CButton
-                  onClick={handleProceedPayment}
-                  label={`Pagar $${amount} MXN`}
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-          )}
-          {paymentMethod === "transferencia" && (
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "32px",
-              }}
-            >
-              <Typography variant="body-normal" sx={{ color: "#ACACAC" }}>
-                {`Transferir $${amount} MXN a`}
-              </Typography>
-              <Typography variant="h6">{`${carerName}`}</Typography>
-              <Typography variant="h5">CLABE: 7658926452917567</Typography>
-              <B4CButton
-                onClick={handleProceedPayment}
-                label={`Pagar $${amount} MXN`}
-                fullWidth
-              />
-            </Box>
+            </Elements>
           )}
         </Box>
       </Grid>
 
-      {/* Sección del resumen de la orden */}
+      {/* Columna derecha: resumen de la orden */}
       <Grid
         size={{ xs: 12, desktop: 6 }}
         sx={{
@@ -202,12 +202,6 @@ export const ClientPaymentPage = () => {
             </Box>
           </Box>
           <Divider />
-          <Box sx={{ display: "flex", gap: "8px" }}>
-            <TextField label="Código de descuento" />
-            <B4CButton label="Aplicar" sx={{ width: "70px" }} />
-          </Box>
-          <Divider />
-
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <Typography variant="body-medium">Subtotal:</Typography>

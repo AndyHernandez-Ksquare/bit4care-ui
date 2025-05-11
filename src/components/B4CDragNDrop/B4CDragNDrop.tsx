@@ -1,28 +1,39 @@
-import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Chip, Typography } from "@mui/material";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import VideoFileRoundedIcon from "@mui/icons-material/VideoFileRounded";
 import { colorPalette } from "@/style/partials/colorPalette";
-import { B4CButton } from "../B4CButton";
-import { Size } from "@/ts/enums";
-
+import { useCallback, useState } from "react";
 export interface B4CDragNDropProps {
   type?: "document" | "video";
+  onDrop: (files: File[]) => void;
 }
 
-export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles);
-  }, []);
+export const B4CDragNDrop = ({
+  type = "document",
+  onDrop,
+}: B4CDragNDropProps) => {
+  const [files, setFiles] = useState<File[]>([]);
+  const hasFiles = files.length > 0;
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const handleDrop = useCallback(
+    (accepted: File[]) => {
+      setFiles(accepted);
+      onDrop(accepted);
+    },
+    [onDrop],
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: handleDrop,
+    multiple: false,
+  });
 
   return (
     <Box
       sx={{
-        mt: 12,
-        p: 12,
+        mt: 3,
+        p: 2,
         border: `1px solid ${colorPalette.grey4}`,
         borderRadius: "4px",
       }}
@@ -31,12 +42,16 @@ export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
         {...getRootProps()}
         sx={{
           border: "2px dashed",
-          borderColor: isDragActive ? "primary.main" : "grey.400",
+          borderColor: hasFiles
+            ? "success.main"
+            : isDragActive
+              ? "primary.main"
+              : "grey.400",
+          backgroundColor: hasFiles ? "rgba(76, 175, 80, 0.1)" : "transparent",
           padding: "20px",
           borderRadius: "4px",
           textAlign: "center",
           cursor: "pointer",
-          transition: "border-color 0.3s",
         }}
       >
         <input {...getInputProps()} />
@@ -45,54 +60,47 @@ export const B4CDragNDrop = ({ type = "document" }: B4CDragNDropProps) => {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
-          minHeight="175px"
+          minHeight="150px"
         >
-          {type === "document" ? (
-            <UploadFileRoundedIcon
-              fontSize="large"
-              color="action"
-              sx={{
-                mb: 12,
-              }}
-            />
-          ) : (
-            <VideoFileRoundedIcon
-              fontSize="large"
-              color="action"
-              sx={{
-                mb: 12,
-              }}
-            />
-          )}
-          {isDragActive ? (
-            <Typography>Soltar los archivos aquí...</Typography>
+          {hasFiles ? (
+            <>
+              {type === "document" ? (
+                <UploadFileRoundedIcon fontSize="large" color="success" />
+              ) : (
+                <VideoFileRoundedIcon fontSize="large" color="success" />
+              )}
+              <Typography mt={1} mb={2}>
+                Archivo cargado:
+              </Typography>
+              {files.map((f) => (
+                <Chip
+                  key={f.name}
+                  label={f.name}
+                  icon={
+                    type === "video" ? (
+                      <VideoFileRoundedIcon />
+                    ) : (
+                      <UploadFileRoundedIcon />
+                    )
+                  }
+                  color="success"
+                />
+              ))}
+            </>
+          ) : isDragActive ? (
+            <Typography>Suéltalo aquí…</Typography>
           ) : (
             <>
-              <Typography>Arrastrar y depositar aquí</Typography>
-              <Typography>o</Typography>
-              <Button
-                variant="text"
-                color="primary"
-                sx={{
-                  textTransform: "none",
-                }}
-              >
-                <Typography>
-                  Buscar {type === "video" ? "video" : "archivo"}
-                </Typography>
-              </Button>
+              {type === "document" ? (
+                <UploadFileRoundedIcon fontSize="large" color="action" />
+              ) : (
+                <VideoFileRoundedIcon fontSize="large" color="action" />
+              )}
+              <Typography mt={1}>Arrastra y suelta aquí</Typography>
             </>
           )}
         </Box>
       </Box>
-      <B4CButton
-        label="Subir Ahora"
-        fullWidth
-        size={Size.Small}
-        sx={{
-          mt: 12,
-        }}
-      />
     </Box>
   );
 };

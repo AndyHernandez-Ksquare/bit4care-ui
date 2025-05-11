@@ -24,21 +24,21 @@ export const SettingsAndProfile = () => {
           sx={{ textTransform: "none" }}
           label="Ajustes de cuenta y perfil"
         />
-        <Tab sx={{ textTransform: "none" }} label="Informacion de pagos" />
+        {/* <Tab sx={{ textTransform: "none" }} label="Informacion de pagos" />
         <Tab
           sx={{ textTransform: "none" }}
           label="Calendario y disponibilidad"
-        />
+        /> */}
       </Tabs>
       <B4CCustomTabPanel value={tabValue} index={0}>
         <UserSettings />
       </B4CCustomTabPanel>
-      <B4CCustomTabPanel value={tabValue} index={1}>
+      {/* <B4CCustomTabPanel value={tabValue} index={1}>
         <PaymentInfo />
       </B4CCustomTabPanel>
       <B4CCustomTabPanel value={tabValue} index={2}>
         <AvailabilitySettings />
-      </B4CCustomTabPanel>
+      </B4CCustomTabPanel> */}
     </PageLayout>
   );
 };

@@ -17,6 +17,7 @@ import { CollaboratorSessionProvider } from "./context/session/CollaboratorSessi
 import { SnackbarProvider } from "./context/ui/SnackbarContext.tsx";
 import { adminRouter } from "./modules/admin/AdminRouter.tsx";
 import { AdminAuthProvider } from "./context/auth/AuthAdminContext.tsx";
+import { ClientApiProvider } from "./context/api/apiClientContext.tsx";
 
 const combinedRoutes = [
   ...clientsRouter,
@@ -43,22 +44,24 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AdminSessionProvider>
-      <ThemeProvider theme={customTheme}>
-        <GlobalScrollbarStyles />
-        <ClientSessionProvider>
-          <AdminAuthProvider>
-            <ClientAuthProvider>
-              <CollaboratorSessionProvider>
-                <AuthCollaboratorProvider>
-                  <SnackbarProvider>
-                    <RouterProvider router={router} />
-                  </SnackbarProvider>
-                </AuthCollaboratorProvider>
-              </CollaboratorSessionProvider>
-            </ClientAuthProvider>
-          </AdminAuthProvider>
-        </ClientSessionProvider>
-      </ThemeProvider>
+      <ClientApiProvider>
+        <ThemeProvider theme={customTheme}>
+          <GlobalScrollbarStyles />
+          <ClientSessionProvider>
+            <AdminAuthProvider>
+              <ClientAuthProvider>
+                <CollaboratorSessionProvider>
+                  <AuthCollaboratorProvider>
+                    <SnackbarProvider>
+                      <RouterProvider router={router} />
+                    </SnackbarProvider>
+                  </AuthCollaboratorProvider>
+                </CollaboratorSessionProvider>
+              </ClientAuthProvider>
+            </AdminAuthProvider>
+          </ClientSessionProvider>
+        </ThemeProvider>
+      </ClientApiProvider>
     </AdminSessionProvider>
   </StrictMode>,
 );

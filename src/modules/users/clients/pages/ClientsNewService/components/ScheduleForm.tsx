@@ -11,11 +11,12 @@ export interface Schedule {
 }
 
 interface ScheduleProps {
-  mode?: "create" | "edit";
+  mode?: "create" | "edit" | "details";
   startDate: string | null;
   endDate: string | null;
   dates: string[];
   schedules: Record<string, Schedule>;
+  disabled?: boolean;
   onChange: (
     field: string,
     value: any,
@@ -30,6 +31,7 @@ export const ScheduleForm = ({
   startDate,
   endDate,
   dates,
+  disabled = false,
   schedules,
   onChange,
   setDates,
@@ -105,6 +107,7 @@ export const ScheduleForm = ({
           onChange={handleDateChange("start_date")}
           disablePast={mode === "create"}
           sx={{ width: "100%" }}
+          disabled={disabled}
         />
         —
         <DatePicker
@@ -114,6 +117,7 @@ export const ScheduleForm = ({
           onChange={handleDateChange("end_date")}
           minDate={startDateValue ?? undefined}
           sx={{ width: "100%" }}
+          disabled={disabled}
         />
       </Box>
       {dates.length > 0 && (
@@ -134,6 +138,7 @@ export const ScheduleForm = ({
                     handleScheduleChange(date, "startTime", value)
                   }
                   sx={{ width: "100%" }}
+                  disabled={disabled}
                 />
                 <TimePicker
                   label="Hora de término"
@@ -142,6 +147,7 @@ export const ScheduleForm = ({
                     handleScheduleChange(date, "endTime", value)
                   }
                   sx={{ width: "100%" }}
+                  disabled={disabled}
                 />
               </Box>
             </Box>

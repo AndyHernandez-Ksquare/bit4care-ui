@@ -31,10 +31,10 @@ export const PendingPage = () => {
   }
 
   return (
-    <Grid container spacing={8}>
+    <Grid container spacing={4} size={{ xs: 12 }}>
       {pendingCarers?.map((carer, index) => (
         <Grid
-          size={{ xs: 3, tablet: 4, desktop: 3 }}
+          size={{ xs: 12, tablet: 6, desktop: 4 }}
           key={`${carer.User.name}-${index}`}
         >
           <Box

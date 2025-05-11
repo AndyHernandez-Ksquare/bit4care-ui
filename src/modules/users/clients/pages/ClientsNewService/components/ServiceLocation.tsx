@@ -12,6 +12,7 @@ const base_google_url =
 
 interface ServiceLocationProps {
   address: string;
+  disabled?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   setAddress: (value: string) => void;
   setLocation: React.Dispatch<
@@ -25,6 +26,7 @@ interface ServiceLocationProps {
 
 export const ServiceLocation = ({
   address,
+  disabled = false,
   location,
   onChange,
   setAddress,
@@ -90,6 +92,7 @@ export const ServiceLocation = ({
         value={address}
         onChange={onChange}
         placeholder="Detalla tu dirección o selecciónala en el mapa"
+        disabled={disabled}
       />
 
       <Box sx={{ mt: 2 }}>

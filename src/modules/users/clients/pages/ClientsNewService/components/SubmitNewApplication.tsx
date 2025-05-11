@@ -6,6 +6,7 @@ import { Size } from "@/ts/enums";
 import { getHourlyRate } from "../utils/getHourlyRate";
 
 interface SubmitNewApplicationProps {
+  isDetails?: boolean;
   validForm?: boolean;
   offerPrice: number;
   professionalNeeded: boolean; // true = Enfermero, false = Cuidador sin título
@@ -20,6 +21,7 @@ interface SubmitNewApplicationProps {
 }
 
 export const SubmitNewApplication = ({
+  isDetails = false,
   validForm = true,
   offerPrice,
   professionalNeeded,
@@ -76,44 +78,57 @@ export const SubmitNewApplication = ({
           ${offerPrice ? offerPrice.toFixed(2) : `0.00`}
         </Typography>
       </Box>
-      <FormControl fullWidth sx={{ m: 1 }}>
-        <TextField
-          id="amount"
-          name="amount"
-          type="number"
-          value={offerPrice}
-          onChange={onChange}
-          onBlur={onBlur}
-          error={!isValidAmount}
-          helperText={
-            !isValidAmount
-              ? `La oferta no puede ser menor a $${minAllowedPrice.toFixed(2)}`
-              : ""
-          }
+      {isDetails && (
+        <B4CButton
+          label="Finalizar"
+          disabled={!validForm}
+          isSubmit
+          size={Size.Small}
         />
-      </FormControl>
-      <Box display={"flex"} sx={{ gap: 8 }}>
-        <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
-        <Typography typography={"body-small"} color={colorPalette.grey3}>
-          El precio recomendado puede ser hasta menos 15% sobre el precio mínimo
-          sugerido.
-        </Typography>
-      </Box>
-      <B4CButton
-        label="Enviar"
-        disabled={!validForm}
-        isSubmit
-        size={Size.Small}
-        onClick={onSubmit}
-      />
-      <Box display={"flex"} sx={{ gap: 8 }}>
-        <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
-        <Typography typography={"body-small"} color={colorPalette.grey3}>
-          Tu solicitud será enviada a los cuidadores disponibles, cuando alguno
-          acepte, deberás confirmar el servicio mediante el pago del mismo.
-        </Typography>
-      </Box>
-      <B4CButton label="Cancelar" variant="secondary" size={Size.Small} />
+      )}
+      {!isDetails && (
+        <>
+          <FormControl fullWidth sx={{ m: 1 }}>
+            <TextField
+              id="amount"
+              name="amount"
+              type="number"
+              value={offerPrice}
+              onChange={onChange}
+              onBlur={onBlur}
+              error={!isValidAmount}
+              helperText={
+                !isValidAmount
+                  ? `La oferta no puede ser menor a $${minAllowedPrice.toFixed(2)}`
+                  : ""
+              }
+            />
+          </FormControl>
+          <Box display={"flex"} sx={{ gap: 8 }}>
+            <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
+            <Typography typography={"body-small"} color={colorPalette.grey3}>
+              El precio recomendado puede ser hasta menos 15% sobre el precio
+              mínimo sugerido.
+            </Typography>
+          </Box>
+          <B4CButton
+            label="Enviar"
+            disabled={!validForm}
+            isSubmit
+            size={Size.Small}
+            onClick={onSubmit}
+          />
+          <Box display={"flex"} sx={{ gap: 8 }}>
+            <InfoOutlinedIcon sx={{ color: colorPalette.primary }} />
+            <Typography typography={"body-small"} color={colorPalette.grey3}>
+              Tu solicitud será enviada a los cuidadores disponibles, cuando
+              alguno acepte, deberás confirmar el servicio mediante el pago del
+              mismo.
+            </Typography>
+          </Box>
+          <B4CButton label="Cancelar" variant="secondary" size={Size.Small} />
+        </>
+      )}
     </Box>
   );
 };

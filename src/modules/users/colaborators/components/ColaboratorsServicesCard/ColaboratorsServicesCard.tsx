@@ -24,6 +24,8 @@ import {
   GetAllApplication,
   GetOneApplication,
 } from "@/ts/types/api/applicationRequest";
+import { useNavigate } from "react-router-dom";
+import { statusTagInfo } from "@/constants/serviceCardsTags";
 
 export const ColaboratorsServicesCard = ({
   id,
@@ -42,19 +44,11 @@ export const ColaboratorsServicesCard = ({
   b4cfee = 0,
   onClick,
 }: ColaboratorsServicesCardProps & { data: GetOneApplication }) => {
-  const statusTagInfo = {
-    pending: { color: "warning", label: "Solicitado" },
-    realizado: { color: "success", label: "Realizado" },
-    accepted: { color: "success", label: "Aceptado" },
-    "no realizado": { color: "error", label: "No Realizado" },
-    solicitado: { color: "warning", label: "Solicitado" },
-    active_negotiation: { color: "info", label: "En negociación" },
-    active: { color: "success", label: "Agendado" },
-  };
-
   const normalizedStatus = status.toLowerCase() as Status;
   const isPending = normalizedStatus === "pending";
   const isNegotiationActive = normalizedStatus === "active_negotiation";
+
+  const isAccepted = normalizedStatus === "accepted";
 
   // Hardcodeando horarios de trabajo 🕒
   const workShifts = [
@@ -82,6 +76,12 @@ export const ColaboratorsServicesCard = ({
     }
   };
 
+  const navigate = useNavigate(); // Hook para navegar entre páginas
+
+  const handleDetail = () => {
+    navigate(`/colaborador/mis-servicios/${id}`); // Redirige al formulario de edición con el ID
+  };
+
   const filteredNegotiations =
     negotiation?.filter((item) => item.applicationRequestId === parseInt(id)) ||
     [];
@@ -99,9 +99,7 @@ export const ColaboratorsServicesCard = ({
     : false;
 
   useEffect(() => {
-    console.log(id);
-    console.log(filteredNegotiations);
-    console.log(canCarerOffer);
+    console.log(status);
     status = status.toLowerCase() as Status;
   }, []);
   return (
@@ -165,8 +163,8 @@ export const ColaboratorsServicesCard = ({
             }}
           >
             <B4CTag
-              label={statusTagInfo[status].label}
-              color={statusTagInfo[status].color as color}
+              label={statusTagInfo[normalizedStatus].label}
+              color={statusTagInfo[normalizedStatus].color as color}
             />
           </Box>
         </Box>
@@ -370,6 +368,16 @@ export const ColaboratorsServicesCard = ({
             flexDirection: "column",
           }}
         >
+          {isAccepted && (
+            <B4CButton
+              size={Size.Small}
+              label="Ver detalles de servicio"
+              variant="primary"
+              onClick={handleDetail}
+              disabled={data.payment_intent_id === null}
+              fullWidth
+            />
+          )}
           {isNegotiationActive && (
             <B4CButton
               size={Size.Small}

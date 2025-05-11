@@ -11,6 +11,7 @@ import {
   NegotiationRequestBody,
 } from "@/ts/types/api/applicationRequest/Negotiation.type";
 import { id } from "date-fns/locale";
+import { MakeComplaintReq } from "@/ts/types/api/applicationRequest/MakeComplaint.type";
 
 const Entity = "application-request";
 
@@ -186,10 +187,41 @@ export const AcceptNegotiation = async (id: string) => {
   }
 };
 
+export const MarkAsEnded = async (id: string) => {
+  try {
+    const response: AxiosResponse<GetOneApplication> = await axios.patch(
+      `/${Entity}/complete/${id}`,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error making negotiation:", error);
+    throw error;
+  }
+};
+
 export const MarkAsNotInterested = async (appRequestId: string) => {
   try {
     const response: AxiosResponse<unknown> = await axios.put(
       `/${Entity}/markAsNotInterested/${appRequestId}`,
+    );
+    if (response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error: unknown) {
+    console.error("Error creating application request:", error);
+    throw error;
+  }
+};
+
+export const MakeComplaint = async (bodyRequest: MakeComplaintReq) => {
+  try {
+    const response: AxiosResponse<unknown> = await axios.post(
+      `/${Entity}/complaint`,
+      bodyRequest,
     );
     if (response.data) {
       return response.data;
