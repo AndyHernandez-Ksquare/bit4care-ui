@@ -4,10 +4,14 @@ export const extractFileMeta = (file: File): FileUploadMetadata => {
   const fullName = file.name;
   const lastDot = fullName.lastIndexOf(".");
   const name = lastDot > 0 ? fullName.substring(0, lastDot) : fullName;
-  const type = lastDot > 0 ? fullName.substring(lastDot + 1) : "";
+  let ext = lastDot > 0 ? fullName.substring(lastDot + 1) : "";
+
+  // 2️⃣ Normalizamos: si viene "jpg" lo convertimos a "jpeg"
+  const normalizedType = ext === "jpg" ? "jpeg" : ext;
+
   return {
     name,
-    type,
+    type: normalizedType,
     fileSize: file.size,
   };
 };
