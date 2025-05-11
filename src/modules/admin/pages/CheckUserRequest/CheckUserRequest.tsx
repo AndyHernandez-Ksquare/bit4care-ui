@@ -1,20 +1,23 @@
 import { B4CButton } from "@/components/B4CButton";
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { useReviewCarer } from "@/context/api/hooks/carer/useReviewCarer";
+import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 import { useGetOneCareer } from "@/context/api/hooks/useGetOneCareer";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
 import { EvaluateCarerRequest } from "@/ts/types/api/carer/CreateCarerProfile.type";
+import { FileUploadResponse } from "@/ts/types/api/file";
 import {
   Avatar,
   Box,
   Breadcrumbs,
   Button,
+  CircularProgress,
   Grid2 as Grid,
   Link,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const CheckUserRequest = () => {
@@ -37,6 +40,14 @@ export const CheckUserRequest = () => {
   // Utilizamos el custom hook para obtener la información del carer
   const { data: user, isLoading, error } = useGetOneCareer(parseInt(careerId));
 
+  // 2️⃣ Archivos del carer
+  const {
+    data: files,
+    loading: filesLoading,
+    error: filesError,
+    refetch: refetchFiles,
+  } = useFileUrlsByUser(user?.User.id ?? null);
+
   // Custom hook para aceptar al carer
   const {
     reviewCarer,
@@ -57,6 +68,27 @@ export const CheckUserRequest = () => {
       // El error ya se maneja en el hook (se guarda en reviewError)
       console.error("Error al aceptar al carer:", err);
     }
+  };
+
+  const handleReject = async () => {
+    // Se crea el objeto de request con ambos valores en true.
+    const requestBody: EvaluateCarerRequest = {
+      is_approved: false,
+      is_active: false,
+    };
+    try {
+      await reviewCarer(requestBody, parseInt(careerId));
+      // Aquí puedes agregar lógica adicional: mostrar notificación, redirigir, etc.
+    } catch (err) {
+      // El error ya se maneja en el hook (se guarda en reviewError)
+      console.error("Error al rechazar al carer:", err);
+    }
+  };
+
+  const DOC_LABELS: Record<string, string> = {
+    cv: "Currículum",
+    id: "Identificación",
+    vid_mot: "Vídeo de introducción",
   };
 
   // Estado de carga
@@ -197,7 +229,9 @@ export const CheckUserRequest = () => {
                   <Typography variant="body-medium-bold">
                     {"Número de teléfono: "}
                   </Typography>
-                  <Typography variant="body-medium">{"9389239"}</Typography>
+                  <Typography variant="body-medium">
+                    {user.User.phone}
+                  </Typography>
                 </Box>
                 <Box
                   sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}
@@ -205,7 +239,7 @@ export const CheckUserRequest = () => {
                   <Typography variant="body-medium-bold">
                     {"Estado de residencia: "}
                   </Typography>
-                  <Typography variant="body-medium">{"Queretaro"}</Typography>
+                  <Typography variant="body-medium">{user.state}</Typography>
                 </Box>
                 <Box
                   sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}
@@ -213,29 +247,42 @@ export const CheckUserRequest = () => {
                   <Typography variant="body-medium-bold">
                     {"Años de experiencia "}
                   </Typography>
-                  <Typography variant="body-medium">{"4 años"}</Typography>
+                  <Typography variant="body-medium">{`${user.years_of_experience} años`}</Typography>
                 </Box>
+                {/* 4️⃣ Aquí renderizamos los archivos: */}
                 <Box
                   sx={{
-                    marginTop: "1rem",
+                    marginTop: "1.5rem",
                     display: "flex",
                     flexDirection: "column",
                     gap: "1rem",
-                    width: "100%",
                   }}
                 >
-                  <B4CButton
-                    labelColor={colorPalette.grey1}
-                    variant="outlined"
-                    label="CV"
-                    size={Size.Small}
-                  />
-                  <B4CButton
-                    labelColor={colorPalette.grey1}
-                    variant="outlined"
-                    label="CV"
-                    size={Size.Small}
-                  />
+                  <Typography variant="body-medium-bold">
+                    Documentos:
+                  </Typography>
+
+                  {filesLoading && <CircularProgress size={24} />}
+                  {filesError && (
+                    <Typography color="error">{filesError}</Typography>
+                  )}
+
+                  {!filesLoading && files?.length
+                    ? files.map((f: FileUploadResponse) => (
+                        <B4CButton
+                          key={f.id}
+                          variant="secondary"
+                          size={Size.Small}
+                          fullWidth
+                          label={DOC_LABELS[f.name] ?? f.name}
+                          onClick={() => window.open(f.url, "_blank")}
+                        />
+                      ))
+                    : !filesLoading && (
+                        <Typography variant="body-small">
+                          No hay archivos disponibles.
+                        </Typography>
+                      )}
                 </Box>
                 <Box
                   sx={{
@@ -291,7 +338,7 @@ export const CheckUserRequest = () => {
                 label="Seguir considerando"
                 onClick={() => setPage(1)}
               />
-              <Button
+              <B4CButton
                 sx={{
                   width: "100%",
                   backgroundColor: colorPalette.error,
@@ -302,9 +349,10 @@ export const CheckUserRequest = () => {
                   fontSize: "16px",
                   textTransform: "none",
                 }}
-              >
-                Rechazar solicitud
-              </Button>
+                label={reviewIsLoading ? "Rechazando..." : "Rechazar solicitud"}
+                onClick={handleReject}
+                disabled={reviewIsLoading}
+              />
             </Box>
           </Box>
         ))}
