@@ -1,7 +1,6 @@
 import { B4CButton } from "@/components/B4CButton";
 import { B4CStarRating } from "@/components/B4CStarRating";
 import { B4CModal } from "@/components/BigElements/B4CModal";
-import { B4CTag } from "@/components/SmallElements/B4CTag";
 import { calculateAverageRating } from "@/constants/calculateAverageRating";
 import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 import { Size } from "@/ts/enums/Size";
@@ -30,10 +29,17 @@ export const SingleCollaboratorsCard = ({
 
   // ── 5️⃣ Cuando cambien las URLs, buscamos la que tenga is_profile_pic === true ──
   useEffect(() => {
-    if (!fileUrls) return;
+    // si cambiamos de usuario o no llegan urls, resetea
+    if (!user || !fileUrls) {
+      setAvatarUrl("");
+      return;
+    }
+
+    // busca foto de perfil
     const profile = fileUrls.find((f) => f.is_profile_pic);
-    if (profile) setAvatarUrl(profile.url);
-  }, []);
+    // si la hay, úsala, si no, bórrala
+    setAvatarUrl(profile?.url ?? "");
+  }, [user, fileUrls]);
 
   return (
     <B4CModal
@@ -61,7 +67,7 @@ export const SingleCollaboratorsCard = ({
             >
               <Avatar
                 src={avatarUrl}
-                alt={"asdad"}
+                alt={user.User.name}
                 sx={{ width: 128, height: 128 }}
               />
               <Typography variant="h5" style={{ color: "#6C6C6C" }}>

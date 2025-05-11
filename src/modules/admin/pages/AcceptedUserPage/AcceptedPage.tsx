@@ -9,7 +9,6 @@ import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 import { GetPresignedUrlByUser } from "@/services/fileServices/FileServices";
 
 export const AcceptedPage = () => {
-  const [users, setUsers] = useState<GetOneCarer[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<GetOneCarer | null>(null);
 
@@ -27,7 +26,6 @@ export const AcceptedPage = () => {
         if (!usersData) {
           throw new Error("No se encontraron datos de usuarios.");
         }
-        setUsers(usersData);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -37,7 +35,7 @@ export const AcceptedPage = () => {
 
   return (
     <Grid container spacing={8}>
-      {users.map((user, index) => (
+      {data?.map((user, index) => (
         <Grid
           size={{ xs: 6, tablet: 4, desktop: 3 }}
           key={`${user.User.name}-${index}`}

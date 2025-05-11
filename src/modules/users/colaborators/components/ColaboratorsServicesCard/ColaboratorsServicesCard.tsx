@@ -99,7 +99,7 @@ export const ColaboratorsServicesCard = ({
     : false;
 
   useEffect(() => {
-    console.log(id);
+    console.log(status);
     status = status.toLowerCase() as Status;
   }, []);
   return (
@@ -163,8 +163,8 @@ export const ColaboratorsServicesCard = ({
             }}
           >
             <B4CTag
-              label={statusTagInfo[status].label}
-              color={statusTagInfo[status].color as color}
+              label={statusTagInfo[normalizedStatus].label}
+              color={statusTagInfo[normalizedStatus].color as color}
             />
           </Box>
         </Box>
