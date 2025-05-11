@@ -107,21 +107,18 @@ function ColaboratorsRegister() {
       const uploads: Promise<FileUploadResponse>[] = [];
       if (cvFile) {
         uploads.push(
-          uploadFile(extractFileMeta({ ...cvFile, name: "cv" }), cvFile),
+          uploadFile({ ...extractFileMeta(cvFile), name: "cv" }, cvFile),
         );
       }
       if (idFile) {
         uploads.push(
-          uploadFile(
-            extractFileMeta({ ...idFile, name: "identificacion" }),
-            idFile,
-          ),
+          uploadFile({ ...extractFileMeta(idFile), name: "id" }, idFile),
         );
       }
       if (videoFile) {
         uploads.push(
           uploadFile(
-            extractFileMeta({ ...videoFile, name: "video" }),
+            { ...extractFileMeta(videoFile), name: "vid_mot" },
             videoFile,
           ),
         );
