@@ -25,7 +25,6 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { Check } from "@mui/icons-material";
 import { useCreateClient } from "@/context/api/hooks/useCreateClient";
 import { useWelcomeMessage } from "@/context/api/hooks/useWelcomeMessage";
-import { SendOtpBodyRequest } from "@/ts/types/api/metaRequest/SendOtp.type";
 
 const clientFormToCreateClientParser = (
   formValues: PhoneFormValues & UserDataFormValues,
@@ -110,7 +109,7 @@ export const B4CSignupSteps = () => {
       });
       const response = await createClient(clientData);
       if (response) {
-        const requestBody: SendOtpBodyRequest = {
+        const requestBody = {
           clientPhoneNumber: `${formik.values.countryCode}${formik.values.phoneNumber}`,
         };
         setOpenSnackbar(true);

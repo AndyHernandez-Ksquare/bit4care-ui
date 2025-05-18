@@ -26,6 +26,32 @@ import {
 } from "@/ts/types/api/applicationRequest";
 import { useNavigate } from "react-router-dom";
 import { statusTagInfo } from "@/constants/serviceCardsTags";
+import { useGetOneAppRequest } from "@/context/api/hooks/application-requests/useGetOneAppRequest";
+
+// 1) Helper para obtener las fechas consecutivas entre dos ISO-strings
+function getDatesBetween(startISO: string, endISO: string): string[] {
+  const dates: string[] = [];
+  const curr = new Date(startISO);
+  const end = new Date(endISO);
+
+  // Normalizar horas para evitar off-by-one
+  curr.setHours(0, 0, 0, 0);
+  end.setHours(0, 0, 0, 0);
+
+  while (curr <= end) {
+    // Formateamos YYYY-MM-DD; puedes usar toLocaleDateString si lo prefieres
+    dates.push(curr.toISOString().slice(0, 10));
+    curr.setDate(curr.getDate() + 1);
+  }
+
+  return dates;
+}
+
+type ShiftLine = {
+  date: string; // p.e. "2025-02-07"
+  start: string; // p.e. "7:00"
+  end: string; // p.e. "10:00"
+};
 
 export const ColaboratorsServicesCard = ({
   id,
@@ -47,20 +73,20 @@ export const ColaboratorsServicesCard = ({
   const normalizedStatus = status.toLowerCase() as Status;
   const isPending = normalizedStatus === "pending";
   const isNegotiationActive = normalizedStatus === "active_negotiation";
-
   const isAccepted = normalizedStatus === "accepted";
 
-  // Hardcodeando horarios de trabajo 🕒
-  const workShifts = [
-    { date: "09 de Marzo de 2025", start: "08:00 AM", end: "10:00 AM" },
-  ];
-
   const { markAsNotInterested, loading, error, isSuccess } = useNotInterested();
+  const {
+    data: getOneData,
+    getOneAppLoading,
+    error: getOneError,
+  } = useGetOneAppRequest(id.toString());
 
   const { markAsInterested } = useMarkAsInterested();
 
   const [openModal, setOpenModal] = useState(false);
   const [openNegotiateModal, setOpenNegotiateModal] = useState(false);
+  const [workShifts, setWorkShifts] = useState<ShiftLine[]>([]);
 
   const [selectedRequest, setSelectedRequest] =
     useState<GetAllApplication | null>(null); // ✅ Estado para la solicitud seleccionada
@@ -99,7 +125,34 @@ export const ColaboratorsServicesCard = ({
     : false;
 
   useEffect(() => {
-    console.log(status);
+    if (!getOneData) return;
+
+    const { start_date, end_date, WorkShift } = getOneData;
+    // 2) Generar array de fechas
+    const dates = getDatesBetween(start_date, end_date);
+
+    // 2) Cruza fechas × turnos y deduplica
+    const seen = new Set<string>();
+    const lines = [];
+
+    for (const date of dates) {
+      for (const ws of WorkShift) {
+        const key = `${date}|${ws.start_hour}|${ws.end_hour}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          lines.push({
+            date,
+            start: ws.start_hour,
+            end: ws.end_hour,
+          });
+        }
+      }
+    }
+
+    setWorkShifts(lines);
+  }, [openModal]);
+
+  useEffect(() => {
     status = status.toLowerCase() as Status;
   }, []);
   return (
