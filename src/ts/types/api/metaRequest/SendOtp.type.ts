@@ -1,3 +1,3 @@
 export interface SendOtpBodyRequest {
-  clientPhoneNumber: string;
+  recipient: string;
 }

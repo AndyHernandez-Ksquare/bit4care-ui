@@ -110,7 +110,7 @@ export const B4CTextfield = ({
         }}
         className={className}
         id={anchorName}
-        error={error}
+        error={error && touched}
         disabled={disabled}
         size="small"
         multiline={isMultiline}

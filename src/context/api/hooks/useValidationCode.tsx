@@ -1,35 +1,70 @@
-import { SendValidationCode } from "@/services/metaServices/sendOtpService";
-import { SendOtpBodyRequest } from "@/ts/types/api/metaRequest/SendOtp.type";
-import { useState } from "react";
+import {
+  SendValidationCode,
+  VerifyValidationCode,
+} from "@/services/metaServices/sendOtpService";
+import { useCallback, useState } from "react";
 
-export const useValidationCode = () => {
-  const [isLoading, setIsLoading] = useState(false); // Estado de carga
-  const [error, setError] = useState<string | null>(null); // Estado de error
-  const [generatedCode, setGeneratedCode] = useState<string>(""); // Estado para el código generado
+interface UseValidationCodeHook {
+  // Envío
+  sendOtp: (recipient: string) => Promise<void>;
+  sending: boolean;
+  sendError: string | null;
+  sent: boolean;
+  // Verificación
+  verifyOtp: (recipient: string, code: string) => Promise<void>;
+  verifying: boolean;
+  verifyError: string | null;
+  verified: boolean;
+}
 
-  const sendCode = async (requestBody: SendOtpBodyRequest) => {
-    setIsLoading(true); // Activamos la carga
-    setError(null); // Limpiamos cualquier error previo
+export const useValidationCode = (): UseValidationCodeHook => {
+  // Estados de envío
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+
+  // Estados de verificación
+  const [verifying, setVerifying] = useState(false);
+  const [verifyError, setVerifyError] = useState<string | null>(null);
+  const [verified, setVerified] = useState(false);
+
+  const sendOtp = useCallback(async (recipient: string) => {
+    setSending(true);
+    setSendError(null);
+    setSent(false);
     try {
-      // Llamamos al servicio para enviar el código de validación
-      const response = await SendValidationCode(requestBody);
-
-      if (response.OTP) {
-        setGeneratedCode(response.OTP); // Guardamos el código OTP recibido
-      } else {
-        setError("No se pudo obtener el código de validación.");
-      }
-    } catch (err) {
-      setError("Hubo un problema al enviar el código. Inténtalo de nuevo.");
+      await SendValidationCode({ recipient });
+      setSent(true);
+    } catch (err: any) {
+      // AxiosError? mostramos el mensaje del backend si existe
+      setSendError(err.response?.data?.message ?? err.message);
     } finally {
-      setIsLoading(false); // Finalizamos la carga
+      setSending(false);
     }
-  };
+  }, []);
+
+  const verifyOtp = useCallback(async (recipient: string, code: string) => {
+    setVerifying(true);
+    setVerifyError(null);
+    setVerified(false);
+    try {
+      await VerifyValidationCode({ recipient, code });
+      setVerified(true);
+    } catch (err: any) {
+      setVerifyError(err.response?.data?.message ?? err.message);
+    } finally {
+      setVerifying(false);
+    }
+  }, []);
 
   return {
-    sendCode,
-    isLoading,
-    error,
-    generatedCode,
+    sendOtp,
+    sending,
+    sendError,
+    sent,
+    verifyOtp,
+    verifying,
+    verifyError,
+    verified,
   };
 };

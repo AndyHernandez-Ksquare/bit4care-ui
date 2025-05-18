@@ -8,7 +8,7 @@ export const useWelcomeMessage = () => {
   const [error, setError] = useState<string | null>(null); // Estado de error
   const [response, setResponse] = useState<WelcomeMessageResponse | null>(null); // Estado para el código generado
 
-  const sendMessage = async (requestBody: SendOtpBodyRequest) => {
+  const sendMessage = async (requestBody: { clientPhoneNumber: string }) => {
     setIsLoading(true); // Activamos la carga
     setError(null); // Limpiamos cualquier error previo
     try {

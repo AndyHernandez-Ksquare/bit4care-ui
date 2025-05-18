@@ -26,26 +26,37 @@ export const B4CConfirmationCodeInput = ({
   setConfirmation,
 }: B4CConfirmationCodeInputProps) => {
   const [inputCode, setInputCode] = useState(""); // Estado para el código ingresado
-  const { sendCode, isLoading, error, generatedCode } = useValidationCode(); // Código de confirmación simulado
+  const {
+    sendOtp,
+    sending,
+    sendError,
+    sent,
+    verifyOtp,
+    verifying,
+    verifyError,
+    verified,
+  } = useValidationCode(); // Código de confirmación simulado
 
   // Manejo del timeout para simular la confirmación del número
-  const handleConfirmCode = () => {
-    if (inputCode === generatedCode) {
-      setConfirmation(true); // Código correcto, confirmar
-      setActiveStep(2); // Pasar al siguiente paso
-    } else {
-      // Código incorrecto, mostrar error
-      alert("El código es incorrecto. Inténtalo de nuevo.");
+  const handleConfirmCode = async () => {
+    // Disparamos la verificación contra el backend
+    try {
+      await verifyOtp(`${countryCode}${phoneNumber}`, inputCode);
+      // Si todo OK:
+      setConfirmation(true);
+      setActiveStep(2);
+    } catch {
+      // El hook ya guarda el mensaje en verifyError
     }
   };
 
   useEffect(() => {
     if (phoneNumber) {
       const requestBody: SendOtpBodyRequest = {
-        clientPhoneNumber: `${countryCode}${phoneNumber}`,
+        recipient: `${countryCode}${phoneNumber}`,
       };
 
-      sendCode(requestBody); // Enviar el código de validación
+      sendOtp(requestBody.recipient); // Enviar el código de validación
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -109,8 +120,8 @@ export const B4CConfirmationCodeInput = ({
             label="Código de confirmación"
             sx={{ marginBlock: "auto" }}
             onChange={(event) => setInputCode(event.target.value)}
-            error={!!error} // Muestra error si existe
-            helperText={error}
+            error={!!verifyError} // Muestra error si existe
+            helperText={verifyError}
           />
           <Typography variant="body-normal" sx={{ color: "#575F6E" }}>
             Confirma tu número de teléfono con el código del mensaje de texto
@@ -131,17 +142,20 @@ export const B4CConfirmationCodeInput = ({
                 fontWeight: "600",
               },
             }}
-            onClick={() =>
-              sendCode({ clientPhoneNumber: `${countryCode}${phoneNumber}` })
-            }
+            onClick={() => sendOtp(`${countryCode}${phoneNumber}`)}
           >
-            Enviar otra vez
+            {sending ? "Reenviando…" : "Enviar otra vez"}
           </Button>
+          {sendError && (
+            <Typography color="error" variant="caption">
+              {sendError}
+            </Typography>
+          )}
         </Grid>
       </Grid>
       <B4CButton
-        disabled={isLoading || confirmation || inputCode.length === 0}
-        isLoading={isLoading}
+        disabled={sending || confirmation || inputCode.length === 0}
+        isLoading={sending}
         label={confirmation ? "Redirigiendo..." : "Confirmar"}
         variant="primary"
         onClick={handleConfirmCode}
