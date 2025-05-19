@@ -171,7 +171,7 @@ export const B4CClientServiceCard = ({
   const handleEndService = async () => {
     try {
       await markAsEnded(id.toString());
-      await beginCaptureAndTransfer;
+      await beginCaptureAndTransfer();
       setSnackbarMessage("Servicio finalizado correctamente");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
