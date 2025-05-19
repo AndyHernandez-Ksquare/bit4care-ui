@@ -14,8 +14,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 // Hooks personalizados para obtener datos de Stripe y manejar pagos
 import { useStripePublishableKey } from "@/context/api/hooks/stripe/useStripePublishableKey";
 import { useCreatePaymentIntent } from "@/context/api/hooks/stripe/useCreatePaymentIntent";
-import { useProceedWithPayment } from "@/context/api/hooks/application-requests/useProceedWithPayment";
-import { useBeginCaptureAndTransfer } from "@/context/api/hooks/stripe/useBeginCaptureAndTransfer";
 import { useSnackbar } from "@/context/ui/SnackbarContext";
 import { PaymentForm } from "./PaymentForm";
 
