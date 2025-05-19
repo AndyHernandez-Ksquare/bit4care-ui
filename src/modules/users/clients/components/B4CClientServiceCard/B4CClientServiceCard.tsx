@@ -34,6 +34,7 @@ import { statusTagInfo } from "@/constants/serviceCardsTags";
 import { useMarkAsEnded } from "@/context/api/hooks/application-requests/useMarkAsEnded";
 import { useMakeComplaint } from "@/context/api/hooks/application-requests/useMakeComplaint";
 import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
+import { useBeginCaptureAndTransfer } from "@/context/api/hooks/stripe/useBeginCaptureAndTransfer";
 
 export const B4CClientServiceCard = ({
   id,
@@ -79,6 +80,9 @@ export const B4CClientServiceCard = ({
   const isAccepted = normalizedStatus === "accepted";
   const isNegotiationActive = normalizedStatus === "active_negotiation";
   const isCompleted = normalizedStatus === "completed";
+
+  const { result, beginCaptureAndTransfer, loading, error } =
+    useBeginCaptureAndTransfer(id);
 
   // Convertir fechas a un formato legible
   const formattedStartDate = startDate
@@ -167,6 +171,7 @@ export const B4CClientServiceCard = ({
   const handleEndService = async () => {
     try {
       await markAsEnded(id.toString());
+      await beginCaptureAndTransfer;
       setSnackbarMessage("Servicio finalizado correctamente");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
