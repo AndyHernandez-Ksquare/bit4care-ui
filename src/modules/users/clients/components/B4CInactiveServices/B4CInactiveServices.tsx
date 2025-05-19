@@ -1,4 +1,3 @@
-import { B4CNoFinishedServices } from "@/assets/images/B4CNoFinishedServices";
 import { Status } from "@/ts/types/components";
 import {
   Box,
@@ -8,11 +7,16 @@ import {
 } from "@mui/material";
 import { B4CClientServiceCard } from "../B4CClientServiceCard/B4CClientServiceCard";
 import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
+import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
+import { colorPalette } from "@/style/partials/colorPalette";
+import { Link } from "react-router-dom";
 
 export const B4CInactiveServices = () => {
   const { applications, isLoading, error } =
     useGetAllApplications("sdfsdfsdfsdf");
 
+  const inactiveApplications =
+    applications?.filter((app) => app.status === "COMPLETED") ?? [];
   return (
     <Box
       sx={{
@@ -50,47 +54,80 @@ export const B4CInactiveServices = () => {
         >
           <CircularProgress />
         </Box>
-      ) : applications && applications.length > 0 ? (
+      ) : inactiveApplications && inactiveApplications.length > 0 ? (
         <Grid
           container
-          spacing={2} // Espaciado entre las tarjetas
+          spacing={16} // Espaciado entre las tarjetas
           sx={{
             width: "100%", // Ancho máximo del grid
             margin: "0 auto", // Centrado del grid
             paddingInline: 0,
           }}
         >
-          {applications.map(
-            ({ id, address, status, description, patient_name }, index) => (
+          {inactiveApplications.map(
+            (
+              {
+                id,
+                address,
+                status,
+                description,
+                carerId,
+                carer_speciality,
+                start_date,
+                end_date,
+                amount,
+                carer,
+              },
+              index,
+            ) => (
               <Grid
                 size={{ xs: 12, desktop: 6 }}
                 key={`active-service-grid-${index}`}
               >
-                {/* <B4CClientServiceCard
-                  key={`${id}-${index}`}
+                <B4CClientServiceCard
+                  carerId={carerId}
+                  carerDescription={carer?.description}
+                  carerSpecialty={carer_speciality}
+                  key={`active-service-${index}`}
                   id={id}
-                  carerName={patient_name}
+                  startDate={start_date}
+                  endDate={end_date}
+                  carerName={carer?.User.name}
                   address={address}
                   service={description}
                   status={status as Status}
-                /> */}
+                  isAssigned={!!carer}
+                  negotiation={carer?.Negotiation}
+                  amount={amount}
+                />
               </Grid>
             ),
           )}
         </Grid>
       ) : (
         <>
-          <Typography variant="h4">
-            Aun no tienes servicios finalizados
-          </Typography>
+          <Typography variant="h4">Aun no tienes servicios activos</Typography>
           <Typography variant="body1">
-            Completa tu primer Servicio para que pueda aparecer en tu archivo de
-            Servicios. Estos se eliminarán después de un año.
+            Da click en el botón para crear una nueva solicitud
           </Typography>
-          <B4CNoFinishedServices />
+          <B4CNoActiveServices />
+          <Link
+            to="/cliente/mis-servicios/nueva-solicitud"
+            style={{
+              backgroundColor: colorPalette.primary,
+              paddingBlock: "1rem",
+              paddingInline: "5rem",
+              borderRadius: "8px",
+              color: colorPalette.white,
+              textDecoration: "none",
+            }}
+          >
+            <Typography variant="body-normal">
+              Hacer una nueva solicitud
+            </Typography>
+          </Link>
         </>
       )}
-      ;
     </Box>
   );
 };
