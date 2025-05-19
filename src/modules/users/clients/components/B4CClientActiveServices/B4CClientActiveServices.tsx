@@ -15,9 +15,9 @@ import { useEffect } from "react";
 export const B4CClientActiveServices = () => {
   const { applications, isLoading, error } = useGetAllApplications("pending");
 
-  useEffect(() => {
-    console.log("applications", applications);
-  }, [applications]);
+  // Filtramos todas las aplicaciones que NO estén completadas
+  const activeApplications =
+    applications?.filter((app) => app.status !== "COMPLETED") ?? [];
 
   return (
     <Box
@@ -56,7 +56,7 @@ export const B4CClientActiveServices = () => {
         >
           <CircularProgress />
         </Box>
-      ) : applications && applications.length > 0 ? (
+      ) : activeApplications && activeApplications.length > 0 ? (
         <Grid
           container
           spacing={16} // Espaciado entre las tarjetas
@@ -66,7 +66,7 @@ export const B4CClientActiveServices = () => {
             paddingInline: 0,
           }}
         >
-          {applications.map(
+          {activeApplications.map(
             (
               {
                 id,
