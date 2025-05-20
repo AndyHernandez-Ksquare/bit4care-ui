@@ -106,7 +106,7 @@ export const B4CInactiveServices = () => {
         </Grid>
       ) : (
         <>
-          <Typography variant="h4">Aun no tienes servicios activos</Typography>
+          <Typography variant="h4">Aun no tienes servicios activo</Typography>
           <Typography variant="body1">
             Da click en el botón para crear una nueva solicitud
           </Typography>
