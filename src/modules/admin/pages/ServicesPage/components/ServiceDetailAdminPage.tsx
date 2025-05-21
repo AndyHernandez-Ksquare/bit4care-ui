@@ -35,12 +35,6 @@ export const ServiceDetailAdminPage = () => {
     );
   }
 
-  useEffect(() => {
-    console.log(application);
-    console.log(application.carer.Complaint);
-    console.log(application.carer);
-  }, []);
-
   return (
     <>
       <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
