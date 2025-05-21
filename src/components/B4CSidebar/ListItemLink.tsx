@@ -10,7 +10,7 @@ export interface IListItemLinkProps extends ListItemProps {
 }
 
 const breadcrumbNameMap: { [key: string]: string } = {
-  "/admin": "Dashboard",
+  "/admin": "Servicios",
   "/admin/colaboradores": "Colaboradores",
   "/admin/servicios": "Servicios",
   "/admin/clientes": "Clientes",

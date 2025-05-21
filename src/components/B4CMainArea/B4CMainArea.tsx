@@ -44,9 +44,6 @@ export const B4CMainArea = ({
           paddingBlock: spacings.spacing2,
         }}
       >
-        <Box sx={{ flexGrow: 1 }}>
-          <B4CSearchBar />
-        </Box>
         <Box display={"flex"} sx={{ gap: 16 }}>
           <B4CAvatar width={40} height={40} imageLink={profileImgURL} />
           <Box sx={{ display: "flex", flexDirection: "column" }}>

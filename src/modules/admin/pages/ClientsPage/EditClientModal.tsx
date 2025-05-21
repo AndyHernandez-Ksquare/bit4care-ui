@@ -2,15 +2,29 @@ import { B4CButton } from "@/components/B4CButton";
 import { B4CTextfield } from "@/components/B4CTextfield";
 import { B4CModal } from "@/components/BigElements/B4CModal";
 import { Size } from "@/ts/enums/Size";
+import { AdminClientList } from "@/ts/types/api/client/AdminClientList.type";
 import { Avatar, Box, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 
 interface IEditClientModal {
+  client: {
+    id: string;
+    name: string;
+    status: string;
+    email: string;
+    phone: string;
+    activity: string;
+    __raw: AdminClientList;
+  };
   open: boolean;
   onClose?: () => void;
 }
 
-export const EditClientModal = ({ open, onClose }: IEditClientModal) => {
+export const EditClientModal = ({
+  client,
+  open,
+  onClose,
+}: IEditClientModal) => {
   const [phone, setPhone] = useState("33-55-54-54-55");
   const [email, setEmail] = useState("mar.hdz@test.com");
 
@@ -55,10 +69,16 @@ export const EditClientModal = ({ open, onClose }: IEditClientModal) => {
             sx={{ width: 115, height: 115, mb: 1 }}
           />
           <Box>
-            <Typography variant="body2" color="success.main" sx={{ mb: 2 }}>
-              Activo
-            </Typography>
-            <Typography variant="h6">Andrew Bojangles</Typography>
+            {client.status === "Activo" ? (
+              <Typography variant="body2" color="success.main" sx={{ mb: 2 }}>
+                Activo
+              </Typography>
+            ) : (
+              <Typography variant="body2" color="error.main" sx={{ mb: 2 }}>
+                Activo
+              </Typography>
+            )}
+            <Typography variant="h6">{client.name}</Typography>
           </Box>
         </Box>
         <Box

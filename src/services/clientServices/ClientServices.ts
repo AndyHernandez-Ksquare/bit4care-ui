@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import axios from "../baseService";
 import { ClientSelf, CreateClient } from "@/ts/types/api/client";
+import { AdminClientList } from "@/ts/types/api/client/AdminClientList.type";
 
 const Entity = "client";
 
@@ -13,6 +14,17 @@ export const CreateClientService = async (requestBody: CreateClient) => {
     return response.data;
   } catch (error) {
     console.error("Failed to create client:", error);
+    throw error;
+  }
+};
+
+export const AdminGetClientService = async () => {
+  try {
+    const response: AxiosResponse<AdminClientList[]> = await axios.get(
+      `/${Entity}/admin`,
+    );
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };

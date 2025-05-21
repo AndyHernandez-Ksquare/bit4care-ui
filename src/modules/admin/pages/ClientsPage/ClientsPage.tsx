@@ -3,6 +3,7 @@ import { useState } from "react";
 import { B4CTable } from "@/components/BigElements/B4CTable";
 import {
   Box,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -22,14 +23,60 @@ import { EditClientModal } from "./EditClientModal";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums/Size";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { useAdminClientList } from "@/context/api/hooks/client/useAdminClientList";
+import { AdminClientList } from "@/ts/types/api/client/AdminClientList.type";
+
+// formateadores
+const dateFormatter = new Intl.DateTimeFormat("es-MX", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+const dateTimeFormatter = new Intl.DateTimeFormat("es-MX", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
 export const ClientsPage = () => {
   const [open, setOpen] = useState(false);
-  const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedClient, setSelectedClient] = useState<{
+    id: string;
+    name: string;
+    status: string;
+    email: string;
+    phone: string;
+    activity: string;
+    __raw: AdminClientList;
+  }>({
+    id: "",
+    name: "",
+    status: "",
+    email: "",
+    phone: "",
+    activity: "",
+    __raw: {
+      id: 0,
+      is_active: false,
+      User: {
+        id: 0,
+        name: "",
+        email: "",
+        phone: "",
+        last_login: new Date(),
+      },
+    },
+  } as any); // inicializamos con un objeto vacío
 
   const handleRowClick = (params: GridRowParams) => {
     setSelectedClient(params.row);
     setOpen(true);
   };
+
+  // ▶️ aquí consumimos el hook
+  const { data: clients, loading, error, refetch } = useAdminClientList();
 
   const columns: GridColDef[] = [
     {
@@ -109,79 +156,83 @@ export const ClientsPage = () => {
     },
   ];
 
-  const data = [
-    {
-      id: "00001",
-      name: "Braulio Estrada Alfonso",
-      status: "Activo",
-      email: "summerdreams87@email.com",
-      phone: "123456789",
-      activity: "2 days ago",
-    },
-    {
-      id: "00002",
-      name: "Braulio Estrada Alfonso",
-      status: "Activo",
-      email: "summerdreams87@email.com",
-      phone: "123456789",
-      activity: "2 days ago",
-    },
-    {
-      id: "00003",
-      name: "Braulio Estrada Alfonso",
-      status: "Activo",
-      email: "summerdreams87@email.com",
-      phone: "123456789",
-      activity: "2 days ago",
-    },
-  ];
+  // ▶️ parseamos CarerProfile[] a la forma que necesita la tabla
+  const rows = (clients ?? []).map((profile) => ({
+    id: profile.id.toString().padStart(5, "0"),
+    name: profile.User.name,
+    status: profile.is_active ? "Activo" : "Inactivo",
+    email: profile.User.email,
+    phone: profile.User.phone,
+    activity: dateTimeFormatter.format(new Date(profile.User.last_login)),
+    // guardamos también todo el profile para el modal
+    __raw: profile,
+  }));
+
   return (
     <PageLayout title="Clientes">
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: 32,
-        }}
-      >
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <FormControl sx={{ minWidth: 200, mr: 2 }}>
-            <InputLabel id="status-select-label">
-              Estatus de Servicio
-            </InputLabel>
-            <Select
-              labelId="status-select-label"
-              label="Acciones en lote"
-              defaultValue=""
-              input={
-                <OutlinedInput
-                  notched
-                  sx={{
-                    "& .MuiOutlinedInput-notchedOutline": { borderWidth: 0 },
-                  }}
-                />
-              }
-            >
-              <MenuItem value="Eliminar inactivos">Eliminar inactivos</MenuItem>
-              <MenuItem value="Eliminar">Eliminar</MenuItem>
-              {/* Agrega más opciones según sea necesario */}
-            </Select>
-          </FormControl>
-          <B4CButton label="Aplicar" size={Size.Small} />
+      {/* manejo de loading y error */}
+      {loading && (
+        <Box sx={{ textAlign: "center", py: 4 }}>
+          <CircularProgress />
         </Box>
+      )}
+      {error && (
+        <Box sx={{ textAlign: "center", py: 4 }}>
+          <Typography color="error">{error}</Typography>
+        </Box>
+      )}
+
+      {!loading && !error && (
         <Box
           sx={{
-            margin: "auto",
-            flexWrap: "wrap",
-            display: "flex",
             width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
           }}
         >
-          <B4CTable dataTable={data} columns={columns} />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <FormControl sx={{ minWidth: 200, mr: 2 }}>
+              <InputLabel id="batch-actions-label">Acciones en lote</InputLabel>
+              <Select
+                labelId="batch-actions-label"
+                label="Acciones en lote"
+                defaultValue=""
+                input={
+                  <OutlinedInput
+                    notched
+                    sx={{
+                      "& .MuiOutlinedInput-notchedOutline": { borderWidth: 0 },
+                    }}
+                  />
+                }
+              >
+                <MenuItem value="Eliminar inactivos">
+                  Eliminar inactivos
+                </MenuItem>
+                <MenuItem value="Eliminar">Eliminar</MenuItem>
+              </Select>
+            </FormControl>
+            <B4CButton label="Aplicar" size={Size.Small} onClick={refetch} />
+          </Box>
+
+          <Box
+            sx={{
+              flexWrap: "wrap",
+              display: "flex",
+              width: "100%",
+            }}
+          >
+            <B4CTable dataTable={rows} columns={columns} />
+          </Box>
         </Box>
-      </Box>
-      <EditClientModal open={open} onClose={() => setOpen(false)} />
+      )}
+
+      <EditClientModal
+        open={open}
+        onClose={() => setOpen(false)}
+        client={selectedClient}
+      />
     </PageLayout>
   );
 };
