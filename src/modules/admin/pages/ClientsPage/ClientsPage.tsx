@@ -79,18 +79,18 @@ export const ClientsPage = () => {
   const { data: clients, loading, error, refetch } = useAdminClientList();
 
   const columns: GridColDef[] = [
-    {
-      field: "select",
-      headerClassName: "super-app-theme--header",
-      headerAlign: "left",
-      renderHeader: (_params: GridColumnHeaderParams) => (
-        <Typography variant="body-normal-bold">{"SELECT"}</Typography>
-      ),
-      width: 100,
-      renderCell: (params: GridCellParams) => {
-        return <B4CCheckbox />;
-      },
-    },
+    // {
+    //   field: "select",
+    //   headerClassName: "super-app-theme--header",
+    //   headerAlign: "left",
+    //   renderHeader: (_params: GridColumnHeaderParams) => (
+    //     <Typography variant="body-normal-bold">{"SELECT"}</Typography>
+    //   ),
+    //   width: 100,
+    //   renderCell: (params: GridCellParams) => {
+    //     return <B4CCheckbox />;
+    //   },
+    // },
     {
       field: "name",
       headerClassName: "super-app-theme--header",
@@ -191,7 +191,7 @@ export const ClientsPage = () => {
             gap: 4,
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          {/* <Box sx={{ display: "flex", alignItems: "center" }}>
             <FormControl sx={{ minWidth: 200, mr: 2 }}>
               <InputLabel id="batch-actions-label">Acciones en lote</InputLabel>
               <Select
@@ -214,7 +214,7 @@ export const ClientsPage = () => {
               </Select>
             </FormControl>
             <B4CButton label="Aplicar" size={Size.Small} onClick={refetch} />
-          </Box>
+          </Box> */}
 
           <Box
             sx={{

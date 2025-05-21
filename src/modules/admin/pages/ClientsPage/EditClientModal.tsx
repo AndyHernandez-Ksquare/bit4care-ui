@@ -52,7 +52,7 @@ export const EditClientModal = ({
         }}
       >
         <Typography variant="h5" sx={{ marginRight: "70%" }}>
-          Editar perfil
+          Información de contacto
         </Typography>
         <Box
           sx={{
@@ -91,23 +91,16 @@ export const EditClientModal = ({
         >
           <B4CTextfield
             label="Número de teléfono"
-            onChange={handlePhoneChange}
+            value={client.phone}
+            disabled
           />
           <B4CTextfield
             label="Dirección de correo electrónico"
-            onChange={handleEmailChange}
+            value={client.email}
+            disabled
           />
         </Box>
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <B4CButton label={"Guardar"} />
-
-          <B4CButton
-            variant="outlined"
-            label={"Cancelar edicion"}
-            size={Size.Small}
-            onClick={onClose}
-          />
-        </Box>
+        <Box sx={{ display: "flex", gap: 2 }}></Box>
       </Box>
     </B4CModal>
   );
