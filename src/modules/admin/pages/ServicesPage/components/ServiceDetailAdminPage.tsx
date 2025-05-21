@@ -17,18 +17,38 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { colorPalette } from "@/style/partials/colorPalette";
+import { useLocation } from "react-router-dom";
+import { GetAllApplication } from "@/ts/types/api/applicationRequest";
+import { useEffect } from "react";
 
 // Aqui si hay muchos detalles a mejorar, ya le cambie los iconos para que sean los que usamos, los de MUI
 
 export const ServiceDetailAdminPage = () => {
+  const { state } = useLocation();
+  const application = state?.application;
+
+  if (!application) {
+    return (
+      <Typography variant="h6" color="error">
+        No se encontró la información del servicio.
+      </Typography>
+    );
+  }
+
+  useEffect(() => {
+    console.log(application);
+    console.log(application.carer.Complaint);
+    console.log(application.carer);
+  }, []);
+
   return (
     <>
       <Breadcrumbs separator={<B4CNextIcon />} aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/admin/servicios/">
+        <Link underline="hover" color="inherit" href="/admin/">
           <Typography typography="body-normal">Servicios</Typography>
         </Link>
         <Typography typography="body-normal-bold" color={colorPalette.primary}>
-          Usuario
+          {application.patient_name}
         </Typography>
       </Breadcrumbs>
       <Grid container spacing={32}>
@@ -46,18 +66,13 @@ export const ServiceDetailAdminPage = () => {
           >
             <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
             <Box>
-              <Typography variant="h6">Darel Caldwell</Typography>
+              <Typography variant="h6">{application.patient_name}</Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                Cuidado de adulto mayor con Alzheimer
+                {application.description}
               </Typography>
             </Box>
           </Box>
-          <Typography variant="body-normal">
-            El paciente es mi papá. Él tiene problemas para recordar cosas,
-            entonces requiere a un cuidador/a que cuente con técnicas de
-            comunicación efectiva. De preferencia busco a alguien con un perfil
-            con experiencia en pacientes con enfermedades neurodegenerativas.
-          </Typography>
+          <Typography variant="body-normal">{application.comments}</Typography>
           <Box
             mb={2}
             sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
@@ -71,7 +86,7 @@ export const ServiceDetailAdminPage = () => {
                 }}
               />
               <Typography variant="body2" color="textSecondary">
-                Colonia Los Álamos, Benito Juárez CDMX. CP: 05040
+                {application.address}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
@@ -83,7 +98,7 @@ export const ServiceDetailAdminPage = () => {
                 }}
               />
               <Typography variant="body2" color="textSecondary">
-                $8100
+                {application.amount}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
@@ -100,63 +115,86 @@ export const ServiceDetailAdminPage = () => {
             </Box>
           </Box>
 
-          <Box mt={2}>
-            <Typography variant="body-small-bold" gutterBottom>
-              ¿Qué sucedió?:{" "}
-            </Typography>
-            <Typography variant="body-small" color="textSecondary">
-              La enfermera llegó tarde el primer día así que no quisiera pagar 8
-              horas ese día, si no menos, como 6. Luego el segundo día llegó
-              bien, y el tercero ya no se presentó. En total solo se trabajó 12
-              horas de 16.
-            </Typography>
-          </Box>
+          {application.carer &&
+            application.carer.Complaint &&
+            application.carer.Complaint.length && (
+              <Box mt={2}>
+                <Typography variant="body-small-bold" gutterBottom>
+                  ¿Qué sucedió?:{" "}
+                </Typography>
+                <Typography variant="body-small" color="textSecondary">
+                  {application.carer.Complaint[0].description}
+                </Typography>
+              </Box>
+            )}
         </Grid>
         {/* Right Section */}
         <Grid size={{ xs: 12, desktop: 6 }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            marginBottom="2rem"
-            sx={{ flexDirection: "column", gap: "32px" }}
-          >
-            <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
+          {application.carer ? (
+            <>
+              <Box
+                display="flex"
+                alignItems="center"
+                marginBottom="2rem"
+                sx={{ flexDirection: "column", gap: "32px" }}
+              >
+                <Avatar sx={{ width: 128, height: 128, mr: 2 }} />
 
-            <Typography variant="h6">Concha del Mar Pérez</Typography>
-            <Rating value={4} readOnly precision={0.5} />
-            <Typography variant="body2" color="textSecondary">
-              Calificación de 80% en Test de Habilidades
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              Experta en adultos mayores con demencia
-            </Typography>
-          </Box>
-          <Box
-            display="flex"
-            alignItems="center"
-            marginBottom="2rem"
-            sx={{ flexDirection: "column", gap: "0.5rem" }}
-          >
-            <Typography variant="h5" gutterBottom>
-              $8100
-            </Typography>
-            <Box display="flex" alignItems="center" mb={2}>
-              <TextField
-                label="Horas"
-                type="number"
-                variant="outlined"
-                size="small"
-                sx={{ maxWidth: 100, mr: 2 }}
-              />
-              <Typography variant="body2">
-                Se le pagaría al cuidador $4000
-              </Typography>
-            </Box>
-            <Typography variant="body2" color="textSecondary" mb={2}>
-              El resto se le devolverá al Cliente.
-            </Typography>
-            <B4CButton label="Pagar a cuidador" size={Size.Small} fullWidth />
-          </Box>
+                <Typography variant="h6">
+                  {application.carer.User.name}
+                </Typography>
+                <Rating
+                  value={application.carer.averageStars}
+                  readOnly
+                  precision={0.5}
+                />
+                <Typography variant="body2" color="textSecondary">
+                  Calificación de 80% en Test de Habilidades
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {application.carer.description}
+                </Typography>
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                marginBottom="2rem"
+                sx={{ flexDirection: "column", gap: "0.5rem" }}
+              >
+                <Typography variant="h5" gutterBottom>
+                  {application.amount}
+                </Typography>
+                {application.carer &&
+                  application.carer.Complaint &&
+                  application.carer.Complaint.length && (
+                    <>
+                      <Box display="flex" alignItems="center" mb={2}>
+                        <TextField
+                          label="Horas"
+                          type="number"
+                          variant="outlined"
+                          size="small"
+                          sx={{ maxWidth: 100, mr: 2 }}
+                        />
+                        <Typography variant="body2">
+                          Se le pagaría al cuidador $4000
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" color="textSecondary" mb={2}>
+                        El resto se le devolverá al Cliente.
+                      </Typography>
+                      <B4CButton
+                        label="Pagar a cuidador"
+                        size={Size.Small}
+                        fullWidth
+                      />
+                    </>
+                  )}
+              </Box>
+            </>
+          ) : (
+            <p>No hay cuidador</p>
+          )}
         </Grid>
       </Grid>
     </>
