@@ -25,9 +25,23 @@ export const adminRouter: RouteObject[] = [
         path: "/admin",
         element: <AdminLayout />,
         children: [
+          // {
+          //   path: "/admin/",
+          //   element: <HomePage />,
+          // },
           {
             path: "/admin/",
-            element: <HomePage />,
+            element: <ServicePage />,
+            children: [
+              {
+                path: "/admin/",
+                element: <ServiceTable />,
+              },
+              {
+                path: "/admin/detalle",
+                element: <ServiceDetailAdminPage />,
+              },
+            ],
           },
           {
             path: "/admin/colaboradores",
@@ -47,28 +61,15 @@ export const adminRouter: RouteObject[] = [
               },
             ],
           },
-          {
-            path: "/admin/servicios",
-            element: <ServicePage />,
-            children: [
-              {
-                path: "/admin/servicios/",
-                element: <ServiceTable />,
-              },
-              {
-                path: "/admin/servicios/detalle",
-                element: <ServiceDetailAdminPage />,
-              },
-            ],
-          },
+
           {
             path: "/admin/clientes",
             element: <ClientsPage />,
           },
-          {
-            path: "/admin/ajustes",
-            element: <Settings />,
-          },
+          // {
+          //   path: "/admin/ajustes",
+          //   element: <Settings />,
+          // },
           {
             path: "*",
             element: <p>random</p>,

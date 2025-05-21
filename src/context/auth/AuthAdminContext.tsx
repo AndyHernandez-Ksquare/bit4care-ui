@@ -19,7 +19,6 @@ export const AdminAuthProvider = ({ children }: ProviderProps) => {
 
     try {
       const data = await UserSelfService(token);
-      console.log(data);
       setIsAdminAuthenticated(!!data?.id);
     } catch (error) {
       console.error("Error obteniendo el usuario:", error);

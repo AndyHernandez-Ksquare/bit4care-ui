@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
 import { B4CTag } from "@/components/SmallElements/B4CTag";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -26,6 +25,36 @@ import { B4CTable } from "@/components/BigElements/B4CTable";
 import { FilterIcon } from "@/assets/svgIcons/filterIcon/FilterIcon";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Link } from "react-router-dom";
+import { useGetAllApplications } from "@/context/api/hooks/application-requests/useGetAllApplications";
+import { GetAllApplication } from "@/ts/types/api/applicationRequest";
+
+// ⬇️ Creamos los formateadores para fechas y moneda MXN
+const dateFormatter = new Intl.DateTimeFormat("es-MX", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+const currencyFormatter = new Intl.NumberFormat("es-MX", {
+  style: "currency",
+  currency: "MXN",
+});
+
+const applicationsDbToTableParser = (applications: GetAllApplication[]) => {
+  return applications.map((application) => {
+    const start = new Date(application.start_date);
+    const end = new Date(application.end_date);
+    return {
+      id: application.id,
+      name: application.patient_name,
+      address: application.address,
+      // 🚀 fechas ya formateadas
+      dates: `${dateFormatter.format(start)} – ${dateFormatter.format(end)}`,
+      // 💸 costo formateado en MXN
+      cost: currencyFormatter.format(application.amount),
+      status: application.status,
+    };
+  });
+};
 
 export const ServiceTable = () => {
   const CustomDatePicker = styled(DatePicker)(({ theme }) => ({
@@ -37,10 +66,9 @@ export const ServiceTable = () => {
         border: "none",
       },
     },
-    // "& .MuiInputAdornment-root": {
-    //   display: "none",
-    // },
   }));
+
+  const { applications, isLoading, error } = useGetAllApplications("asdasd");
 
   const columns: GridColDef[] = [
     {
@@ -124,26 +152,27 @@ export const ServiceTable = () => {
     },
   ];
 
-  const data = [
-    {
-      id: "00001",
-      name: "Braulio",
-      address:
-        "Calle Juárez #123, Colonia Centro, Ciudad de México, CDMX, México.",
-      dates: "13.05.2025 - 15.05.2025",
-      cost: "$8000",
-      status: "pagado",
-    },
-    {
-      id: "00002",
-      name: "Pedro Pérez",
-      address:
-        "Calle Juárez #123, Colonia Centro, Ciudad de México, CDMX, México.",
-      dates: "13.05.2025 - 15.05.2025",
-      cost: "$8000",
-      status: "por pagar",
-    },
-  ];
+  // Mientras cargan las aplicaciones, mostramos spinner
+  if (isLoading) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Si hay error, lo mostramos
+  if (error) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h6" color="error">
+          {"Error al cargar las aplicaciones"}
+        </Typography>
+      </Box>
+    );
+  }
+
+  const data = applicationsDbToTableParser(applications || []);
   return (
     <>
       <Box

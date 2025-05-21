@@ -35,7 +35,7 @@ export const AdminLoginForm = () => {
             setToken(userData.token);
             setTimeout(() => {
               navigate("/admin");
-            }, 100);
+            }, 1000);
           } else {
             setErrorMessage(
               "No tienes permisos para acceder a este panel de administrador.",

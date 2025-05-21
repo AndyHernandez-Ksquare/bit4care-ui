@@ -1,11 +1,11 @@
 export const genders = [
   {
     label: "Masculino",
-    value: "Male",
+    value: "male",
   },
   {
     label: "Femenino",
-    value: "Female",
+    value: "female",
   },
   {
     label: "Prefiero no decirlo",

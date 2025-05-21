@@ -16,7 +16,6 @@ export const useGetAllApplications = (status: string) => {
         const data = await GetAllApplicationRequests(status);
         setApplications(data);
       } catch (err) {
-        console.log(err);
         setError(err);
       } finally {
         setIsLoading(false);

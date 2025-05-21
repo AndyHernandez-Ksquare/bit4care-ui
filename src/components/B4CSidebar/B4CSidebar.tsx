@@ -36,9 +36,10 @@ export const B4CSidebar = () => {
       >
         <ListItemLink to="/admin" />
         <ListItemLink to="/admin/colaboradores" />
-        <ListItemLink to="/admin/servicios" />
         <ListItemLink to="/admin/clientes" />
-        <ListItemLink to="/admin/ajustes" />
+        {/* <ListItemLink to="/admin/servicios" /> */}
+
+        {/* <ListItemLink to="/admin/ajustes" /> */}
       </List>
       <Button onClick={handleLogout} sx={{ color: colorPalette.black1 }}>
         <Typography variant="body-normal-bold">Salir de la cuenta</Typography>

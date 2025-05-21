@@ -16,7 +16,7 @@ import {
   MedicalInformationRounded,
 } from "@mui/icons-material";
 import { Avatar, Box, Chip, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface B4CNegotiationModalProps {
   serviceId: string;
@@ -56,6 +56,27 @@ export const B4CCarerNegotiationModal = ({
 
   const [bid, setBid] = useState<string>("");
 
+  useEffect(() => {
+    console.log("Data:", data);
+
+    if (!data) return;
+    // Dentro del componente, antes del return:
+    const lastNegotiation =
+      data.Negotiation && data.Negotiation.length > 0
+        ? data.Negotiation[data.Negotiation.length - 1]
+        : null;
+
+    // Si hay negociación, usamos offer_by_client del último elemento; de lo contrario, data.amount.
+    const baseAmount = lastNegotiation
+      ? lastNegotiation.offer_by_client
+      : data.amount;
+
+    console.log("Base Amount:", baseAmount);
+    // Calculamos la comisión usando el baseAmount.
+    const commission = baseAmount * parseFloat(data.commision_percentage);
+    console.log(data.commision_percentage);
+    console.log("Commission:", commission);
+  }, [data]);
   // Función para manejar la contraoferta
   const handleCounterOffer = async () => {
     if (!bid) return;

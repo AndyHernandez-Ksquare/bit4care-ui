@@ -7,4 +7,5 @@ export const statusTagInfo: {
   active_negotiation: { color: "info", label: "En negociación" },
   active: { color: "success", label: "Agendado" },
   completed: { color: "info", label: "Finalizado" },
+  active_complaint: { color: "error", label: "Reclamo activo" },
 };
