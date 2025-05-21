@@ -52,6 +52,7 @@ const applicationsDbToTableParser = (applications: GetAllApplication[]) => {
       // 💸 costo formateado en MXN
       cost: currencyFormatter.format(application.amount),
       status: application.status,
+      originalData: application,
     };
   });
 };
@@ -91,7 +92,8 @@ export const ServiceTable = () => {
       renderCell: (params: GridCellParams) => {
         return (
           <Link
-            to={`/admin/servicios/detalle`} // Aquí rediriges al detalle de la fila
+            to={`/admin/detalle`} // Aquí rediriges al detalle de la fila
+            state={{ application: params.row.originalData }}
             style={{ textDecoration: "none" }} // Evitar subrayado en el texto
           >
             <Typography variant="body-normal-bold" color="primary">
