@@ -31,9 +31,10 @@ export const PendingPage = () => {
   }
 
   return (
-    <Grid container spacing={4} size={{ xs: 12 }}>
+    <Grid container spacing={4}>
       {pendingCarers?.map((carer, index) => (
         <Grid
+          gap={4}
           size={{ xs: 12, tablet: 6, desktop: 4 }}
           key={`${carer.User.name}-${index}`}
         >
@@ -41,12 +42,13 @@ export const PendingPage = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "262px",
+              height: "100%",
               borderRadius: "8px",
               boxShadow: "0px 8px 30px 0px #0000001F",
               paddingBlock: spacings.spacing4,
               paddingInline: spacings.spacing2,
-              gap: "4vh",
+              overflow: "hidden",
+              gap: "2vh",
             }}
           >
             <Box
@@ -57,13 +59,16 @@ export const PendingPage = () => {
               <Avatar
                 src={""}
                 alt={`${carer.User.name}`}
-                sx={{ width: 128, height: 128 }}
+                sx={{
+                  width: { xs: 64, desktop: 128 },
+                  height: { xs: 64, desktop: 128 },
+                }}
               />
               <Typography variant="body-small-bold">
                 {carer.User.name}
               </Typography>
               <Typography variant="body-small" sx={{ fontSize: "14px" }}>
-                {carer.speciality}
+                {carer.speciality || "Sin especialidad"}
               </Typography>
               <Typography variant="body-small" sx={{ fontSize: "14px" }}>
                 {carer.User.email}

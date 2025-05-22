@@ -1,12 +1,17 @@
-import { getAcceptedUsers, User } from "@/services/colaboratorsServices";
 import { spacings } from "@/style/partials/spacings";
-import { Avatar, Box, Grid2 as Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  Avatar,
+  Box,
+  CircularProgress,
+  Grid2 as Grid,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 import { SingleCollaboratorsCard } from "../ColaboratorsPage/SingleCollaboratorsCard";
 import { useGetAllCareers } from "@/context/api/hooks/useGetAllCareers";
 import { GetOneCarer } from "@/ts/types/api/carer/GetOneCarer.type";
 import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
-import { GetPresignedUrlByUser } from "@/services/fileServices/FileServices";
+import { B4CButton } from "@/components/B4CButton";
 
 export const AcceptedPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -17,29 +22,48 @@ export const AcceptedPage = () => {
     setSelectedUser(user);
     setOpenModal(!!user);
   };
-  const { data } = useGetAllCareers();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersData = data;
-        if (!usersData) {
-          throw new Error("No se encontraron datos de usuarios.");
-        }
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    fetchUsers();
-  }, []); // Se ejecuta solo una vez al montar el componente
+  const { data, isLoading, error } = useGetAllCareers();
+
+  // Estado de carga global
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" mt={spacings.spacing4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Estado de error global
+  if (error) {
+    return (
+      <Box textAlign="center" mt={spacings.spacing4}>
+        <Typography variant="h6" color="error">
+          {error}
+        </Typography>
+        <B4CButton
+          label="Recargar"
+          variant="primary"
+          onClick={() => window.location.reload()}
+          sx={{ mt: spacings.spacing2 }}
+        />
+      </Box>
+    );
+  }
+
+  // Estado de data vacía
+  if (!data || data.length === 0) {
+    return (
+      <Box textAlign="center" mt={spacings.spacing4}>
+        <Typography variant="h6">No se encontraron colaboradores.</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Grid container spacing={8}>
       {data?.map((user, index) => (
-        <Grid
-          size={{ xs: 6, tablet: 4, desktop: 3 }}
-          key={`${user.User.name}-${index}`}
-        >
+        <Grid size={{ xs: 6, tablet: 4 }} key={`${user.User.name}-${index}`}>
           <CollaboratorCard user={user} onClick={handleOpen(user)} />
         </Grid>
       ))}
@@ -76,7 +100,7 @@ const CollaboratorCard: React.FC<CollaboratorCardProps> = ({
         flexDirection: "column",
         cursor: "pointer",
         alignItems: "center",
-        maxWidth: "262px",
+        height: "287px",
         borderRadius: "8px",
         boxShadow: "0px 8px 30px 0px #0000001F",
         paddingBlock: spacings.spacing4,
@@ -91,13 +115,42 @@ const CollaboratorCard: React.FC<CollaboratorCardProps> = ({
       <Avatar
         src={loading ? undefined : profilePic}
         alt={user.User.name}
-        sx={{ width: 128, height: 128 }}
+        sx={{
+          width: { xs: 64, desktop: 128 },
+          height: { xs: 64, desktop: 128 },
+        }}
       />
-      <Typography variant="body-small-bold">{user.User.name}</Typography>
-      <Typography variant="body-small" sx={{ fontSize: "14px" }}>
-        {user.speciality}
+      <Typography
+        variant="body-small-bold"
+        sx={{
+          mt: spacings.spacing2,
+          textAlign: "center",
+          wordBreak: "break-word",
+          overflowWrap: "break-word",
+        }}
+      >
+        {user.User.name}
       </Typography>
-      <Typography variant="body-small" sx={{ fontSize: "14px" }}>
+      <Typography
+        variant="body-small"
+        sx={{
+          fontSize: { xs: "12px", desktop: "14px" },
+          textAlign: "center",
+          wordBreak: "break-word",
+          overflowWrap: "break-word",
+        }}
+      >
+        {user.speciality ? user.speciality : "Sin especialidad"}
+      </Typography>
+      <Typography
+        variant="body-small"
+        sx={{
+          fontSize: { xs: "12px", desktop: "14px" },
+          textAlign: "center",
+          wordBreak: "break-word",
+          overflowWrap: "break-word",
+        }}
+      >
         {user.User.email}
       </Typography>
     </Box>
