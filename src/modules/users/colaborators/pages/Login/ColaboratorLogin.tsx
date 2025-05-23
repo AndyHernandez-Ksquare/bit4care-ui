@@ -55,6 +55,10 @@ export const ColaboratorLogin = () => {
               setTimeout(() => {
                 navigate("/colaborador");
               }, 1000); // Pequeño retraso para permitir que se cierre el modal
+            } else {
+              setErrorMessage(
+                "Tu cuenta aún no ha sido aprobada. Por favor, espera a que los administradores evaluen tu solicitud.",
+              );
             }
           }
         }
@@ -118,6 +122,9 @@ export const ColaboratorLogin = () => {
             <Typography color="#545454">
               Ingresa tu correo y contraseña registrados
             </Typography>
+            {errorMessage && (
+              <Typography color="error">{errorMessage}</Typography>
+            )}
             <B4CTextfield
               placeholder="Usuario"
               value={formik.values.email}

@@ -31,7 +31,7 @@ export const PendingPage = () => {
   }
 
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={16}>
       {pendingCarers?.map((carer, index) => (
         <Grid
           gap={4}
@@ -42,7 +42,6 @@ export const PendingPage = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              height: "100%",
               borderRadius: "8px",
               boxShadow: "0px 8px 30px 0px #0000001F",
               paddingBlock: spacings.spacing4,
