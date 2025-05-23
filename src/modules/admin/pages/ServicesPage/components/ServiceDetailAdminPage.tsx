@@ -20,6 +20,7 @@ import { colorPalette } from "@/style/partials/colorPalette";
 import { useLocation } from "react-router-dom";
 import { GetAllApplication } from "@/ts/types/api/applicationRequest";
 import { useEffect } from "react";
+import { B4CNoActiveServices } from "@/assets/images/B4CNoActiveServices";
 
 // Aqui si hay muchos detalles a mejorar, ya le cambie los iconos para que sean los que usamos, los de MUI
 
@@ -187,7 +188,33 @@ export const ServiceDetailAdminPage = () => {
               </Box>
             </>
           ) : (
-            <p>No hay cuidador</p>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              sx={{ py: 8, textAlign: "center" }}
+            >
+              {/* Ilustración o icono */}
+              <B4CNoActiveServices />
+
+              {/* Título */}
+              <Typography
+                variant="h5"
+                sx={{ color: colorPalette.primary, mb: 1 }}
+              >
+                Aún no hay un cuidador asignado
+              </Typography>
+
+              {/* Subtítulo */}
+              <Typography
+                variant="body2"
+                sx={{ color: colorPalette.grey1, mb: 3, maxWidth: 300 }}
+              >
+                En cuanto un cuidador acepte este servicio, sus datos aparecerán
+                aquí.
+              </Typography>
+            </Box>
           )}
         </Grid>
       </Grid>

@@ -3,6 +3,7 @@ import { B4CNextIcon } from "@/components/B4CNextIcon/B4CNextIcon";
 import { useReviewCarer } from "@/context/api/hooks/carer/useReviewCarer";
 import { useFileUrlsByUser } from "@/context/api/hooks/file/useFileUrlsByUser";
 import { useGetOneCareer } from "@/context/api/hooks/useGetOneCareer";
+import { useSnackbar } from "@/context/ui/SnackbarContext";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { Size } from "@/ts/enums/Size";
 import { EvaluateCarerRequest } from "@/ts/types/api/carer/CreateCarerProfile.type";
@@ -18,11 +19,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const CheckUserRequest = () => {
   const [searchParams] = useSearchParams(); // Obtener los query params
   const careerId = searchParams.get("id"); // Obtener el ID del query param
+
+  const navigate = useNavigate();
+  const { open: openSnackbar } = useSnackbar();
 
   const [page, setPage] = useState(1);
 
@@ -63,10 +67,11 @@ export const CheckUserRequest = () => {
     };
     try {
       await reviewCarer(requestBody, parseInt(careerId));
-      // Aquí puedes agregar lógica adicional: mostrar notificación, redirigir, etc.
+      openSnackbar("Colaborador aceptado correctamente.", "success");
     } catch (err) {
-      // El error ya se maneja en el hook (se guarda en reviewError)
-      console.error("Error al aceptar al carer:", err);
+      openSnackbar("Error al aceptar la solicitud", "error");
+    } finally {
+      navigate("/admin/colaboradores");
     }
   };
 
@@ -78,10 +83,12 @@ export const CheckUserRequest = () => {
     };
     try {
       await reviewCarer(requestBody, parseInt(careerId));
-      // Aquí puedes agregar lógica adicional: mostrar notificación, redirigir, etc.
+      openSnackbar("Colaborador rechazado.", "success");
     } catch (err) {
       // El error ya se maneja en el hook (se guarda en reviewError)
-      console.error("Error al rechazar al carer:", err);
+      openSnackbar("Error al rechazar la solicitud", "error");
+    } finally {
+      navigate("/admin/colaboradores");
     }
   };
 

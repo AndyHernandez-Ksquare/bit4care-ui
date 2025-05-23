@@ -29,10 +29,6 @@ export function useFileUpload() {
         // 2️⃣ Cargar el binario a S3
         await fetch(presigned.url, {
           method: "PUT",
-          headers: {
-            // meta.contentType debe ser exactamente el mismo string que usaste al firmar
-            "Content-Type": "image/jpeg",
-          },
           body: file,
         });
 
