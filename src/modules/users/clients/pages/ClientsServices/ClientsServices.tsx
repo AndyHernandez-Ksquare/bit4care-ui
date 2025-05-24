@@ -2,7 +2,7 @@ import { PageLayout } from "@/components/B4CPageLayout";
 import { B4CTab } from "@/components/B4CTab/B4CTab";
 import { spacings } from "@/style/partials/spacings";
 import { Box, Grid2 as Grid, IconButton } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { B4CInactiveServices } from "../../components/B4CInactiveServices";
 import { B4CButton } from "@/components/B4CButton";
 import { Size } from "@/ts/enums";
@@ -10,14 +10,30 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import { colorPalette } from "@/style/partials/colorPalette";
 import { B4CClientActiveServices } from "../../components/B4CClientActiveServices";
+import { useGetClientSelf } from "@/context/api/hooks/useGetClientSelf";
+import { useCreateCustomer } from "@/context/api/hooks/stripe/useCreateCustomer";
 
 export const ClientsServices = () => {
   const [tab, setTab] = useState(0);
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("clientToken");
+
+  const { data } = useGetClientSelf(token || "");
+  const { createCustomer } = useCreateCustomer();
+
   const handleNewServiceClick = () => {
     navigate("/cliente/mis-servicios/nueva-solicitud");
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!data?.stripeAccountId) {
+        await createCustomer();
+      }
+    };
+    fetchData();
+  }, []);
 
   const serviceStatus = [
     <B4CClientActiveServices key={"activeServices"} />,
